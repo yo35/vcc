@@ -1,5 +1,5 @@
 
-#include "AbstractTimer.h"
+#include "abstracttimer.h"
 #include <glibmm/main.h>
 
 AbstractTimer::AbstractTimer() {
@@ -36,11 +36,11 @@ int AbstractTimer::get_raw_time() const {
 }
 
 void AbstractTimer::refresh_time() const {
-	
+
 	// Si on est en pause, curr_time est supposé être à jour
 	if(mode==PAUSED)
 		return;
-	
+
 	time_t now;
 	time(&now);
 	int diff = static_cast<int>(difftime(now, start_at) * 1000.0);
