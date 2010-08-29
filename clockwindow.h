@@ -20,9 +20,13 @@ private:
 
 	// Event handling
 	void on_pause_clicked();
+	void on_reset_clicked();
 
-	// Change the
+	// Modifie le cadran actif
 	void set_no_actif(int new_no_actif);
+
+	// Remets les timers à zéro
+	void reset_timers();
 
 	int no_actif;
 	Timer       timer[2];

@@ -12,18 +12,16 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
 
 	// Réglage des horloges
-	for(int i=0; i<2; ++i) {
-		timer[i].set_time(3*60*1000);
-		//timer[i].set_time(3*1000);
-		timer[i].set_mode(Timer::PAUSED);
-		dial [i].set_timer(timer[i]);
-		dial_layout.pack_start(dial[i]);
-	}
+	reset_timers();
 
 	// Gestion des événements
 	btn_pause.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_clicked));
 
 	// Géométrie générale
+	for(int i=0; i<2; ++i) {
+		dial[i].set_timer(timer[i]);
+		dial_layout.pack_start(dial[i]);
+	}
 	btns_layout.set_spacing(5);
 	main_layout.set_spacing(5);
 	btns_layout.pack_start(btn_pause);
@@ -75,6 +73,10 @@ void ClockWindow::on_pause_clicked() {
 	set_no_actif(-1);
 }
 
+void ClockWindow::on_reset_clicked() {
+	reset_timers();
+}
+
 void ClockWindow::set_no_actif(int new_no_actif) {
 	if(new_no_actif==no_actif)
 		return;
@@ -85,5 +87,13 @@ void ClockWindow::set_no_actif(int new_no_actif) {
 	no_actif = new_no_actif;
 	if(no_actif>=0 && no_actif<2) {
 		timer[no_actif].set_mode(Timer::DECREMENT);
+	}
+}
+
+void ClockWindow::reset_timers() {
+	for(int i=0; i<2; ++i) {
+		timer[i].set_time(3*60*1000);
+		//timer[i].set_time(3*1000);
+		timer[i].set_mode(Timer::PAUSED);
 	}
 }
