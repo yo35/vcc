@@ -4,10 +4,11 @@
 
 ClockWindow::ClockWindow() : Gtk::Window() {
 	for(int i=0; i<2; ++i) {
-		timer [i].set_time(3*60*1000);
-		timer [i].set_mode(Timer::PAUSED);
-		visual[i].set_timer(timer[i]);
-		layout.pack_start(visual[i]);
+		timer[i].set_time(3*60*1000);
+		//timer[i].set_time(3*1000);
+		timer[i].set_mode(Timer::PAUSED);
+		dial [i].set_timer(timer[i]);
+		layout.pack_start(dial[i]);
 	}
 	no_actif = -1;
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);

@@ -1,25 +1,26 @@
 
-#ifndef DIGITALTIMER_H
-#define DIGITALTIMER_H
+#ifndef DIGITALDIAL_H
+#define DIGITALDIAL_H
 
 #include <gtkmm/drawingarea.h>
 #include "timer.h"
 
-class DigitalTimer : public Gtk::DrawingArea {
+class DigitalDial : public Gtk::DrawingArea {
 
 public:
 
-	// Constructeur
-	DigitalTimer();
+	// Divers
+	DigitalDial();
 	void set_timer(const Timer &timer);
 
 protected:
 
+	// Routine de dessin
 	virtual bool on_expose_event(GdkEventExpose *event);
 
 private:
 
-	// Routines internes
+	// Force le redessin du widget
 	void refresh_widget();
 
 	// Données membres

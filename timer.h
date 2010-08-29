@@ -16,29 +16,30 @@ public:
 		PAUSED
 	} Mode;
 
-	// Constructeur
+	// Divers
 	Timer();
-
 	sigc::signal<void> signal_modified() const;
 
+	// Contrôle du timer
 	void set_mode(Mode new_mode);
+	void set_time(int  new_time);
 	Mode get_mode() const;
-
-	void set_time(int new_time);
 	int  get_time() const;
 
-
 private:
+
+	// Structure interne pour le repérage d'un instant dans le temps
+	typedef struct timeval timeval_t;
 
 	// Routines internes
 	void refresh_time() const;
 	bool on_timeout_elapses();
-	static int difftime(const struct timeval &t2, const struct timeval &t1);
+	static int difftime(const timeval_t &t2, const timeval_t &t1);
 
 	// Données membres
 	Mode               m_mode;
 	int                m_time;
-	struct timeval     m_start_at;
+	timeval_t          m_start_at;
 	sigc::signal<void> m_signal_modified;
 };
 

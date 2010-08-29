@@ -2,6 +2,10 @@
 #include "timer.h"
 #include <glibmm/main.h>
 
+
+////////////////////////////////////////////////////////////////////////////////
+// Divers
+
 Timer::Timer() : Glib::Object() {
 	m_mode = PAUSED;
 	m_time = 0;
@@ -18,11 +22,15 @@ bool Timer::on_timeout_elapses() {
 	return true;
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+// Contrôle du timer
+
 void Timer::set_mode(Mode new_mode) {
 	if(m_mode==new_mode)
 		return;
 
-	// Mise en pause
+	// Mise en pause du timer
 	if(new_mode==PAUSED) {
 		m_time = get_time();
 		m_mode = PAUSED;
@@ -30,7 +38,6 @@ void Timer::set_mode(Mode new_mode) {
 
 	// Démarrage du timer
 	else {
-		//time(&m_start_at);
 		gettimeofday(&m_start_at, 0);
 		m_mode = new_mode;
 	}
@@ -59,7 +66,7 @@ int Timer::get_time() const {
 	// Sinon, il faut calculer la valeur courante à partir de la date de lancement
 	// du timer (m_start_at) et de la valeur du timer à cet instant (m_time)
 	else {
-		struct timeval now;
+		timeval_t now;
 		gettimeofday(&now, 0);
 		int diff = difftime(now, m_start_at);
 		if(m_mode==INCREMENT)
@@ -69,7 +76,8 @@ int Timer::get_time() const {
 	}
 }
 
-int Timer::difftime(const struct timeval &t2, const struct timeval &t1) {
+// Calcule (t2 - t1), et retourne le résultat en millisecondes
+int Timer::difftime(const timeval_t &t2, const timeval_t &t1) {
 	return
 		(t2.tv_sec  - t1.tv_sec ) * 1000 +
 		(t2.tv_usec - t1.tv_usec) / 1000;
