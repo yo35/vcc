@@ -5,8 +5,13 @@
 #include <iostream>
 
 ClockWindow::ClockWindow() : Gtk::Window(),
-	btn_break("Play/pause"), btn_reset("New game")
+	btn_pause("Play/pause"), btn_reset("New game")
 {
+	// Divers
+	no_actif = -1;
+	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
+
+	// Réglage des horloges
 	for(int i=0; i<2; ++i) {
 		timer[i].set_time(3*60*1000);
 		//timer[i].set_time(3*1000);
@@ -14,11 +19,14 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 		dial [i].set_timer(timer[i]);
 		dial_layout.pack_start(dial[i]);
 	}
-	no_actif = -1;
-	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
+
+	// Gestion des événements
+	btn_pause.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_clicked));
+
+	// Géométrie générale
 	btns_layout.set_spacing(5);
 	main_layout.set_spacing(5);
-	btns_layout.pack_start(btn_break);
+	btns_layout.pack_start(btn_pause);
 	btns_layout.pack_start(btn_reset);
 	main_layout.pack_start(dial_layout);
 	main_layout.pack_start(btns_layout);
@@ -61,6 +69,10 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
 			break;
 	}
 	return true;
+}
+
+void ClockWindow::on_pause_clicked() {
+	set_no_actif(-1);
 }
 
 void ClockWindow::set_no_actif(int new_no_actif) {
