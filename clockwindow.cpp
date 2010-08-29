@@ -2,6 +2,7 @@
 #include "clockwindow.h"
 #include "hardwarekeycode.h"
 #include <gtkmm/stock.h>
+#include <gtkmm/messagedialog.h>
 #include <iostream>
 
 ClockWindow::ClockWindow() : Gtk::Window(),
@@ -16,6 +17,7 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 
 	// Gestion des événements
 	btn_pause.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_clicked));
+	btn_reset.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_reset_clicked));
 
 	// Géométrie générale
 	for(int i=0; i<2; ++i) {
@@ -74,6 +76,18 @@ void ClockWindow::on_pause_clicked() {
 }
 
 void ClockWindow::on_reset_clicked() {
+
+	// On demande confirmation si l'un des timers est actif
+	if(one_timer_is_active()) {
+		Gtk::MessageDialog dialog(*this, "Do you really want to start a new game ?",
+			false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_YES_NO, true);
+		dialog.set_title("Stop this game ?");
+		int retval = dialog.run();
+		if(retval!=Gtk::RESPONSE_YES)
+			return;
+	}
+
+	// Remise à zéro proprement dite
 	reset_timers();
 }
 
@@ -81,11 +95,11 @@ void ClockWindow::set_no_actif(int new_no_actif) {
 	if(new_no_actif==no_actif)
 		return;
 
-	if(no_actif>=0 && no_actif<2) {
+	if(one_timer_is_active()) {
 		timer[no_actif].set_mode(Timer::PAUSED);
 	}
 	no_actif = new_no_actif;
-	if(no_actif>=0 && no_actif<2) {
+	if(one_timer_is_active()) {
 		timer[no_actif].set_mode(Timer::DECREMENT);
 	}
 }
@@ -96,4 +110,8 @@ void ClockWindow::reset_timers() {
 		//timer[i].set_time(3*1000);
 		timer[i].set_mode(Timer::PAUSED);
 	}
+}
+
+bool ClockWindow::one_timer_is_active() const {
+	return no_actif>=0 && no_actif<2;
 }

@@ -28,6 +28,9 @@ private:
 	// Remets les timers à zéro
 	void reset_timers();
 
+	// Test si l'un des timers est actif
+	bool one_timer_is_active() const;
+
 	int no_actif;
 	Timer       timer[2];
 	DigitalDial dial [2];
