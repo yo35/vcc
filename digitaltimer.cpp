@@ -1,8 +1,14 @@
 
 #include "digitaltimer.h"
 
-DigitalTimer::DigitalTimer() : AbstractTimer(), Gtk::DrawingArea() {
+DigitalTimer::DigitalTimer() : Gtk::DrawingArea() {
+	m_timer = 0;
 	set_size_request(400, 400);
+}
+
+void DigitalTimer::set_timer(const Timer &timer) {
+	m_timer = &timer;
+	m_timer->signal_modified().connect(sigc::mem_fun(*this, &DigitalTimer::refresh_widget));
 }
 
 void DigitalTimer::refresh_widget() {
@@ -26,21 +32,23 @@ bool DigitalTimer::on_expose_event(GdkEventExpose *event) {
 	Gtk::Allocation allocation = get_allocation();
 	int width = allocation.get_width();
 	int height = allocation.get_height();
-		
+
 	// Le fond de l'image
-	if(get_mode()==AbstractTimer::PAUSED)
+	if(m_timer!=0 && m_timer->get_mode()==Timer::PAUSED)
 		cr->set_source_rgb(1.0, 1.0, 1.0);
 	else
 		cr->set_source_rgb(1.0, 1.0, 0.5);
 	cr->paint();
-	
+
 	// Le text
-	int curr_time = get_raw_time() / 1000;
-	cr->translate(10, 300);
-	cr->set_font_size(200);
-	cr->set_source_rgb(0.0, 0.0, 0.0);
-	cr->text_path(Glib::ustring::format(curr_time));
-	cr->fill_preserve();
-	
+	if(m_timer != 0) {
+		int curr_time = m_timer->get_time();
+		cr->translate(10, 300);
+		cr->set_font_size(200);
+		cr->set_source_rgb(0.0, 0.0, 0.0);
+		cr->text_path(Glib::ustring::format(curr_time));
+		cr->fill_preserve();
+	}
+
 	return true;
 }

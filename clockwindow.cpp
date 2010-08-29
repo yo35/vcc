@@ -4,9 +4,10 @@
 
 ClockWindow::ClockWindow() : Gtk::Window() {
 	for(int i=0; i<2; ++i) {
-		timer[i].set_time(3*60*1000);
-		timer[i].set_mode(AbstractTimer::PAUSED);
-		layout.pack_start(timer[i]);
+		timer [i].set_time(3*60*1000);
+		timer [i].set_mode(Timer::PAUSED);
+		visual[i].set_timer(timer[i]);
+		layout.pack_start(visual[i]);
 	}
 	no_actif = -1;
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
@@ -104,9 +105,9 @@ ClockWindow::ClockWindow() : Gtk::Window() {
 #define LEFT_BUTTON 1
 
 bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
-	//std::cout << "Button : " << event->hardware_keycode << std::endl;
+	std::cout << "Button : " << event->hardware_keycode << std::endl;
 	switch(event->hardware_keycode) {
-	
+
 		// Les blancs appuient sur la pendule
 		case KEY_ESCAPE:
 		case KEY_F1:
@@ -143,7 +144,7 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
 		case KEY_ARROW:
 			set_no_actif(1);
 			break;
-			
+
 		// Les noirs appuient sur la pendule
 		case KEY_F10:
 		case KEY_F11:
@@ -185,7 +186,7 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
 		case KEY_RIGHT:
 			set_no_actif(0);
 			break;
-		
+
 		default:
 			break;
 	}
@@ -195,12 +196,12 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
 void ClockWindow::set_no_actif(int new_no_actif) {
 	if(new_no_actif==no_actif)
 		return;
-	
+
 	if(no_actif>=0 && no_actif<2) {
-		timer[no_actif].set_mode(AbstractTimer::PAUSED);
+		timer[no_actif].set_mode(Timer::PAUSED);
 	}
 	no_actif = new_no_actif;
 	if(no_actif>=0 && no_actif<2) {
-		timer[no_actif].set_mode(AbstractTimer::DECREMENT);
+		timer[no_actif].set_mode(Timer::DECREMENT);
 	}
 }
