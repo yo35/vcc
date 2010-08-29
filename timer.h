@@ -2,8 +2,8 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include <ctime>
 #include <glibmm/object.h>
+#include <sys/time.h>
 
 class Timer : public Glib::Object {
 
@@ -33,11 +33,12 @@ private:
 	// Routines internes
 	void refresh_time() const;
 	bool on_timeout_elapses();
+	static int difftime(const struct timeval &t2, const struct timeval &t1);
 
 	// Données membres
 	Mode               m_mode;
 	int                m_time;
-	time_t             m_start_at;
+	struct timeval     m_start_at;
 	sigc::signal<void> m_signal_modified;
 };
 
