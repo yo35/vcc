@@ -4,6 +4,7 @@
 
 #include <gtkmm/window.h>
 #include <gtkmm/box.h>
+#include <gtkmm/button.h>
 #include "digitaldial.h"
 
 class ClockWindow : public Gtk::Window {
@@ -18,10 +19,14 @@ protected:
 private:
 	void set_no_actif(int new_no_actif);
 
+	int no_actif;
 	Timer       timer[2];
 	DigitalDial dial [2];
-	int no_actif;
-	Gtk::HBox layout;
+	Gtk::Button btn_break;
+	Gtk::Button btn_reset;
+	Gtk::HBox   dial_layout;
+	Gtk::HBox   btns_layout;
+	Gtk::VBox   main_layout;
 };
 
 #endif
