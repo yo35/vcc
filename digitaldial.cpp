@@ -44,12 +44,13 @@ bool DigitalDial::on_expose_event(GdkEventExpose *event) {
 
 	// Le texte à afficher
 	int curr_time = m_timer->get_time();
+	int rounded_curr_time = (curr_time+499)/1000;
 	Glib::ustring txt;
 	if(curr_time < 0)
 		txt = "0.00";
 	else {
-		int sec = (curr_time / 1000) % 60;
-		int min = (curr_time / 1000) / 60;
+		int sec = rounded_curr_time % 60;
+		int min = rounded_curr_time / 60;
 		Glib::ustring txt_min = Glib::ustring::format(min);
 		Glib::ustring txt_sec = Glib::ustring::format(sec);
 		if(sec < 10)
