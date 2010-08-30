@@ -50,3 +50,10 @@ void TimeControl::set_increment(int new_increment, int no) {
 		m_increment[1] = new_increment;
 	}
 }
+
+bool TimeControl::both_sides_have_same_time() const {
+	bool retval = m_main_time[0]==m_main_time[1];
+	if(m_mode==FISCHER || m_mode==BRONSTEIN)
+		retval = retval && (m_increment[0]==m_increment[1]);
+	return retval;
+}

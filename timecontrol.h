@@ -9,8 +9,8 @@ public:
 	// 4 modes de contrôle de temps sont disponibles
 	typedef enum {
 		SIMPLE_DELAY,
-		FISCHER,
-		BRONSTEIN,
+		FISCHER     ,
+		BRONSTEIN   ,
 		HOUR_GLASS
 	} Mode;
 
@@ -26,6 +26,9 @@ public:
 	void set_mode(Mode new_mode);
 	void set_main_time(int new_main_time, int no=-1);
 	void set_increment(int new_increment, int no=-1);
+
+	// Test si les deux côtés ont la même config
+	bool both_sides_have_same_time() const;
 
 private:
 

@@ -24,6 +24,7 @@ private:
 	// Event handling
 	void on_pause_clicked();
 	void on_reset_clicked();
+	void on_tctrl_clicked();
 	void on_clock_button_clicked(int no);
 
 	// Modifie le cadran actif
@@ -45,6 +46,7 @@ private:
 	Gtk::Toolbar    toolbar;
 	Gtk::ToolButton btn_reset;
 	Gtk::ToolButton btn_pause;
+	Gtk::ToolButton btn_tctrl;
 	Gtk::HBox       dial_layout;
 	Gtk::VBox       main_layout;
 };

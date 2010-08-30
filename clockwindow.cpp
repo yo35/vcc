@@ -1,13 +1,14 @@
 
 #include "clockwindow.h"
 #include "hardwarekeycode.h"
+#include "timecontroldialog.h"
 #include <gtkmm/stock.h>
 #include <gtkmm/messagedialog.h>
 #include <iostream>
 #include <cassert>
 
 ClockWindow::ClockWindow() : Gtk::Window(),
-	btn_reset(Gtk::Stock::NEW), btn_pause(Gtk::Stock::MEDIA_PAUSE)
+	btn_reset(Gtk::Stock::NEW), btn_pause(Gtk::Stock::MEDIA_PAUSE), btn_tctrl("Time control")
 {
 	// Divers
 	time_control.set_mode(TimeControl::BRONSTEIN);
@@ -25,6 +26,7 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 	// Gestion des événements
 	btn_reset.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_reset_clicked));
 	btn_pause.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_clicked));
+	btn_tctrl.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_tctrl_clicked));
 
 	// Géométrie générale
 	for(int i=0; i<2; ++i) {
@@ -34,6 +36,7 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 	}
 	toolbar.append(btn_reset);
 	toolbar.append(btn_pause);
+	toolbar.append(btn_tctrl);
 	main_layout.pack_start(toolbar, Gtk::PACK_SHRINK);
 	main_layout.pack_start(dial_layout);
 	main_layout.set_spacing(5);
@@ -97,6 +100,15 @@ void ClockWindow::on_reset_clicked() {
 	}
 
 	// Remise à zéro proprement dite
+	reset_timers();
+}
+
+void ClockWindow::on_tctrl_clicked() {
+	TimeControlDialog dialog(*this, time_control);
+	int retval = dialog.run();
+	if(retval!=Gtk::RESPONSE_OK)
+		return;
+	time_control = dialog.get_time_control();
 	reset_timers();
 }
 
