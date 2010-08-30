@@ -15,8 +15,9 @@ public:
 	ClockWindow();
 
 protected:
-	bool on_key_press_event(GdkEventKey* event);
-	//bool on_button_press_event(GdkEventButton* event);
+
+	// Event handling
+	virtual bool on_key_press_event(GdkEventKey* event);
 
 private:
 
