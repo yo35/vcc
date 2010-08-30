@@ -21,16 +21,18 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 
 	// Géométrie générale
 	for(int i=0; i<2; ++i) {
+		dial[i].set_can_focus(true);
 		dial[i].set_timer(timer[i]);
 		dial_layout.pack_start(dial[i]);
 	}
 	toolbar.append(btn_reset);
 	toolbar.append(btn_pause);
-	main_layout.pack_start(toolbar);
+	main_layout.pack_start(toolbar, Gtk::PACK_SHRINK);
 	main_layout.pack_start(dial_layout);
 	main_layout.set_spacing(5);
 	add(main_layout);
 	show_all_children();
+	dial[0].grab_focus();
 }
 
 bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
