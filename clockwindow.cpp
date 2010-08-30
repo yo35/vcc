@@ -4,11 +4,18 @@
 #include <gtkmm/stock.h>
 #include <gtkmm/messagedialog.h>
 #include <iostream>
+#include <cassert>
 
 ClockWindow::ClockWindow() : Gtk::Window(),
 	btn_reset(Gtk::Stock::NEW), btn_pause(Gtk::Stock::MEDIA_PAUSE)
 {
 	// Divers
+	time_control.set_mode(TimeControl::BRONSTEIN);
+	//time_control.set_mode(TimeControl::FISCHER);
+	//time_control.set_mode(TimeControl::HOUR_GLASS);
+	//time_control.set_mode(TimeControl::SIMPLE_DELAY);
+	time_control.set_main_time(180*1000);
+	time_control.set_increment(  3*1000);
 	no_actif = -1;
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
 
@@ -53,7 +60,7 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
 		case KEY_X:
 		case KEY_C:
 		case KEY_V:
-			set_no_actif(1);
+			on_clock_button_clicked(0);
 			break;
 
 		// Les noirs appuient sur la pendule
@@ -63,7 +70,7 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
 		case KEY_K:
 		case KEY_L:
 		case KEY_M:
-			set_no_actif(0);
+			on_clock_button_clicked(1);
 			break;
 
 		default:
@@ -73,7 +80,8 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
 }
 
 void ClockWindow::on_pause_clicked() {
-	set_no_actif(-1);
+	if(one_timer_is_active())
+		stop_timer();
 }
 
 void ClockWindow::on_reset_clicked() {
@@ -92,24 +100,81 @@ void ClockWindow::on_reset_clicked() {
 	reset_timers();
 }
 
-void ClockWindow::set_no_actif(int new_no_actif) {
-	if(new_no_actif==no_actif)
-		return;
+void ClockWindow::on_clock_button_clicked(int no) {
+	assert(no>=0 && no<2);
+	if(one_timer_is_active()) {
+		if(no_actif==no)
+			change_timer();
+	}
+	else {
+		start_timer(1-no);
+	}
+}
 
-	if(one_timer_is_active()) {
+void ClockWindow::start_timer(int no) {
+	assert(!one_timer_is_active());
+	if(time_control.mode()==TimeControl::HOUR_GLASS)
+		timer[1-no].set_mode(Timer::INCREMENT);
+	timer[no].set_mode(Timer::DECREMENT);
+	no_actif = no;
+}
+
+void ClockWindow::change_timer() {
+	assert(one_timer_is_active());
+
+	// En hour-glass, le timer inactif est en mode incrément
+	if(time_control.mode()==TimeControl::HOUR_GLASS)
+		timer[no_actif].set_mode(Timer::INCREMENT);
+
+	// Sinon, il est mis en pause
+	else {
 		timer[no_actif].set_mode(Timer::PAUSED);
+
+		// En mode fischer ou bronstein, on incrémente le compteur à chaque coup,
+		// Rq : uniquement si le compteur est positif
+		if((
+			time_control.mode()==TimeControl::FISCHER ||
+			time_control.mode()==TimeControl::BRONSTEIN) &&
+			timer[no_actif].get_time() >= 0)
+		{
+			int new_time = timer[no_actif].get_time() + time_control.increment(no_actif);
+			if(time_control.mode()==TimeControl::BRONSTEIN) {
+				if(new_time > bronstein_limit[no_actif])
+					new_time = bronstein_limit[no_actif];
+				else
+					bronstein_limit[no_actif] = new_time;
+			}
+			timer[no_actif].set_time(new_time);
+		}
 	}
-	no_actif = new_no_actif;
-	if(one_timer_is_active()) {
-		timer[no_actif].set_mode(Timer::DECREMENT);
-	}
+
+	// Le nouveau timer actif passe en mode décrement
+	no_actif = 1-no_actif;
+	timer[no_actif].set_mode(Timer::DECREMENT);
+}
+
+void ClockWindow::stop_timer() {
+	assert(one_timer_is_active());
+	timer[0].set_mode(Timer::PAUSED);
+	timer[1].set_mode(Timer::PAUSED);
+	no_actif = -1;
 }
 
 void ClockWindow::reset_timers() {
 	for(int i=0; i<2; ++i) {
-		timer[i].set_time(3*60*1000);
-		//timer[i].set_time(3*1000);
+
+		// Mise en pause
 		timer[i].set_mode(Timer::PAUSED);
+
+		// Calcul du temps initial
+		int start_time = time_control.main_time(i);
+		if(time_control.mode()==TimeControl::FISCHER || time_control.mode()==TimeControl::BRONSTEIN)
+			start_time += time_control.increment(i);
+
+		// Définition des flags
+		timer[i].set_time(start_time);
+		if(time_control.mode()==TimeControl::BRONSTEIN)
+			bronstein_limit[i] = start_time;
 	}
 }
 

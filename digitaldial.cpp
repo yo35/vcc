@@ -36,10 +36,10 @@ bool DigitalDial::on_expose_event(GdkEventExpose *event) {
 	double height = allocation.get_height();
 
 	// Le fond de l'image
-	if(m_timer->get_mode()==Timer::PAUSED)
-		cr->set_source_rgb(1.0, 1.0, 1.0);
-	else
+	if(m_timer->get_mode()==Timer::DECREMENT)
 		cr->set_source_rgb(1.0, 1.0, 0.5);
+	else
+		cr->set_source_rgb(1.0, 1.0, 1.0);
 	cr->paint();
 
 	// Le texte à afficher

@@ -30,18 +30,11 @@ void Timer::set_mode(Mode new_mode) {
 	if(m_mode==new_mode)
 		return;
 
-	// Mise en pause du timer
-	if(new_mode==PAUSED) {
+	if(m_mode != Timer::PAUSED)
 		m_time = get_time();
-		m_mode = PAUSED;
-	}
-
-	// Démarrage du timer
-	else {
+	if(new_mode != Timer::PAUSED)
 		gettimeofday(&m_start_at, 0);
-		m_mode = new_mode;
-	}
-
+	m_mode = new_mode;
 	m_signal_modified.emit();
 }
 

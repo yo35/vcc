@@ -7,6 +7,7 @@
 #include <gtkmm/toolbutton.h>
 #include <gtkmm/toolbar.h>
 #include "digitaldial.h"
+#include "timecontrol.h"
 
 class ClockWindow : public Gtk::Window {
 
@@ -22,9 +23,12 @@ private:
 	// Event handling
 	void on_pause_clicked();
 	void on_reset_clicked();
+	void on_clock_button_clicked(int no);
 
 	// Modifie le cadran actif
-	void set_no_actif(int new_no_actif);
+	void start_timer(int no);
+	void change_timer();
+	void stop_timer();
 
 	// Remets les timers à zéro
 	void reset_timers();
@@ -32,6 +36,8 @@ private:
 	// Test si l'un des timers est actif
 	bool one_timer_is_active() const;
 
+	TimeControl     time_control;
+	int             bronstein_limit[2];
 	int             no_actif;
 	Timer           timer[2];
 	DigitalDial     dial [2];
