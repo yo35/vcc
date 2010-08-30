@@ -6,7 +6,7 @@
 #include <iostream>
 
 ClockWindow::ClockWindow() : Gtk::Window(),
-	btn_pause("Play/pause"), btn_reset("New game")
+	btn_reset(Gtk::Stock::NEW), btn_pause(Gtk::Stock::MEDIA_PAUSE)
 {
 	// Divers
 	no_actif = -1;
@@ -16,20 +16,19 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 	reset_timers();
 
 	// Gestion des événements
-	btn_pause.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_clicked));
 	btn_reset.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_reset_clicked));
+	btn_pause.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_clicked));
 
 	// Géométrie générale
 	for(int i=0; i<2; ++i) {
 		dial[i].set_timer(timer[i]);
 		dial_layout.pack_start(dial[i]);
 	}
-	btns_layout.set_spacing(5);
-	main_layout.set_spacing(5);
-	btns_layout.pack_start(btn_pause);
-	btns_layout.pack_start(btn_reset);
+	toolbar.append(btn_reset);
+	toolbar.append(btn_pause);
+	main_layout.pack_start(toolbar);
 	main_layout.pack_start(dial_layout);
-	main_layout.pack_start(btns_layout);
+	main_layout.set_spacing(5);
 	add(main_layout);
 	show_all_children();
 }

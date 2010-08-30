@@ -4,7 +4,8 @@
 
 #include <gtkmm/window.h>
 #include <gtkmm/box.h>
-#include <gtkmm/button.h>
+#include <gtkmm/toolbutton.h>
+#include <gtkmm/toolbar.h>
 #include "digitaldial.h"
 
 class ClockWindow : public Gtk::Window {
@@ -31,14 +32,14 @@ private:
 	// Test si l'un des timers est actif
 	bool one_timer_is_active() const;
 
-	int no_actif;
-	Timer       timer[2];
-	DigitalDial dial [2];
-	Gtk::Button btn_pause;
-	Gtk::Button btn_reset;
-	Gtk::HBox   dial_layout;
-	Gtk::HBox   btns_layout;
-	Gtk::VBox   main_layout;
+	int             no_actif;
+	Timer           timer[2];
+	DigitalDial     dial [2];
+	Gtk::Toolbar    toolbar;
+	Gtk::ToolButton btn_reset;
+	Gtk::ToolButton btn_pause;
+	Gtk::HBox       dial_layout;
+	Gtk::VBox       main_layout;
 };
 
 #endif
