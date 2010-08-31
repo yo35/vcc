@@ -20,17 +20,17 @@ run: $(EXE)
 
 # Construction de l'exécutable à partir des .o
 $(EXE): $(OBJS)
-	@echo "\033[34;1mLinking du fichier $(notdir $@)...\033[0m"
+	@echo "\033[34;1mLinking file $(notdir $@)...\033[0m"
 	@$(LD) $^ -o $@ $(LDFLAGS)
 
 # Construction des .o a partir des .cpp, et du fichier .dep correspondant
 %.o: %.cpp %.dep
-	@echo "\033[34;1mCompilation du fichier $(notdir $<)...\033[0m"
+	@echo "\033[34;1mCompiling file $(notdir $<)...\033[0m"
 	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 # Construction des dépendances de chaque .cpp et de l'arborescence
 %.dep: %.cpp
-	@echo "\033[34;1mGénération des dépendances du fichier $(notdir $<)...\033[0m"
+	@echo "\033[34;1mExtracting dependencies from file $(notdir $<)...\033[0m"
 	@$(CXX) $(CXXFLAGS) -MM -MF $@ $<
 
 # Cibles PHONY
