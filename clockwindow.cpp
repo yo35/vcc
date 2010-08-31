@@ -1,23 +1,16 @@
 
 #include "clockwindow.h"
-#include "hardwarekeycode.h"
 #include "timecontroldialog.h"
 #include "keymap.h"
+#include "params.h"
 #include <gtkmm/stock.h>
 #include <gtkmm/messagedialog.h>
-#include <iostream>
 #include <cassert>
 
 ClockWindow::ClockWindow() : Gtk::Window(),
 	btn_reset(Gtk::Stock::NEW), btn_pause(Gtk::Stock::MEDIA_PAUSE), btn_tctrl("Time control")
 {
 	// Divers
-	time_control.set_mode(TimeControl::BRONSTEIN);
-	//time_control.set_mode(TimeControl::FISCHER);
-	//time_control.set_mode(TimeControl::HOUR_GLASS);
-	//time_control.set_mode(TimeControl::SIMPLE_DELAY);
-	time_control.set_main_time(180*1000);
-	time_control.set_increment(  3*1000);
 	no_actif = -1;
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
 
@@ -47,49 +40,23 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 }
 
 bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
-	//std::cout << "Hardware KC : " << std::hex << event->hardware_keycode
-		//<< "\t Keyval : " << event->keyval << std::endl;
-	//Keymap::keycode_to_keyvals(event->hardware_keycode);
-	Keymap::Keyval kv = Keymap::keycode_to_cannonical_keyval(event->hardware_keycode);
-	std::cout << "Kv: " << kv << "; Name:" << Keymap::keyval_to_string(kv) << std::endl;
 
-	//guint key_up = gdk_keyval_to_upper(event->keyval);
-	//std::cout << gdk_keyval_name(key_up) << std::endl;
-	//std::cout << "Keycode:" << event->hardware_keycode << std::endl;
-	//Keymap::keyval_to_keycode(event->keyval);
-
-	switch(event->hardware_keycode) {
-
-		// Les blancs appuient sur la pendule
-		case KEY_A:
-		case KEY_Z:
-		case KEY_E:
-		case KEY_R:
-		case KEY_T:
-		case KEY_Q:
-		case KEY_S:
-		case KEY_D:
-		case KEY_F:
-		case KEY_W:
-		case KEY_X:
-		case KEY_C:
-		case KEY_V:
-			on_clock_button_clicked(0);
-			break;
-
-		// Les noirs appuient sur la pendule
-		case KEY_I:
-		case KEY_O:
-		case KEY_P:
-		case KEY_K:
-		case KEY_L:
-		case KEY_M:
-			on_clock_button_clicked(1);
-			break;
-
-		default:
-			break;
+	// Décodage
+	Keymap::Keycode code  = event->hardware_keycode;
+	bool test_area[2];
+	for(int k=0; k<2; ++k) {
+		test_area[k] = (gp->key_area[k].find(code) != gp->key_area[k].end());
 	}
+
+	// On appelle la fonction qvb
+	int verif = 0;
+	for(int k=0; k<2; ++k) {
+		if(test_area[k]) {
+			on_clock_button_clicked(k);
+			++verif;
+		}
+	}
+	assert(verif<2);
 	return true;
 }
 
@@ -115,11 +82,11 @@ void ClockWindow::on_reset_clicked() {
 }
 
 void ClockWindow::on_tctrl_clicked() {
-	TimeControlDialog dialog(*this, time_control);
+	TimeControlDialog dialog(*this, gp->time_control);
 	int retval = dialog.run();
 	if(retval!=Gtk::RESPONSE_OK)
 		return;
-	time_control = dialog.get_time_control();
+	gp->time_control = dialog.get_time_control();
 	reset_timers();
 }
 
@@ -136,7 +103,7 @@ void ClockWindow::on_clock_button_clicked(int no) {
 
 void ClockWindow::start_timer(int no) {
 	assert(!one_timer_is_active());
-	if(time_control.mode()==TimeControl::HOUR_GLASS)
+	if(gp->time_control.mode()==TimeControl::HOUR_GLASS)
 		timer[1-no].set_mode(Timer::INCREMENT);
 	timer[no].set_mode(Timer::DECREMENT);
 	no_actif = no;
@@ -146,7 +113,7 @@ void ClockWindow::change_timer() {
 	assert(one_timer_is_active());
 
 	// En hour-glass, le timer inactif est en mode incrément
-	if(time_control.mode()==TimeControl::HOUR_GLASS)
+	if(gp->time_control.mode()==TimeControl::HOUR_GLASS)
 		timer[no_actif].set_mode(Timer::INCREMENT);
 
 	// Sinon, il est mis en pause
@@ -156,12 +123,12 @@ void ClockWindow::change_timer() {
 		// En mode fischer ou bronstein, on incrémente le compteur à chaque coup,
 		// Rq : uniquement si le compteur est positif
 		if((
-			time_control.mode()==TimeControl::FISCHER ||
-			time_control.mode()==TimeControl::BRONSTEIN) &&
+			gp->time_control.mode()==TimeControl::FISCHER ||
+			gp->time_control.mode()==TimeControl::BRONSTEIN) &&
 			timer[no_actif].get_time() >= 0)
 		{
-			int new_time = timer[no_actif].get_time() + time_control.increment(no_actif);
-			if(time_control.mode()==TimeControl::BRONSTEIN) {
+			int new_time = timer[no_actif].get_time() + gp->time_control.increment(no_actif);
+			if(gp->time_control.mode()==TimeControl::BRONSTEIN) {
 				if(new_time > bronstein_limit[no_actif])
 					new_time = bronstein_limit[no_actif];
 				else
@@ -190,13 +157,13 @@ void ClockWindow::reset_timers() {
 		timer[i].set_mode(Timer::PAUSED);
 
 		// Calcul du temps initial
-		int start_time = time_control.main_time(i);
-		if(time_control.mode()==TimeControl::FISCHER || time_control.mode()==TimeControl::BRONSTEIN)
-			start_time += time_control.increment(i);
+		int start_time = gp->time_control.main_time(i);
+		if(gp->time_control.mode()==TimeControl::FISCHER || gp->time_control.mode()==TimeControl::BRONSTEIN)
+			start_time += gp->time_control.increment(i);
 
 		// Définition des flags
 		timer[i].set_time(start_time);
-		if(time_control.mode()==TimeControl::BRONSTEIN)
+		if(gp->time_control.mode()==TimeControl::BRONSTEIN)
 			bronstein_limit[i] = start_time;
 	}
 }

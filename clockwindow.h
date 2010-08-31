@@ -7,7 +7,6 @@
 #include <gtkmm/toolbutton.h>
 #include <gtkmm/toolbar.h>
 #include "digitaldial.h"
-#include "timecontrol.h"
 
 class ClockWindow : public Gtk::Window {
 
@@ -38,7 +37,6 @@ private:
 	// Test si l'un des timers est actif
 	bool one_timer_is_active() const;
 
-	TimeControl     time_control;
 	int             bronstein_limit[2];
 	int             no_actif;
 	Timer           timer[2];
