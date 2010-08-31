@@ -24,8 +24,6 @@ private:
 
 };
 
-
-
 extern Params *gp;
 
 #endif
