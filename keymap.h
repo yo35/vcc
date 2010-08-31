@@ -6,7 +6,6 @@
 #include <string>
 #include <list>
 
-
 namespace Keymap {
 
 	// Alias
