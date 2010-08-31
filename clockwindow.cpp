@@ -2,6 +2,7 @@
 #include "clockwindow.h"
 #include "hardwarekeycode.h"
 #include "timecontroldialog.h"
+#include "keymap.h"
 #include <gtkmm/stock.h>
 #include <gtkmm/messagedialog.h>
 #include <iostream>
@@ -46,7 +47,17 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 }
 
 bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
-	std::cout << "Button : " << event->hardware_keycode << std::endl;
+	//std::cout << "Hardware KC : " << std::hex << event->hardware_keycode
+		//<< "\t Keyval : " << event->keyval << std::endl;
+	//Keymap::keycode_to_keyvals(event->hardware_keycode);
+	Keymap::Keyval kv = Keymap::keycode_to_cannonical_keyval(event->hardware_keycode);
+	std::cout << "Kv: " << kv << "; Name:" << Keymap::keyval_to_string(kv) << std::endl;
+
+	//guint key_up = gdk_keyval_to_upper(event->keyval);
+	//std::cout << gdk_keyval_name(key_up) << std::endl;
+	//std::cout << "Keycode:" << event->hardware_keycode << std::endl;
+	//Keymap::keyval_to_keycode(event->keyval);
+
 	switch(event->hardware_keycode) {
 
 		// Les blancs appuient sur la pendule
