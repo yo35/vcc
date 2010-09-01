@@ -8,17 +8,15 @@ subst() {
 # Fichiers intermédiaires
 CONFIG_DICO=config.dico
 CONFIG_SED=config.sed
-CONFIG_ECHO=config.echo
 echo "# Auto-generated file" > $CONFIG_DICO
 
 # Génère la bonne commande echo suivant que le système gère ou non l'échappement
-echo '\\' > $CONFIG_ECHO
-TEST_ECHO=`cat $CONFIG_ECHO`
-if [ $TEST_ECHO = '\\' ]; then
-	# Alors, echo ne gère pas l'échappement par backslash
-	subst echo_prog 'echo -e'
-else
+TEST_ECHO=`echo "\0101"`
+if [ $TEST_ECHO = 'A' ]; then
+	# Alors, echo gère l'échappement par backslash
 	subst echo_prog 'echo'
+else
+	subst echo_prog 'echo -e'
 fi
 
 # Détection de l'OS
@@ -29,8 +27,6 @@ elif [ $OSTYPE = 'msys' ]; then
 else
 	subst os_name 'unknown'
 fi
-
-subst test_var 'a/a\b'
 
 # Génération du makefile
 sed \
