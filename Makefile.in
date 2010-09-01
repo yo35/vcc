@@ -8,8 +8,17 @@ CXX  = g++
 LD   = g++
 ECHO = @echo_prog@
 
-# Options de compilation
-CXXFLAGS  = -pedantic -Wall -Wextra -O2 -g `pkg-config --cflags gtkmm-2.4`
+# Options du compilateur
+COMMON_CXXFLAGS  = -pedantic -Wall -Wextra -O2 -g `pkg-config --cflags gtkmm-2.4`
+LINUX_CXXFLAGS   = -DOS_IS_LINUX
+WINDOWS_CXXFLAGS = -DOS_IS_WINDOWS
+ifeq ($(OS), windows)
+CXXFLAGS = $(COMMON_CXXFLAGS) $(WINDOWS_CXXFLAGS)
+else ifeq ($(OS), linux)
+CXXFLAGS = $(COMMON_CXXFLAGS) $(LINUX_CXXFLAGS)
+else
+CXXFLAGS = $(COMMON_CXXFLAGS)
+endif
 LDFLAGS   = `pkg-config --libs gtkmm-2.4`
 
 # Fichiers à générer
