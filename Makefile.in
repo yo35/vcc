@@ -56,10 +56,17 @@ clean:
 	rm -f *.o *.dep
 	rm -f $(EXE)
 
+# Nettoyage complet
+distclean: clean
+	rm -f config.*
+	rm Makefile
+
 # Dépendances générées dynamiquement
 ifneq ($(MAKECMDGOALS), clean)
+ifneq ($(MAKECMDGOALS), distclean)
 -include $(DEPS)
+endif
 endif
 
 # Cibles PHONY
-.PHONY: clean run
+.PHONY: clean run distclean
