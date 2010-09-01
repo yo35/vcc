@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Fonction de substitution
+subst() {
+	echo $1=$2 >> $CONFIG_DICO
+}
+
+# Fichiers intermédiaires
+CONFIG_DICO=config.dico
+CONFIG_SED=config.sed
+echo "# Auto-generated file" > $CONFIG_DICO
+
+# Génère la bonne commande echo suivant que le système gère ou non l'échappement
+TEST_ECHO=`echo '\\'`
+if [ $TEST_ECHO = '\\' ]; then
+	# Alors, echo ne gère pas l'échappement par backslash
+	subst echo_prog 'echo -e'
+else
+	subst echo_prog 'echo'
+fi
+
+# Détection de l'OS
+if [ $OSTYPE = 'linux-gnu' ]; then
+	subst os_name 'linux'
+elif [ $OSTYPE = 'msys' ]; then
+	subst os_name 'windows'
+else
+	subst os_name 'unknown'
+fi
+
+subst test_var 'a/a\b'
+
+# Génération du makefile
+sed \
+	-e 's/\\/\\\\/g' \
+	-e 's/\//\\\//g' \
+	-e 's/\([a-zA-Z_]*\)=\(.*\)/s\/@\1@\/\2\/g/g' \
+	$CONFIG_DICO > $CONFIG_SED
+sed -f $CONFIG_SED Makefile.in > Makefile

@@ -1,14 +1,23 @@
 
+# Variables à modifier
+PROG_NAME = clock
+OS        = @os_name@
+
 # Commandes
-CXX = g++
-LD  = g++
+CXX  = g++
+LD   = g++
+ECHO = @echo_prog@
 
 # Options de compilation
 CXXFLAGS  = -pedantic -Wall -Wextra -O2 -g `pkg-config --cflags gtkmm-2.4`
 LDFLAGS   = `pkg-config --libs gtkmm-2.4`
 
 # Fichiers à générer
-EXE  = clock
+ifeq ($(OS), windows)
+EXE  = $(PROG_NAME).exe
+else
+EXE  = $(PROG_NAME)
+endif
 SRC  = $(wildcard *.cpp)
 OBJS = $(patsubst %.cpp,%.o,$(SRC))
 DEPS = $(patsubst %.cpp,%.dep,$(SRC))
@@ -20,21 +29,18 @@ run: $(EXE)
 
 # Construction de l'exécutable à partir des .o
 $(EXE): $(OBJS)
-	@echo "\033[34;1mLinking file $(notdir $@)...\033[0m"
+	@$(ECHO) "\033[34;1mLinking file $(notdir $@)...\033[0m"
 	@$(LD) $^ -o $@ $(LDFLAGS)
 
 # Construction des .o a partir des .cpp, et du fichier .dep correspondant
 %.o: %.cpp %.dep
-	@echo "\033[34;1mCompiling file $(notdir $<)...\033[0m"
+	@$(ECHO) "\033[34;1mCompiling file $(notdir $<)...\033[0m"
 	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 # Construction des dépendances de chaque .cpp et de l'arborescence
 %.dep: %.cpp
-	@echo "\033[34;1mExtracting dependencies from file $(notdir $<)...\033[0m"
+	@$(ECHO) "\033[34;1mExtracting dependencies from file $(notdir $<)...\033[0m"
 	@$(CXX) $(CXXFLAGS) -MM -MF $@ $<
-
-# Cibles PHONY
-.PHONY: clean run
 
 # Nettoyage
 clean:
@@ -45,3 +51,6 @@ clean:
 ifneq ($(MAKECMDGOALS), clean)
 -include $(DEPS)
 endif
+
+# Cibles PHONY
+.PHONY: clean run
