@@ -10,22 +10,16 @@ CONFIG_DICO=config.dico
 CONFIG_SED=config.sed
 echo "# Auto-generated file" > $CONFIG_DICO
 
-# Génère la bonne commande echo suivant que le système gère ou non l'échappement
-TEST_ECHO=`echo "\0101"`
-if [ $TEST_ECHO = 'A' ]; then
-	# Alors, echo gère l'échappement par backslash
-	subst echo_prog 'echo'
-else
-	subst echo_prog 'echo -e'
-fi
-
 # Détection de l'OS
 if [ $OSTYPE = 'linux-gnu' ]; then
 	subst os_name 'linux'
+	subst echo_prog 'echo'
 elif [ $OSTYPE = 'msys' ]; then
 	subst os_name 'windows'
+	subst echo_prog 'echo -e'
 else
 	subst os_name 'unknown'
+	subst echo_prog 'echo'
 fi
 
 # Génération du makefile
