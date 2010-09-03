@@ -8,7 +8,7 @@
 #include <cassert>
 
 ClockWindow::ClockWindow() : Gtk::Window(),
-	btn_reset(Gtk::Stock::NEW), btn_pause(Gtk::Stock::MEDIA_PAUSE), btn_tctrl(Gtk::Stock::PREFERENCES)
+	btn_reset(Gtk::Stock::NEW), btn_pause(Gtk::Stock::MEDIA_PAUSE), btn_tctrl("Time control")
 {
 	// Divers
 	no_actif = -1;
@@ -69,9 +69,9 @@ void ClockWindow::on_reset_clicked() {
 
 	// On demande confirmation si l'un des timers est actif
 	if(one_timer_is_active()) {
-		Gtk::MessageDialog dialog(*this, "Voulez-vous vraiment commencer une nouvelle partie ?",
+		Gtk::MessageDialog dialog(*this, "Do you really want to start a new game ?",
 			false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_YES_NO, true);
-		dialog.set_title("Arrêter cette partie ?");
+		dialog.set_title("Stop this game ?");
 		int retval = dialog.run();
 		if(retval!=Gtk::RESPONSE_YES)
 			return;

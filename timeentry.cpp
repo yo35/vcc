@@ -2,7 +2,7 @@
 #include "timeentry.h"
 
 TimeEntry::TimeEntry() : Gtk::HBox(),
-	lbl_hour("hr"), lbl_min("min"), lbl_sec("sec")
+	lbl_hour("hour"), lbl_min("min"), lbl_sec("sec")
 {
 	set_spacing(5);
 	hour.set_range(0, 99);

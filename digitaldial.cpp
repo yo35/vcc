@@ -47,7 +47,7 @@ bool DigitalDial::on_expose_event(GdkEventExpose *event) {
 	int rounded_curr_time = (curr_time+499)/1000;
 	Glib::ustring txt;
 	if(curr_time < 0)
-		txt = "Tombé";
+		txt = "Flag down";
 	else {
 		int sec = rounded_curr_time % 60;
 		int min = rounded_curr_time / 60;
