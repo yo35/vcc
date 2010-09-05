@@ -61,10 +61,10 @@ include_directories(${GTKMM_INCLUDE_DIRS} include)
 link_directories(${GTKMM_LIBRARY_DIRS})
 if(${WIN32})
 	add_definitions("-DOS_IS_WINDOWS")
+	if(${CMAKE_BUILD_TYPE} MATCHES Release)
+		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
+	endif(${CMAKE_BUILD_TYPE} MATCHES Release)
 endif(${WIN32})
-if(${WIN32} AND (${CMAKE_BUILD_TYPE} MATCHES Release))
-	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
-endif(${WIN32} AND (${CMAKE_BUILD_TYPE} MATCHES Release))
 
 # Bibliothèque pour la désactivation de la touche windows
 if(${WIN32})
