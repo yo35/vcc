@@ -7,12 +7,21 @@
 #include <gtkmm/messagedialog.h>
 #include <cassert>
 
+#ifdef OS_IS_WINDOWS
+	#include "winkeyhookdll.h"
+#endif
+
 ClockWindow::ClockWindow() : Gtk::Window(),
 	btn_reset(Gtk::Stock::NEW), btn_pause(Gtk::Stock::MEDIA_PAUSE), btn_tctrl("Time control")
 {
 	// Divers
 	no_actif = -1;
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
+	
+	// Désactivation de la touche windows
+	#ifdef OS_IS_WINDOWS
+		set_kbd_hook();
+	#endif
 
 	// Réglage des horloges
 	reset_timers();
