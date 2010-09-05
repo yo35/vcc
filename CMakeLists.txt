@@ -1,6 +1,6 @@
 
 ################################################################################
-# Vérifications
+# Vérifications et configuration
 
 # Version de CMake
 cmake_minimum_required(VERSION 2.8)
@@ -22,6 +22,9 @@ endif(NOT (
 find_package(PkgConfig)
 pkg_check_modules(GTKMM REQUIRED gtkmm-2.4)
 
+# Répertoires de sorite
+set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
+set(LIBRARY_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 
 
 
@@ -31,6 +34,7 @@ pkg_check_modules(GTKMM REQUIRED gtkmm-2.4)
 # Généralités
 project(ChessClock)
 set(EXECUTABLE_NAME "chess-clock")
+set(HOOKDLL_NAME "winkeyhook")
 set(PROJECT_VERSION_MAJOR 0)
 set(PROJECT_VERSION_MINOR 5)
 
@@ -45,25 +49,45 @@ file(
 	src_h_files
 	src/*.h
 )
+file(
+	GLOB
+	dll_c_files
+	src/winkeyhook/*.c
+)
 
 # Divers
-set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 add_definitions("-pedantic -Wall -Wextra")
-include_directories(${GTKMM_INCLUDE_DIRS})
+include_directories(${GTKMM_INCLUDE_DIRS} include)
 link_directories(${GTKMM_LIBRARY_DIRS})
 if(${WIN32})
 	add_definitions("-DOS_IS_WINDOWS")
 endif(${WIN32})
+if(${WIN32} AND (${CMAKE_BUILD_TYPE} MATCHES Release))
+	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
+endif(${WIN32} AND (${CMAKE_BUILD_TYPE} MATCHES Release))
+
+# Bibliothèque pour la désactivation de la touche windows
+if(${WIN32})
+	add_library(
+		${HOOKDLL_NAME}
+		SHARED
+		${dll_c_files}
+	)
+	set(HOOKDLL_LIBRARY ${HOOKDLL_NAME})
+else(${WIN32})
+	set(HOOKDLL_LIBRARY "")
+endif(${WIN32})
 
 # Exécutable
 add_executable(
-	chess-clock
+	${EXECUTABLE_NAME}
 	${src_cpp_files}
 	${src_h_files}
 )
 target_link_libraries(
-	chess-clock
+	${EXECUTABLE_NAME}
 	${GTKMM_LIBRARIES}
+	${HOOKDLL_LIBRARY}
 )
 
 
