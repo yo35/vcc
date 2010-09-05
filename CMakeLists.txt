@@ -51,6 +51,9 @@ set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 add_definitions("-pedantic -Wall -Wextra")
 include_directories(${GTKMM_INCLUDE_DIRS})
 link_directories(${GTKMM_LIBRARY_DIRS})
+if(${WIN32})
+	add_definitions("-DOS_IS_WINDOWS")
+endif(${WIN32})
 
 # Exécutable
 add_executable(

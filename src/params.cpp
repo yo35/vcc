@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 
-#define KEYMAP_PATH "keymap.txt"
+#define KEYMAP_PATH "data/keymap.txt"
 
 Params *gp;
 
