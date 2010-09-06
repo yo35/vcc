@@ -175,6 +175,7 @@ void ClockWindow::reset_timers() {
 		if(gp->time_control.mode()==TimeControl::BRONSTEIN)
 			bronstein_limit[i] = start_time;
 	}
+	no_actif = -1;
 }
 
 bool ClockWindow::one_timer_is_active() const {
