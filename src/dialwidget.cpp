@@ -1,17 +1,17 @@
 
-#include "dial.h"
+#include "dialwidget.h"
 
-Dial::Dial() : Gtk::DrawingArea() {
+DialWidget::DialWidget() : Gtk::DrawingArea() {
 	m_timer = 0;
 	set_size_request(400, 300);
 }
 
-void Dial::set_timer(const Timer &timer) {
+void DialWidget::set_timer(const Timer &timer) {
 	m_timer = &timer;
-	m_timer->signal_modified().connect(sigc::mem_fun(*this, &Dial::refresh_widget));
+	m_timer->signal_modified().connect(sigc::mem_fun(*this, &DialWidget::refresh_widget));
 }
 
-void Dial::refresh_widget() {
+void DialWidget::refresh_widget() {
 	Glib::RefPtr<Gdk::Window> window = get_window();
 	if(window == 0)
 		return;
@@ -21,7 +21,7 @@ void Dial::refresh_widget() {
 	window->invalidate_rect(r, false);
 }
 
-bool Dial::on_expose_event(GdkEventExpose *event) {
+bool DialWidget::on_expose_event(GdkEventExpose *event) {
 	Glib::RefPtr<Gdk::Window> window = get_window();
 	if(window == 0)
 		return false;

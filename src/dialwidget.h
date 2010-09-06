@@ -1,16 +1,16 @@
 
-#ifndef DIAL_H
-#define DIAL_H
+#ifndef DIALWIDGET_H
+#define DIALWIDGET_H
 
 #include <gtkmm/drawingarea.h>
 #include "timer.h"
 
-class Dial : public Gtk::DrawingArea {
+class DialWidget : public Gtk::DrawingArea {
 
 public:
 
 	// Divers
-	Dial();
+	DialWidget();
 	void set_timer(const Timer &timer);
 
 protected:
