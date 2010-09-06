@@ -54,6 +54,8 @@ file(
 	dll_c_files
 	src/winkeyhook/*.c
 )
+set(config_in_file include/config.h.in)
+set(config_h_file include/config.h)
 
 # Divers
 add_definitions("-pedantic -Wall -Wextra")
@@ -65,6 +67,12 @@ if(${WIN32})
 		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
 	endif(${CMAKE_BUILD_TYPE} MATCHES Release)
 endif(${WIN32})
+
+# Fichier de configuration
+configure_file(
+	${config_in_file}
+	${config_h_file}
+)
 
 # Bibliothèque pour la désactivation de la touche windows
 if(${WIN32})
