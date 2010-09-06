@@ -3,7 +3,10 @@
 #include <cassert>
 #include <fstream>
 #include <string>
+#include <stdexcept>
+#include <iostream>
 
+//#define KEYMAP_PATH "keymap.txt"
 #define KEYMAP_PATH "data/keymap.txt"
 
 Params *gp;
@@ -19,11 +22,13 @@ Params::Params() {
 	time_control.set_increment(  3*1000);
 
 	// Zones actives
-	KeyvalList  keyval_left ;
-	KeyvalList  keyval_right;
-	KeyvalList *curr_area = 0;
-	std::ifstream       file;
+	KeyvalList    keyval_left ;
+	KeyvalList    keyval_right;
+	KeyvalList   *curr_area = 0;
+	std::ifstream file;
 	file.open(KEYMAP_PATH);
+	if(file.fail())
+		throw std::runtime_error("Unable to open the keyboard configuration file");
 	while(!file.eof()) {
 		std::string line;
 		getline(file, line);
@@ -42,10 +47,12 @@ Params::Params() {
 		else {
 			int nb = 0;
 			for(unsigned int k=0; k<line.length(); ++k) {
-				assert(line[k]>='0' && line[k]<='9');
+				if(line[k]<'0' || line[k]>'9')
+					throw std::runtime_error("The keyboard configuration file is corrupted");
 				nb = nb*10 + line[k] - '0';
 			}
-			assert(curr_area!=0);
+			if(curr_area==0)
+				throw std::runtime_error("The keyboard configuration file is corrupted");
 			curr_area->push_back(nb);
 		}
 	}
