@@ -1,11 +1,11 @@
 
-#include "keymap.h"
+#include "keys.h"
 
-std::string Keymap::keyval_to_string(Keyval val) {
+std::string keyval_to_string(Keyval val) {
 	return std::string(gdk_keyval_name(val));
 }
 
-Keymap::KeyvalList Keymap::keycode_to_keyvals(Keycode code) {
+KeyvalList keycode_to_keyvals(Keycode code) {
 	KeyvalList retval;
 	guint     *keyvals;
 	gint       n_entries;
@@ -18,9 +18,9 @@ Keymap::KeyvalList Keymap::keycode_to_keyvals(Keycode code) {
 	return retval;
 }
 
-Keymap::Keyval Keymap::keycode_to_cannonical_keyval(Keycode code) {
+Keyval keycode_to_cannonical_keyval(Keycode code) {
 	KeyvalList keyvals = keycode_to_keyvals(code);
-	for(std::list<Keyval>::const_iterator it=keyvals.begin(); it!=keyvals.end(); ++it) {
+	for(KeyvalList::const_iterator it=keyvals.begin(); it!=keyvals.end(); ++it) {
 		if((*it>='0' && *it<='9') || (*it>='A' && *it<='Z'))
 			return *it;
 	}
@@ -30,7 +30,7 @@ Keymap::Keyval Keymap::keycode_to_cannonical_keyval(Keycode code) {
 		return keyvals.front();
 }
 
-Keymap::KeycodeList Keymap::keyval_to_keycodes(Keyval val) {
+KeycodeList keyval_to_keycodes(Keyval val) {
 	KeycodeList   retval;
 	GdkKeymapKey *keys;
 	gint          n_keys;

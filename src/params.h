@@ -3,7 +3,7 @@
 #define PARAMS_H
 
 #include "timecontrol.h"
-#include "keymap.h"
+#include "keys.h"
 #include <set>
 
 class Params {
@@ -16,11 +16,11 @@ public:
 	TimeControl time_control;
 
 	// Zones actives pour les touches clavier
-	std::set<Keymap::Keycode> key_area[2];
-	void init_kb_areas(const Keymap::KeyvalList &area_left, const Keymap::KeyvalList &area_right);
+	std::set<Keycode> key_area[2];
+	void init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right);
 
 private:
-	std::set<Keymap::Keycode> aux_init_kb_areas(const Keymap::KeyvalList &src);
+	std::set<Keycode> aux_init_kb_areas(const KeyvalList &src);
 
 };
 

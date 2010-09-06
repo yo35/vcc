@@ -1,7 +1,7 @@
 
 #include "clockwindow.h"
 #include "timecontroldialog.h"
-#include "keymap.h"
+#include "keys.h"
 #include "params.h"
 #include <gtkmm/stock.h>
 #include <gtkmm/messagedialog.h>
@@ -51,21 +51,19 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
 
 	// Décodage
-	Keymap::Keycode code  = event->hardware_keycode;
+	Keycode code  = event->hardware_keycode;
 	bool test_area[2];
 	for(int k=0; k<2; ++k) {
 		test_area[k] = (gp->key_area[k].find(code) != gp->key_area[k].end());
 	}
 
 	// On appelle la fonction qvb
-	int verif = 0;
+	assert(!(test_area[0] && test_area[1]));
 	for(int k=0; k<2; ++k) {
 		if(test_area[k]) {
 			on_clock_button_clicked(k);
-			++verif;
 		}
 	}
-	assert(verif<2);
 	return true;
 }
 
