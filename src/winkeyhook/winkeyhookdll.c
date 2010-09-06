@@ -1,6 +1,7 @@
 
 #include "winkeyhookdll.h"
 #include <windows.h>
+#include <config.h>
 
 HHOOK hHook = 0;
 
@@ -27,7 +28,7 @@ int __declspec(dllexport) set_kbd_hook()
 	HMODULE hCurrModule;
 	
 	/* Retrieve current module's handle */
-	hCurrModule = GetModuleHandle("libwinkeyhook.dll");
+	hCurrModule = GetModuleHandle(HOOKDLL_FULL_NAME);
 	if(hCurrModule==NULL)
 		return GetLastError();
 
