@@ -4,9 +4,7 @@
 #include <fstream>
 #include <string>
 #include <stdexcept>
-#include <iostream>
 
-//#define KEYMAP_PATH "keymap.txt"
 #define KEYMAP_PATH "data/keymap.txt"
 
 Params *gp;
@@ -14,12 +12,9 @@ Params *gp;
 Params::Params() {
 
 	// Cadence
-	//time_control.set_mode(TimeControl::BRONSTEIN);
 	time_control.set_mode(TimeControl::FISCHER);
-	//time_control.set_mode(TimeControl::HOUR_GLASS);
-	//time_control.set_mode(TimeControl::SIMPLE_DELAY);
 	time_control.set_main_time(180*1000);
-	time_control.set_increment(  3*1000);
+	time_control.set_increment(  2*1000);
 
 	// Zones actives
 	KeyvalList    keyval_left ;
