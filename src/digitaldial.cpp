@@ -48,14 +48,24 @@ bool DigitalDial::on_expose_event(GdkEventExpose *event) {
 	Glib::ustring txt;
 	if(curr_time < 0)
 		txt = "Flag down";
-	else {
+	else if(rounded_curr_time < 60*60) {
 		int sec = rounded_curr_time % 60;
 		int min = rounded_curr_time / 60;
 		Glib::ustring txt_min = Glib::ustring::format(min);
 		Glib::ustring txt_sec = Glib::ustring::format(sec);
 		if(sec < 10)
 			txt_sec = "0" + txt_sec;
-		txt =  txt_min + "." + txt_sec;
+		txt = txt_min + "." + txt_sec;
+	}
+	else {
+		rounded_curr_time = rounded_curr_time / 60;
+		int min  = rounded_curr_time % 60;
+		int hour = rounded_curr_time / 60;
+		Glib::ustring txt_min  = Glib::ustring::format(min );
+		Glib::ustring txt_hour = Glib::ustring::format(hour);
+		if(min < 10)
+			txt_min = "0" + txt_min;
+		txt = txt_hour + ":" + txt_min;
 	}
 
 	// Texte modèle
