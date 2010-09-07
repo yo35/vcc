@@ -3,17 +3,16 @@
 #include "timecontroldialog.h"
 #include "keys.h"
 #include "params.h"
-#include <gtkmm/stock.h>
 #include <gtkmm/messagedialog.h>
 #include <cassert>
+#include <iostream>
 
 #ifdef OS_IS_WINDOWS
 	#include <winkeyhookdll.h>
 #endif
 
-ClockWindow::ClockWindow() : Gtk::Window(),
-	btn_reset(Gtk::Stock::NEW), btn_pause(Gtk::Stock::MEDIA_PAUSE), btn_tctrl("Time control")
-{
+ClockWindow::ClockWindow() : Gtk::Window() {
+
 	// Divers
 	no_actif = -1;
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
@@ -31,15 +30,32 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 	btn_pause.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_clicked));
 	btn_tctrl.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_tctrl_clicked));
 
+	// Toolbar
+	int icon_height = 0;
+	int icon_width  = 0;
+	Gtk::IconSize::lookup(toolbar.get_icon_size(), icon_width, icon_height);
+	std::cout << icon_width << "," << icon_height << std::endl;
+	img_reset.set(gp->icon_reset.get(icon_height));
+	img_pause.set(gp->icon_pause.get(icon_height));
+	btn_reset.set_icon_widget(img_reset);
+	btn_pause.set_icon_widget(img_pause);
+	btn_tctrl.set_icon_widget(img_tctrl);
+	btn_reset.set_label("Reset"       );
+	btn_pause.set_label("Pause"       );
+	btn_tctrl.set_label("Time control");
+	btn_reset.set_tooltip_text("Reset the clock");
+	btn_pause.set_tooltip_text("Pause the clock");
+	btn_tctrl.set_tooltip_text("Change the current time control");
+	toolbar.append(btn_reset);
+	toolbar.append(btn_pause);
+	toolbar.append(btn_tctrl);
+
 	// Géométrie générale
 	for(int i=0; i<2; ++i) {
 		dial[i].set_can_focus(true);
 		dial[i].set_timer(timer[i]);
 		dial_layout.pack_start(dial[i]);
 	}
-	toolbar.append(btn_reset);
-	toolbar.append(btn_pause);
-	toolbar.append(btn_tctrl);
 	main_layout.pack_start(toolbar, Gtk::PACK_SHRINK);
 	main_layout.pack_start(dial_layout);
 	main_layout.set_spacing(5);

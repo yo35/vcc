@@ -9,7 +9,10 @@
 
 Params *gp;
 
-Params::Params() {
+Params::Params() :
+	icon_reset("reset.svg"),
+	icon_pause("pause.svg")
+{
 
 	// Cadence
 	time_control.set_mode(TimeControl::FISCHER);

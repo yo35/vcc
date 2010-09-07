@@ -6,6 +6,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm/toolbutton.h>
 #include <gtkmm/toolbar.h>
+#include <gtkmm/image.h>
 #include "dialwidget.h"
 
 class ClockWindow : public Gtk::Window {
@@ -42,6 +43,9 @@ private:
 	Timer           timer[2];
 	DialWidget      dial [2];
 	Gtk::Toolbar    toolbar;
+	Gtk::Image      img_reset;
+	Gtk::Image      img_pause;
+	Gtk::Image      img_tctrl;
 	Gtk::ToolButton btn_reset;
 	Gtk::ToolButton btn_pause;
 	Gtk::ToolButton btn_tctrl;
