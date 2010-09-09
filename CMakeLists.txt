@@ -124,5 +124,6 @@ if(NOT (${SVN2CL} MATCHES "SVN2CL-NOTFOUND"))
 	add_custom_target(
 		ChangeLog
 		COMMAND ${SVN2CL} --group-by-day
+		COMMAND ./process-changelog.sh
 	)
 endif(NOT (${SVN2CL} MATCHES "SVN2CL-NOTFOUND"))
