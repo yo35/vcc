@@ -1,0 +1,139 @@
+2010-09-09  yoann
+
+	* data/pause.svg: Modif bords noirs pour l'icone pause
+
+2010-09-07  yoann
+
+	* data/pause.svg, data/reset.svg, src/clockwindow.cpp,
+	  src/clockwindow.h, src/icon.cpp, src/icon.h, src/params.cpp,
+	  src/params.h: Mise en place des icones
+
+2010-09-06  yoann
+
+	* src/params.cpp: Debug
+	* src/params.cpp: Proprisation ouverture du fichier de config
+	  keyboard
+	* src/clockwindow.cpp, src/keymap.cpp, src/keymap.h, src/keys.cpp,
+	  src/keys.h, src/params.cpp, src/params.h: Renommage keymap ->keys
+	* src/clockwindow.h, src/dialwidget.cpp, src/dialwidget.h,
+	  src/digitaldial.cpp, src/digitaldial.h: Renommage digialdial ->
+	  dialwidget
+	* src/digitaldial.cpp, src/digitaldial.h: Renommage digialdial ->
+	  dial
+	* src/clockwindow.cpp: Debug
+	* src/digitaldial.cpp: Affichage en mode hr:min
+
+2010-09-06  Administrateur
+
+	* include/config.h.in, src/winkeyhook/winkeyhookdll.c: Debug
+
+2010-09-06  yoann
+
+	* CMakeLists.txt, include, include/config.h.in,
+	  src/clockwindow.cpp: Ajout d'un fichier de configuration
+
+2010-09-05  yoann
+
+	* CMakeLists.txt: Debug
+
+2010-09-05  Administrateur
+
+	* CMakeLists.txt, src/winkeyhook/winkeyhookdll.c: Adaptation cmake
+	  pour windows
+
+2010-09-05  yoann
+
+	* CMakeLists.txt, src/main.cpp, src/params.cpp: Proprisation cmake
+	* ., CMakeLists.txt: Mise-en-place cmake
+	* ., Makefile.in, clockwindow.cpp, clockwindow.h, configure, data,
+	  data/keymap.txt, digitaldial.cpp, digitaldial.h, include,
+	  include/winkeyhookdll.h, keymap.cpp, keymap.h, keymap.txt,
+	  main.cpp, params.cpp, params.h, src, src/clockwindow.cpp,
+	  src/clockwindow.h, src/digitaldial.cpp, src/digitaldial.h,
+	  src/keymap.cpp, src/keymap.h, src/main.cpp, src/params.cpp,
+	  src/params.h, src/timecontrol.cpp, src/timecontrol.h,
+	  src/timecontroldialog.cpp, src/timecontroldialog.h,
+	  src/timeentry.cpp, src/timeentry.h, src/timer.cpp, src/timer.h,
+	  src/winkeyhook, src/winkeyhook/winkeyhookdll.c, timecontrol.cpp,
+	  timecontrol.h, timecontroldialog.cpp, timecontroldialog.h,
+	  timeentry.cpp, timeentry.h, timer.cpp, timer.h, winkeyhookdll.c,
+	  winkeyhookdll.h: Modification de l'arborescence
+
+2010-09-05  Yoann
+
+	* clockwindow.cpp, winkeyhookdll.c, winkeyhookdll.h: Désactivation
+	  de la touche WIN sous windaube
+
+2010-09-03  yoann
+
+	* clockwindow.cpp, digitaldial.cpp, params.cpp,
+	  timecontroldialog.cpp, timeentry.cpp: Retour à la version
+	  anglaise
+
+2010-09-02  yoann
+
+	* clockwindow.cpp, digitaldial.cpp, params.cpp,
+	  timecontroldialog.cpp, timeentry.cpp: Textes en français
+
+2010-09-01  yoann
+
+	* Makefile.in: Cible distclean
+	* Makefile.in: Détection de l'OS dans les fichiers cpp
+	* ., configure: Debug
+
+2010-09-01  Administrateur
+
+	* configure: Debug
+	* configure: Debug test_echo
+
+2010-09-01  yoann
+
+	* ., Makefile, Makefile.in, configure: Makefile adapatatif
+	* Makefile, main.cpp: Debug fin de lignes
+
+2010-08-31  yoann
+
+	* Makefile: Makefile en anglais
+	* keymap.h: Debug
+	* params.h: Debug
+	* clockwindow.cpp, clockwindow.h, hardwarekeycode.h, keymap.cpp,
+	  keymap.h, keymap.txt, main.cpp, params.cpp, params.h: Gestion des
+	  touches
+	* clockwindow.cpp, keymap.cpp, keymap.h: Gestion du clavier
+
+2010-08-30  yoann
+
+	* digitaldial.cpp: Message txt quand tombé
+	* digitaldial.cpp: Modif méthode d'arrondi millisec pour
+	  l'affichage
+	* clockwindow.cpp, clockwindow.h, timecontrol.cpp, timecontrol.h,
+	  timecontroldialog.cpp, timecontroldialog.h, timeentry.cpp,
+	  timeentry.h: Boîte de dialogue cadence
+	* clockwindow.h: Debug
+	* clockwindow.cpp, clockwindow.h, digitaldial.cpp, timecontrol.cpp,
+	  timecontrol.h, timer.cpp: Gestion cadences complexes
+	* clockwindow.cpp: Debug pb de focus dans la toolbar
+	* clockwindow.cpp, clockwindow.h: Mise en place toolbar
+
+2010-08-29  yoann
+
+	* clockwindow.cpp, clockwindow.h: Routine de reset
+	* clockwindow.cpp, clockwindow.h: Routine de mise en pause
+	* clockwindow.cpp, clockwindow.h: Routine de mise en pause
+	* clockwindow.cpp, clockwindow.h, hardwarekeycode.h: Ajout boutons
+	* clockwindow.cpp, clockwindow.h, digitaldial.cpp, digitaldial.h,
+	  digitaltimer.cpp, digitaltimer.h, timer.cpp, timer.h:
+	  Proprisation affichage
+	* timer.cpp, timer.h: Précision milliseconde
+	* clockwindow.cpp, clockwindow.h, digitaltimer.cpp, digitaltimer.h,
+	  labeltimer.cpp, labeltimer.h, timer.cpp, timer.h: Proprisation
+	  timer
+	* ., absracttimer.cpp, abstracttimer.h, timer.cpp, timer.h:
+	  Renommage Timer
+	* Makefile, absracttimer.cpp: Debug
+	* absracttimer.cpp, abstracttimer.h, clockwindow.cpp,
+	  clockwindow.h, digitaltimer.cpp, digitaltimer.h, labeltimer.cpp,
+	  labeltimer.h, main.cpp: Dépôt initial du projet
+	* Makefile: Mise en place du Makefile
+	* .: Structure interne du projet ChessClock
+
