@@ -1,18 +1,19 @@
-2010-09-09  yoann
+2010-09-09  Yoann Le Montagner <yo35(at)melix(dot)net>
 
+	* CMakeLists.txt, process-changelog.sh: Script de correction du
+	  ChangeLog généré par svn2cl
 	* CMakeLists.txt: Ajout d'une cible pour générer ChangeLog
-	* ChangeLog: Update ChangeLog
 	* AUTHORS, COPYING, ChangeLog, INSTALL, NEWS, README: Ajout des
 	  notices texte COPYING, etc...
 	* data/pause.svg: Modif bords noirs pour l'icone pause
 
-2010-09-07  yoann
+2010-09-07  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* data/pause.svg, data/reset.svg, src/clockwindow.cpp,
 	  src/clockwindow.h, src/icon.cpp, src/icon.h, src/params.cpp,
 	  src/params.h: Mise en place des icones
 
-2010-09-06  yoann
+2010-09-06  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* src/params.cpp: Debug
 	* src/params.cpp: Proprisation ouverture du fichier de config
@@ -27,25 +28,25 @@
 	* src/clockwindow.cpp: Debug
 	* src/digitaldial.cpp: Affichage en mode hr:min
 
-2010-09-06  Administrateur
+2010-09-06  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* include/config.h.in, src/winkeyhook/winkeyhookdll.c: Debug
 
-2010-09-06  yoann
+2010-09-06  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* CMakeLists.txt, include, include/config.h.in,
 	  src/clockwindow.cpp: Ajout d'un fichier de configuration
 
-2010-09-05  yoann
+2010-09-05  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* CMakeLists.txt: Debug
 
-2010-09-05  Administrateur
+2010-09-05  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* CMakeLists.txt, src/winkeyhook/winkeyhookdll.c: Adaptation cmake
 	  pour windows
 
-2010-09-05  yoann
+2010-09-05  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* CMakeLists.txt, src/main.cpp, src/params.cpp: Proprisation cmake
 	* ., CMakeLists.txt: Mise-en-place cmake
@@ -68,34 +69,34 @@
 	* clockwindow.cpp, winkeyhookdll.c, winkeyhookdll.h: Désactivation
 	  de la touche WIN sous windaube
 
-2010-09-03  yoann
+2010-09-03  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* clockwindow.cpp, digitaldial.cpp, params.cpp,
 	  timecontroldialog.cpp, timeentry.cpp: Retour à la version
 	  anglaise
 
-2010-09-02  yoann
+2010-09-02  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* clockwindow.cpp, digitaldial.cpp, params.cpp,
 	  timecontroldialog.cpp, timeentry.cpp: Textes en français
 
-2010-09-01  yoann
+2010-09-01  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* Makefile.in: Cible distclean
 	* Makefile.in: Détection de l'OS dans les fichiers cpp
 	* ., configure: Debug
 
-2010-09-01  Administrateur
+2010-09-01  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* configure: Debug
 	* configure: Debug test_echo
 
-2010-09-01  yoann
+2010-09-01  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* ., Makefile, Makefile.in, configure: Makefile adapatatif
 	* Makefile, main.cpp: Debug fin de lignes
 
-2010-08-31  yoann
+2010-08-31  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* Makefile: Makefile en anglais
 	* keymap.h: Debug
@@ -105,7 +106,7 @@
 	  touches
 	* clockwindow.cpp, keymap.cpp, keymap.h: Gestion du clavier
 
-2010-08-30  yoann
+2010-08-30  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* digitaldial.cpp: Message txt quand tombé
 	* digitaldial.cpp: Modif méthode d'arrondi millisec pour
@@ -119,7 +120,7 @@
 	* clockwindow.cpp: Debug pb de focus dans la toolbar
 	* clockwindow.cpp, clockwindow.h: Mise en place toolbar
 
-2010-08-29  yoann
+2010-08-29  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* clockwindow.cpp, clockwindow.h: Routine de reset
 	* clockwindow.cpp, clockwindow.h: Routine de mise en pause
