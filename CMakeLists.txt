@@ -117,3 +117,12 @@ add_custom_target(
 	COMMAND ${CMAKE_COMMAND} -E remove_directory bin
 	COMMAND ${CMAKE_COMMAND} -E remove_directory CMakeFiles
 )
+
+# Génération du fichier ChangeLog
+find_program(SVN2CL svn2cl)
+if(NOT (${SVN2CL} MATCHES "SVN2CL-NOTFOUND"))
+	add_custom_target(
+		ChangeLog
+		COMMAND ${SVN2CL} --group-by-day
+	)
+endif(NOT (${SVN2CL} MATCHES "SVN2CL-NOTFOUND"))
