@@ -1,5 +1,7 @@
 2010-09-09  yoann
 
+	* AUTHORS, COPYING, ChangeLog, INSTALL, NEWS, README: Ajout des
+	  notices texte COPYING, etc...
 	* data/pause.svg: Modif bords noirs pour l'icone pause
 
 2010-09-07  yoann
