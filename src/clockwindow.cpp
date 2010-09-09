@@ -3,9 +3,9 @@
 #include "timecontroldialog.h"
 #include "keys.h"
 #include "params.h"
-#include <gtkmm/messagedialog.h>
+#include <config.h>
 #include <cassert>
-#include <iostream>
+#include <gtkmm/messagedialog.h>
 
 #ifdef OS_IS_WINDOWS
 	#include <winkeyhookdll.h>
@@ -16,6 +16,12 @@ ClockWindow::ClockWindow() : Gtk::Window() {
 	// Divers
 	no_actif = -1;
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
+	set_title(
+		Glib::ustring(PROJECT_FULL_NAME) +
+		" " +
+		Glib::ustring(PROJECT_VERSION_MAJOR) +
+		"." +
+		Glib::ustring(PROJECT_VERSION_MINOR));
 
 	// Désactivation de la touche windows
 	#ifdef OS_IS_WINDOWS
@@ -34,7 +40,6 @@ ClockWindow::ClockWindow() : Gtk::Window() {
 	int icon_height = 0;
 	int icon_width  = 0;
 	Gtk::IconSize::lookup(toolbar.get_icon_size(), icon_width, icon_height);
-	std::cout << icon_width << "," << icon_height << std::endl;
 	img_reset.set(gp->icon_reset.get(icon_height));
 	img_pause.set(gp->icon_pause.get(icon_height));
 	btn_reset.set_icon_widget(img_reset);

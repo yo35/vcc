@@ -32,8 +32,9 @@ set(LIBRARY_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 # Définition du projet
 
 # Généralités
-project(ChessClock)
-set(EXECUTABLE_NAME "chess-clock")
+project(virtual-chess-clock)
+set(PROJECT_FULL_NAME "Virtual Chess Clock")
+set(EXECUTABLE_NAME "vcc")
 set(HOOKDLL_NAME "winkeyhook")
 set(PROJECT_VERSION_MAJOR 0)
 set(PROJECT_VERSION_MINOR 5)
