@@ -11,7 +11,8 @@ Params *gp;
 
 Params::Params() :
 	icon_reset("reset.svg"),
-	icon_pause("pause.svg")
+	icon_pause("pause.svg"),
+	icon_tctrl("tctrl.svg")
 {
 
 	// Cadence

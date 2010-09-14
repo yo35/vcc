@@ -42,6 +42,7 @@ ClockWindow::ClockWindow() : Gtk::Window() {
 	Gtk::IconSize::lookup(toolbar.get_icon_size(), icon_width, icon_height);
 	img_reset.set(gp->icon_reset.get(icon_height));
 	img_pause.set(gp->icon_pause.get(icon_height));
+	img_tctrl.set(gp->icon_tctrl.get(icon_height));
 	btn_reset.set_icon_widget(img_reset);
 	btn_pause.set_icon_widget(img_pause);
 	btn_tctrl.set_icon_widget(img_tctrl);

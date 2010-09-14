@@ -23,6 +23,7 @@ public:
 	// Icones
 	Icon icon_reset;
 	Icon icon_pause;
+	Icon icon_tctrl;
 
 private:
 	std::set<Keycode> aux_init_kb_areas(const KeyvalList &src);
