@@ -35,11 +35,11 @@ ClockWindow::ClockWindow() : Gtk::Window() {
 	no_actif = -1;
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
 	set_title(
-		Glib::ustring(PROJECT_FULL_NAME) +
-		" " +
+		Glib::ustring(PROJECT_FULL_NAME    ) +
+		Glib::ustring(" "                  ) +
 		Glib::ustring(PROJECT_VERSION_MAJOR) +
-		"." +
-		Glib::ustring(PROJECT_VERSION_MINOR));
+		Glib::ustring("."                  ) +
+		Glib::ustring(PROJECT_VERSION_MINOR) );
 
 	// Désactivation de la touche windows
 	#ifdef OS_IS_WINDOWS

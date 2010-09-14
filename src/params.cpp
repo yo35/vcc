@@ -18,19 +18,18 @@
  */
 
 #include "params.h"
+#include <config.h>
 #include <cassert>
 #include <fstream>
 #include <string>
 #include <stdexcept>
 
-#define KEYMAP_PATH "data/keymap.txt"
-
 Params *gp;
 
 Params::Params() :
-	icon_reset("reset.svg"),
-	icon_pause("pause.svg"),
-	icon_tctrl("tctrl.svg")
+	icon_reset(std::string(VCC_SHARE_PATH) + std::string("/reset.svg")),
+	icon_pause(std::string(VCC_SHARE_PATH) + std::string("/pause.svg")),
+	icon_tctrl(std::string(VCC_SHARE_PATH) + std::string("/tctrl.svg"))
 {
 
 	// Cadence
@@ -42,8 +41,9 @@ Params::Params() :
 	KeyvalList    keyval_left ;
 	KeyvalList    keyval_right;
 	KeyvalList   *curr_area = 0;
+	std::string   path = std::string(VCC_SHARE_PATH) + std::string("/keymap.txt");
 	std::ifstream file;
-	file.open(KEYMAP_PATH);
+	file.open(path.c_str());
 	if(file.fail())
 		throw std::runtime_error("Unable to open the keyboard configuration file");
 	while(!file.eof()) {
