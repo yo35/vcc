@@ -1,5 +1,36 @@
+2010-09-14  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* ., AUTHORS, CMakeLists.txt, include/config.h.in: Ajout des
+	  fichiers doc lors de l'install + Début mise en place CPack
+
+2010-09-14  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* CMakeLists.txt, include/config.h.in: Corrections cible 'make
+	  install' pour windows
+
+2010-09-14  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* ., CMakeLists.txt, include/config.h.in, src/clockwindow.cpp,
+	  src/icon.cpp, src/params.cpp: Gestion de l'arbre en runtime &
+	  cible install
+	* include/config.h.in, include/winkeyhookdll.h,
+	  src/clockwindow.cpp, src/clockwindow.h, src/dialwidget.cpp,
+	  src/dialwidget.h, src/icon.cpp, src/icon.h, src/keys.cpp,
+	  src/keys.h, src/main.cpp, src/params.cpp, src/params.h,
+	  src/timecontrol.cpp, src/timecontrol.h,
+	  src/timecontroldialog.cpp, src/timecontroldialog.h,
+	  src/timeentry.cpp, src/timeentry.h, src/timer.cpp, src/timer.h,
+	  src/winkeyhook/winkeyhookdll.c: Ajout des copyrights en tête des
+	  fichiers source
+	* data/tctrl.svg, src/clockwindow.cpp, src/params.cpp,
+	  src/params.h: Création d'une icône pour le bouton de modification
+	  de cadence
+
 2010-09-09  Yoann Le Montagner <yo35(at)melix(dot)net>
 
+	* CMakeLists.txt, include/config.h.in, src/clockwindow.cpp,
+	  src/main.cpp: Affichage du nom du projet dans la barre de titre
+	  de la fenêtre principale
 	* CMakeLists.txt, process-changelog.sh: Script de correction du
 	  ChangeLog généré par svn2cl
 	* CMakeLists.txt: Ajout d'une cible pour générer ChangeLog
