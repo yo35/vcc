@@ -1,3 +1,21 @@
+#
+#    This file is part of Virtual Chess Clock, a chess clock software
+#
+#    Copyright (C) 2010  Yoann Le Montagner <yo35(at)melix(dot)net>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 ################################################################################
 # Vérifications et configuration
@@ -88,6 +106,9 @@ file(
 # Fichier de keymap
 set(keymap_file data/keymap.txt)
 
+# Fichiers README, licence, etc...
+set(readme_aso_files README NEWS AUTHORS COPYING INSTALL ChangeLog)
+
 
 
 ################################################################################
@@ -98,6 +119,7 @@ if(${COMPILE_FOR_DEV})
 	set(VCC_BASE_PATH ".")
 	set(VCC_BIN_RPATH "bin")
 	set(VCC_SHARE_RPATH "data")
+	set(VCC_DOC_RPATH ".")
 
 # Mode release
 else(${COMPILE_FOR_DEV})
@@ -105,8 +127,10 @@ else(${COMPILE_FOR_DEV})
 	set(VCC_BIN_RPATH "bin")
 	if(${WIN32})
 		set(VCC_SHARE_RPATH "share")
+		set(VCC_DOC_RPATH ".")
 	else(${WIN32})
 		set(VCC_SHARE_RPATH "share/${PROJECT_NAME}")
+		set(VCC_DOC_RPATH "share/doc/${PROJECT_NAME}")
 	endif(${WIN32})
 
 endif(${COMPILE_FOR_DEV})
@@ -165,10 +189,12 @@ target_link_libraries(
 # Supprimer tout ce qui n'est pas sur le SVN
 add_custom_target(
 	mrproper
-	COMMAND ${CMAKE_COMMAND} -E remove -f Makefile CMakeCache.txt cmake_install.cmake
-	COMMAND ${CMAKE_COMMAND} -E remove -f install_manifest.txt include/config.h
+	COMMAND ${CMAKE_COMMAND} -E remove -f *.cmake *.tar.gz *.deb
+	COMMAND ${CMAKE_COMMAND} -E remove -f Makefile CMakeCache.txt install_manifest.txt
+	COMMAND ${CMAKE_COMMAND} -E remove -f include/config.h
 	COMMAND ${CMAKE_COMMAND} -E remove_directory bin
 	COMMAND ${CMAKE_COMMAND} -E remove_directory CMakeFiles
+	COMMAND ${CMAKE_COMMAND} -E remove_directory _CPack_Packages
 )
 
 # Génération du fichier ChangeLog
@@ -191,13 +217,24 @@ if(${COMPILE_FOR_DEV})
 
 # Installation
 else(${COMPILE_FOR_DEV})
-	INSTALL(PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/${EXECUTABLE_FULL_NAME}
+
+	# Cible 'make install'
+	install(PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/${EXECUTABLE_FULL_NAME}
 		DESTINATION ${VCC_BIN_RPATH})
 	if(${WIN32})
-		INSTALL(FILES ${LIBRARY_OUTPUT_PATH}/${HOOKDLL_FULL_NAME}
+		install(FILES ${LIBRARY_OUTPUT_PATH}/${HOOKDLL_FULL_NAME}
 			DESTINATION ${VCC_BIN_RPATH})
 	endif(${WIN32})
-	INSTALL(FILES ${icon_int_files} DESTINATION ${VCC_SHARE_RPATH})
-	INSTALL(FILES ${keymap_file} DESTINATION ${VCC_SHARE_RPATH})
+	install(FILES ${icon_int_files} DESTINATION ${VCC_SHARE_RPATH})
+	install(FILES ${keymap_file} DESTINATION ${VCC_SHARE_RPATH})
+	install(FILES ${readme_aso_files} DESTINATION ${VCC_DOC_RPATH})
+
+	# CPack
+	set(CPACK_GENERATOR "TGZ;DEB")
+	set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+	set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+	set(CPACK_PACKAGE_VERSION_PATCH 0)
+	set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Yoann Le Montagner")
+	include(CPack)
 
 endif(${COMPILE_FOR_DEV})
