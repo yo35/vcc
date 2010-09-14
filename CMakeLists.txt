@@ -46,6 +46,10 @@ set(HOOKDLL_NAME "winkeyhook")
 set(PROJECT_VERSION_MAJOR 0)
 set(PROJECT_VERSION_MINOR 5)
 
+# Noms complets
+set(EXECUTABLE_FULL_NAME "${EXECUTABLE_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
+set(HOOKDLL_FULL_NAME "${CMAKE_SHARED_LIBRARY_PREFIX}${HOOKDLL_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}")
+
 
 
 ################################################################################
@@ -92,14 +96,18 @@ set(keymap_file data/keymap.txt)
 # Mode debug
 if(${COMPILE_FOR_DEV})
 	set(VCC_BASE_PATH ".")
-	set(VCC_SHARE_RPATH "data")
 	set(VCC_BIN_RPATH "bin")
+	set(VCC_SHARE_RPATH "data")
 
 # Mode release
 else(${COMPILE_FOR_DEV})
 	set(VCC_BASE_PATH ${CMAKE_INSTALL_PREFIX})
-	set(VCC_SHARE_RPATH "share/${PROJECT_NAME}")
 	set(VCC_BIN_RPATH "bin")
+	if(${WIN32})
+		set(VCC_SHARE_RPATH "share")
+	else(${WIN32})
+		set(VCC_SHARE_RPATH "share/${PROJECT_NAME}")
+	endif(${WIN32})
 
 endif(${COMPILE_FOR_DEV})
 
@@ -114,9 +122,9 @@ include_directories(${GTKMM_INCLUDE_DIRS} include)
 link_directories(${GTKMM_LIBRARY_DIRS})
 if(${WIN32})
 	add_definitions("-DOS_IS_WINDOWS")
-	if(${COMPILE_FOR_DEV})
+	if(NOT ${COMPILE_FOR_DEV})
 		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
-	endif(${COMPILE_FOR_DEV})
+	endif(NOT ${COMPILE_FOR_DEV})
 endif(${WIN32})
 
 # Fichier de configuration
@@ -183,7 +191,12 @@ if(${COMPILE_FOR_DEV})
 
 # Installation
 else(${COMPILE_FOR_DEV})
-	INSTALL(PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/${EXECUTABLE_NAME} DESTINATION ${VCC_BIN_RPATH})
+	INSTALL(PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/${EXECUTABLE_FULL_NAME}
+		DESTINATION ${VCC_BIN_RPATH})
+	if(${WIN32})
+		INSTALL(FILES ${LIBRARY_OUTPUT_PATH}/${HOOKDLL_FULL_NAME}
+			DESTINATION ${VCC_BIN_RPATH})
+	endif(${WIN32})
 	INSTALL(FILES ${icon_int_files} DESTINATION ${VCC_SHARE_RPATH})
 	INSTALL(FILES ${keymap_file} DESTINATION ${VCC_SHARE_RPATH})
 
