@@ -1,1 +1,18 @@
+Virtual Chess Clock - A simple and free chess clock software
+------------------------------------------------------------
 
+About
+-----
+Virtual Chess Clock is a chess clock software, which means that it is a program
+that could replace a real chess clock. The first version of VCC was developed
+in August 2010 during a real chess tournament, because I and friends of mine
+were lacking of such a stuff, so we could not blitz, so we were in bad trouble !
+
+
+Features
+--------
+ - two active area of keys on the keyboard (left and right) to trigger player
+   turn shift
+ - support for exotic time control modes such as Fischer, Bronstein, hour-glass
+ - time resolution of 1 millisecond
+ - desactivation of the window keys on Windows
