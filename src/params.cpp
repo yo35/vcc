@@ -30,9 +30,9 @@
 Params *gp;
 
 Params::Params() :
-	icon_reset(std::string(VCC_SHARE_PATH) + std::string("/reset.svg")),
-	icon_pause(std::string(VCC_SHARE_PATH) + std::string("/pause.svg")),
-	icon_tctrl(std::string(VCC_SHARE_PATH) + std::string("/tctrl.svg"))
+	icon_reset(std::string(VCC_SHARE_PATH) + std::string("/reset.png")),
+	icon_pause(std::string(VCC_SHARE_PATH) + std::string("/pause.png")),
+	icon_tctrl(std::string(VCC_SHARE_PATH) + std::string("/tctrl.png"))
 {
 
 	// Cadence

@@ -103,7 +103,7 @@ file(
 file(
 	GLOB
 	icon_int_files
-	data/*.svg
+	data/*.png
 )
 
 # Fichier de keymap
