@@ -135,7 +135,7 @@ if(${COMPILE_FOR_DEV})
 
 # Mode release
 else(${COMPILE_FOR_DEV})
-	set(VCC_TOP ${CMAKE_INSTALL_PATH})
+	set(VCC_TOP ${CMAKE_INSTALL_PREFIX})
 	set(VCC_BIN_RPATH "bin")
 	set(VCC_BIN_RPATH_BACKWARD "..")
 	if(${WIN32})
