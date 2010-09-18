@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Virtual Chess Clock
+GenericName=Chess clock software
+Comment=A chess clock software
+Exec=vcc
+Icon=vcc
+Terminal=false
+Categories=GTK;Game;
+StartupNotify=true

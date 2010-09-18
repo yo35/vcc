@@ -106,8 +106,14 @@ file(
 	data/*.png
 )
 
+# Icône de l'application
+set(icon_app_file data/vcc_icon/vcc.png)
+
 # Fichier de keymap
 set(keymap_file data/keymap.txt)
+
+# Fichier desktop
+set(desktop_file data/vcc.desktop)
 
 # Fichiers README, licence, etc...
 set(readme_aso_files README NEWS AUTHORS COPYING INSTALL ChangeLog)
@@ -231,11 +237,14 @@ else(${COMPILE_FOR_DEV})
 	install(FILES ${icon_int_files} DESTINATION ${VCC_SHARE_RPATH})
 	install(FILES ${keymap_file} DESTINATION ${VCC_SHARE_RPATH})
 	install(FILES ${readme_aso_files} DESTINATION ${VCC_DOC_RPATH})
+	install(FILES ${desktop_file} DESTINATION share/applications)
+	install(FILES ${icon_app_file} DESTINATION share/icons)
 
 	# CPack
 	set(CPACK_GENERATOR "DEB")
 	set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 	set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+	set(CPACK_PACKAGE_VERSION_PATCH 0)
 	set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
 	set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
 	set(CPACK_PACKAGE_DESCRIPTION_FILE README)
