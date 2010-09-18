@@ -23,14 +23,23 @@
 #include <gtkmm/main.h>
 #include "clockwindow.h"
 #include "params.h"
+#include <config.h>
 
 int main(int argc, char *argv[]) {
 
+	// Initialisation GTK
 	Gtk::Main kit(argc, argv);
-	gp = new Params();
+
+	// Calcul des paramètres
+	std::string prefix_path = VCC_TOP;
+	gp = new Params(prefix_path);
+
+	// GUI
 	ClockWindow* mainUI = new ClockWindow();
 	Gtk::Main::run(*mainUI);
-	delete gp;
+	delete mainUI;
 
+	// Terminaison du programme
+	delete gp;
 	return 0;
 }

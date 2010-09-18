@@ -29,12 +29,12 @@
 
 Params *gp;
 
-Params::Params() :
-	icon_reset(std::string(VCC_SHARE_PATH) + std::string("/reset.png")),
-	icon_pause(std::string(VCC_SHARE_PATH) + std::string("/pause.png")),
-	icon_tctrl(std::string(VCC_SHARE_PATH) + std::string("/tctrl.png"))
+Params::Params(const std::string &prefix_path) :
+	icon_reset(prefix_path + "/" + VCC_SHARE_RPATH + "/reset.png"),
+	icon_pause(prefix_path + "/" + VCC_SHARE_RPATH + "/pause.png"),
+	icon_tctrl(prefix_path + "/" + VCC_SHARE_RPATH + "/tctrl.png"),
+	m_prefix_path(prefix_path)
 {
-
 	// Cadence
 	time_control.set_mode(TimeControl::FISCHER);
 	time_control.set_main_time(180*1000);
@@ -44,7 +44,7 @@ Params::Params() :
 	KeyvalList    keyval_left ;
 	KeyvalList    keyval_right;
 	KeyvalList   *curr_area = 0;
-	std::string   path = std::string(VCC_SHARE_PATH) + std::string("/keymap.txt");
+	std::string   path = prefix_path + "/" + VCC_SHARE_RPATH  + "/keymap.txt";
 	std::ifstream file;
 	file.open(path.c_str());
 	if(file.fail())
@@ -100,4 +100,8 @@ std::set<Keycode> Params::aux_init_kb_areas(const KeyvalList &src) {
 		retval.insert(keycodes.begin(), keycodes.end());
 	}
 	return retval;
+}
+
+const std::string &Params::prefix_path() const {
+	return m_prefix_path;
 }

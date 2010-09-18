@@ -125,8 +125,9 @@ set(readme_aso_files README NEWS AUTHORS COPYING INSTALL ChangeLog)
 
 # Mode debug
 if(${COMPILE_FOR_DEV})
-	set(VCC_BASE_PATH ".")
+	set(VCC_TOP ".")
 	set(VCC_BIN_RPATH "bin")
+	set(VCC_BIN_RPATH_BACKWARD "..")
 	set(VCC_SHARE_RPATH "data/share")
 	set(VCC_ICONS_RPATH "data/icons")
 	set(VCC_APPLICATIONS_RPATH "data/applications")
@@ -134,8 +135,9 @@ if(${COMPILE_FOR_DEV})
 
 # Mode release
 else(${COMPILE_FOR_DEV})
-	set(VCC_BASE_PATH ${CMAKE_INSTALL_PREFIX})
+	set(VCC_TOP ${CMAKE_INSTALL_PATH})
 	set(VCC_BIN_RPATH "bin")
+	set(VCC_BIN_RPATH_BACKWARD "..")
 	if(${WIN32})
 		set(VCC_SHARE_RPATH "share")
 		set(VCC_ICONS_RPATH "share/icons")

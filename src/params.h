@@ -32,7 +32,7 @@ class Params {
 public:
 
 	// Constructeur
-	Params();
+	Params(const std::string &prefix_path);
 
 	// Cadence de jeu
 	TimeControl time_control;
@@ -46,9 +46,13 @@ public:
 	Icon icon_pause;
 	Icon icon_tctrl;
 
+	// Pointe vers le répertoire de base du package
+	const std::string &prefix_path() const;
+
 private:
 	std::set<Keycode> aux_init_kb_areas(const KeyvalList &src);
 
+	std::string m_prefix_path;
 };
 
 extern Params *gp;
