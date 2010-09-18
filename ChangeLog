@@ -1,3 +1,40 @@
+2010-09-18  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* CMakeLists.txt, changelog.sh, process-changelog.sh:
+	  Simplification cible changelog
+	* CMakeLists.txt: Debug
+	* CMakeLists.txt, include/config.h.in, src/main.cpp,
+	  src/params.cpp, src/params.h: Proprisation de la détermination du
+	  répertoire TOP
+	* CMakeLists.txt, data/applications, data/applications/vcc.desktop,
+	  data/icons, data/icons/vcc.png, data/icons/vcc.svg,
+	  data/keymap.txt, data/pause.png, data/pause.svg, data/reset.png,
+	  data/reset.svg, data/share, data/share/keymap.txt,
+	  data/share/pause.png, data/share/pause.svg, data/share/reset.png,
+	  data/share/reset.svg, data/share/tctrl.png, data/share/tctrl.svg,
+	  data/tctrl.png, data/tctrl.svg, data/vcc.desktop, data/vcc_icon:
+	  Proprisation structure du répertoire data
+	* CMakeLists.txt, data/vcc.desktop, data/vcc_icon,
+	  data/vcc_icon/vcc.png, data/vcc_icon/vcc.svg: Icone
+	  application+raccourci gnome
+
+2010-09-16  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* README: Description simple de VCC dans le fichier README
+	* CMakeLists.txt, data/pause.png, data/reset.png, data/tctrl.png,
+	  src/params.cpp: Utilisation d'icônes au format png (compatibilité
+	  avec windows)
+	* CMakeLists.txt: Commentaires pour package Debian
+	* CMakeLists.txt, include/config.h.in, include/winkeyhookdll.h,
+	  src/clockwindow.cpp, src/clockwindow.h, src/dialwidget.cpp,
+	  src/dialwidget.h, src/icon.cpp, src/icon.h, src/keys.cpp,
+	  src/keys.h, src/main.cpp, src/params.cpp, src/params.h,
+	  src/timecontrol.cpp, src/timecontrol.h,
+	  src/timecontroldialog.cpp, src/timecontroldialog.h,
+	  src/timeentry.cpp, src/timeentry.h, src/timer.cpp, src/timer.h,
+	  src/winkeyhook/winkeyhookdll.c: Modification du formattage des
+	  en-tête licence
+
 2010-09-14  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* ., AUTHORS, CMakeLists.txt, include/config.h.in: Ajout des
