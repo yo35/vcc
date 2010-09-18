@@ -20,18 +20,31 @@
  ******************************************************************************/
 
 
-#include <gtkmm/main.h>
 #include "clockwindow.h"
 #include "params.h"
 #include <config.h>
+#include <gtkmm/main.h>
+#include <stdexcept>
+#ifdef OS_IS_WINDOWS
+	#include <windows.h>
+#endif
 
 int main(int argc, char *argv[]) {
 
 	// Initialisation GTK
 	Gtk::Main kit(argc, argv);
 
-	// Calcul des paramètres
-	std::string prefix_path = VCC_TOP;
+	// Chargement des paramètres
+	#ifdef OS_IS_WINDOWS
+		char buff[2048];
+		if(GetModuleFileName(NULL, buff, 2048)==0)
+			throw std::runtime_error("Unable to retrieve the filename of the executable");
+		std::string exe_path = buff;
+		std::string prefix_path = Glib::path_get_dirname(exe_path)
+			+ "/" + VCC_BIN_RPATH_BACKWARD;
+	#else
+		std::string prefix_path = VCC_TOP;
+	#endif
 	gp = new Params(prefix_path);
 
 	// GUI
