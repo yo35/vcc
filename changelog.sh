@@ -2,6 +2,9 @@
 
 TMP_OUTPUT_FILE=tmp_output_file
 
+# Extraction du journal subversion
+svn2cl --group-by-day
+
 # Supprime les lignes concernant ChangeLog dans ChangLog
 sed -e '/* ChangeLog:/d' ChangeLog > $TMP_OUTPUT_FILE
 mv $TMP_OUTPUT_FILE ChangeLog

@@ -215,14 +215,10 @@ add_custom_target(
 )
 
 # Génération du fichier ChangeLog
-find_program(SVN2CL svn2cl)
-if(NOT (${SVN2CL} MATCHES "SVN2CL-NOTFOUND"))
-	add_custom_target(
-		changelog
-		COMMAND ${SVN2CL} --group-by-day
-		COMMAND ./process-changelog.sh
-	)
-endif(NOT (${SVN2CL} MATCHES "SVN2CL-NOTFOUND"))
+add_custom_target(
+	changelog
+	COMMAND ./changelog.sh
+)
 
 # Exécution
 if(${COMPILE_FOR_DEV})
