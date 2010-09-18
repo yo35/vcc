@@ -103,17 +103,17 @@ file(
 file(
 	GLOB
 	icon_int_files
-	data/*.png
+	data/share/*.png
 )
 
 # Icône de l'application
-set(icon_app_file data/vcc_icon/vcc.png)
+set(icon_app_file data/icons/vcc.png)
 
 # Fichier de keymap
-set(keymap_file data/keymap.txt)
+set(keymap_file data/share/keymap.txt)
 
 # Fichier desktop
-set(desktop_file data/vcc.desktop)
+set(desktop_file data/applications/vcc.desktop)
 
 # Fichiers README, licence, etc...
 set(readme_aso_files README NEWS AUTHORS COPYING INSTALL ChangeLog)
@@ -127,7 +127,9 @@ set(readme_aso_files README NEWS AUTHORS COPYING INSTALL ChangeLog)
 if(${COMPILE_FOR_DEV})
 	set(VCC_BASE_PATH ".")
 	set(VCC_BIN_RPATH "bin")
-	set(VCC_SHARE_RPATH "data")
+	set(VCC_SHARE_RPATH "data/share")
+	set(VCC_ICONS_RPATH "data/icons")
+	set(VCC_APPLICATIONS_RPATH "data/applications")
 	set(VCC_DOC_RPATH ".")
 
 # Mode release
@@ -136,9 +138,13 @@ else(${COMPILE_FOR_DEV})
 	set(VCC_BIN_RPATH "bin")
 	if(${WIN32})
 		set(VCC_SHARE_RPATH "share")
+		set(VCC_ICONS_RPATH "share/icons")
+		set(VCC_APPLICATIONS_RPATH "share/applications")
 		set(VCC_DOC_RPATH ".")
 	else(${WIN32})
 		set(VCC_SHARE_RPATH "share/${PROJECT_NAME}")
+		set(VCC_ICONS_RPATH "share/icons")
+		set(VCC_APPLICATIONS_RPATH "share/applications")
 		set(VCC_DOC_RPATH "share/doc/${PROJECT_NAME}")
 	endif(${WIN32})
 
@@ -237,8 +243,8 @@ else(${COMPILE_FOR_DEV})
 	install(FILES ${icon_int_files} DESTINATION ${VCC_SHARE_RPATH})
 	install(FILES ${keymap_file} DESTINATION ${VCC_SHARE_RPATH})
 	install(FILES ${readme_aso_files} DESTINATION ${VCC_DOC_RPATH})
-	install(FILES ${desktop_file} DESTINATION share/applications)
-	install(FILES ${icon_app_file} DESTINATION share/icons)
+	install(FILES ${desktop_file} DESTINATION ${VCC_APPLICATIONS_RPATH})
+	install(FILES ${icon_app_file} DESTINATION ${VCC_ICONS_RPATH})
 
 	# CPack
 	set(CPACK_GENERATOR "DEB")
