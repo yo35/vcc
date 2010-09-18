@@ -52,6 +52,13 @@ pkg_check_modules(GTKMM REQUIRED gtkmm-2.4)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(LIBRARY_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 
+# Fichiers ressource
+if(${WIN32})
+	set(CMAKE_RC_COMPILER windres)
+	set(CMAKE_RC_COMPILE_OBJECT "windres <SOURCE> -O coff -o <OBJECT>")
+	enable_language(RC)
+endif(${WIN32})
+
 
 
 ################################################################################
@@ -107,7 +114,13 @@ file(
 )
 
 # Icône de l'application
-set(icon_app_file data/icons/vcc.png)
+if(${WIN32})
+	set(icon_app_file data/icons/vcc.ico)
+	set(icon_rc_file data/icons/winicon.rc)
+else(${WIN32})
+	set(icon_app_file data/icons/vcc.png)
+	set(icon_rc_file "")
+endif(${WIN32})
 
 # Fichier de keymap
 set(keymap_file data/share/keymap.txt)
@@ -191,6 +204,7 @@ add_executable(
 	${EXECUTABLE_NAME}
 	${src_cpp_files}
 	${src_h_files}
+	${icon_rc_file}
 )
 target_link_libraries(
 	${EXECUTABLE_NAME}
