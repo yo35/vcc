@@ -1,5 +1,7 @@
 2010-09-19  Yoann Le Montagner <yo35(at)melix(dot)net>
 
+	* CMakeLists.txt: Prise en compte du numéro de version patch +
+	  Passage à v0.9
 	* changelog.sh: Debug
 	* CMakeLists.txt: Debug
 	* INSTALL, NEWS, README: Instructions d'installation + précision
