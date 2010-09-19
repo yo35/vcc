@@ -40,9 +40,17 @@ endif(NOT (
 )
 
 # Mode d'installation
-if(NOT DEFINED COMPILE_FOR_DEV)
-	message(FATAL_ERROR "Must define COMPILE_FOR_DEV")
-endif(NOT DEFINED COMPILE_FOR_DEV)
+if(NOT (
+	(${INSTALL_TYPE} MATCHES Dev) OR
+	(${INSTALL_TYPE} MATCHES Compile) OR
+	(${INSTALL_TYPE} MATCHES Package))
+)
+	message(FATAL_ERROR "Must define INSTALL_TYPE")
+if(NOT (
+	(${INSTALL_TYPE} MATCHES Dev) OR
+	(${INSTALL_TYPE} MATCHES Compile) OR
+	(${INSTALL_TYPE} MATCHES Package))
+)
 
 # Gtkmm
 find_package(PkgConfig)
@@ -130,6 +138,8 @@ set(desktop_file data/applications/vcc.desktop)
 
 # Fichiers README, licence, etc...
 set(readme_aso_files README NEWS AUTHORS COPYING INSTALL ChangeLog)
+get_filename_component("README_FULL_PATH" "README" ABSOLUTE)
+get_filename_component("COPYING_FULL_PATH" "COPYING" ABSOLUTE)
 
 
 
@@ -137,7 +147,7 @@ set(readme_aso_files README NEWS AUTHORS COPYING INSTALL ChangeLog)
 # Répertoires en runtime
 
 # Mode debug
-if(${COMPILE_FOR_DEV})
+if(${INSTALL_TYPE} MATCHES Dev)
 	set(VCC_TOP ".")
 	set(VCC_BIN_RPATH "bin")
 	set(VCC_BIN_RPATH_BACKWARD "../..")
@@ -147,7 +157,7 @@ if(${COMPILE_FOR_DEV})
 	set(VCC_DOC_RPATH ".")
 
 # Mode release
-else(${COMPILE_FOR_DEV})
+else(${INSTALL_TYPE} MATCHES Dev)
 	set(VCC_TOP ${CMAKE_INSTALL_PREFIX})
 	set(VCC_BIN_RPATH "bin")
 	set(VCC_BIN_RPATH_BACKWARD "..")
@@ -163,7 +173,7 @@ else(${COMPILE_FOR_DEV})
 		set(VCC_DOC_RPATH "share/doc/${PROJECT_NAME}")
 	endif(${WIN32})
 
-endif(${COMPILE_FOR_DEV})
+endif(${INSTALL_TYPE} MATCHES Dev)
 
 
 
@@ -176,9 +186,9 @@ include_directories(${GTKMM_INCLUDE_DIRS} include)
 link_directories(${GTKMM_LIBRARY_DIRS})
 if(${WIN32})
 	add_definitions("-DOS_IS_WINDOWS")
-	if(NOT ${COMPILE_FOR_DEV})
+	if(NOT (${INSTALL_TYPE} MATCHES Dev))
 		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
-	endif(NOT ${COMPILE_FOR_DEV})
+	endif(NOT (${INSTALL_TYPE} MATCHES Dev))
 endif(${WIN32})
 
 # Fichier de configuration
@@ -235,7 +245,7 @@ add_custom_target(
 )
 
 # Exécution
-if(${COMPILE_FOR_DEV})
+if(${INSTALL_TYPE} MATCHES Dev)
 	add_custom_target(
 		run
 		COMMAND ${EXECUTABLE_OUTPUT_PATH}/${EXECUTABLE_NAME}
@@ -243,7 +253,7 @@ if(${COMPILE_FOR_DEV})
 	)
 
 # Installation
-else(${COMPILE_FOR_DEV})
+else(${INSTALL_TYPE} MATCHES Dev)
 
 	# Cible 'make install'
 	install(PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/${EXECUTABLE_FULL_NAME}
@@ -257,30 +267,27 @@ else(${COMPILE_FOR_DEV})
 	install(FILES ${readme_aso_files} DESTINATION ${VCC_DOC_RPATH})
 	install(FILES ${desktop_file} DESTINATION ${VCC_APPLICATIONS_RPATH})
 	install(FILES ${icon_app_file} DESTINATION ${VCC_ICONS_RPATH})
-	
-	# Fichiers à passer sous forme d'un chemin absolu
-	get_filename_component("README_FULL_PATH" "README" ABSOLUTE)
-	get_filename_component("COPYING_FULL_PATH" "COPYING" ABSOLUTE)
-	
-	# CPack
-	if(${WIN32})
-		set(CPACK_GENERATOR "NSIS")
-	else(${WIN32})
-		set(CPACK_GENERATOR "DEB")
-	endif(${WIN32})
-	set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-	set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-	set(CPACK_PACKAGE_VERSION_PATCH 0)
-	set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
-	set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
-	set(CPACK_PACKAGE_DESCRIPTION_FILE ${README_FULL_PATH})
-	set(CPACK_RESOURCE_FILE_LICENSE ${COPYING_FULL_PATH})
-	set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Virtual Chess Clock is a simple and free chess clock software")
-	set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Yoann Le Montagner")
-	set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS
-		"CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\${PROJECT_FULL_NAME}.lnk' '$INSTDIR\\\\${VCC_BIN_RPATH}\\\\${EXECUTABLE_FULL_NAME}'")
-	set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS
-		"Delete '$SMPROGRAMS\\\\$START_MENU\\\\${PROJECT_FULL_NAME}.lnk'")
-	include(CPack)
 
-endif(${COMPILE_FOR_DEV})
+	# CPack
+	if(${INSTALL_TYPE} MATCHES Package)
+		if(${WIN32})
+			set(CPACK_GENERATOR "NSIS")
+		else(${WIN32})
+			set(CPACK_GENERATOR "DEB")
+		endif(${WIN32})
+		set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+		set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+		set(CPACK_PACKAGE_VERSION_PATCH 0)
+		set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
+		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
+		set(CPACK_PACKAGE_DESCRIPTION_FILE ${README_FULL_PATH})
+		set(CPACK_RESOURCE_FILE_LICENSE ${COPYING_FULL_PATH})
+		set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Virtual Chess Clock is a simple and free chess clock software")
+		set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Yoann Le Montagner")
+		set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS
+			"CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\${PROJECT_FULL_NAME}.lnk' '$INSTDIR\\\\${VCC_BIN_RPATH}\\\\${EXECUTABLE_FULL_NAME}'")
+		set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS
+			"Delete '$SMPROGRAMS\\\\$START_MENU\\\\${PROJECT_FULL_NAME}.lnk'")
+		include(CPack)
+	endif(${INSTALL_TYPE} MATCHES Package)
+endif(${INSTALL_TYPE} MATCHES Dev)
