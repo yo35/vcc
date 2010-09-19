@@ -149,7 +149,7 @@ get_filename_component("COPYING_FULL_PATH" "COPYING" ABSOLUTE)
 # Mode debug
 if(${INSTALL_TYPE} MATCHES Dev)
 	set(VCC_TOP ".")
-	set(VCC_BIN_RPATH "bin")
+	set(VCC_BIN_RPATH "bin/${CMAKE_BUILD_TYPE}")
 	set(VCC_BIN_RPATH_BACKWARD "../..")
 	set(VCC_SHARE_RPATH "data/share")
 	set(VCC_ICONS_RPATH "data/icons")
@@ -267,7 +267,7 @@ else(${INSTALL_TYPE} MATCHES Dev)
 	install(FILES ${readme_aso_files} DESTINATION ${VCC_DOC_RPATH})
 	install(FILES ${desktop_file} DESTINATION ${VCC_APPLICATIONS_RPATH})
 	install(FILES ${icon_app_file} DESTINATION ${VCC_ICONS_RPATH})
-	
+
 	# Libraries additionnelles pour windows
 	if((${INSTALL_TYPE} MATCHES Package) AND ${WIN32})
 		install(DIRECTORY redist_win32/mingw32/         DESTINATION "." PATTERN ".svn" EXCLUDE)
