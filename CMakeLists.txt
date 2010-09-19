@@ -46,7 +46,7 @@ if(NOT (
 	(${INSTALL_TYPE} MATCHES Package))
 )
 	message(FATAL_ERROR "Must define INSTALL_TYPE")
-if(NOT (
+endif(NOT (
 	(${INSTALL_TYPE} MATCHES Dev) OR
 	(${INSTALL_TYPE} MATCHES Compile) OR
 	(${INSTALL_TYPE} MATCHES Package))
