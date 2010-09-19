@@ -267,6 +267,23 @@ else(${INSTALL_TYPE} MATCHES Dev)
 	install(FILES ${readme_aso_files} DESTINATION ${VCC_DOC_RPATH})
 	install(FILES ${desktop_file} DESTINATION ${VCC_APPLICATIONS_RPATH})
 	install(FILES ${icon_app_file} DESTINATION ${VCC_ICONS_RPATH})
+	
+	# Libraries additionnelles pour windows
+	if((${INSTALL_TYPE} MATCHES Package) AND ${WIN32})
+		install(DIRECTORY redist_win32/mingw32/         DESTINATION "." PATTERN ".svn" EXCLUDE)
+		install(DIRECTORY redist_win32/gtkmm/           DESTINATION "." PATTERN ".svn" EXCLUDE)
+		install(DIRECTORY redist_win32/gtk+/atk/        DESTINATION "." PATTERN ".svn" EXCLUDE)
+		install(DIRECTORY redist_win32/gtk+/cairo/      DESTINATION "." PATTERN ".svn" EXCLUDE)
+		install(DIRECTORY redist_win32/gtk+/expat/      DESTINATION "." PATTERN ".svn" EXCLUDE)
+		install(DIRECTORY redist_win32/gtk+/fontconfig/ DESTINATION "." PATTERN ".svn" EXCLUDE)
+		install(DIRECTORY redist_win32/gtk+/freetype/   DESTINATION "." PATTERN ".svn" EXCLUDE)
+		install(DIRECTORY redist_win32/gtk+/glib/       DESTINATION "." PATTERN ".svn" EXCLUDE)
+		install(DIRECTORY redist_win32/gtk+/gtk+/       DESTINATION "." PATTERN ".svn" EXCLUDE)
+		install(DIRECTORY redist_win32/gtk+/gtk+-conf/  DESTINATION "." PATTERN ".svn" EXCLUDE)
+		install(DIRECTORY redist_win32/gtk+/libpng/     DESTINATION "." PATTERN ".svn" EXCLUDE)
+		install(DIRECTORY redist_win32/gtk+/pango/      DESTINATION "." PATTERN ".svn" EXCLUDE)
+		install(DIRECTORY redist_win32/gtk+/zlib/       DESTINATION "." PATTERN ".svn" EXCLUDE)
+	endif((${INSTALL_TYPE} MATCHES Package) AND ${WIN32})
 
 	# CPack
 	if(${INSTALL_TYPE} MATCHES Package)
