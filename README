@@ -11,8 +11,28 @@ were lacking of such a stuff, so we could not blitz, so we were in bad trouble !
 
 Features
 --------
- - two active area of keys on the keyboard (left and right) to trigger player
-   turn shift
+ - two active key areas on the keyboard (left and right) to trigger player shift
  - support for exotic time control modes such as Fischer, Bronstein, hour-glass
  - time resolution of 1 millisecond
- - desactivation of the window keys on Windows
+ - inactivation of the window keys on Windows
+
+
+License
+-------
+Virtual Chess Clock is distributed under the terms of the GNU General Public
+License as published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version. A copy of this license can be
+found in the file COPYING included with the source code of this program.
+
+
+Ideas, questions, wishes and bug reports
+----------------------------------------
+If you notice a bug, please feel free to send me a mail to report it: it helps
+me to improve Virtual Chess Clock. Please mention details about your OS (name,
+32 or 64 bits, aso...) and the context in which the bug occurs in your bug
+report. Of course, you can also mail me if you have a question about Virtual
+Chess Clock, or if you wish to get a new feature in further versions.
+
+
+--
+Copyright (C) 2010  Yoann Le Montagner <yo35(at)melix(dot)net>
