@@ -1,3 +1,11 @@
+2010-09-20  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* NEWS: Release version 0.9
+	* data/applications: Ignore vcc.desktop
+	* CMakeLists.txt, data/applications/vcc.desktop,
+	  data/applications/vcc.desktop.in: Chemin absolu vers l'icone de
+	  vcc dans le fichier desktop
+
 2010-09-19  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* CMakeLists.txt: Prise en compte du numéro de version patch +
