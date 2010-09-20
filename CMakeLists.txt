@@ -135,6 +135,7 @@ endif(${WIN32})
 set(keymap_file data/share/keymap.txt)
 
 # Fichier desktop
+set(desktop_in_file data/applications/vcc.desktop.in)
 set(desktop_file data/applications/vcc.desktop)
 
 # Fichiers README, licence, etc...
@@ -192,10 +193,14 @@ if(${WIN32})
 	endif(NOT (${INSTALL_TYPE} MATCHES Dev))
 endif(${WIN32})
 
-# Fichier de configuration
+# Fichiers de configuration
 configure_file(
 	${config_in_file}
 	${config_h_file}
+)
+configure_file(
+	${desktop_in_file}
+	${desktop_file}
 )
 
 # Bibliothèque pour la désactivation de la touche windows
@@ -234,6 +239,7 @@ add_custom_target(
 	COMMAND ${CMAKE_COMMAND} -E remove -f *.cmake *.tar.gz *.deb *.exe
 	COMMAND ${CMAKE_COMMAND} -E remove -f Makefile CMakeCache.txt install_manifest.txt
 	COMMAND ${CMAKE_COMMAND} -E remove -f include/config.h
+	COMMAND ${CMAKE_COMMAND} -E remove -f data/applications/vcc.desktop
 	COMMAND ${CMAKE_COMMAND} -E remove_directory bin
 	COMMAND ${CMAKE_COMMAND} -E remove_directory CMakeFiles
 	COMMAND ${CMAKE_COMMAND} -E remove_directory _CPack_Packages
