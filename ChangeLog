@@ -1,6 +1,7 @@
 2010-09-20  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* CMakeLists.txt: Correction dépendance GTKMM pour Debian
+	* CMakeLists.txt: Correction dépendance GTKMM pour Debian
 	* NEWS: Release version 0.9
 	* data/applications: Ignore vcc.desktop
 	* CMakeLists.txt, data/applications/vcc.desktop,
