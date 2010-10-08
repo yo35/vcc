@@ -23,6 +23,7 @@
 #include "clockwindow.h"
 #include "params.h"
 #include <config.h>
+#include <libintl.h>
 #include <gtkmm/main.h>
 #include <stdexcept>
 #ifdef OS_IS_WINDOWS
@@ -33,6 +34,11 @@ int main(int argc, char *argv[]) {
 
 	// Initialisation GTK
 	Gtk::Main kit(argc, argv);
+
+	// Initialisation libintl
+	setlocale(LC_ALL, "");
+	bindtextdomain(PROJECT_NAME, "./po");
+	textdomain(PROJECT_NAME);
 
 	// Chargement des paramètres
 	#ifdef OS_IS_WINDOWS
