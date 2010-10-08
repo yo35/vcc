@@ -35,12 +35,7 @@ int main(int argc, char *argv[]) {
 	// Initialisation GTK
 	Gtk::Main kit(argc, argv);
 
-	// Initialisation libintl
-	setlocale(LC_ALL, "");
-	bindtextdomain(PROJECT_NAME, "./po");
-	textdomain(PROJECT_NAME);
-
-	// Chargement des paramètres
+	// Détermination du path de top-level
 	#ifdef OS_IS_WINDOWS
 		char buff[2048];
 		if(GetModuleFileName(NULL, buff, 2048)==0)
@@ -51,6 +46,14 @@ int main(int argc, char *argv[]) {
 	#else
 		std::string prefix_path = VCC_TOP;
 	#endif
+
+	// Initialisation libintl
+	std::string locale_path = prefix_path + "/" + VCC_LOCALE_RPATH;
+	setlocale(LC_ALL, "");
+	bindtextdomain(PROJECT_NAME, locale_path.c_str());
+	textdomain(PROJECT_NAME);
+
+	// Chargement des paramètres
 	gp = new Params(prefix_path);
 
 	// GUI
