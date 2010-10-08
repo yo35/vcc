@@ -143,6 +143,9 @@ set(readme_aso_files README NEWS AUTHORS COPYING INSTALL ChangeLog)
 get_filename_component("README_FULL_PATH" "README" ABSOLUTE)
 get_filename_component("COPYING_FULL_PATH" "COPYING" ABSOLUTE)
 
+# Ficher de template pour les traductions
+set(template_pot_file po/vcc.pot)
+
 
 
 ################################################################################
@@ -252,6 +255,14 @@ add_custom_target(
 add_custom_target(
 	changelog
 	COMMAND ./changelog.sh
+)
+
+# Génération du fichier de template pour les traductions
+add_custom_target(
+	pot
+	COMMAND xgettext --from-code=UTF-8 --package-name=${PROJECT_NAME}
+		--package-version=${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}
+		-o ${template_pot_file} ${src_cpp_files} ${src_h_files} ${dll_c_files}
 )
 
 # Exécution
