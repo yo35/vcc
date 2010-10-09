@@ -1,115 +1,115 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Yoann Le Montagner <yo35 ( at ) melix ( dot ) net>
+# French translations for PACKAGE package.
+# Copyright (C) 2010 Yoann Le Montagner <yo35 ( at ) melix ( dot ) net>
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Yoann Le Montagner <yo35@melix.net>, 2010.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: virtual-chess-clock 0.99.0\n"
 "Report-Msgid-Bugs-To: Yoann Le Montagner <yo35 ( at ) melix ( dot ) net>\n"
-"POT-Creation-Date: 2010-10-09 12:11+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2010-10-09 12:01+0200\n"
+"PO-Revision-Date: 2010-10-09 12:02+0200\n"
+"Last-Translator: Yoann Le Montagner <yo35@melix.net>\n"
+"Language-Team: French\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: /home/yoann/Tmp/VCC/trunk/src/dialwidget.cpp:72
 msgid "Flag down"
-msgstr ""
+msgstr "Tombé"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:71
 msgid "Reset"
-msgstr ""
+msgstr "Réinitialisation"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:72
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:73
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:28
 msgid "Time control"
-msgstr ""
+msgstr "Cadence"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:74
 msgid "Reset the clock"
-msgstr ""
+msgstr "Initialiser la pendule"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:75
 msgid "Pause the clock"
-msgstr ""
+msgstr "Mettre la pendule en pause"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:76
 msgid "Change the current time control"
-msgstr ""
+msgstr "Modifier la cadence"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:123
 msgid "Do you really want to start a new game ?"
-msgstr ""
+msgstr "Voulez-vous vraiment commencer une nouvelle partie?"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:125
 msgid "Stop this game ?"
-msgstr ""
+msgstr "Terminer cette partie ?"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timeentry.cpp:27
 msgid "hour"
-msgstr ""
+msgstr "heure"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timeentry.cpp:27
 msgid "min"
-msgstr ""
+msgstr "min"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timeentry.cpp:27
 msgid "sec"
-msgstr ""
+msgstr "sec"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:36
 msgid "Mode"
-msgstr ""
+msgstr "Mode"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:38
 msgid "Simple delay"
-msgstr ""
+msgstr "Mort subite"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:39
 msgid "Fischer"
-msgstr ""
+msgstr "Fischer"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:40
 msgid "Bronstein"
-msgstr ""
+msgstr "Bronstein"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:41
 msgid "Hour-glass"
-msgstr ""
+msgstr "Hourglass"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:50
 msgid "Left"
-msgstr ""
+msgstr "Gauche"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:51
 msgid "Right"
-msgstr ""
+msgstr "Droite"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:53
 msgid "Main time"
-msgstr ""
+msgstr "Temps principal"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:54
 msgid "Increment"
-msgstr ""
+msgstr "Incrément"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:70
 msgid "Time control values are the same for both sides"
-msgstr ""
+msgstr "Même temps pour les deux côtés"
 
 #: /home/yoann/Tmp/VCC/trunk/src/params.cpp:52
 msgid "Unable to open the keyboard configuration file"
-msgstr ""
+msgstr "Impossible d'ouvrir le fichier de configuration du clavier"
 
 #: /home/yoann/Tmp/VCC/trunk/src/params.cpp:72
 #: /home/yoann/Tmp/VCC/trunk/src/params.cpp:76
 msgid "The keyboard configuration file is corrupted"
-msgstr ""
+msgstr "Le fichier de configuration du clavier est corrompu"
