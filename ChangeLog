@@ -1,5 +1,6 @@
 2010-10-09  Yoann Le Montagner <yo35(at)melix(dot)net>
 
+	* include/translation.h: En-tête de copyright
 	* INSTALL, NEWS: Commentaires sur la version 0.99
 
 2010-10-09  Yoann Le Montagner <yo35(at)melix(dot)net>
