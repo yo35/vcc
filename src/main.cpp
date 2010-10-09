@@ -23,7 +23,7 @@
 #include "clockwindow.h"
 #include "params.h"
 #include <config.h>
-#include <libintl.h>
+#include <translation.h>
 #include <gtkmm/main.h>
 #include <stdexcept>
 #ifdef OS_IS_WINDOWS

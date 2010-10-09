@@ -22,10 +22,10 @@
 
 #include "timecontroldialog.h"
 #include <gtkmm/stock.h>
-#include <libintl.h>
+#include <translation.h>
 
 TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src) :
-	Gtk::Dialog(gettext("Time control"), parent, true, true)
+	Gtk::Dialog(_("Time control"), parent, true, true)
 {
 	// Boutons de réponse
 	add_button(Gtk::Stock::OK    , Gtk::RESPONSE_OK    );
@@ -33,12 +33,12 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 	set_default_response(Gtk::RESPONSE_OK);
 
 	// Frame "mode"
-	frm_mode.set_label(gettext("Mode"));
+	frm_mode.set_label(_("Mode"));
 	layout_mode.set_spacing(5);
-	mode[0].set_label(gettext("Simple delay"));
-	mode[1].set_label(gettext("Fischer"     ));
-	mode[2].set_label(gettext("Bronstein"   ));
-	mode[3].set_label(gettext("Hour-glass"  ));
+	mode[0].set_label(_("Simple delay"));
+	mode[1].set_label(_("Fischer"     ));
+	mode[2].set_label(_("Bronstein"   ));
+	mode[3].set_label(_("Hour-glass"  ));
 	for(int i=0; i<4; ++i) {
 		mode[i].set_group(group);
 		mode[i].signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::manage_sensitivity));
@@ -47,11 +47,11 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 	frm_mode.add(layout_mode);
 
 	// Frames "time"
-	frm_time[0].set_label(gettext("Left" ));
-	frm_time[1].set_label(gettext("Right"));
+	frm_time[0].set_label(_("Left" ));
+	frm_time[1].set_label(_("Right"));
 	for(int i=0; i<2; ++i) {
-		lbl_main_time[i].set_label(gettext("Main time"));
-		lbl_increment[i].set_label(gettext("Increment"));
+		lbl_main_time[i].set_label(_("Main time"));
+		lbl_increment[i].set_label(_("Increment"));
 		layout_time[i].resize(2, 2);
 		layout_time[i].set_spacings(5);
 		layout_time[i].attach(lbl_main_time[i], 0, 1, 0, 1);
@@ -67,7 +67,7 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 	layout_times.pack_start(frm_time[1]);
 
 	// Case à cocher liant les deux côtés
-	link_both_times.set_label(gettext("Time control values are the same for both sides"));
+	link_both_times.set_label(_("Time control values are the same for both sides"));
 	link_both_times.signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::manage_sensitivity));
 	link_both_times.signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_main_time));
 	link_both_times.signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_increment));

@@ -27,7 +27,7 @@
 #include <config.h>
 #include <cassert>
 #include <gtkmm/messagedialog.h>
-#include <libintl.h>
+#include <translation.h>
 
 #ifdef OS_IS_WINDOWS
 	#include <winkeyhookdll.h>
@@ -68,12 +68,12 @@ ClockWindow::ClockWindow() : Gtk::Window() {
 	btn_reset.set_icon_widget(img_reset);
 	btn_pause.set_icon_widget(img_pause);
 	btn_tctrl.set_icon_widget(img_tctrl);
-	btn_reset.set_label(gettext("Reset"       ));
-	btn_pause.set_label(gettext("Pause"       ));
-	btn_tctrl.set_label(gettext("Time control"));
-	btn_reset.set_tooltip_text(gettext("Reset the clock"                ));
-	btn_pause.set_tooltip_text(gettext("Pause the clock"                ));
-	btn_tctrl.set_tooltip_text(gettext("Change the current time control"));
+	btn_reset.set_label(_("Reset"       ));
+	btn_pause.set_label(_("Pause"       ));
+	btn_tctrl.set_label(_("Time control"));
+	btn_reset.set_tooltip_text(_("Reset the clock"                ));
+	btn_pause.set_tooltip_text(_("Pause the clock"                ));
+	btn_tctrl.set_tooltip_text(_("Change the current time control"));
 	toolbar.append(btn_reset);
 	toolbar.append(btn_pause);
 	toolbar.append(btn_tctrl);
@@ -120,9 +120,9 @@ void ClockWindow::on_reset_clicked() {
 
 	// On demande confirmation si l'un des timers est actif
 	if(one_timer_is_active()) {
-		Gtk::MessageDialog dialog(*this, gettext("Do you really want to start a new game ?"),
+		Gtk::MessageDialog dialog(*this, _("Do you really want to start a new game ?"),
 			false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_YES_NO, true);
-		dialog.set_title(gettext("Stop this game ?"));
+		dialog.set_title(_("Stop this game ?"));
 		int retval = dialog.run();
 		if(retval!=Gtk::RESPONSE_YES)
 			return;

@@ -21,7 +21,7 @@
 
 
 #include "dialwidget.h"
-#include <libintl.h>
+#include <translation.h>
 
 DialWidget::DialWidget() : Gtk::DrawingArea() {
 	m_timer = 0;
@@ -69,7 +69,7 @@ bool DialWidget::on_expose_event(GdkEventExpose *event) {
 	int rounded_curr_time = (curr_time+499)/1000;
 	Glib::ustring txt;
 	if(curr_time < 0)
-		txt = gettext("Flag down");
+		txt = _("Flag down");
 	else if(rounded_curr_time < 60*60) {
 		int sec = rounded_curr_time % 60;
 		int min = rounded_curr_time / 60;

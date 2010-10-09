@@ -21,10 +21,10 @@
 
 
 #include "timeentry.h"
-#include "libintl.h"
+#include <translation.h>
 
 TimeEntry::TimeEntry() : Gtk::HBox(),
-	lbl_hour(gettext("hour")), lbl_min(gettext("min")), lbl_sec(gettext("sec"))
+	lbl_hour(_("hour")), lbl_min(_("min")), lbl_sec(_("sec"))
 {
 	set_spacing(5);
 	hour.set_range(0, 99);
