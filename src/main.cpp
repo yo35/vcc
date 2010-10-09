@@ -51,6 +51,7 @@ int main(int argc, char *argv[]) {
 	std::string locale_path = prefix_path + "/" + VCC_LOCALE_RPATH;
 	setlocale(LC_ALL, "");
 	bindtextdomain(PROJECT_NAME, locale_path.c_str());
+	bind_textdomain_codeset(PROJECT_NAME, "UTF-8");
 	textdomain(PROJECT_NAME);
 
 	// Chargement des paramètres
