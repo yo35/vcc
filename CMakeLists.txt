@@ -291,7 +291,6 @@ add_custom_target(
 	translations
 	DEPENDS ${TRANSLATIONS_DEPENDS}
 )
-
 add_dependencies(${EXECUTABLE_NAME} translations)
 
 # Exécution
