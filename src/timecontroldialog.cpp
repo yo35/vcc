@@ -35,10 +35,10 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 	// Frame "mode"
 	frm_mode.set_label(_("Mode"));
 	layout_mode.set_spacing(5);
-	mode[0].set_label(_("Simple delay"));
+	mode[0].set_label(_("Sudden death"));
 	mode[1].set_label(_("Fischer"     ));
 	mode[2].set_label(_("Bronstein"   ));
-	mode[3].set_label(_("Hour-glass"  ));
+	mode[3].set_label(_("Hourglass"   ));
 	for(int i=0; i<4; ++i) {
 		mode[i].set_group(group);
 		mode[i].signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::manage_sensitivity));

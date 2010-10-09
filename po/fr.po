@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtual-chess-clock 0.99.0\n"
 "Report-Msgid-Bugs-To: Yoann Le Montagner <yo35 ( at ) melix ( dot ) net>\n"
-"POT-Creation-Date: 2010-10-09 12:01+0200\n"
+"POT-Creation-Date: 2010-10-09 12:15+0200\n"
 "PO-Revision-Date: 2010-10-09 12:02+0200\n"
 "Last-Translator: Yoann Le Montagner <yo35@melix.net>\n"
 "Language-Team: French\n"
@@ -46,11 +46,11 @@ msgid "Change the current time control"
 msgstr "Modifier la cadence"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:123
-msgid "Do you really want to start a new game ?"
-msgstr "Voulez-vous vraiment commencer une nouvelle partie?"
+msgid "Do you really want to start a new game?"
+msgstr "Voulez-vous vraiment commencer une nouvelle partie ?"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:125
-msgid "Stop this game ?"
+msgid "Stop this game?"
 msgstr "Terminer cette partie ?"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timeentry.cpp:27
@@ -70,7 +70,7 @@ msgid "Mode"
 msgstr "Mode"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:38
-msgid "Simple delay"
+msgid "Sudden death"
 msgstr "Mort subite"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:39
@@ -82,7 +82,7 @@ msgid "Bronstein"
 msgstr "Bronstein"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:41
-msgid "Hour-glass"
+msgid "Hourglass"
 msgstr "Hourglass"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:50

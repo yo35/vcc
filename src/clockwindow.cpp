@@ -120,9 +120,9 @@ void ClockWindow::on_reset_clicked() {
 
 	// On demande confirmation si l'un des timers est actif
 	if(one_timer_is_active()) {
-		Gtk::MessageDialog dialog(*this, _("Do you really want to start a new game ?"),
+		Gtk::MessageDialog dialog(*this, _("Do you really want to start a new game?"),
 			false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_YES_NO, true);
-		dialog.set_title(_("Stop this game ?"));
+		dialog.set_title(_("Stop this game?"));
 		int retval = dialog.run();
 		if(retval!=Gtk::RESPONSE_YES)
 			return;
