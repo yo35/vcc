@@ -21,6 +21,7 @@ To be able to build Virtual Chess Clock from sources, you need to install
 beforehand:
 	- CMake (Makefile generation): http://www.cmake.org/
 	- GTKmm (graphic library): http://www.gtkmm.org/
+	- gettext (translation library): http://www.gnu.org/software/gettext/
 	- Of course, a C++ compiler.
 
 Then, follow those instructions:
