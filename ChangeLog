@@ -1,3 +1,38 @@
+2010-10-09  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* INSTALL, NEWS: Commentaires sur la version 0.99
+
+2010-10-09  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* redist_win32/gtkmm/bin/intl.dll,
+	  redist_win32/gtkmm/manifest/gtkmm_2.20.3-1_win32.mft: Ajout dll
+	  pour les traductions
+
+2010-10-09  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/main.cpp: Force l'encodage UTF-8 pour gettext
+	* CMakeLists.txt: Commandes d'installation
+	* CMakeLists.txt: Procédure de compilation des fichiers de
+	  traduction
+	* ., CMakeLists.txt: Procédure de compilation des fichiers de
+	  traduction
+	* po/fr.po, po/vcc.pot, src/clockwindow.cpp,
+	  src/timecontroldialog.cpp: Debug
+	* po/fr.po, po/vcc.pot: Fichier de traduction pour le français
+	* CMakeLists.txt, po/vcc.pot: Génération du .pot
+	* include/translation.h, src/clockwindow.cpp, src/dialwidget.cpp,
+	  src/main.cpp, src/params.cpp, src/timecontroldialog.cpp,
+	  src/timeentry.cpp: Fichier d'en-tête pour gettext
+
+2010-10-08  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* CMakeLists.txt, po, po/vcc.pot: Génération du fichier POT
+	* CMakeLists.txt, include/config.h.in, src/main.cpp: Définition du
+	  path de locale
+	* CMakeLists.txt, src/clockwindow.cpp, src/dialwidget.cpp,
+	  src/main.cpp, src/params.cpp, src/timecontroldialog.cpp,
+	  src/timeentry.cpp: Modif du code en vue de la traduction
+
 2010-09-20  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* CMakeLists.txt: Correction dépendance GTKMM pour Debian
