@@ -146,6 +146,13 @@ get_filename_component("COPYING_FULL_PATH" "COPYING" ABSOLUTE)
 # Ficher de template pour les traductions
 set(template_pot_file po/vcc.pot)
 
+# Fichiers de traduction
+file(
+	GLOB
+	translation_po_files
+	po/*.po
+)
+
 
 
 ################################################################################
@@ -247,6 +254,7 @@ add_custom_target(
 	COMMAND ${CMAKE_COMMAND} -E remove -f include/config.h
 	COMMAND ${CMAKE_COMMAND} -E remove -f data/applications/vcc.desktop
 	COMMAND ${CMAKE_COMMAND} -E remove_directory bin
+	COMMAND ${CMAKE_COMMAND} -E remove_directory locale
 	COMMAND ${CMAKE_COMMAND} -E remove_directory CMakeFiles
 	COMMAND ${CMAKE_COMMAND} -E remove_directory _CPack_Packages
 )
@@ -266,6 +274,25 @@ add_custom_target(
 		--copyright-holder='Yoann Le Montagner <yo35(at)melix(dot)net>'
 		-o ${template_pot_file} ${src_cpp_files} ${src_h_files} ${dll_c_files}
 )
+
+# Compilation des fichiers de traduction
+set(TRANSLATIONS_DEPENDS "")
+foreach(translation_po_file ${translation_po_files})
+	get_filename_component(INTL_CODE ${translation_po_file} NAME_WE)
+	add_custom_command(
+		OUTPUT locale/${INTL_CODE}/LC_MESSAGES/${PROJECT_NAME}.mo
+		COMMAND ${CMAKE_COMMAND} -E make_directory locale/${INTL_CODE}/LC_MESSAGES
+		COMMAND msgfmt -c -v -o $@ $<
+		DEPENDS ${translation_po_file}
+	)
+	set(TRANSLATIONS_DEPENDS ${TRANSLATIONS_DEPENDS} locale/${INTL_CODE}/LC_MESSAGES/${PROJECT_NAME}.mo)
+endforeach(translation_po_file)
+add_custom_target(
+	translations
+	DEPENDS ${TRANSLATIONS_DEPENDS}
+)
+
+add_dependencies(${EXECUTABLE_NAME} translations)
 
 # Exécution
 if(${INSTALL_TYPE} MATCHES Dev)
