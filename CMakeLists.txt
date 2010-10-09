@@ -277,16 +277,16 @@ add_custom_target(
 
 # Compilation des fichiers de traduction
 set(TRANSLATIONS_DEPENDS "")
-foreach(translation_po_file ${translation_po_files})
-	get_filename_component(INTL_CODE ${translation_po_file} NAME_WE)
+foreach(loop_var ${translation_po_files})
+	get_filename_component(INTL_CODE ${loop_var} NAME_WE)
 	add_custom_command(
 		OUTPUT locale/${INTL_CODE}/LC_MESSAGES/${PROJECT_NAME}.mo
 		COMMAND ${CMAKE_COMMAND} -E make_directory locale/${INTL_CODE}/LC_MESSAGES
 		COMMAND msgfmt -c -v -o $@ $<
-		DEPENDS ${translation_po_file}
+		DEPENDS ${loop_var}
 	)
 	set(TRANSLATIONS_DEPENDS ${TRANSLATIONS_DEPENDS} locale/${INTL_CODE}/LC_MESSAGES/${PROJECT_NAME}.mo)
-endforeach(translation_po_file)
+endforeach(loop_var)
 add_custom_target(
 	translations
 	DEPENDS ${TRANSLATIONS_DEPENDS}
@@ -316,6 +316,10 @@ else(${INSTALL_TYPE} MATCHES Dev)
 	install(FILES ${readme_aso_files} DESTINATION ${VCC_DOC_RPATH})
 	install(FILES ${desktop_file} DESTINATION ${VCC_APPLICATIONS_RPATH})
 	install(FILES ${icon_app_file} DESTINATION ${VCC_ICONS_RPATH})
+	foreach(loop_var ${translation_po_files})
+		get_filename_component(INTL_CODE ${loop_var} NAME_WE)
+		install(DIRECTORY locale/${INTL_CODE} DESTINATION ${VCC_LOCALE_RPATH})
+	endforeach(loop_var)
 
 	# Libraries additionnelles pour windows
 	if(${INSTALL_TYPE} MATCHES Package)
