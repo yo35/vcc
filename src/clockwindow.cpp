@@ -21,6 +21,7 @@
 
 
 #include "clockwindow.h"
+#include "vccaboutdialog.h"
 #include "timecontroldialog.h"
 #include "keys.h"
 #include "params.h"
@@ -28,7 +29,6 @@
 #include <cassert>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/stock.h>
-#include <gtkmm/aboutdialog.h>
 #include <translation.h>
 
 #ifdef OS_IS_WINDOWS
@@ -40,12 +40,7 @@ ClockWindow::ClockWindow() : Gtk::Window() {
 	// Divers
 	no_actif = -1;
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
-	set_title(
-		Glib::ustring(PROJECT_FULL_NAME    ) +
-		Glib::ustring(" "                  ) +
-		Glib::ustring(PROJECT_VERSION_MAJOR) +
-		Glib::ustring("."                  ) +
-		Glib::ustring(PROJECT_VERSION_MINOR) );
+	set_title(PROJECT_FULL_NAME " " PROJECT_VERSION_MAJOR "." PROJECT_VERSION_MINOR);
 
 	// Désactivation de la touche windows
 	#ifdef OS_IS_WINDOWS
@@ -78,10 +73,10 @@ ClockWindow::ClockWindow() : Gtk::Window() {
 	btn_pause.set_tooltip_text(_("Pause the clock"                ));
 	btn_tctrl.set_tooltip_text(_("Change the current time control"));
 	btn_about.set_stock_id(Gtk::Stock::ABOUT);
-	toolbar.append(btn_reset);
-	toolbar.append(btn_pause);
-	toolbar.append(btn_tctrl);
-	toolbar.append(btn_about);
+	toolbar.append(btn_reset  );
+	toolbar.append(btn_pause  );
+	toolbar.append(btn_tctrl  );
+	toolbar.append(btn_about  );
 
 	// Géométrie générale
 	for(int i=0; i<2; ++i) {
@@ -147,19 +142,7 @@ void ClockWindow::on_tctrl_clicked() {
 }
 
 void ClockWindow::on_about_clicked() {
-	Gtk::AboutDialog dialog;
-	std::list<Glib::ustring> authors;
-	authors.push_back("Yoann Le Montagner <yo35@melix.net>");
-	dialog.set_program_name(PROJECT_FULL_NAME);
-	dialog.set_version(
-		Glib::ustring(PROJECT_VERSION_MAJOR) +
-		Glib::ustring("."                  ) +
-		Glib::ustring(PROJECT_VERSION_MINOR));
-	dialog.set_copyright("Copyright 2010 Yoann Le Montagner");
-	dialog.set_comments(_("A simple and free chess clock software"));
-	dialog.set_license("txt license");
-	dialog.set_website("http://vchessclock.sourceforge.net/");
-	dialog.set_authors(authors);
+	VccAboutDialog dialog;
 	dialog.run();
 }
 
