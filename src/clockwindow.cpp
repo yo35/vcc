@@ -27,6 +27,8 @@
 #include <config.h>
 #include <cassert>
 #include <gtkmm/messagedialog.h>
+#include <gtkmm/stock.h>
+#include <gtkmm/aboutdialog.h>
 #include <translation.h>
 
 #ifdef OS_IS_WINDOWS
@@ -57,6 +59,7 @@ ClockWindow::ClockWindow() : Gtk::Window() {
 	btn_reset.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_reset_clicked));
 	btn_pause.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_clicked));
 	btn_tctrl.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_tctrl_clicked));
+	btn_about.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_about_clicked));
 
 	// Toolbar
 	int icon_height = 0;
@@ -74,9 +77,11 @@ ClockWindow::ClockWindow() : Gtk::Window() {
 	btn_reset.set_tooltip_text(_("Reset the clock"                ));
 	btn_pause.set_tooltip_text(_("Pause the clock"                ));
 	btn_tctrl.set_tooltip_text(_("Change the current time control"));
+	btn_about.set_stock_id(Gtk::Stock::ABOUT);
 	toolbar.append(btn_reset);
 	toolbar.append(btn_pause);
 	toolbar.append(btn_tctrl);
+	toolbar.append(btn_about);
 
 	// Géométrie générale
 	for(int i=0; i<2; ++i) {
@@ -139,6 +144,23 @@ void ClockWindow::on_tctrl_clicked() {
 		return;
 	gp->time_control = dialog.get_time_control();
 	reset_timers();
+}
+
+void ClockWindow::on_about_clicked() {
+	Gtk::AboutDialog dialog;
+	std::list<Glib::ustring> authors;
+	authors.push_back("Yoann Le Montagner <yo35@melix.net>");
+	dialog.set_program_name(PROJECT_FULL_NAME);
+	dialog.set_version(
+		Glib::ustring(PROJECT_VERSION_MAJOR) +
+		Glib::ustring("."                  ) +
+		Glib::ustring(PROJECT_VERSION_MINOR));
+	dialog.set_copyright("Copyright 2010 Yoann Le Montagner");
+	dialog.set_comments(_("A simple and free chess clock software"));
+	dialog.set_license("txt license");
+	dialog.set_website("http://vchessclock.sourceforge.net/");
+	dialog.set_authors(authors);
+	dialog.run();
 }
 
 void ClockWindow::on_clock_button_clicked(int no) {
