@@ -21,9 +21,11 @@
 
 
 #include "vccaboutdialog.h"
+#include "params.h"
 #include <config.h>
 #include <translation.h>
 #include <list>
+
 
 VccAboutDialog::VccAboutDialog() : Gtk::AboutDialog() {
 
@@ -40,6 +42,11 @@ VccAboutDialog::VccAboutDialog() : Gtk::AboutDialog() {
 	// Divers
 	set_website("http://vchessclock.sourceforge.net/");
 	set_copyright("Copyright (C) 2010 Yoann Le Montagner");
+
+	// Logo
+	m_logo = Gdk::Pixbuf::create_from_file(
+		gp->prefix_path() + "/" + VCC_SHARE_RPATH + "/logo.png", 128, 128);
+	set_logo(m_logo);
 
 	// Licence
 	set_license(

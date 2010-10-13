@@ -24,6 +24,8 @@
 #define VCCABOUTDIALOG_H
 
 #include <gtkmm/aboutdialog.h>
+#include <gdkmm/pixbuf.h>
+
 
 class VccAboutDialog : public Gtk::AboutDialog {
 
@@ -31,6 +33,11 @@ public:
 
 	// Constructeur
 	VccAboutDialog();
+
+private:
+
+	// Logo
+	Glib::RefPtr<Gdk::Pixbuf> m_logo;
 };
 
 #endif
