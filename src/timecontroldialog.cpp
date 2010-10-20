@@ -47,24 +47,24 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 	frm_mode.add(layout_mode);
 
 	// Frames "time"
-	frm_time[0].set_label(_("Left" ));
-	frm_time[1].set_label(_("Right"));
-	for(int i=0; i<2; ++i) {
-		lbl_main_time[i].set_label(_("Main time"));
-		lbl_increment[i].set_label(_("Increment"));
-		layout_time[i].resize(2, 2);
-		layout_time[i].set_spacings(5);
-		layout_time[i].attach(lbl_main_time[i], 0, 1, 0, 1);
-		layout_time[i].attach(lbl_increment[i], 0, 1, 1, 2);
-		layout_time[i].attach(    main_time[i], 1, 2, 0, 1);
-		layout_time[i].attach(    increment[i], 1, 2, 1, 2);
-		frm_time[i].add(layout_time[i]);
+	frm_time[LEFT ].set_label(_("Left" ));
+	frm_time[RIGHT].set_label(_("Right"));
+	for(Side::iterator k=Side::first(); k.valid(); ++k) {
+		lbl_main_time[*k].set_label(_("Main time"));
+		lbl_increment[*k].set_label(_("Increment"));
+		layout_time  [*k].resize(2, 2);
+		layout_time  [*k].set_spacings(5);
+		layout_time  [*k].attach(lbl_main_time[*k], 0, 1, 0, 1);
+		layout_time  [*k].attach(lbl_increment[*k], 0, 1, 1, 2);
+		layout_time  [*k].attach(    main_time[*k], 1, 2, 0, 1);
+		layout_time  [*k].attach(    increment[*k], 1, 2, 1, 2);
+		frm_time     [*k].add(layout_time[*k]);
 	}
-	main_time[0].signal_changed().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_main_time));
-	increment[0].signal_changed().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_increment));
+	main_time[LEFT].signal_changed().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_main_time));
+	increment[LEFT].signal_changed().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_increment));
 	layout_times.set_spacing(5);
-	layout_times.pack_start(frm_time[0]);
-	layout_times.pack_start(frm_time[1]);
+	layout_times.pack_start(frm_time[LEFT ]);
+	layout_times.pack_start(frm_time[RIGHT]);
 
 	// Case à cocher liant les deux côtés
 	link_both_times.set_label(_("Time control values are the same for both sides"));
@@ -85,27 +85,27 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 
 TimeControl TimeControlDialog::get_time_control() const {
 	TimeControl retval;
-	if(mode[0].get_active()) retval.set_mode(TimeControl::SIMPLE_DELAY);
+	if(mode[0].get_active()) retval.set_mode(TimeControl::SUDDEN_DEATH);
 	if(mode[1].get_active()) retval.set_mode(TimeControl::FISCHER     );
 	if(mode[2].get_active()) retval.set_mode(TimeControl::BRONSTEIN   );
-	if(mode[3].get_active()) retval.set_mode(TimeControl::HOUR_GLASS  );
-	for(int i=0; i<2; ++i) {
-		retval.set_main_time(main_time[i].get_time());
+	if(mode[3].get_active()) retval.set_mode(TimeControl::HOURGLASS   );
+	for(Side::iterator k=Side::first(); k.valid(); ++k) {
+		retval.set_main_time(main_time[*k].get_time(), *k);
 		if(retval.mode()==TimeControl::FISCHER || retval.mode()==TimeControl::BRONSTEIN)
-			retval.set_increment(increment[i].get_time());
+			retval.set_increment(increment[*k].get_time(), *k);
 	}
 	return retval;
 }
 
 void TimeControlDialog::set_time_control(const TimeControl &src) {
 	mode[src.mode()].set_active(true);
-	for(int i=0; i<2; ++i) {
-		main_time[i].set_time(src.main_time(i));
+	for(Side::iterator k=Side::first(); k.valid(); ++k) {
+		main_time[*k].set_time(src.main_time(*k));
 		if(src.mode()==TimeControl::FISCHER || src.mode()==TimeControl::BRONSTEIN) {
-			increment[i].set_time(src.increment(i));
+			increment[*k].set_time(src.increment(*k));
 		}
 		else {
-			increment[i].set_time(0);
+			increment[*k].set_time(0);
 		}
 	}
 	link_both_times.set_active(src.both_sides_have_same_time());
@@ -115,17 +115,17 @@ void TimeControlDialog::set_time_control(const TimeControl &src) {
 void TimeControlDialog::manage_sensitivity() {
 	bool enable_increment = (mode[1].get_active() || mode[2].get_active());
 	bool enable_right     = !link_both_times.get_active();
-	increment[0].set_sensitive(enable_increment);
-	increment[1].set_sensitive(enable_increment && enable_right);
-	main_time[1].set_sensitive(                    enable_right);
+	increment[LEFT ].set_sensitive(enable_increment);
+	increment[RIGHT].set_sensitive(enable_increment && enable_right);
+	main_time[RIGHT].set_sensitive(                    enable_right);
 }
 
 void TimeControlDialog::copy_left_main_time() {
 	if(link_both_times.get_active())
-		main_time[1].set_time(main_time[0].get_time());
+		main_time[RIGHT].set_time(main_time[LEFT].get_time());
 }
 
 void TimeControlDialog::copy_left_increment() {
 	if(link_both_times.get_active())
-		increment[1].set_time(increment[0].get_time());
+		increment[RIGHT].set_time(increment[LEFT].get_time());
 }

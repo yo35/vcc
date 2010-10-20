@@ -20,60 +20,57 @@
  ******************************************************************************/
 
 
+#ifndef BITIMER_H
+#define BITIMER_H
+
+#include <glibmm/object.h>
+#include "side.h"
+#include "timer.h"
 #include "timecontrol.h"
 
 
-// Constructeur
-TimeControl::TimeControl() {
-	m_mode = SUDDEN_DEATH;
-	for(Side::iterator k=Side::first(); k.valid(); ++k) {
-		m_main_time[*k] = 0;
-		m_increment[*k] = 0;
-	}
-}
+// Double-timer
+class BiTimer : public Glib::Object {
 
-// Accesseurs
-TimeControl::Mode TimeControl::mode() const {
-	return m_mode;
-}
+public:
 
-int TimeControl::main_time(const Side &side) const {
-	return m_main_time[side];
-}
+	// Mode du double-timer
+	typedef enum {
+		ACTIVE,
+		PAUSED
+	} Mode;
 
-int TimeControl::increment(const Side &side) const {
-	assert(m_mode==FISCHER || m_mode==BRONSTEIN);
-	return m_increment[side];
-}
+	// Divers
+	BiTimer();
 
-// Modifieurs
-void TimeControl::set_mode(Mode new_mode) {
-	m_mode = new_mode;
-}
+	// Accesseurs
+	Mode               mode        () const;
+	Side               active_side () const;
+	const TimeControl &time_control() const;
+	const Timer &timer(const Side &side) const;
 
-void TimeControl::set_main_times(int new_main_times) {
-	for(Side::iterator k=Side::first(); k.valid(); ++k) {
-		m_main_time[*k] = new_main_times;
-	}
-}
+	// Modifie le cadran actif
+	void start_timer(const Side &side);
+	void change_timer();
+	void stop_timer();
 
-void TimeControl::set_main_time(int new_main_time, const Side &side) {
-	m_main_time[side] = new_main_time;
-}
+	// Remets les timers à zéro
+	void reset_timers();
 
-void TimeControl::set_increments(int new_increments) {
-	for(Side::iterator k=Side::first(); k.valid(); ++k) {
-		m_increment[*k] = new_increments;
-	}
-}
+	// Modifie la cadence
+	void set_time_control(const TimeControl &time_control);
 
-void TimeControl::set_increment(int new_increment, const Side &side) {
-	m_increment[side] = new_increment;
-}
+private:
 
-bool TimeControl::both_sides_have_same_time() const {
-	bool retval = m_main_time[LEFT]==m_main_time[RIGHT];
-	if(m_mode==FISCHER || m_mode==BRONSTEIN)
-		retval = retval && (m_increment[LEFT]==m_increment[RIGHT]);
-	return retval;
-}
+	// Alias
+	typedef EnumArray<Side, Timer> TimerSideArray;
+
+	// Données membres
+	Mode           m_mode           ;
+	Side           m_active_side    ;
+	TimeControl    m_time_control   ;
+	TimerSideArray m_timer          ;
+	IntSideArray   m_bronstein_limit;
+};
+
+#endif

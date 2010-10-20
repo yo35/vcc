@@ -38,7 +38,7 @@ public:
 	TimeControl time_control;
 
 	// Zones actives pour les touches clavier
-	std::set<Keycode> key_area[2];
+	EnumArray<Side, std::set<Keycode> > key_area;
 	void init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right);
 
 	// Icones

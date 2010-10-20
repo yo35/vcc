@@ -29,6 +29,7 @@
 #include <gtkmm/toolbar.h>
 #include <gtkmm/image.h>
 #include "dialwidget.h"
+#include "bitimer.h"
 
 class ClockWindow : public Gtk::Window {
 
@@ -47,33 +48,21 @@ private:
 	void on_reset_clicked();
 	void on_tctrl_clicked();
 	void on_about_clicked();
-	void on_clock_button_clicked(int no);
+	void on_clock_button_clicked(const Side &side);
 
-	// Modifie le cadran actif
-	void start_timer(int no);
-	void change_timer();
-	void stop_timer();
-
-	// Remets les timers à zéro
-	void reset_timers();
-
-	// Test si l'un des timers est actif
-	bool one_timer_is_active() const;
-
-	int             bronstein_limit[2];
-	int             no_actif;
-	Timer           timer[2];
-	DialWidget      dial [2];
-	Gtk::Toolbar    toolbar;
-	Gtk::Image      img_reset;
-	Gtk::Image      img_pause;
-	Gtk::Image      img_tctrl;
-	Gtk::ToolButton btn_reset;
-	Gtk::ToolButton btn_pause;
-	Gtk::ToolButton btn_tctrl;
-	Gtk::ToolButton btn_about;
-	Gtk::HBox       dial_layout;
-	Gtk::VBox       main_layout;
+	// Données membre
+	BiTimer                     core;
+	EnumArray<Side, DialWidget> dial;
+	Gtk::Toolbar                toolbar;
+	Gtk::Image                  img_reset;
+	Gtk::Image                  img_pause;
+	Gtk::Image                  img_tctrl;
+	Gtk::ToolButton             btn_reset;
+	Gtk::ToolButton             btn_pause;
+	Gtk::ToolButton             btn_tctrl;
+	Gtk::ToolButton             btn_about;
+	Gtk::HBox                   dial_layout;
+	Gtk::VBox                   main_layout;
 };
 
 #endif

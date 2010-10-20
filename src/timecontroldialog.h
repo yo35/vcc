@@ -52,20 +52,20 @@ private:
 	void copy_left_increment();
 
 	// Widget
-	Gtk::CheckButton        link_both_times;
-	Gtk::RadioButton        mode[4];
-	Gtk::RadioButton::Group group;
-	TimeEntry               main_time[2];
-	TimeEntry               increment[2];
-	Gtk::Label              lbl_main_time[2];
-	Gtk::Label              lbl_increment[2];
-	Gtk::Frame              frm_time[2];
-	Gtk::Frame              frm_mode;
+	Gtk::CheckButton            link_both_times;
+	Gtk::RadioButton            mode[4]        ;
+	Gtk::RadioButton::Group     group          ;
+	Gtk::Frame                  frm_mode       ;
+	EnumArray<Side, TimeEntry > main_time      ;
+	EnumArray<Side, TimeEntry > increment      ;
+	EnumArray<Side, Gtk::Label> lbl_main_time  ;
+	EnumArray<Side, Gtk::Label> lbl_increment  ;
+	EnumArray<Side, Gtk::Frame> frm_time       ;
 
 	// Layout
-	Gtk::VBox  layout_mode;
-	Gtk::Table layout_time[2];
-	Gtk::HBox  layout_times;
+	Gtk::VBox                   layout_mode ;
+	EnumArray<Side, Gtk::Table> layout_time ;
+	Gtk::HBox                   layout_times;
 };
 
 #endif

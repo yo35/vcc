@@ -38,8 +38,8 @@ Params::Params(const std::string &prefix_path) :
 {
 	// Cadence
 	time_control.set_mode(TimeControl::FISCHER);
-	time_control.set_main_time(180*1000);
-	time_control.set_increment(  2*1000);
+	time_control.set_main_times(180*1000);
+	time_control.set_increments(  2*1000);
 
 	// Zones actives
 	KeyvalList    keyval_left ;
@@ -84,14 +84,14 @@ Params::Params(const std::string &prefix_path) :
 void Params::init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right) {
 
 	// Chargement des listes de touches gauches et droites
-	key_area[0] = aux_init_kb_areas(area_left );
-	key_area[1] = aux_init_kb_areas(area_right);
+	key_area[LEFT ] = aux_init_kb_areas(area_left );
+	key_area[RIGHT] = aux_init_kb_areas(area_right);
 
 	// On vérifie que l'intersection des deux ensembles est vide
 	std::set<Keycode> area_both;
-	area_both.insert(key_area[0].begin(), key_area[0].end());
-	area_both.insert(key_area[1].begin(), key_area[1].end());
-	assert(area_both.size()==key_area[0].size()+key_area[1].size());
+	area_both.insert(key_area[LEFT ].begin(), key_area[LEFT ].end());
+	area_both.insert(key_area[RIGHT].begin(), key_area[RIGHT].end());
+	assert(area_both.size()==key_area[LEFT].size()+key_area[RIGHT].size());
 }
 
 std::set<Keycode> Params::aux_init_kb_areas(const KeyvalList &src) {
