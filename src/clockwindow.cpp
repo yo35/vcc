@@ -63,6 +63,8 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 	btn_about.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_about_clicked));
 
 	// Toolbar
+	//sep_toolbar.set_draw(false);
+	//sep_toolbar.set_expand(true);
 	int icon_height = 0;
 	int icon_width  = 0;
 	Gtk::IconSize::lookup(toolbar.get_icon_size(), icon_width, icon_height);
@@ -81,6 +83,7 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 	btn_about.set_stock_id(Gtk::Stock::ABOUT);
 	toolbar.append(btn_reset  );
 	toolbar.append(btn_pause  );
+	toolbar.append(sep_toolbar);
 	toolbar.append(btn_tctrl  );
 	toolbar.append(btn_about  );
 

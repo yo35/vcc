@@ -26,6 +26,7 @@
 #include <gtkmm/window.h>
 #include <gtkmm/box.h>
 #include <gtkmm/toolbutton.h>
+#include <gtkmm/separatortoolitem.h>
 #include <gtkmm/toolbar.h>
 #include <gtkmm/image.h>
 #include "dialwidget.h"
@@ -65,6 +66,7 @@ private:
 	Gtk::ToolButton             btn_pause;
 	Gtk::ToolButton             btn_tctrl;
 	Gtk::ToolButton             btn_about;
+	Gtk::SeparatorToolItem      sep_toolbar;
 	Gtk::HBox                   dial_layout;
 	Gtk::VBox                   main_layout;
 };
