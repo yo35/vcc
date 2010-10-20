@@ -88,10 +88,11 @@ const std::string &Params::prefix_path() const {
 // Cadence de jeu initiale
 TimeControl Params::initial_time_control() const {
 	TimeControl retval;
-	int mode_tmp = get_data("Time_Control", "Mode", 0);
+	/*int mode_tmp = get_data("Time_Control", "Mode", 0);
 	if(mode_tmp >= TimeControlType::BaseType::N)
 		mode_tmp = 0;
-	retval.set_mode(TimeControlType(mode_tmp));
+	retval.set_mode(TimeControlType(mode_tmp));*/
+	retval.set_mode     (get_data("Time_Control", "Mode"           , SUDDEN_DEATH));
 	retval.set_main_time(get_data("Time_Control", "Main_Time_Left" , 3*60*1000), LEFT );
 	retval.set_main_time(get_data("Time_Control", "Main_Time_Right", 3*60*1000), RIGHT);
 	if(retval.mode()==FISCHER || retval.mode()==BRONSTEIN) {
@@ -102,13 +103,30 @@ TimeControl Params::initial_time_control() const {
 }
 
 void Params::set_initial_time_control(const TimeControl &src) {
-	set_data("Time_Control", "Mode"           , src.mode().to_int());
+	set_data("Time_Control", "Mode"           , src.mode());
 	set_data("Time_Control", "Main_Time_Left" , src.main_time(LEFT ));
 	set_data("Time_Control", "Main_Time_Right", src.main_time(RIGHT));
 	if(src.mode()==FISCHER || src.mode()==BRONSTEIN) {
 		set_data("Time_Control", "Increment_Left" , src.increment(LEFT ));
 		set_data("Time_Control", "Increment_Right", src.increment(RIGHT));
 	}
+}
+
+// Lecture / écriture d'un type énuméré
+template<class T>
+Enumerable<T> Params::get_data(const std::string &section, const std::string &key,
+	const Enumerable<T> &default_value) const
+{
+	int retval = get_data(section, key, default_value.to_int());
+	if(retval>=0 && retval<Enumerable<T>::BaseType::N)
+		return Enumerable<T>(retval);
+	else
+		return default_value;
+}
+
+template<class T>
+void Params::set_data(const std::string &section, const std::string &key, const Enumerable<T> &value) {
+	set_data(section, key, value.to_int());
 }
 
 // Lecture / écriture de données numériques
@@ -154,7 +172,7 @@ std::string Params::int_to_string(int src) {
 	if(src==0)
 		return "0";
 
-	std::string res = "";
+	std::list<char> pile;
 	bool add_tiret = false;
 	if(src<0) {
 		add_tiret = true;
@@ -162,11 +180,14 @@ std::string Params::int_to_string(int src) {
 	}
 	while(src>0) {
 		int digit = src%10;
-		res = "" + static_cast<char>('0' + digit) + res;
+		pile.push_front('0' + digit);
 		src = src/10;
 	}
-	if(add_tiret)
-		res = "-" + res;
+	std::string res = add_tiret ? "-" : "";
+	while(!pile.empty()) {
+		res += pile.front();
+		pile.pop_front();
+	}
 	return res;
 }
 
@@ -174,7 +195,7 @@ std::string Params::int_to_string(int src) {
 bool Params::is_valid_int(const std::string &src, int *buff) {
 	bool is_negative = false;
 	size_t pos0 = 0;
-	*buff = 0;
+	int res = 0;
 	if(src.empty())
 		return false;
 	if(src.at(0) == '-') {
@@ -186,12 +207,13 @@ bool Params::is_valid_int(const std::string &src, int *buff) {
 	for(size_t pos=pos0; pos<src.length(); ++pos) {
 		char curr_car = src.at(pos);
 		if(curr_car>='0' && curr_car<='9')
-			*buff = *buff*10 + static_cast<int>(curr_car - '0');
+			res = res*10 + static_cast<int>(curr_car - '0');
 		else
 			return false;
 	}
 	if(is_negative)
-		*buff = -*buff;
+		res = -res;
+	*buff = res;
 	return true;
 }
 

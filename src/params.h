@@ -50,13 +50,17 @@ public:
 private:
 	std::set<Keycode> aux_init_kb_areas(const KeyvalList &src);
 
-	// Fonctions d'accès aux données
-	int  get_data(const std::string &section, const std::string &key, int default_value) const;
-	void set_data(const std::string &section, const std::string &key, int value);
-	std::string get_data(const std::string &section, const std::string &key,
-		const std::string &default_value) const;
-	void        set_data(const std::string &section, const std::string &key,
-		const std::string &value);
+	// Fonctions d'accès aux données (lecture)
+	template<class T>
+	Enumerable<T> get_data(const std::string &section, const std::string &key, const Enumerable<T> &default_value) const;
+	int           get_data(const std::string &section, const std::string &key, int                  default_value) const;
+	std::string   get_data(const std::string &section, const std::string &key, const std::string   &default_value) const;
+
+	// Fonctions d'accès aux données (écriture)
+	template<class T>
+	void set_data(const std::string &section, const std::string &key, const Enumerable<T> &value);
+	void set_data(const std::string &section, const std::string &key, int                  value);
+	void set_data(const std::string &section, const std::string &key, const std::string   &value);
 
 	// Conversion
 	static std::string int_to_string(int src);

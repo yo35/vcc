@@ -132,14 +132,14 @@ std::string IniStruct::trim(const std::string &src) {
 		++beg;
 		if(beg>=static_cast<int>(src.length()))
 			return "";
-		if(is_space_char(src.at(beg)))
+		if(!is_space_char(src.at(beg)))
 			break;
 	}
 	int end = src.length();
 	while(true) {
 		--end;
 		assert(end>=0);
-		if(is_space_char(src.at(end)))
+		if(!is_space_char(src.at(end)))
 			break;
 	}
 	assert(beg <= end);
