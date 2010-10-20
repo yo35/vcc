@@ -30,6 +30,7 @@
 #include <gtkmm/image.h>
 #include "dialwidget.h"
 #include "bitimer.h"
+#include "icon.h"
 
 class ClockWindow : public Gtk::Window {
 
@@ -54,6 +55,9 @@ private:
 	BiTimer                     core;
 	EnumArray<Side, DialWidget> dial;
 	Gtk::Toolbar                toolbar;
+	Icon                        ico_reset;
+	Icon                        ico_pause;
+	Icon                        ico_tctrl;
 	Gtk::Image                  img_reset;
 	Gtk::Image                  img_pause;
 	Gtk::Image                  img_tctrl;

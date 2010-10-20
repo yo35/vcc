@@ -30,12 +30,8 @@
 
 Params *gp;
 
-Params::Params(const std::string &prefix_path) :
-	icon_reset(prefix_path + "/" + VCC_SHARE_RPATH + "/reset.png"),
-	icon_pause(prefix_path + "/" + VCC_SHARE_RPATH + "/pause.png"),
-	icon_tctrl(prefix_path + "/" + VCC_SHARE_RPATH + "/tctrl.png"),
-	m_prefix_path(prefix_path)
-{
+Params::Params(const std::string &prefix_path) : m_prefix_path(prefix_path) {
+
 	// Cadence
 	time_control.set_mode(TimeControl::FISCHER);
 	time_control.set_main_times(180*1000);

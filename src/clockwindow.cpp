@@ -35,7 +35,11 @@
 	#include <winkeyhookdll.h>
 #endif
 
-ClockWindow::ClockWindow() : Gtk::Window() {
+ClockWindow::ClockWindow() : Gtk::Window(),
+	ico_reset(gp->prefix_path() + "/" + VCC_SHARE_RPATH + "/reset.png"),
+	ico_pause(gp->prefix_path() + "/" + VCC_SHARE_RPATH + "/pause.png"),
+	ico_tctrl(gp->prefix_path() + "/" + VCC_SHARE_RPATH + "/tctrl.png")
+{
 
 	// Divers
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
@@ -62,9 +66,9 @@ ClockWindow::ClockWindow() : Gtk::Window() {
 	int icon_height = 0;
 	int icon_width  = 0;
 	Gtk::IconSize::lookup(toolbar.get_icon_size(), icon_width, icon_height);
-	img_reset.set(gp->icon_reset.get(icon_height));
-	img_pause.set(gp->icon_pause.get(icon_height));
-	img_tctrl.set(gp->icon_tctrl.get(icon_height));
+	img_reset.set(ico_reset.get(icon_height));
+	img_pause.set(ico_pause.get(icon_height));
+	img_tctrl.set(ico_tctrl.get(icon_height));
 	btn_reset.set_icon_widget(img_reset);
 	btn_pause.set_icon_widget(img_pause);
 	btn_tctrl.set_icon_widget(img_tctrl);

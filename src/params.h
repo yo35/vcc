@@ -41,11 +41,6 @@ public:
 	EnumArray<Side, std::set<Keycode> > key_area;
 	void init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right);
 
-	// Icones
-	Icon icon_reset;
-	Icon icon_pause;
-	Icon icon_tctrl;
-
 	// Pointe vers le répertoire de base du package
 	const std::string &prefix_path() const;
 
