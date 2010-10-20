@@ -23,9 +23,10 @@
 #ifndef PARAMS_H
 #define PARAMS_H
 
+#include "inistruct.h"
 #include "timecontrol.h"
 #include "keys.h"
-#include "icon.h"
+#include <string>
 #include <set>
 
 class Params {
@@ -33,21 +34,37 @@ public:
 
 	// Constructeur
 	Params(const std::string &prefix_path);
+	~Params();
+
+	// Pointe vers le répertoire de base du package
+	const std::string &prefix_path() const;
 
 	// Cadence de jeu
-	TimeControl time_control;
+	TimeControl initial_time_control() const;
+	void set_initial_time_control(const TimeControl &src);
 
 	// Zones actives pour les touches clavier
 	EnumArray<Side, std::set<Keycode> > key_area;
 	void init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right);
 
-	// Pointe vers le répertoire de base du package
-	const std::string &prefix_path() const;
-
 private:
 	std::set<Keycode> aux_init_kb_areas(const KeyvalList &src);
 
+	// Fonctions d'accès aux données
+	int  get_data(const std::string &section, const std::string &key, int default_value) const;
+	void set_data(const std::string &section, const std::string &key, int value);
+	std::string get_data(const std::string &section, const std::string &key,
+		const std::string &default_value) const;
+	void        set_data(const std::string &section, const std::string &key,
+		const std::string &value);
+
+	// Conversion
+	static std::string int_to_string(int src);
+	static bool is_valid_int(const std::string &src, int *buff);
+
+	// Données membres
 	std::string m_prefix_path;
+	IniStruct   m_data;
 };
 
 extern Params *gp;

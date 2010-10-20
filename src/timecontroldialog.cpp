@@ -35,14 +35,14 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 	// Frame "mode"
 	frm_mode.set_label(_("Mode"));
 	layout_mode.set_spacing(5);
-	mode[0].set_label(_("Sudden death"));
-	mode[1].set_label(_("Fischer"     ));
-	mode[2].set_label(_("Bronstein"   ));
-	mode[3].set_label(_("Hourglass"   ));
-	for(int i=0; i<4; ++i) {
-		mode[i].set_group(group);
-		mode[i].signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::manage_sensitivity));
-		layout_mode.pack_start(mode[i]);
+	mode[SUDDEN_DEATH].set_label(_("Sudden death"));
+	mode[FISCHER     ].set_label(_("Fischer"     ));
+	mode[BRONSTEIN   ].set_label(_("Bronstein"   ));
+	mode[HOURGLASS   ].set_label(_("Hourglass"   ));
+	for(TimeControlType::iterator k=TimeControlType::first(); k.valid(); ++k) {
+		mode[*k].set_group(group);
+		mode[*k].signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::manage_sensitivity));
+		layout_mode.pack_start(mode[*k]);
 	}
 	frm_mode.add(layout_mode);
 
@@ -85,13 +85,13 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 
 TimeControl TimeControlDialog::get_time_control() const {
 	TimeControl retval;
-	if(mode[0].get_active()) retval.set_mode(TimeControl::SUDDEN_DEATH);
-	if(mode[1].get_active()) retval.set_mode(TimeControl::FISCHER     );
-	if(mode[2].get_active()) retval.set_mode(TimeControl::BRONSTEIN   );
-	if(mode[3].get_active()) retval.set_mode(TimeControl::HOURGLASS   );
+	for(TimeControlType::iterator k=TimeControlType::first(); k.valid(); ++k) {
+		if(mode[*k].get_active())
+			retval.set_mode(*k);
+	}
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		retval.set_main_time(main_time[*k].get_time(), *k);
-		if(retval.mode()==TimeControl::FISCHER || retval.mode()==TimeControl::BRONSTEIN)
+		if(retval.mode()==FISCHER || retval.mode()==BRONSTEIN)
 			retval.set_increment(increment[*k].get_time(), *k);
 	}
 	return retval;
@@ -101,7 +101,7 @@ void TimeControlDialog::set_time_control(const TimeControl &src) {
 	mode[src.mode()].set_active(true);
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		main_time[*k].set_time(src.main_time(*k));
-		if(src.mode()==TimeControl::FISCHER || src.mode()==TimeControl::BRONSTEIN) {
+		if(src.mode()==FISCHER || src.mode()==BRONSTEIN) {
 			increment[*k].set_time(src.increment(*k));
 		}
 		else {
@@ -113,7 +113,7 @@ void TimeControlDialog::set_time_control(const TimeControl &src) {
 }
 
 void TimeControlDialog::manage_sensitivity() {
-	bool enable_increment = (mode[1].get_active() || mode[2].get_active());
+	bool enable_increment = (mode[FISCHER].get_active() || mode[BRONSTEIN].get_active());
 	bool enable_right     = !link_both_times.get_active();
 	increment[LEFT ].set_sensitive(enable_increment);
 	increment[RIGHT].set_sensitive(enable_increment && enable_right);

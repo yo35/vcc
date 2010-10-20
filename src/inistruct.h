@@ -20,52 +20,36 @@
  ******************************************************************************/
 
 
-#ifndef TIMECONTROLDIALOG_H
-#define TIMECONTROLDIALOG_H
+#ifndef INISTRUCT_H
+#define INISTRUCT_H
 
-#include <gtkmm/dialog.h>
-#include <gtkmm/radiobutton.h>
-#include <gtkmm/checkbutton.h>
-#include <gtkmm/label.h>
-#include <gtkmm/frame.h>
-#include <gtkmm/box.h>
-#include <gtkmm/table.h>
-#include "timeentry.h"
-#include "timecontrol.h"
+#include <string>
+#include <map>
 
-class TimeControlDialog : public Gtk::Dialog {
+class IniStruct {
 
 public:
 
-	// Constructeur
-	TimeControlDialog(Gtk::Window &parent, const TimeControl &src);
+	// Aliases
+	typedef std::string            Key    ;
+	typedef std::string            Value  ;
+	typedef std::map<Key, Value  > Section;
+	typedef std::map<Key, Section> Tree   ;
 
-	// Accesseur/modifieur
-	void set_time_control(const TimeControl &src);
-	TimeControl get_time_control() const;
+	// Données
+	Tree root;
+
+	// Fonctions de lecture/écriture
+	void load(const std::string &path);
+	void save(const std::string &path) const;
 
 private:
 
-	// Comportement interne de la boîte de dialogue
-	void manage_sensitivity();
-	void copy_left_main_time();
-	void copy_left_increment();
-
-	// Widget
-	Gtk::CheckButton                              link_both_times;
-	EnumArray<TimeControlType, Gtk::RadioButton>  mode           ;
-	Gtk::RadioButton::Group                       group          ;
-	Gtk::Frame                                    frm_mode       ;
-	EnumArray<Side, TimeEntry >                   main_time      ;
-	EnumArray<Side, TimeEntry >                   increment      ;
-	EnumArray<Side, Gtk::Label>                   lbl_main_time  ;
-	EnumArray<Side, Gtk::Label>                   lbl_increment  ;
-	EnumArray<Side, Gtk::Frame>                   frm_time       ;
-
-	// Layout
-	Gtk::VBox                   layout_mode ;
-	EnumArray<Side, Gtk::Table> layout_time ;
-	Gtk::HBox                   layout_times;
+	// Fonctions auxilliaires
+	static std::string trim(const std::string &src);
+	static bool is_valid_key(const Key &src);
+	static bool is_valid_id_char(char src);
+	static bool is_space_char(char src);
 };
 
 #endif

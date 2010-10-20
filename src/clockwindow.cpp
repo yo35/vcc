@@ -40,6 +40,8 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 	ico_pause(gp->prefix_path() + "/" + VCC_SHARE_RPATH + "/pause.png"),
 	ico_tctrl(gp->prefix_path() + "/" + VCC_SHARE_RPATH + "/tctrl.png")
 {
+	// Initialisation de la pendule
+	core.set_time_control(gp->initial_time_control());
 
 	// Divers
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
@@ -144,6 +146,7 @@ void ClockWindow::on_tctrl_clicked() {
 	if(retval!=Gtk::RESPONSE_OK)
 		return;
 	core.set_time_control(dialog.get_time_control());
+	gp->set_initial_time_control(core.time_control());
 }
 
 void ClockWindow::on_about_clicked() {

@@ -24,30 +24,40 @@
 #define TIMECONTROL_H
 
 #include "side.h"
+#include "enumerable.h"
+
+
+// Types de cadence
+// 4 modes de contrôle de temps sont disponibles
+class BaseTimeControlType {
+public:
+	static const int N = 4;
+};
+typedef Enumerable<BaseTimeControlType> TimeControlType;
+
+
+// Constantes pour les types de cadences
+extern const TimeControlType SUDDEN_DEATH;
+extern const TimeControlType FISCHER     ;
+extern const TimeControlType BRONSTEIN   ;
+extern const TimeControlType HOURGLASS   ;
+
 
 // Cadence
 class TimeControl {
 
 public:
 
-	// 4 modes de contrôle de temps sont disponibles
-	typedef enum {
-		SUDDEN_DEATH,
-		FISCHER     ,
-		BRONSTEIN   ,
-		HOURGLASS
-	} Mode;
-
 	// Constructeur
 	TimeControl();
 
 	// Accesseurs
-	Mode mode() const;
+	TimeControlType mode() const;
 	int  main_time(const Side &side) const;
 	int  increment(const Side &side) const;
 
 	// Modifieurs
-	void set_mode(Mode new_mode);
+	void set_mode(const TimeControlType &new_mode);
 	void set_main_times(int new_main_times);
 	void set_increments(int new_increments);
 	void set_main_time (int new_main_time, const Side &side);
@@ -59,9 +69,9 @@ public:
 private:
 
 	// Données membres
-	Mode         m_mode;
-	IntSideArray m_main_time;
-	IntSideArray m_increment;
+	TimeControlType m_mode;
+	IntSideArray    m_main_time;
+	IntSideArray    m_increment;
 };
 
 #endif

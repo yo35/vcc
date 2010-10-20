@@ -50,7 +50,7 @@ const Timer &BiTimer::timer(const Side &side) const {
 // Démarre un timer
 void BiTimer::start_timer(const Side &side) {
 	assert(m_mode==PAUSED);
-	if(m_time_control.mode()==TimeControl::HOURGLASS)
+	if(m_time_control.mode()==HOURGLASS)
 		m_timer[rev(side)].set_mode(Timer::INCREMENT);
 	m_timer[side].set_mode(Timer::DECREMENT);
 	m_active_side = side;
@@ -62,7 +62,7 @@ void BiTimer::change_timer() {
 	assert(m_mode==ACTIVE);
 
 	// En hour-glass, le timer inactif est en mode incrément
-	if(m_time_control.mode()==TimeControl::HOURGLASS)
+	if(m_time_control.mode()==HOURGLASS)
 		m_timer[m_active_side].set_mode(Timer::INCREMENT);
 
 	// Sinon, il est mis en pause
@@ -72,13 +72,13 @@ void BiTimer::change_timer() {
 		// En mode fischer ou bronstein, on incrémente le compteur à chaque coup,
 		// Rq : uniquement si le compteur est positif
 		if((
-			m_time_control.mode()==TimeControl::FISCHER ||
-			m_time_control.mode()==TimeControl::BRONSTEIN) &&
+			m_time_control.mode()==FISCHER ||
+			m_time_control.mode()==BRONSTEIN) &&
 			m_timer[m_active_side].get_time() >= 0)
 		{
 			int new_time = m_timer[m_active_side].get_time()
 				+ m_time_control.increment(m_active_side);
-			if(m_time_control.mode()==TimeControl::BRONSTEIN) {
+			if(m_time_control.mode()==BRONSTEIN) {
 				if(new_time > m_bronstein_limit[m_active_side])
 					new_time = m_bronstein_limit[m_active_side];
 				else
@@ -110,15 +110,15 @@ void BiTimer::reset_timers() {
 
 		// Calcul du temps initial
 		int start_time = m_time_control.main_time(*k);
-		if(m_time_control.mode()==TimeControl::FISCHER
-			|| m_time_control.mode()==TimeControl::BRONSTEIN)
+		if(m_time_control.mode()==FISCHER
+			|| m_time_control.mode()==BRONSTEIN)
 		{
 			start_time += m_time_control.increment(*k);
 		}
 
 		// Définition des flags
 		m_timer[*k].set_time(start_time);
-		if(m_time_control.mode()==TimeControl::BRONSTEIN)
+		if(m_time_control.mode()==BRONSTEIN)
 			m_bronstein_limit[*k] = start_time;
 	}
 	m_mode = PAUSED;

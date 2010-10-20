@@ -22,6 +22,11 @@
 
 #include "timecontrol.h"
 
+// Constantes pour les types de cadences
+const TimeControlType SUDDEN_DEATH(0);
+const TimeControlType FISCHER     (1);
+const TimeControlType BRONSTEIN   (2);
+const TimeControlType HOURGLASS   (3);
 
 // Constructeur
 TimeControl::TimeControl() {
@@ -33,7 +38,7 @@ TimeControl::TimeControl() {
 }
 
 // Accesseurs
-TimeControl::Mode TimeControl::mode() const {
+TimeControlType TimeControl::mode() const {
 	return m_mode;
 }
 
@@ -47,7 +52,7 @@ int TimeControl::increment(const Side &side) const {
 }
 
 // Modifieurs
-void TimeControl::set_mode(Mode new_mode) {
+void TimeControl::set_mode(const TimeControlType &new_mode) {
 	m_mode = new_mode;
 }
 

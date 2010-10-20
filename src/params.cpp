@@ -32,10 +32,8 @@ Params *gp;
 
 Params::Params(const std::string &prefix_path) : m_prefix_path(prefix_path) {
 
-	// Cadence
-	time_control.set_mode(TimeControl::FISCHER);
-	time_control.set_main_times(180*1000);
-	time_control.set_increments(  2*1000);
+	// Lecture du fichier INI
+	m_data.load(m_prefix_path + "/vcc.ini");
 
 	// Zones actives
 	KeyvalList    keyval_left ;
@@ -77,6 +75,126 @@ Params::Params(const std::string &prefix_path) : m_prefix_path(prefix_path) {
 	init_kb_areas(keyval_left, keyval_right);
 }
 
+// Destructeur
+Params::~Params() {
+	m_data.save(m_prefix_path + "/vcc_new.ini");
+}
+
+// Répertoire VCC_TOP
+const std::string &Params::prefix_path() const {
+	return m_prefix_path;
+}
+
+// Cadence de jeu initiale
+TimeControl Params::initial_time_control() const {
+	TimeControl retval;
+	int mode_tmp = get_data("Time_Control", "Mode", 0);
+	if(mode_tmp >= TimeControlType::BaseType::N)
+		mode_tmp = 0;
+	retval.set_mode(TimeControlType(mode_tmp));
+	retval.set_main_time(get_data("Time_Control", "Main_Time_Left" , 3*60*1000), LEFT );
+	retval.set_main_time(get_data("Time_Control", "Main_Time_Right", 3*60*1000), RIGHT);
+	if(retval.mode()==FISCHER || retval.mode()==BRONSTEIN) {
+		retval.set_increment(get_data("Time_Control", "Increment_Left" , 2*1000), LEFT );
+		retval.set_increment(get_data("Time_Control", "Increment_Right", 2*1000), RIGHT);
+	}
+	return retval;
+}
+
+void Params::set_initial_time_control(const TimeControl &src) {
+	set_data("Time_Control", "Mode"           , src.mode().to_int());
+	set_data("Time_Control", "Main_Time_Left" , src.main_time(LEFT ));
+	set_data("Time_Control", "Main_Time_Right", src.main_time(RIGHT));
+	if(src.mode()==FISCHER || src.mode()==BRONSTEIN) {
+		set_data("Time_Control", "Increment_Left" , src.increment(LEFT ));
+		set_data("Time_Control", "Increment_Right", src.increment(RIGHT));
+	}
+}
+
+// Lecture / écriture de données numériques
+int Params::get_data(const std::string &section, const std::string &key, int default_value) const
+{
+	std::string buff = get_data(section, key, int_to_string(default_value));
+	int retval = 0;
+	if(is_valid_int(buff, &retval))
+		return retval;
+	else
+		return default_value;
+}
+
+void Params::set_data(const std::string &section, const std::string &key, int value)
+{
+	set_data(section, key, int_to_string(value));
+}
+
+// Lecture / écriture des données
+std::string Params::get_data(const std::string &section, const std::string &key,
+	const std::string &default_value) const
+{
+	IniStruct::Tree::const_iterator i=m_data.root.find(section);
+	if(i==m_data.root.end())
+		return default_value;
+	else {
+		IniStruct::Section::const_iterator j=i->second.find(key);
+		if(j==i->second.end())
+			return default_value;
+		else
+			return j->second;
+	}
+}
+
+void Params::set_data(const std::string &section, const std::string &key,
+	const std::string &value)
+{
+	m_data.root[section][key] = value;
+}
+
+// Conversion int -> string
+std::string Params::int_to_string(int src) {
+	if(src==0)
+		return "0";
+
+	std::string res = "";
+	bool add_tiret = false;
+	if(src<0) {
+		add_tiret = true;
+		src = -src;
+	}
+	while(src>0) {
+		int digit = src%10;
+		res = "" + static_cast<char>('0' + digit) + res;
+		src = src/10;
+	}
+	if(add_tiret)
+		res = "-" + res;
+	return res;
+}
+
+// Conversion string -> int si possible
+bool Params::is_valid_int(const std::string &src, int *buff) {
+	bool is_negative = false;
+	size_t pos0 = 0;
+	*buff = 0;
+	if(src.empty())
+		return false;
+	if(src.at(0) == '-') {
+		is_negative = true;
+		pos0 = 1;
+		if(src.length()==1)
+			return false;
+	}
+	for(size_t pos=pos0; pos<src.length(); ++pos) {
+		char curr_car = src.at(pos);
+		if(curr_car>='0' && curr_car<='9')
+			*buff = *buff*10 + static_cast<int>(curr_car - '0');
+		else
+			return false;
+	}
+	if(is_negative)
+		*buff = -*buff;
+	return true;
+}
+
 void Params::init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right) {
 
 	// Chargement des listes de touches gauches et droites
@@ -97,8 +215,4 @@ std::set<Keycode> Params::aux_init_kb_areas(const KeyvalList &src) {
 		retval.insert(keycodes.begin(), keycodes.end());
 	}
 	return retval;
-}
-
-const std::string &Params::prefix_path() const {
-	return m_prefix_path;
 }
