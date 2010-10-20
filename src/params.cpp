@@ -88,10 +88,6 @@ const std::string &Params::prefix_path() const {
 // Cadence de jeu initiale
 TimeControl Params::initial_time_control() const {
 	TimeControl retval;
-	/*int mode_tmp = get_data("Time_Control", "Mode", 0);
-	if(mode_tmp >= TimeControlType::BaseType::N)
-		mode_tmp = 0;
-	retval.set_mode(TimeControlType(mode_tmp));*/
 	retval.set_mode     (get_data("Time_Control", "Mode"           , SUDDEN_DEATH));
 	retval.set_main_time(get_data("Time_Control", "Main_Time_Left" , 3*60*1000), LEFT );
 	retval.set_main_time(get_data("Time_Control", "Main_Time_Right", 3*60*1000), RIGHT);
