@@ -33,11 +33,12 @@ class Params {
 public:
 
 	// Constructeur
-	Params(const std::string &prefix_path);
+	Params(const std::string &prefix_path, const std::string &config_path);
 	~Params();
 
-	// Pointe vers le répertoire de base du package
+	// Pointe vers les répertoires de base
 	const std::string &prefix_path() const;
+	const std::string &config_path() const;
 
 	// Cadence de jeu
 	TimeControl initial_time_control() const;
@@ -67,7 +68,9 @@ private:
 	static bool is_valid_int(const std::string &src, int *buff);
 
 	// Données membres
-	std::string m_prefix_path;
+	const std::string m_prefix_path;
+	const std::string m_config_path;
+	const std::string m_vccini_path;
 	IniStruct   m_data;
 };
 

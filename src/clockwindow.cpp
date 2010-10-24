@@ -36,9 +36,9 @@
 #endif
 
 ClockWindow::ClockWindow() : Gtk::Window(),
-	ico_reset(gp->prefix_path() + "/" + VCC_SHARE_RPATH + "/reset.png"),
-	ico_pause(gp->prefix_path() + "/" + VCC_SHARE_RPATH + "/pause.png"),
-	ico_tctrl(gp->prefix_path() + "/" + VCC_SHARE_RPATH + "/tctrl.png")
+	ico_reset(gp->prefix_path() + "/" VCC_SHARE_RPATH "/reset.png"),
+	ico_pause(gp->prefix_path() + "/" VCC_SHARE_RPATH "/pause.png"),
+	ico_tctrl(gp->prefix_path() + "/" VCC_SHARE_RPATH "/tctrl.png")
 {
 	// Initialisation de la pendule
 	core.set_time_control(gp->initial_time_control());

@@ -47,6 +47,17 @@ int main(int argc, char *argv[]) {
 		std::string prefix_path = VCC_TOP;
 	#endif
 
+	// Détermination du dossier de configuration
+	#ifdef DEV_COMPILATION
+		std::string config_path = VCC_TOP "/user_config";
+	#else
+		#ifdef OS_IS_WINDOWS
+			std::string config_path = Glib::get_user_config_dir() + "/" PROJECT_NAME;
+		#else
+			std::string config_path = Glib::get_home_dir() + "/." PROJECT_NAME;
+		#endif
+	#endif
+
 	// Initialisation libintl
 	std::string locale_path = prefix_path + "/" + VCC_LOCALE_RPATH;
 	setlocale(LC_ALL, "");
@@ -55,7 +66,7 @@ int main(int argc, char *argv[]) {
 	textdomain(PROJECT_NAME);
 
 	// Chargement des paramètres
-	gp = new Params(prefix_path);
+	gp = new Params(prefix_path, config_path);
 
 	// GUI
 	ClockWindow* mainUI = new ClockWindow();

@@ -27,13 +27,38 @@
 #include <string>
 #include <stdexcept>
 #include <translation.h>
+#include <giomm/file.h>
+#include <glibmm/ustring.h>
 
 Params *gp;
 
-Params::Params(const std::string &prefix_path) : m_prefix_path(prefix_path) {
+Params::Params(const std::string &prefix_path, const std::string &config_path) :
+	m_prefix_path(prefix_path),
+	m_config_path(config_path),
+	m_vccini_path(config_path + "/" EXECUTABLE_NAME ".ini")
+{
+	// Création du répertoire de configuration dans le dossier de l'utilisateur
+	// s'il n'existe pas déjà
+	static Glib::RefPtr<Gio::File> config_dir = Gio::File::create_for_path(m_config_path);
+	if(!config_dir->query_exists()) {
+		config_dir->make_directory();
+	}
+
+	// Création d'un fichier de configuration vide s'il n'en existe pas un déjà
+	static Glib::RefPtr<Gio::File> ini_file = Gio::File::create_for_path(m_vccini_path);
+	if(!ini_file->query_exists()) {
+		std::ofstream ini_file2;
+		ini_file2.open(m_vccini_path.c_str());
+		if(ini_file2.fail()) {
+			throw std::runtime_error(Glib::ustring::compose(_(
+				"Unable to create the INI configuration file at %1"), m_vccini_path));
+		}
+		ini_file2 << std::endl;
+		ini_file2.close();
+	}
 
 	// Lecture du fichier INI
-	m_data.load(m_prefix_path + "/vcc.ini");
+	m_data.load(m_vccini_path);
 
 	// Zones actives
 	KeyvalList    keyval_left ;
@@ -77,12 +102,17 @@ Params::Params(const std::string &prefix_path) : m_prefix_path(prefix_path) {
 
 // Destructeur
 Params::~Params() {
-	m_data.save(m_prefix_path + "/vcc_new.ini");
+	m_data.save(m_vccini_path);
 }
 
 // Répertoire VCC_TOP
 const std::string &Params::prefix_path() const {
 	return m_prefix_path;
+}
+
+// Répertoire de configuration (dépend de l'utilisateur actif)
+const std::string &Params::config_path() const {
+	return m_config_path;
 }
 
 // Cadence de jeu initiale

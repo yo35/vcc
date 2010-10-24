@@ -205,6 +205,9 @@ if(${WIN32})
 		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
 	endif(NOT (${INSTALL_TYPE} MATCHES Dev))
 endif(${WIN32})
+if(${INSTALL_TYPE} MATCHES Dev)
+	add_definitions("-DDEV_COMPILATION")
+endif(${INSTALL_TYPE} MATCHES Dev)
 
 # Fichiers de configuration
 configure_file(
