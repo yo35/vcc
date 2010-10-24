@@ -1,3 +1,47 @@
+2010-10-24  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* CMakeLists.txt, NEWS: Update NEWS et numéro de version passe à
+	  0.999
+	* po/fr.po, po/vcc.pot, src/clockwindow.cpp: MAJ des traductions
+	* src/params.h: Debug
+	* ., CMakeLists.txt, src/clockwindow.cpp, src/main.cpp,
+	  src/params.cpp, src/params.h: Ecriture du fichier de
+	  configuration dans le dossier de l'utilisateur courant
+	* src/clockwindow.cpp: Tooltip pour le bouton credits
+
+2010-10-20  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/params.cpp: Debug
+	* src/inistruct.cpp, src/params.cpp, src/params.h: Debug
+	* src/bitimer.cpp, src/clockwindow.cpp, src/inistruct.cpp,
+	  src/inistruct.h, src/params.cpp, src/params.h,
+	  src/timecontrol.cpp, src/timecontrol.h,
+	  src/timecontroldialog.cpp, src/timecontroldialog.h: Mise-en-place
+	  parser/driver INI
+	* src/clockwindow.cpp, src/clockwindow.h: Séparateur dans la barre
+	  d'outils
+	* src/clockwindow.cpp, src/clockwindow.h, src/params.cpp,
+	  src/params.h: Les icones sont des objets de la fenêtre où elles
+	  sont utilisées
+	* src/bitimer.cpp, src/bitimer.h, src/clockwindow.cpp,
+	  src/clockwindow.h, src/enumerable.h, src/params.cpp,
+	  src/params.h, src/side.cpp, src/side.h, src/timecontrol.cpp,
+	  src/timecontrol.h, src/timecontroldialog.cpp,
+	  src/timecontroldialog.h: Isolement des routines logiques hors des
+	  classes GUI
+
+2010-10-13  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* data/share/logo.png, src/vccaboutdialog.cpp,
+	  src/vccaboutdialog.h: Ajout du logo dans la boîte de dialogue
+	  credits
+
+2010-10-10  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/clockwindow.cpp, src/vccaboutdialog.cpp,
+	  src/vccaboutdialog.h: Proprisation boîte de dialog about
+	* src/clockwindow.cpp, src/clockwindow.h: Boîte de dialog 'About'
+
 2010-10-09  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* include/translation.h: En-tête de copyright
