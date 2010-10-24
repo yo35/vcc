@@ -79,10 +79,11 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 	btn_reset.set_label(_("Reset"       ));
 	btn_pause.set_label(_("Pause"       ));
 	btn_tctrl.set_label(_("Time control"));
+	btn_about.set_stock_id(Gtk::Stock::ABOUT);
 	btn_reset.set_tooltip_text(_("Reset the clock"                ));
 	btn_pause.set_tooltip_text(_("Pause the clock"                ));
 	btn_tctrl.set_tooltip_text(_("Change the current time control"));
-	btn_about.set_stock_id(Gtk::Stock::ABOUT);
+	btn_about.set_tooltip_text(_("Credits and license"            ));
 	toolbar.append(btn_reset  );
 	toolbar.append(btn_pause  );
 	toolbar.append(sep_toolbar);
