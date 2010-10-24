@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtual-chess-clock 0.99.0\n"
 "Report-Msgid-Bugs-To: Yoann Le Montagner <yo35 ( at ) melix ( dot ) net>\n"
-"POT-Creation-Date: 2010-10-09 12:15+0200\n"
+"POT-Creation-Date: 2010-10-24 13:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,36 +20,57 @@ msgstr ""
 msgid "Flag down"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:71
+#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:38
+msgid "Unable to open the INI file %1 for reading"
+msgstr ""
+
+#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:63
+#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:68
+#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:76
+#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:81
+#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:87
+#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:95
+msgid "Unconsistency in the INI file %1 at line #%2"
+msgstr ""
+
+#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:111
+msgid "Unable to open the INI file %1 for writing"
+msgstr ""
+
+#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:79
 msgid "Reset"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:72
+#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:80
 msgid "Pause"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:73
+#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:81
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:28
 msgid "Time control"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:74
+#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:83
 msgid "Reset the clock"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:75
+#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:84
 msgid "Pause the clock"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:76
+#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:85
 msgid "Change the current time control"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:123
+#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:86
+msgid "Information about credits and license"
+msgstr ""
+
+#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:132
 msgid "Do you really want to start a new game?"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:125
+#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:134
 msgid "Stop this game?"
 msgstr ""
 
@@ -105,11 +126,19 @@ msgstr ""
 msgid "Time control values are the same for both sides"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/params.cpp:52
+#: /home/yoann/Tmp/VCC/trunk/src/vccaboutdialog.cpp:35
+msgid "A simple and free chess clock software"
+msgstr ""
+
+#: /home/yoann/Tmp/VCC/trunk/src/params.cpp:54
+msgid "Unable to create the INI configuration file at %1"
+msgstr ""
+
+#: /home/yoann/Tmp/VCC/trunk/src/params.cpp:71
 msgid "Unable to open the keyboard configuration file"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/params.cpp:72
-#: /home/yoann/Tmp/VCC/trunk/src/params.cpp:76
+#: /home/yoann/Tmp/VCC/trunk/src/params.cpp:91
+#: /home/yoann/Tmp/VCC/trunk/src/params.cpp:95
 msgid "The keyboard configuration file is corrupted"
 msgstr ""
