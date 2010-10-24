@@ -1,3 +1,10 @@
+Virtual Chess Clock 0.999 (October 24, 2010)
+
+	* The last time control selected is now recorded when VCC closes
+	* Credits and license dialog
+	* Strict separation between algorithm and GUI in the source code
+
+
 Virtual Chess Clock 0.99 (October 10, 2010)
 
 	* Adding support for internationalization
