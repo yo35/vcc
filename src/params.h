@@ -71,7 +71,7 @@ private:
 	const std::string m_prefix_path;
 	const std::string m_config_path;
 	const std::string m_vccini_path;
-	IniStruct   m_data;
+	IniStruct         m_data;
 };
 
 extern Params *gp;
