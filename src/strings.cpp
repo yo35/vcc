@@ -20,34 +20,46 @@
  ******************************************************************************/
 
 
-#ifndef INISTRUCT_H
-#define INISTRUCT_H
+#include "strings.h"
+#include <cctype>
+#include <cassert>
 
-#include <string>
-#include <map>
+// Supprime les espaces en début et fin de chaîne
+std::string trim(const std::string &src) {
+	int beg = -1;
+	while(true) {
+		++beg;
+		if(beg>=static_cast<int>(src.length()))
+			return "";
+		if(!isspace(src.at(beg)))
+			break;
+	}
+	int end = src.length();
+	while(true) {
+		--end;
+		assert(end>=0);
+		if(!isspace(src.at(end)))
+			break;
+	}
+	assert(beg <= end);
+	return src.substr(beg, end-beg+1);
+}
 
-class IniStruct {
-
-public:
-
-	// Aliases
-	typedef std::string            Key    ;
-	typedef std::string            Value  ;
-	typedef std::map<Key, Value  > Section;
-	typedef std::map<Key, Section> Tree   ;
-
-	// Données
-	Tree root;
-
-	// Fonctions de lecture/écriture
-	void load(const std::string &path);
-	void save(const std::string &path) const;
-
-private:
-
-	// Fonctions auxilliaires
-	static bool is_valid_key(const Key &src);
-	static bool is_valid_id_char(char src);
-};
-
-#endif
+// Découpe une chaîne de caractères en fonction du séparateur 'sep'
+std::list<std::string> split(const std::string &src, char sep) {
+	std::list<std::string> retval;
+	std::string curr_str = "";
+	for(unsigned int pos = 0; pos<src.size(); ++pos) {
+		if(src.at(pos) == sep) {
+			if(curr_str != "") {
+				retval.push_back(curr_str);
+				curr_str = "";
+			}
+		}
+		else
+			curr_str += src.at(pos);
+	}
+	if(curr_str != "")
+		retval.push_back(curr_str);
+	return retval;
+}

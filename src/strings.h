@@ -20,34 +20,17 @@
  ******************************************************************************/
 
 
-#ifndef INISTRUCT_H
-#define INISTRUCT_H
+#ifndef STRINGS_H
+#define STRINGS_H
 
 #include <string>
-#include <map>
+#include <list>
 
-class IniStruct {
+// Supprime les espaces en début et fin de chaîne
+std::string trim(const std::string &src);
 
-public:
+// Découpe une chaîne de caractères en fonction du séparateur 'sep'
+std::list<std::string> split(const std::string &src, char sep);
 
-	// Aliases
-	typedef std::string            Key    ;
-	typedef std::string            Value  ;
-	typedef std::map<Key, Value  > Section;
-	typedef std::map<Key, Section> Tree   ;
-
-	// Données
-	Tree root;
-
-	// Fonctions de lecture/écriture
-	void load(const std::string &path);
-	void save(const std::string &path) const;
-
-private:
-
-	// Fonctions auxilliaires
-	static bool is_valid_key(const Key &src);
-	static bool is_valid_id_char(char src);
-};
 
 #endif

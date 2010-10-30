@@ -21,6 +21,7 @@
 
 
 #include "inistruct.h"
+#include "strings.h"
 #include <cassert>
 #include <fstream>
 #include <stdexcept>
@@ -125,27 +126,6 @@ void IniStruct::save(const std::string &path) const {
 	file.close();
 }
 
-// Supprime les espaces en début et fin de chaîne
-std::string IniStruct::trim(const std::string &src) {
-	int beg = -1;
-	while(true) {
-		++beg;
-		if(beg>=static_cast<int>(src.length()))
-			return "";
-		if(!is_space_char(src.at(beg)))
-			break;
-	}
-	int end = src.length();
-	while(true) {
-		--end;
-		assert(end>=0);
-		if(!is_space_char(src.at(end)))
-			break;
-	}
-	assert(beg <= end);
-	return src.substr(beg, end-beg+1);
-}
-
 // Test si une clé est valide, ie si elle est non-vide et ne contient que des
 // caractères d'identifiant valides
 bool IniStruct::is_valid_key(const Key &src) {
@@ -162,9 +142,4 @@ bool IniStruct::is_valid_key(const Key &src) {
 bool IniStruct::is_valid_id_char(char src) {
 	return (src>='A' && src<='Z') || (src>='a' && src<='z')
 		|| (src>='0' && src<='9') || src=='_';
-}
-
-// Test si un caractère est un espace
-bool IniStruct::is_space_char(char src) {
-	return src==' ' || src=='\t' || src=='\n';
 }
