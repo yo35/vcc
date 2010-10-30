@@ -24,7 +24,7 @@
 #define TIMER_H
 
 #include <glibmm/object.h>
-#include <sys/time.h>
+#include "timestamp.h"
 
 class Timer : public Glib::Object {
 
@@ -49,18 +49,14 @@ public:
 
 private:
 
-	// Structure interne pour le repérage d'un instant dans le temps
-	typedef struct timeval timeval_t;
-
 	// Routines internes
 	void refresh_time() const;
 	bool on_timeout_elapses();
-	static int difftime(const timeval_t &t2, const timeval_t &t1);
 
 	// Données membres
 	Mode               m_mode;
 	int                m_time;
-	timeval_t          m_start_at;
+	Timestamp          m_start_at;
 	sigc::signal<void> m_signal_modified;
 };
 
