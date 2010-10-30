@@ -22,6 +22,7 @@
 
 #include "clockwindow.h"
 #include "params.h"
+#include "strings.h"
 #include <config.h>
 #include <translation.h>
 #include <gtkmm/main.h>
@@ -68,8 +69,18 @@ int main(int argc, char *argv[]) {
 	// Chargement des paramètres
 	gp = new Params(prefix_path, config_path);
 
+	// Icône de l'application
+	std::list<std::string> icon_sizes = split(ICON_SIZES, ';');
+	std::list<Glib::RefPtr<Gdk::Pixbuf> > icons;
+	for(std::list<std::string>::const_iterator it=icon_sizes.begin(); it!=icon_sizes.end(); ++it) {
+		Glib::RefPtr<Gdk::Pixbuf> icon = Gdk::Pixbuf::create_from_file(
+			prefix_path + "/" VCC_ICONS_RPATH "/" + *it + "/" ICON_NAME);
+		icons.push_back(icon);
+	}
+	Gtk::Window::set_default_icon_list(icons);
+
 	// GUI
-	Gtk::Window::set_default_icon_from_file(prefix_path + "/" VCC_ICONS_RPATH "/vcc.png");
+	//Gtk::Window::set_default_icon_from_file(prefix_path + "/" VCC_ICONS_RPATH "/vcc.png");
 	ClockWindow* mainUI = new ClockWindow();
 	Gtk::Main::run(*mainUI);
 	delete mainUI;

@@ -123,6 +123,18 @@ file(
 )
 
 # Icône de l'application
+file(
+	GLOB
+	raw_icon_sizes
+	data/icons/unix/*
+)
+set(icon_sizes "")
+foreach(loop_var ${raw_icon_sizes})
+	get_filename_component(tmp_var ${loop_var} NAME)
+	set(icon_sizes ${icon_sizes} ${tmp_var})
+endforeach(loop_var)
+set(icon_name "apps/vcc.png")
+
 if(${WIN32})
 	set(icon_app_file data/icons/vcc.ico)
 	set(icon_rc_file data/icons/winicon.rc)
@@ -164,7 +176,7 @@ if(${INSTALL_TYPE} MATCHES Dev)
 	set(VCC_BIN_RPATH "bin/${CMAKE_BUILD_TYPE}")
 	set(VCC_BIN_RPATH_BACKWARD "../..")
 	set(VCC_SHARE_RPATH "data/share")
-	set(VCC_ICONS_RPATH "data/icons")
+	set(VCC_ICONS_RPATH "data/icons/unix")
 	set(VCC_APPLICATIONS_RPATH "data/applications")
 	set(VCC_DOC_RPATH ".")
 	set(VCC_LOCALE_RPATH "locale")
