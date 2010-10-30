@@ -1,11 +1,13 @@
 [Desktop Entry]
 Type=Application
 Version=1.0
-Name=Virtual Chess Clock
-GenericName=Chess clock software
-Comment=A chess clock software
 Exec=vcc
 Icon=@CMAKE_INSTALL_PREFIX@/@VCC_ICONS_RPATH@/vcc.png
 Terminal=false
 Categories=GTK;Game;
 StartupNotify=true
+Name=Virtual Chess Clock
+GenericName=Chess clock software
+GenericName[fr]=Pendule d'échecs
+Comment=A chess clock software
+Comment[fr]=Un logiciel de pendule d'échecs
