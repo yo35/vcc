@@ -38,8 +38,8 @@
 #define HOOKDLL_FULL_NAME "@HOOKDLL_FULL_NAME@"
 
 /* Icônes de l'application */
-#define ICON_SIZES "@icon_sizes@"
-#define ICON_NAME  "@icon_name@"
+#define ICON_SIZES "@ICON_SIZES@"
+#define ICON_NAME  "@ICON_NAME@"
 
 /* Paths */
 #define VCC_TOP                "@VCC_TOP@"

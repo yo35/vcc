@@ -80,7 +80,6 @@ int main(int argc, char *argv[]) {
 	Gtk::Window::set_default_icon_list(icons);
 
 	// GUI
-	//Gtk::Window::set_default_icon_from_file(prefix_path + "/" VCC_ICONS_RPATH "/vcc.png");
 	ClockWindow* mainUI = new ClockWindow();
 	Gtk::Main::run(*mainUI);
 	delete mainUI;

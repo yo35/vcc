@@ -87,6 +87,19 @@ set(PROJECT_VERSION_PATCH 0  )
 set(EXECUTABLE_FULL_NAME "${EXECUTABLE_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 set(HOOKDLL_FULL_NAME "${CMAKE_SHARED_LIBRARY_PREFIX}${HOOKDLL_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}")
 
+# Icône de l'application
+file(GLOB RAW_ICON_SIZES data/icons/unix/*x*)
+set(ICON_SIZES "")
+foreach(loop_var ${RAW_ICON_SIZES})
+	get_filename_component(tmp_var ${loop_var} NAME)
+	set(ICON_SIZES ${ICON_SIZES} ${tmp_var})
+endforeach(loop_var)
+if(${WIN32})
+	set(ICON_NAME "vcc.ico")
+else(${WIN32})
+	set(ICON_NAME "apps/vcc.png")
+endif(${WIN32})
+
 
 
 ################################################################################
@@ -122,24 +135,10 @@ file(
 	data/share/*.png
 )
 
-# Icône de l'application
-file(
-	GLOB
-	raw_icon_sizes
-	data/icons/unix/*
-)
-set(icon_sizes "")
-foreach(loop_var ${raw_icon_sizes})
-	get_filename_component(tmp_var ${loop_var} NAME)
-	set(icon_sizes ${icon_sizes} ${tmp_var})
-endforeach(loop_var)
-set(icon_name "apps/vcc.png")
-
+# Fichier de ressource pour l'icône de l'application (uniquement sous windows)
 if(${WIN32})
-	set(icon_app_file data/icons/vcc.ico)
-	set(icon_rc_file data/icons/winicon.rc)
+	set(icon_rc_file data/icons/windows/winicon.rc)
 else(${WIN32})
-	set(icon_app_file data/icons/vcc.png)
 	set(icon_rc_file "")
 endif(${WIN32})
 
@@ -147,7 +146,6 @@ endif(${WIN32})
 set(keymap_file data/share/keymap.txt)
 
 # Fichier desktop
-set(desktop_in_file data/applications/vcc.desktop.in)
 set(desktop_file data/applications/vcc.desktop)
 
 # Fichiers README, licence, etc...
@@ -176,7 +174,11 @@ if(${INSTALL_TYPE} MATCHES Dev)
 	set(VCC_BIN_RPATH "bin/${CMAKE_BUILD_TYPE}")
 	set(VCC_BIN_RPATH_BACKWARD "../..")
 	set(VCC_SHARE_RPATH "data/share")
-	set(VCC_ICONS_RPATH "data/icons/unix")
+	if(${WIN32})
+		set(VCC_ICONS_RPATH "data/icons/windows")
+	else(${WIN32})
+		set(VCC_ICONS_RPATH "data/icons/unix")
+	endif(${WIN32})
 	set(VCC_APPLICATIONS_RPATH "data/applications")
 	set(VCC_DOC_RPATH ".")
 	set(VCC_LOCALE_RPATH "locale")
@@ -194,7 +196,7 @@ else(${INSTALL_TYPE} MATCHES Dev)
 		set(VCC_LOCALE_RPATH "share/locale")
 	else(${WIN32})
 		set(VCC_SHARE_RPATH "share/${PROJECT_NAME}")
-		set(VCC_ICONS_RPATH "share/icons")
+		set(VCC_ICONS_RPATH "share/icons/hicolor")
 		set(VCC_APPLICATIONS_RPATH "share/applications")
 		set(VCC_DOC_RPATH "share/doc/${PROJECT_NAME}")
 		set(VCC_LOCALE_RPATH "share/locale")
@@ -225,10 +227,6 @@ endif(${INSTALL_TYPE} MATCHES Dev)
 configure_file(
 	${config_in_file}
 	${config_h_file}
-)
-configure_file(
-	${desktop_in_file}
-	${desktop_file}
 )
 
 # Bibliothèque pour la désactivation de la touche windows
@@ -318,6 +316,7 @@ if(${INSTALL_TYPE} MATCHES Dev)
 
 # Installation
 else(${INSTALL_TYPE} MATCHES Dev)
+	message(STATUS "VCC will be installed in ${CMAKE_INSTALL_PREFIX}")
 
 	# Cible 'make install'
 	install(PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/${EXECUTABLE_FULL_NAME}
@@ -330,7 +329,13 @@ else(${INSTALL_TYPE} MATCHES Dev)
 	install(FILES ${keymap_file} DESTINATION ${VCC_SHARE_RPATH})
 	install(FILES ${readme_aso_files} DESTINATION ${VCC_DOC_RPATH})
 	install(FILES ${desktop_file} DESTINATION ${VCC_APPLICATIONS_RPATH})
-	install(FILES ${icon_app_file} DESTINATION ${VCC_ICONS_RPATH})
+	if(${WIN32})
+		install(FILES data/icons/windows/vcc.ico
+	if(${WIN32})
+		foreach(loop_var ${ICON_SIZES})
+			install(DIRECTORY data/icons/unix/${loop_var} DESTINATION ${VCC_ICONS_RPATH} PATTERN ".svn" EXCLUDE)
+		endforeach(loop_var)
+	endif(${WIN32})
 	foreach(loop_var ${translation_po_files})
 		get_filename_component(INTL_CODE ${loop_var} NAME_WE)
 		install(DIRECTORY locale/${INTL_CODE} DESTINATION ${VCC_LOCALE_RPATH})

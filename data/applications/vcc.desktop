@@ -2,7 +2,7 @@
 Type=Application
 Version=1.0
 Exec=vcc
-Icon=@CMAKE_INSTALL_PREFIX@/@VCC_ICONS_RPATH@/vcc.png
+Icon=vcc
 Terminal=false
 Categories=GTK;Game;
 StartupNotify=true
