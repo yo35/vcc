@@ -52,7 +52,7 @@ private:
 	void on_about_clicked();
 	void on_clock_button_clicked(const Side &side);
 
-	// Données membre
+	// Données membres
 	BiTimer                     core;
 	EnumArray<Side, DialWidget> dial;
 	Gtk::Toolbar                toolbar;

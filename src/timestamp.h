@@ -31,4 +31,7 @@ typedef struct timeval Timestamp;
 // Retourne t2-t1 en millisecondes
 int difftime(const Timestamp &t2, const Timestamp &t1);
 
+// Retourne la date présente
+Timestamp get_timestamp_now();
+
 #endif

@@ -80,8 +80,7 @@ int Timer::get_time() const {
 	// Sinon, il faut calculer la valeur courante à partir de la date de lancement
 	// du timer (m_start_at) et de la valeur du timer à cet instant (m_time)
 	else {
-		Timestamp now;
-		gettimeofday(&now, 0);
+		Timestamp now = get_timestamp_now();
 		int diff = difftime(now, m_start_at);
 		if(m_mode==INCREMENT)
 			return m_time + diff;
