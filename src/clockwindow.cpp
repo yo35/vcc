@@ -35,13 +35,18 @@
 	#include <winkeyhookdll.h>
 #endif
 
-ClockWindow::ClockWindow() : Gtk::Window(),
+ClockWindow::ClockWindow() : Gtk::Window(), reinit_delayer(2),
 	ico_reset(gp->prefix_path() + "/" VCC_SHARE_RPATH "/reset.png"),
 	ico_pause(gp->prefix_path() + "/" VCC_SHARE_RPATH "/pause.png"),
 	ico_tctrl(gp->prefix_path() + "/" VCC_SHARE_RPATH "/tctrl.png")
 {
 	// Initialisation de la pendule
 	core.set_time_control(gp->initial_time_control());
+
+	// Initialisation du retardateur pour la réinitialisation de la pendule par le clavier
+	reinit_delayer.set_delay(1500);
+	reinit_delayer.signal_occurred().connect(
+		sigc::mem_fun(*this, &ClockWindow::on_reset_triggered_from_kb));
 
 	// Divers
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
@@ -103,6 +108,10 @@ ClockWindow::ClockWindow() : Gtk::Window(),
 
 bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
 
+	// Réinitialisation par le clavier
+	if(event->keyval==65505) reinit_delayer.trigger(0);
+	if(event->keyval==65506) reinit_delayer.trigger(1);
+
 	// Décodage
 	Keycode code = event->hardware_keycode;
 	BoolSideArray test_area;
@@ -117,6 +126,15 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
 			on_clock_button_clicked(*k);
 		}
 	}
+	return true;
+}
+
+bool ClockWindow::on_key_release_event(GdkEventKey* event) {
+
+	// Réinitialisation par le clavier
+	if(event->keyval==65505) reinit_delayer.cancel_trigger(0);
+	if(event->keyval==65506) reinit_delayer.cancel_trigger(1);
+
 	return true;
 }
 
@@ -168,4 +186,8 @@ void ClockWindow::on_clock_button_clicked(const Side &side) {
 	else {
 		core.start_timer(rev(side));
 	}
+}
+
+void ClockWindow::on_reset_triggered_from_kb() {
+	core.reset_timers();
 }

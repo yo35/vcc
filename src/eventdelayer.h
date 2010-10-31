@@ -20,59 +20,39 @@
  ******************************************************************************/
 
 
-#ifndef CLOCKWINDOW_H
-#define CLOCKWINDOW_H
+#ifndef EVENTDELAYER_H
+#define EVENTDELAYER_H
 
-#include <gtkmm/window.h>
-#include <gtkmm/box.h>
-#include <gtkmm/toolbutton.h>
-#include <gtkmm/separatortoolitem.h>
-#include <gtkmm/toolbar.h>
-#include <gtkmm/image.h>
-#include "dialwidget.h"
-#include "bitimer.h"
-#include "icon.h"
-#include "eventdelayer.h"
+#include <glibmm/object.h>
+#include "timestamp.h"
+#include <vector>
 
-class ClockWindow : public Gtk::Window {
+class EventDelayer : public Glib::Object {
 
 public:
-	ClockWindow();
 
-protected:
+	// Constructeur et gestion du délai
+	EventDelayer(unsigned int nb_trigger);
+	int delay() const;
+	void set_delay(int src);
 
-	// Event handling
-	virtual bool on_key_press_event  (GdkEventKey* event);
-	virtual bool on_key_release_event(GdkEventKey* event);
+	// Signal déclenché
+	sigc::signal<void> signal_occurred() const;
+
+	// Activation/désactivation d'un trigger
+	void trigger(unsigned int no);
+	void cancel_trigger(unsigned int no);
 
 private:
 
-	// Event handling
-	void on_pause_clicked();
-	void on_reset_clicked();
-	void on_tctrl_clicked();
-	void on_about_clicked();
-	void on_clock_button_clicked(const Side &side);
-	void on_reset_triggered_from_kb();
+	// Routine de check
+	bool on_timeout_elapses();
 
 	// Données membres
-	BiTimer                     core;
-	EventDelayer                reinit_delayer;
-	EnumArray<Side, DialWidget> dial;
-	Gtk::Toolbar                toolbar;
-	Icon                        ico_reset;
-	Icon                        ico_pause;
-	Icon                        ico_tctrl;
-	Gtk::Image                  img_reset;
-	Gtk::Image                  img_pause;
-	Gtk::Image                  img_tctrl;
-	Gtk::ToolButton             btn_reset;
-	Gtk::ToolButton             btn_pause;
-	Gtk::ToolButton             btn_tctrl;
-	Gtk::ToolButton             btn_about;
-	Gtk::SeparatorToolItem      sep_toolbar;
-	Gtk::HBox                   dial_layout;
-	Gtk::VBox                   main_layout;
+	int                    m_delay          ;
+	std::vector<bool>      m_is_active      ;
+	std::vector<Timestamp> m_triggered_at   ;
+	sigc::signal<void>     m_signal_occurred;
 };
 
 #endif
