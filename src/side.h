@@ -26,8 +26,7 @@
 #include "enumerable.h"
 
 // Type de base
-class BaseSide {
-public:
+struct BaseSide {
 	static const int N = 2;
 };
 
