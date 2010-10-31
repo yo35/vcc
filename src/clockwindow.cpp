@@ -127,8 +127,13 @@ void ClockWindow::on_pause_clicked() {
 
 void ClockWindow::on_reset_clicked() {
 
-	// On demande confirmation si l'un des timers est actif
-	if(core.mode()==BiTimer::ACTIVE) {
+	// Lecture du paramètre relatif à la demande de confirmation
+	ReinitConfirm confirm_mode = gp->reinit_confirm();
+
+	// On demande confirmation suivant la valeur du paramètre de demande de confirmation
+	if(confirm_mode==RC_ALWAYS ||
+		(confirm_mode==RC_IF_NOT_PAUSED && core.mode()==BiTimer::ACTIVE))
+	{
 		Gtk::MessageDialog dialog(*this, _("Do you really want to start a new game?"),
 			false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_YES_NO, true);
 		dialog.set_title(_("Stop this game?"));

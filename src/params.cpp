@@ -30,6 +30,10 @@
 #include <giomm/file.h>
 #include <glibmm/ustring.h>
 
+const ReinitConfirm RC_ALWAYS       (0);
+const ReinitConfirm RC_IF_NOT_PAUSED(1);
+const ReinitConfirm RC_NEVER        (2);
+
 Params *gp;
 
 Params::Params(const std::string &prefix_path, const std::string &config_path) :
@@ -137,6 +141,16 @@ void Params::set_initial_time_control(const TimeControl &src) {
 		m_data.set_data("Time_Control", "Increment_Left" , src.increment(LEFT ));
 		m_data.set_data("Time_Control", "Increment_Right", src.increment(RIGHT));
 	}
+}
+
+// Demande de confirmation pour la réinitialisation de l'horloge (lecture)
+ReinitConfirm Params::reinit_confirm() const {
+	return m_data.get_data("Misc", "Confirm_When_Reinitializing", RC_IF_NOT_PAUSED);
+}
+
+// Demande de confirmation pour la réinitialisation de l'horloge (écriture)
+void Params::set_reinit_confirm(const ReinitConfirm &src) {
+	m_data.set_data("Misc", "Confirm_When_Reinitializing", src);
 }
 
 void Params::init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right) {

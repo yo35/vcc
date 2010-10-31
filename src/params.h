@@ -26,9 +26,20 @@
 #include "inistruct.h"
 #include "timecontrol.h"
 #include "keys.h"
+#include "enumerable.h"
 #include <string>
 #include <set>
 
+// Demande de confirmation pour la réinitialisation de l'horloge
+struct BaseReinitConfirm {
+	static const int N = 3;
+};
+typedef Enumerable<BaseReinitConfirm> ReinitConfirm;
+extern const ReinitConfirm RC_ALWAYS;
+extern const ReinitConfirm RC_IF_NOT_PAUSED;
+extern const ReinitConfirm RC_NEVER;
+
+// Paramètres généraux
 class Params {
 public:
 
@@ -43,6 +54,10 @@ public:
 	// Cadence de jeu
 	TimeControl initial_time_control() const;
 	void set_initial_time_control(const TimeControl &src);
+
+	// Demande de confirmation pour la réinitialisation de l'horloge
+	ReinitConfirm reinit_confirm() const;
+	void set_reinit_confirm(const ReinitConfirm &src);
 
 	// Zones actives pour les touches clavier
 	EnumArray<Side, std::set<Keycode> > key_area;
