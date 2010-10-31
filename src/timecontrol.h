@@ -29,8 +29,7 @@
 
 // Types de cadence
 // 4 modes de contrôle de temps sont disponibles
-class BaseTimeControlType {
-public:
+struct BaseTimeControlType {
 	static const int N = 4;
 };
 typedef Enumerable<BaseTimeControlType> TimeControlType;
