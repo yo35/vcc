@@ -23,6 +23,8 @@
 #include "strings.h"
 #include <cctype>
 #include <cassert>
+#include <sstream>
+
 
 // Supprime les espaces en début et fin de chaîne
 std::string trim(const std::string &src) {
@@ -62,4 +64,56 @@ std::list<std::string> split(const std::string &src, char sep) {
 	if(curr_str != "")
 		retval.push_back(curr_str);
 	return retval;
+}
+
+// Conversion d'un entier en chaîne de caractères
+std::string int_to_string(int src) {
+	std::stringstream buff;
+	buff << src;
+	return buff.str();
+}
+
+// Conversion string -> int si possible
+bool is_valid_int(const std::string &src) {
+	size_t pos0 = 0;
+	if(src.empty())
+		return false;
+	if(src.at(0) == '-') {
+		pos0 = 1;
+		if(src.length()==1)
+			return false;
+	}
+	for(size_t pos=pos0; pos<src.length(); ++pos) {
+		char curr_car = src.at(pos);
+		if(!(curr_car>='0' && curr_car<='9'))
+			return false;
+	}
+	return true;
+}
+
+// Conversion d'une chaîne de caractères en entier
+int string_to_int(const std::string &src) {
+
+	// Initialisation
+	size_t pos0 = 0;
+	bool is_negative = false;
+	int res = 0;
+	assert(!src.empty());
+
+	// Entiers négatifs
+	if(src.at(0) == '-') {
+		is_negative = true;
+		pos0 = 1;
+		assert(src.length()>1);
+	}
+
+	// Calcul de la valeur absolue du résultat
+	for(size_t pos=pos0; pos<src.length(); ++pos) {
+		char curr_car = src.at(pos);
+		assert(curr_car>='0' && curr_car<='9');
+		res = res*10 + static_cast<int>(curr_car - '0');
+	}
+
+	// Valeure finale
+	return is_negative ? -res : res;
 }

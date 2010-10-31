@@ -20,49 +20,20 @@
  ******************************************************************************/
 
 
-#ifndef INISTRUCT_H
-#define INISTRUCT_H
+// Lecture d'un type énuméré
+template<class T>
+Enumerable<T> IniStruct::get_data(const Key &section, const Key &code,
+	const Enumerable<T> &default_value) const
+{
+	int retval = get_data(section, code, default_value.to_int());
+	if(retval>=0 && retval<Enumerable<T>::BaseType::N)
+		return Enumerable<T>(retval);
+	else
+		return default_value;
+}
 
-#include <string>
-#include <map>
-#include "enumerable.h"
-
-class IniStruct {
-
-public:
-
-	// Aliases
-	typedef std::string            Key    ;
-	typedef std::string            Value  ;
-	typedef std::map<Key, Value  > Section;
-	typedef std::map<Key, Section> Tree   ;
-
-	// Fonctions de lecture/écriture dans le fichier sous-jacent
-	void load(const std::string &path);
-	void save(const std::string &path) const;
-
-	// Lecture d'une data
-	template<class T>
-	Enumerable<T> get_data(const Key &section, const Key &code, const Enumerable<T> &default_value) const;
-	int           get_data(const Key &section, const Key &code, int                  default_value) const;
-	std::string   get_data(const Key &section, const Key &code, const std::string   &default_value) const;
-
-	// Écriture d'une data
-	template<class T>
-	void set_data(const Key &section, const Key &code, const Enumerable<T> &value);
-	void set_data(const Key &section, const Key &code, int                  value);
-	void set_data(const Key &section, const Key &code, const std::string   &value);
-
-private:
-
-	// Fonctions auxilliaires
-	static bool is_valid_key(const Key &src);
-	static bool is_valid_id_char(char src);
-
-	// Données
-	Tree root;
-};
-
-#include "inistruct.inl"
-
-#endif
+// Écriture d'un type énuméré
+template<class T>
+void IniStruct::set_data(const Key &section, const Key &code, const Enumerable<T> &value) {
+	set_data(section, code, value.to_int());
+}

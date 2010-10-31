@@ -143,3 +143,40 @@ bool IniStruct::is_valid_id_char(char src) {
 	return (src>='A' && src<='Z') || (src>='a' && src<='z')
 		|| (src>='0' && src<='9') || src=='_';
 }
+
+
+// Lecture d'un entier
+int IniStruct::get_data(const Key &section, const Key &code, int default_value) const
+{
+	std::string buff = get_data(section, code, int_to_string(default_value));
+	if(is_valid_int(buff))
+		return string_to_int(buff);
+	else
+		return default_value;
+}
+
+// Lecture d'une chaîne de caractères
+std::string IniStruct::get_data(const Key &section, const Key &code,
+	const std::string &default_value) const
+{
+	Tree::const_iterator i=root.find(section);
+	if(i==root.end())
+		return default_value;
+	else {
+		Section::const_iterator j=i->second.find(code);
+		if(j==i->second.end())
+			return default_value;
+		else
+			return j->second;
+	}
+}
+
+// Écriture d'un entier
+void IniStruct::set_data(const Key &section, const Key &code, int value) {
+	set_data(section, code, int_to_string(value));
+}
+
+// Écriture d'un texte
+void IniStruct::set_data(const Key &section, const Key &code, const std::string &value) {
+	root[section][code] = value;
+}

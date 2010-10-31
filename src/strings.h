@@ -32,5 +32,12 @@ std::string trim(const std::string &src);
 // Découpe une chaîne de caractères en fonction du séparateur 'sep'
 std::list<std::string> split(const std::string &src, char sep);
 
+// Conversion d'un entier en chaîne de caractères
+std::string int_to_string(int src);
+
+// Conversion d'une chaîne de caractères en entier
+bool is_valid_int(const std::string &src);
+int string_to_int(const std::string &src);
+
 
 #endif
