@@ -66,7 +66,7 @@ bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
 	delta_y =  0.9*height;
 	scale_x =  0.8*width  / static_cast<double>(m_kbm->line_width());
 	scale_y = -0.8*height / static_cast<double>(m_kbm->nb_lines());
-	margin  = 0.005*(height < width ? height : width);
+	margin  = 0.007*(height < width ? height : width);
 	radius  = 0.02 *(height < width ? height : width);
 
 	// Touches
@@ -127,8 +127,8 @@ void KeyboardMapWidget::draw_key(unsigned int idx) {
 		make_polygone(xs, ys);
 	}
 
-	cr->set_source_rgb(1.0,0.0, 0.0);
-	cr->stroke_preserve();
+	cr->set_source_rgb(1.0, 1.0, 1.0);
+	cr->fill_preserve();
 }
 
 // Dessine un rectangle échencré
@@ -212,86 +212,12 @@ void KeyboardMapWidget::make_polygone(const std::list<int> &xs, const std::list<
 	cr->begin_new_path();
 	cr->move_to(aretes_margin[0], stop_at[0]);
 	for(unsigned int idx=0; idx<xs.size(); ++idx) {
-		cr->line_to(start_at[2*idx+1], aretes_margin[2*idx+1]);
-		cr->line_to(stop_at [2*idx+1], aretes_margin[2*idx+1]);
-		cr->line_to(aretes_margin[2*idx+2], start_at[2*idx+2]);
-		cr->line_to(aretes_margin[2*idx+2], stop_at [2*idx+2]);
-	}
-	cr->close_path();
-	cr->set_source_rgb(1.0, 1.0, 1.0);
-	cr->fill_preserve();
-
-	// Tracé
-	cr->begin_new_path();
-	cr->move_to(aretes_margin[0], stop_at[0]);
-	for(unsigned int idx=0; idx<xs.size(); ++idx) {
 		small_arc(start_at[2*idx+1], stop_at[2*idx], angle_dep[2*idx+1], angle_arr[2*idx+1]);
 		cr->line_to(stop_at [2*idx+1], aretes_margin[2*idx+1]);
 		small_arc(stop_at[2*idx+1], start_at[2*idx+2], angle_dep[2*idx+2], angle_arr[2*idx+2]);
 		cr->line_to(aretes_margin[2*idx+2], stop_at [2*idx+2]);
 	}
 	cr->close_path();
-
-
-	/*
-
-
-	std::cout << "Nb pts = " << xs.size() << std::endl;
-	std::list<int>::const_iterator x = xs.begin(); ++x;
-	std::list<int>::const_iterator y = ys.begin();
-	std::cout << "(" << *x << "," << *y << ") initial" << std::endl;
-
-	double xp = x_conv(xs.front());
-	double yp = y_conv(ys.back());
-	double yn = y_conv(*y);
-	double xn;
-	cr->move_to(xp, (yn > yp) ? yp+radius : yp-radius);
-	cr->line_to(xp, (yn > yp) ? yn-radius : yn+radius);
-
-	while(x!=xs.end()) {
-		xn = x_conv(*x);
-
-		double xc1 = (xn < xp) ? xp-radius : xp+radius;
-		double xc2 = (xn < xp) ? xn+radius : xn-radius;
-		cr->line_to(xc1, yn);
-		cr->line_to(xc2, yn);
-		++y;
-		yp = yn;
-		yn = y_conv(*y);
-
-		double yc2 = (yn < yp) ? yp-radius : yp+radius;
-		double yc3 = (yn < yp) ? yn+radius : yn-radius;
-		cr->line_to(xn, yc2);
-		cr->line_to(xn, yc3);
-		++x;
-		xp = xn;
-
-*/
-		/*
-		x1p = (x1 < x0) ? x
-
-		x1 = (x2 < x0) ? x2+radius : x2-radius;
-		x3 = (x2 < x0) ? x2-radius : x2+radius;
-
-
-		std::cout << "(" << *x << "," << *y << ")" << std::endl;
-		cr->line_to(xn, xn);
-		++y;
-		std::cout << "(" << *x << "," << *y << ")" << std::endl;
-		cr->line_to(xn, xn);
-		++x;
-
-		x0 = x3;*/
-	/*}
-	xn = x_conv(xs.front());
-	cr->line_to((xn < xp) ? xp-radius : xp+radius, yn);
-	cr->line_to((xn < xp) ? xn+radius : xn-radius, yn);*/
-
-	/*x = xs.begin();
-	std::cout << "(" << *x << "," << *y << ")" << std::endl;
-	cr->line_to(xn, xn);
-	std::cout << "(close)" << std::endl;*/
-	//cr->close_path();
 }
 
 // Arc de cercle
