@@ -47,8 +47,11 @@ private:
 	// Routines de dessin
 	void draw_key(unsigned int idx);
 	void make_rectangle(int x0, int y0, int dx, int dy);
+	void make_polygone(const std::list<int> &xs, const std::list<int> &ys);
+	void small_arc(double xc, double yc, double angle1, double angle2);
 	double x_conv(int x) const;
 	double y_conv(int y) const;
+	static double sgn(double src);
 
 	// Données membres
 	const KeyboardMap *m_kbm;

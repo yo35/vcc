@@ -69,6 +69,9 @@ ClockWindow::ClockWindow() : Gtk::Window(), reinit_delayer(2),
 	btn_tctrl.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_tctrl_clicked));
 	btn_about.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_about_clicked));
 
+	kbm.load("./fr.kbm");
+	kbm_widget.set_keyboard_map(kbm);
+
 	// Toolbar
 	//sep_toolbar.set_draw(false);
 	//sep_toolbar.set_expand(true);
@@ -100,13 +103,44 @@ ClockWindow::ClockWindow() : Gtk::Window(), reinit_delayer(2),
 	dial_layout.pack_start(dial[RIGHT]);
 	main_layout.pack_start(toolbar, Gtk::PACK_SHRINK);
 	main_layout.pack_start(dial_layout);
+	main_layout.pack_start(kbm_widget);
 	main_layout.set_spacing(5);
 	add(main_layout);
 	show_all_children();
 	dial[LEFT].grab_focus();
 }
 
-bool ClockWindow::on_key_press_event(GdkEventKey* event)  {
+/*
+#include <fstream>
+#include <iostream>
+#include "keyboardmap.h"
+*/
+
+bool ClockWindow::on_key_press_event(GdkEventKey* event) {
+
+	/*
+	std::string curr_file = "./curr_line_5.kbm";
+	int curr_no_line = 5;
+
+	static std::ofstream file;
+	if(!file.is_open())
+		file.open(curr_file.c_str());
+
+	static int curr_no = 0;
+	file << "1;" << curr_no_line << ";" << curr_no*100 << ";100;";
+	++curr_no;
+	KeyvalList keyvals = keycode_to_keyvals(event->hardware_keycode);
+	for(KeyvalList::const_iterator it=keyvals.begin(); it!= keyvals.end(); ++it) {
+		file << *it << ";";
+	}
+	file << std::endl;
+	*/
+
+	/*
+	KeyboardMap kbm;
+	kbm.load("./fr.kbm");
+	std::cout << kbm.keys().size() << std::endl;
+	*/
 
 	// Réinitialisation par le clavier
 	if(event->keyval==65505) reinit_delayer.trigger(0);

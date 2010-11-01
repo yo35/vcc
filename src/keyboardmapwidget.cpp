@@ -103,30 +103,32 @@ void KeyboardMapWidget::draw_key(unsigned int idx) {
 
 	// Cas d'une touche située à cheval sur plusieurs lignes
 	else {
-		double curr_x = m_kbm->keys()[idx].x_lines.front().pos + m_kbm->keys()[idx].x_lines.front().width;
-		double curr_y = m_kbm->keys()[idx].bottom_line;
-		cr->move_to(curr_x*scale_x+delta_x, curr_y*scale_y+delta_y);
+		std::list<int> xs;
+		std::list<int> ys;
 		for(KeySizeList::const_iterator it=m_kbm->keys()[idx].x_lines.begin();
 			it!=m_kbm->keys()[idx].x_lines.end(); ++it)
 		{
-			curr_x = it->pos;
-			cr->line_to(curr_x*scale_x+delta_x, curr_y*scale_y+delta_y);
-			curr_y += 1.0;
-			cr->line_to(curr_x*scale_x+delta_x, curr_y*scale_y+delta_y);
+			xs.push_back(it->pos);
 		}
 		for(KeySizeList::const_reverse_iterator it=m_kbm->keys()[idx].x_lines.rbegin();
 			it!=m_kbm->keys()[idx].x_lines.rend(); ++it)
 		{
-			curr_x = it->pos + it->width;
-			cr->line_to(curr_x*scale_x+delta_x, curr_y*scale_y+delta_y);
-			curr_y -= 1.0;
-			cr->line_to(curr_x*scale_x+delta_x, curr_y*scale_y+delta_y);
+			xs.push_back(it->pos + it->width);
 		}
-		cr->close_path();
+		int first_x = xs.back();
+		xs.pop_back();
+		xs.push_front(first_x);
+		for(unsigned int dy=0; dy<m_kbm->keys()[idx].x_lines.size(); ++dy) {
+			ys.push_back(m_kbm->keys()[idx].bottom_line + dy);
+		}
+		for(unsigned int dy=m_kbm->keys()[idx].x_lines.size(); dy>0; --dy) {
+			ys.push_back(m_kbm->keys()[idx].bottom_line + dy);
+		}
+		make_polygone(xs, ys);
 	}
 
-	cr->set_source_rgb(1.0, 1.0, 1.0);
-	cr->fill_preserve();
+	cr->set_source_rgb(1.0,0.0, 0.0);
+	cr->stroke_preserve();
 }
 
 // Dessine un rectangle échencré
@@ -137,23 +139,174 @@ void KeyboardMapWidget::make_rectangle(int x0, int y0, int dx, int dy) {
 	double yt = y_conv(y0+dy) + margin;
 	cr->begin_new_path();
 	cr->move_to(xl+radius, yb);
-	cr->arc(xl+radius, yb-radius, radius, M_PI_2, M_PI);
+	cr->arc(xl+radius, yb-radius, radius, M_PI_2, M_PI);   // SO
 	cr->line_to(xl, yt+radius);
-	cr->arc(xl+radius, yt+radius, radius, -M_PI, -M_PI_2);
+	cr->arc(xl+radius, yt+radius, radius, -M_PI, -M_PI_2); // NO
 	cr->line_to(xr-radius, yt);
-	cr->arc(xr-radius, yt+radius, radius, -M_PI_2, 0.0);
+	cr->arc(xr-radius, yt+radius, radius, -M_PI_2, 0.0);   // NE
 	cr->line_to(xr, yb-radius);
-	cr->arc(xr-radius, yb-radius, radius, 0.0, M_PI_2);
+	cr->arc(xr-radius, yb-radius, radius, 0.0, M_PI_2);    // SE
+	cr->close_path();
+}
+
+// Dessine un polygone échencré
+void KeyboardMapWidget::make_polygone(const std::list<int> &xs, const std::list<int> &ys) {
+	assert(xs.size()==ys.size());
+	assert(xs.size()>=2);
+
+	// Les indices pairs sont des x (arètes verticales),
+	// les indices impairs des y (arètes horizontales)
+	std::vector<double> aretes(2*xs.size()+2);
+	std::list<int>::const_iterator x = xs.begin();
+	std::list<int>::const_iterator y = ys.begin();
+	for(unsigned int idx=0; idx<xs.size(); ++idx) {
+		aretes[2*idx  ] = x_conv(*x);
+		aretes[2*idx+1] = y_conv(*y);
+		++x;
+		++y;
+	}
+	aretes[2*xs.size()  ] = aretes[0];
+	aretes[2*xs.size()+1] = aretes[1];
+
+	// Corrections margin
+	std::vector<double> aretes_margin = aretes;
+	for(unsigned int idx=0; idx<xs.size(); ++idx) {
+		aretes_margin[2*idx+1] += -margin * sgn(aretes[2*idx  ] - aretes[2*idx+2]);
+		aretes_margin[2*idx+2] +=  margin * sgn(aretes[2*idx+1] - aretes[2*idx+3]);
+	}
+	aretes_margin[0] = aretes_margin[2*xs.size()];
+	aretes_margin[2*xs.size()+1] = aretes_margin[1];
+
+	// Coordonnées de stop des arètes
+	// Rq : inversion de la parité
+	std::vector<double> start_at(2*xs.size()+2);
+	std::vector<double> stop_at (2*xs.size()+2);
+	for(unsigned int idx=1; idx<=2*xs.size(); ++idx) {
+		start_at[idx] = aretes_margin[idx-1] - radius*sgn(aretes[idx-1]-aretes[idx+1]);
+		stop_at [idx] = aretes_margin[idx+1] + radius*sgn(aretes[idx-1]-aretes[idx+1]);
+	}
+	start_at[0] = start_at[2*xs.size()];
+	stop_at [0] = stop_at [2*xs.size()];
+	start_at[2*xs.size()+1] = start_at[1];
+	stop_at [2*xs.size()+1] = stop_at [1];
+
+	// Angles de départ au début de l'arète
+	std::vector<double> angle_dep(2*xs.size()+2);
+	for(unsigned int idx=0; idx<xs.size(); ++idx) {
+		angle_dep[2*idx+1] = (aretes[2*idx+2] < aretes[2*idx  ]) ? 0.0 : -M_PI;
+		angle_dep[2*idx+2] = (aretes[2*idx+3] < aretes[2*idx+1]) ? M_PI_2 : -M_PI_2;
+	}
+	angle_dep[0] = angle_dep[2*xs.size()];
+	angle_dep[2*xs.size()+1] = angle_dep[1];
+
+	// Angles d'arrivée au début de l'arète
+	std::vector<double> angle_arr(angle_dep);
+	for(unsigned int idx=0; idx<xs.size(); ++idx) {
+		angle_arr[2*idx+2] +=  M_PI_2*sgn(aretes[2*idx+3]-aretes[2*idx+1])*sgn(aretes[2*idx+2]-aretes[2*idx  ]);
+		angle_arr[2*idx+3] += -M_PI_2*sgn(aretes[2*idx+3]-aretes[2*idx+1])*sgn(aretes[2*idx+4]-aretes[2*idx+2]);
+	}
+	angle_arr[0] = angle_arr[2*xs.size()  ];
+	angle_arr[1] = angle_arr[2*xs.size()+1];
+
+	// Tracé
+	cr->begin_new_path();
+	cr->move_to(aretes_margin[0], stop_at[0]);
+	for(unsigned int idx=0; idx<xs.size(); ++idx) {
+		cr->line_to(start_at[2*idx+1], aretes_margin[2*idx+1]);
+		cr->line_to(stop_at [2*idx+1], aretes_margin[2*idx+1]);
+		cr->line_to(aretes_margin[2*idx+2], start_at[2*idx+2]);
+		cr->line_to(aretes_margin[2*idx+2], stop_at [2*idx+2]);
+	}
+	cr->close_path();
+	cr->set_source_rgb(1.0, 1.0, 1.0);
+	cr->fill_preserve();
+
+	// Tracé
+	cr->begin_new_path();
+	cr->move_to(aretes_margin[0], stop_at[0]);
+	for(unsigned int idx=0; idx<xs.size(); ++idx) {
+		small_arc(start_at[2*idx+1], stop_at[2*idx], angle_dep[2*idx+1], angle_arr[2*idx+1]);
+		cr->line_to(stop_at [2*idx+1], aretes_margin[2*idx+1]);
+		small_arc(stop_at[2*idx+1], start_at[2*idx+2], angle_dep[2*idx+2], angle_arr[2*idx+2]);
+		cr->line_to(aretes_margin[2*idx+2], stop_at [2*idx+2]);
+	}
 	cr->close_path();
 
-	/*cr->rectangle(
-		static_cast<double>(x0)*scale_x + delta_x + margin,
-		static_cast<double>(y0)*scale_y + delta_y - margin,
-		static_cast<double>(dx)*scale_x - 2.0*margin,
-		static_cast<double>(dy)*scale_y + 2.0*margin
-	);*/
+
+	/*
+
+
+	std::cout << "Nb pts = " << xs.size() << std::endl;
+	std::list<int>::const_iterator x = xs.begin(); ++x;
+	std::list<int>::const_iterator y = ys.begin();
+	std::cout << "(" << *x << "," << *y << ") initial" << std::endl;
+
+	double xp = x_conv(xs.front());
+	double yp = y_conv(ys.back());
+	double yn = y_conv(*y);
+	double xn;
+	cr->move_to(xp, (yn > yp) ? yp+radius : yp-radius);
+	cr->line_to(xp, (yn > yp) ? yn-radius : yn+radius);
+
+	while(x!=xs.end()) {
+		xn = x_conv(*x);
+
+		double xc1 = (xn < xp) ? xp-radius : xp+radius;
+		double xc2 = (xn < xp) ? xn+radius : xn-radius;
+		cr->line_to(xc1, yn);
+		cr->line_to(xc2, yn);
+		++y;
+		yp = yn;
+		yn = y_conv(*y);
+
+		double yc2 = (yn < yp) ? yp-radius : yp+radius;
+		double yc3 = (yn < yp) ? yn+radius : yn-radius;
+		cr->line_to(xn, yc2);
+		cr->line_to(xn, yc3);
+		++x;
+		xp = xn;
+
+*/
+		/*
+		x1p = (x1 < x0) ? x
+
+		x1 = (x2 < x0) ? x2+radius : x2-radius;
+		x3 = (x2 < x0) ? x2-radius : x2+radius;
+
+
+		std::cout << "(" << *x << "," << *y << ")" << std::endl;
+		cr->line_to(xn, xn);
+		++y;
+		std::cout << "(" << *x << "," << *y << ")" << std::endl;
+		cr->line_to(xn, xn);
+		++x;
+
+		x0 = x3;*/
+	/*}
+	xn = x_conv(xs.front());
+	cr->line_to((xn < xp) ? xp-radius : xp+radius, yn);
+	cr->line_to((xn < xp) ? xn+radius : xn-radius, yn);*/
+
+	/*x = xs.begin();
+	std::cout << "(" << *x << "," << *y << ")" << std::endl;
+	cr->line_to(xn, xn);
+	std::cout << "(close)" << std::endl;*/
+	//cr->close_path();
+}
+
+// Arc de cercle
+void KeyboardMapWidget::small_arc(double xc, double yc, double angle1, double angle2) {
+	if(angle1 < angle2)
+		cr->arc(xc, yc, radius, angle1, angle2);
+	else
+		cr->arc_negative(xc, yc, radius, angle1, angle2);
 }
 
 // Conversions x et y
 double KeyboardMapWidget::x_conv(int x) const { return static_cast<double>(x)*scale_x + delta_x; }
 double KeyboardMapWidget::y_conv(int y) const { return static_cast<double>(y)*scale_y + delta_y; }
+
+// Fonction signe
+double KeyboardMapWidget::sgn(double src) {
+	return src==0 ? 0 : (src>0 ? 1 : -1);
+}

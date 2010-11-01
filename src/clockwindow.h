@@ -33,6 +33,7 @@
 #include "bitimer.h"
 #include "icon.h"
 #include "eventdelayer.h"
+#include "keyboardmapwidget.h"
 
 class ClockWindow : public Gtk::Window {
 
@@ -54,6 +55,9 @@ private:
 	void on_about_clicked();
 	void on_clock_button_clicked(const Side &side);
 	void on_reset_triggered_from_kb();
+
+	KeyboardMap kbm;
+	KeyboardMapWidget kbm_widget;
 
 	// Données membres
 	BiTimer                     core;
