@@ -45,7 +45,9 @@ private:
 	void refresh_widget();
 
 	// Routines de dessin
-	void draw_key(unsigned int idx);
+	void draw_key_shape(unsigned int idx);
+	void draw_key_text (unsigned int idx);
+	void make_text     (int x0, int y0, int dx, int dy, const Glib::ustring &txt);
 	void make_rectangle(int x0, int y0, int dx, int dy);
 	void make_polygone(const std::list<int> &xs, const std::list<int> &ys);
 	void small_arc(double xc, double yc, double r0, double angle1, double angle2);
@@ -64,6 +66,8 @@ private:
 	double scale_y;
 	double margin ;
 	double radius ;
+	double padding;
+	double best_sz;
 };
 
 #endif

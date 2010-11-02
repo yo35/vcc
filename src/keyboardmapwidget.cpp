@@ -66,19 +66,51 @@ bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
 	delta_y =  0.9*height;
 	scale_x =  0.8*width  / static_cast<double>(m_kbm->line_width());
 	scale_y = -0.8*height / static_cast<double>(m_kbm->nb_lines());
-	margin  = 0.007*(height < width ? height : width);
-	radius  = 0.02 *(height < width ? height : width);
+	margin  = 0.007*min(height, width);
+	radius  = 0.02 *min(height, width);
+	padding = 0.03 *min(height, width);
+	best_sz = 0.4;
 
 	// Touches
 	cr->set_source_rgb(0.0, 0.0, 0.0);
 	for(unsigned idx=0; idx<m_kbm->keys().size(); ++idx) {
-		draw_key(idx);
+		draw_key_shape(idx);
+		draw_key_text (idx);
 	}
 	return true;
 }
 
-// Dessine une touche
-void KeyboardMapWidget::draw_key(unsigned int idx) {
+// Écrit le texte de la touche
+void KeyboardMapWidget::draw_key_text(unsigned int idx) {
+	assert(m_kbm!=0);
+	assert(idx<m_kbm->keys().size());
+
+	// Ligne sur laquelle sera écrit le texte (la plus large possible)
+	int no_larger_line = 0;
+	int pos_on_line    = 0;
+	int larger_width   = 0;
+	int delta_no_line  = 0;
+	for(KeySizeList::const_iterator it=m_kbm->keys()[idx].x_lines.begin();
+		it!=m_kbm->keys()[idx].x_lines.end(); ++it)
+	{
+		if(it->width >= larger_width) {
+			no_larger_line = m_kbm->keys()[idx].bottom_line + delta_no_line;
+			pos_on_line    = it->pos  ;
+			larger_width   = it->width;
+		}
+		++delta_no_line;
+	}
+
+	// Écrit le texte
+	assert(!m_kbm->keys()[idx].keyvals.empty());
+	Glib::ustring txt = keyval_to_symbol(m_kbm->keys()[idx].keyvals.front());
+	make_text(pos_on_line, no_larger_line, larger_width, 1, txt);
+	cr->set_source_rgb(0.0, 0.0, 0.0);
+	cr->fill_preserve();
+}
+
+// Dessine la touche sans le texte
+void KeyboardMapWidget::draw_key_shape(unsigned int idx) {
 	assert(m_kbm!=0);
 	assert(idx<m_kbm->keys().size());
 
@@ -117,10 +149,48 @@ void KeyboardMapWidget::draw_key(unsigned int idx) {
 		make_polygone(xs, ys);
 	}
 
+	// Applique la couleur
 	cr->set_source_rgb(1.0, 1.0, 1.0);
 	cr->fill_preserve();
 	//cr->set_source_rgb(1.0, 0.0, 0.0);
 	//cr->stroke_preserve();
+}
+
+// Dessine un texte centré dans le rectangle passé en paramètre
+void KeyboardMapWidget::make_text(int x0, int y0, int dx, int dy, const Glib::ustring &txt) {
+	cr->begin_new_path();
+
+	// Boîte englobante max du texte
+	double xl = x_conv(x0)    + padding;
+	double xr = x_conv(x0+dx) - padding;
+	double yb = y_conv(y0)   ;
+	double yt = y_conv(y0+dy);
+
+	// Taille de la police
+	double w_box      = xr-xl;
+	double h_box      = yb-yt;
+	double ideal_size = best_sz * h_box;
+	cr->set_font_size(ideal_size);
+	Cairo::TextExtents te;
+	cr->get_text_extents(txt, te);
+	if(te.width > w_box) {
+		cr->set_font_size(ideal_size * w_box / te.width);
+		cr->get_text_extents(txt, te);
+	}
+	/*double w_scale_factor = w_box/te.width;
+	double h_scale_factor = h_box/te.height;
+	double scale_factor = min(h_scale_factor, w_scale_factor);
+	cr->set_font_size(ideal_size * scale_factor);*/
+
+	// Centrage
+	cr->get_text_extents(txt, te);
+
+	// Dessin
+	double delta_x_box = (w_box - te.width )/2.0;
+	double delta_y_box = (h_box + te.height)/2.0;
+	cr->begin_new_path();
+	cr->move_to(xl+delta_x_box, yt+delta_y_box);
+	cr->text_path(txt);
 }
 
 // Dessine un rectangle échencré

@@ -26,6 +26,7 @@
 #include <gdk/gdk.h>
 #include <string>
 #include <list>
+#include <glibmm/ustring.h>
 
 
 // Aliases
@@ -37,9 +38,12 @@ typedef std::list<Keyval > KeyvalList ;
 // Nom associé à la keyval
 std::string keyval_to_string(Keyval val);
 
+// Symbole associé à la keyval
+Glib::ustring keyval_to_symbol(Keyval val);
+
 // Conversions keycode vers keyval
-KeyvalList keycode_to_keyvals(Keycode code);
-Keyval     keycode_to_cannonical_keyval(Keycode code);
+//KeyvalList keycode_to_keyvals(Keycode code);
+//Keyval     keycode_to_cannonical_keyval(Keycode code);
 
 // Récupération du ou des keycodes à partir du keyval
 KeycodeList keyval_to_keycodes(Keyval val);
