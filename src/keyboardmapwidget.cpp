@@ -74,16 +74,6 @@ bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
 	for(unsigned idx=0; idx<m_kbm->keys().size(); ++idx) {
 		draw_key(idx);
 	}
-
-	// Rectangle 1
-	/*scaled_rectangle(0, 0, m_kbm->line_width(), m_kbm->nb_lines());
-	cr->set_source_rgb(1,0,0);
-	cr->stroke_preserve();
-	scaled_rectangle(0, 0, 1000, 4);
-	cr->set_source_rgb(0,0,0);
-	cr->fill_preserve();*/
-
-
 	return true;
 }
 
@@ -129,6 +119,8 @@ void KeyboardMapWidget::draw_key(unsigned int idx) {
 
 	cr->set_source_rgb(1.0, 1.0, 1.0);
 	cr->fill_preserve();
+	//cr->set_source_rgb(1.0, 0.0, 0.0);
+	//cr->stroke_preserve();
 }
 
 // Dessine un rectangle échencré
@@ -177,13 +169,29 @@ void KeyboardMapWidget::make_polygone(const std::list<int> &xs, const std::list<
 	aretes_margin[0] = aretes_margin[2*xs.size()];
 	aretes_margin[2*xs.size()+1] = aretes_margin[1];
 
+	// Rayon ajusté du début de l'arète
+	std::vector<double> radius_aj(2*xs.size()+2);
+	for(unsigned int idx=0; idx<=2*xs.size()+1; ++idx) {
+		radius_aj[idx] = radius;
+	}
+	for(unsigned int idx=1; idx<=2*xs.size(); ++idx) {
+		radius_aj[idx] = min(radius_aj[idx], abs(aretes_margin[idx-1]-aretes_margin[idx+1])/2);
+	}
+	radius_aj[0] = radius_aj[2*xs.size()];
+	radius_aj[2*xs.size()+1] = radius_aj[1];
+	for(unsigned int idx=2; idx<=2*xs.size()+1; ++idx) {
+		radius_aj[idx] = min(radius_aj[idx], abs(aretes_margin[idx]-aretes_margin[idx-2])/2);
+	}
+	radius_aj[0] = radius_aj[2*xs.size()  ];
+	radius_aj[1] = radius_aj[2*xs.size()+1];
+
 	// Coordonnées de stop des arètes
 	// Rq : inversion de la parité
 	std::vector<double> start_at(2*xs.size()+2);
 	std::vector<double> stop_at (2*xs.size()+2);
 	for(unsigned int idx=1; idx<=2*xs.size(); ++idx) {
-		start_at[idx] = aretes_margin[idx-1] - radius*sgn(aretes[idx-1]-aretes[idx+1]);
-		stop_at [idx] = aretes_margin[idx+1] + radius*sgn(aretes[idx-1]-aretes[idx+1]);
+		start_at[idx] = aretes_margin[idx-1] - radius_aj[idx]  *sgn(aretes[idx-1]-aretes[idx+1]);
+		stop_at [idx] = aretes_margin[idx+1] + radius_aj[idx+1]*sgn(aretes[idx-1]-aretes[idx+1]);
 	}
 	start_at[0] = start_at[2*xs.size()];
 	stop_at [0] = stop_at [2*xs.size()];
@@ -212,27 +220,35 @@ void KeyboardMapWidget::make_polygone(const std::list<int> &xs, const std::list<
 	cr->begin_new_path();
 	cr->move_to(aretes_margin[0], stop_at[0]);
 	for(unsigned int idx=0; idx<xs.size(); ++idx) {
-		small_arc(start_at[2*idx+1], stop_at[2*idx], angle_dep[2*idx+1], angle_arr[2*idx+1]);
+		small_arc(start_at[2*idx+1], stop_at[2*idx], radius_aj[2*idx+1],
+			angle_dep[2*idx+1], angle_arr[2*idx+1]);
 		cr->line_to(stop_at [2*idx+1], aretes_margin[2*idx+1]);
-		small_arc(stop_at[2*idx+1], start_at[2*idx+2], angle_dep[2*idx+2], angle_arr[2*idx+2]);
+		small_arc(stop_at[2*idx+1], start_at[2*idx+2], radius_aj[2*idx+2],
+			angle_dep[2*idx+2], angle_arr[2*idx+2]);
 		cr->line_to(aretes_margin[2*idx+2], stop_at [2*idx+2]);
 	}
 	cr->close_path();
 }
 
 // Arc de cercle
-void KeyboardMapWidget::small_arc(double xc, double yc, double angle1, double angle2) {
+void KeyboardMapWidget::small_arc(double xc, double yc, double r0, double angle1, double angle2) {
 	if(angle1 < angle2)
-		cr->arc(xc, yc, radius, angle1, angle2);
+		cr->arc(xc, yc, r0, angle1, angle2);
 	else
-		cr->arc_negative(xc, yc, radius, angle1, angle2);
+		cr->arc_negative(xc, yc, r0, angle1, angle2);
 }
 
 // Conversions x et y
 double KeyboardMapWidget::x_conv(int x) const { return static_cast<double>(x)*scale_x + delta_x; }
 double KeyboardMapWidget::y_conv(int y) const { return static_cast<double>(y)*scale_y + delta_y; }
 
-// Fonction signe
+// Fonctions maths
 double KeyboardMapWidget::sgn(double src) {
 	return src==0 ? 0 : (src>0 ? 1 : -1);
+}
+double KeyboardMapWidget::abs(double src) {
+	return src<0 ? -src : src;
+}
+double KeyboardMapWidget::min(double s1, double s2) {
+	return s1 < s2 ? s1 : s2;
 }
