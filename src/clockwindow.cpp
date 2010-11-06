@@ -25,6 +25,7 @@
 #include "timecontroldialog.h"
 #include "keys.h"
 #include "params.h"
+#include "keyboardmapwidget.h"
 #include <config.h>
 #include <cassert>
 #include <gtkmm/messagedialog.h>
@@ -67,10 +68,8 @@ ClockWindow::ClockWindow() : Gtk::Window(), reinit_delayer(2),
 	btn_reset.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_reset_clicked));
 	btn_pause.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_clicked));
 	btn_tctrl.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_tctrl_clicked));
+	btn_prefs.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_prefs_clicked));
 	btn_about.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_about_clicked));
-
-	kbm.load(gp->prefix_path() + "/" VCC_SHARE_RPATH "/fr.kbm");
-	kbm_widget.set_keyboard_map(kbm);
 
 	// Toolbar
 	//sep_toolbar.set_draw(false);
@@ -87,15 +86,18 @@ ClockWindow::ClockWindow() : Gtk::Window(), reinit_delayer(2),
 	btn_reset.set_label(_("Reset"       ));
 	btn_pause.set_label(_("Pause"       ));
 	btn_tctrl.set_label(_("Time control"));
-	btn_about.set_stock_id(Gtk::Stock::ABOUT);
+	btn_prefs.set_stock_id(Gtk::Stock::PREFERENCES);
+	btn_about.set_stock_id(Gtk::Stock::ABOUT      );
 	btn_reset.set_tooltip_text(_("Reset the clock"                      ));
 	btn_pause.set_tooltip_text(_("Pause the clock"                      ));
 	btn_tctrl.set_tooltip_text(_("Change the current time control"      ));
+	btn_prefs.set_tooltip_text(_("Configuration"                        ));
 	btn_about.set_tooltip_text(_("Information about credits and license"));
 	toolbar.append(btn_reset  );
 	toolbar.append(btn_pause  );
 	toolbar.append(sep_toolbar);
 	toolbar.append(btn_tctrl  );
+	toolbar.append(btn_prefs  );
 	toolbar.append(btn_about  );
 
 	// Géométrie générale
@@ -103,7 +105,6 @@ ClockWindow::ClockWindow() : Gtk::Window(), reinit_delayer(2),
 	dial_layout.pack_start(dial[RIGHT]);
 	main_layout.pack_start(toolbar, Gtk::PACK_SHRINK);
 	main_layout.pack_start(dial_layout);
-	main_layout.pack_start(kbm_widget);
 	main_layout.set_spacing(5);
 	add(main_layout);
 	show_all_children();
@@ -200,6 +201,19 @@ void ClockWindow::on_tctrl_clicked() {
 		return;
 	core.set_time_control(dialog.get_time_control());
 	gp->set_initial_time_control(core.time_control());
+}
+
+void ClockWindow::on_prefs_clicked() {
+
+	KeyboardMap kbm;
+	KeyboardMapWidget kbm_widget;
+	kbm.load(gp->prefix_path() + "/" VCC_SHARE_RPATH "/fr.kbm");
+	kbm_widget.set_keyboard_map(kbm);
+
+	Gtk::Dialog dialog("Test dialog", *this, true, true);
+	dialog.get_vbox()->pack_start(kbm_widget);
+	dialog.show_all_children();
+	dialog.run();
 }
 
 void ClockWindow::on_about_clicked() {
