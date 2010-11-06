@@ -59,6 +59,9 @@ private:
 
 	// Données membres
 	const KeyboardMap *m_kbm;
+	std::vector<bool>  m_keydown;
+
+	// Objets liés au dessin du widget
 	Cairo::RefPtr<Cairo::Context> cr;
 	double delta_x;
   double delta_y;

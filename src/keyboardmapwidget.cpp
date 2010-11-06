@@ -30,6 +30,8 @@ KeyboardMapWidget::KeyboardMapWidget() : Gtk::DrawingArea() {
 
 void KeyboardMapWidget::set_keyboard_map(const KeyboardMap &kbm) {
 	m_kbm = &kbm;
+	m_keydown.resize(m_kbm->keys().size(), false);
+	m_keydown[47] = true;
 	refresh_widget();
 }
 
@@ -144,6 +146,11 @@ void KeyboardMapWidget::draw_key_shape(unsigned int idx) {
 	// Applique la couleur
 	cr->set_source_rgb(1.0, 1.0, 1.0);
 	cr->fill_preserve();
+	if(m_keydown[idx]) {
+		cr->set_source_rgb(1.0, 0.5, 0.0);
+		cr->set_line_width(margin * 1.5);
+		cr->stroke_preserve();
+	}
 }
 
 // Dessine un texte centré dans le rectangle passé en paramètre

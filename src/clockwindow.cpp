@@ -110,11 +110,11 @@ ClockWindow::ClockWindow() : Gtk::Window(), reinit_delayer(2),
 	dial[LEFT].grab_focus();
 }
 
-
+/*
 #include <fstream>
 #include <iostream>
 #include "keyboardmap.h"
-
+*/
 
 bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 
@@ -136,12 +136,6 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 	}
 	file << std::endl;
 	*/
-
-
-	KeyboardMap kbm;
-	kbm.load("./fr.kbm");
-	std::cout << kbm.keys().size() << std::endl;
-
 
 	// Réinitialisation par le clavier
 	if(event->keyval==65505) reinit_delayer.trigger(0);
