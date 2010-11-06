@@ -25,7 +25,6 @@
 #include "timecontroldialog.h"
 #include "keys.h"
 #include "params.h"
-#include "keyboardmapwidget.h"
 #include <config.h>
 #include <cassert>
 #include <gtkmm/messagedialog.h>
@@ -202,6 +201,8 @@ void ClockWindow::on_tctrl_clicked() {
 	core.set_time_control(dialog.get_time_control());
 	gp->set_initial_time_control(core.time_control());
 }
+
+#include "keyboardmapwidget.h"
 
 void ClockWindow::on_prefs_clicked() {
 

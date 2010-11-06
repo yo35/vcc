@@ -45,6 +45,9 @@ protected:
 
 private:
 
+	// Action sur une touche clavier
+	void on_key_action(Keyval keyval, bool is_press);
+
 	// Force le redessin du widget
 	void refresh_widget();
 
