@@ -197,14 +197,13 @@ void KeyboardMap::check_consistency(bool test, const std::string &path, int curr
 // Calcul de la table de traduction
 void KeyboardMap::compute_translation_table() {
 	translation_table.clear();
-	for(unsigned int idx=0; idx<m_keys.size(); ++idx) {
+	for(int idx=0; idx<static_cast<int>(m_keys.size()); ++idx) {
 		for(int k=0; k<m_keys[idx].nb_keyvals(); ++k) {
 			Keyval curr_keyval = m_keys[idx].keyval(k);
-			if(translation_table.find(curr_keyval)==translation_table.end()) {
-				translation_table[curr_keyval] = static_cast<int>(idx);
-			} else {
+			if(translation_table.find(curr_keyval)==translation_table.end())
+				translation_table[curr_keyval] = idx;
+			else if(translation_table[curr_keyval]!=idx)
 				translation_table[curr_keyval] = -1;
-			}
 		}
 	}
 	translation_table_ready = true;
