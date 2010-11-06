@@ -26,6 +26,7 @@
 #include "keys.h"
 #include <string>
 #include <fstream>
+#include <map>
 
 
 // Plan de clavier
@@ -42,6 +43,9 @@ public:
   int                      line_width   () const;
 	const PhysicalKeyVector &keys         () const;
 
+	// Détermine le numéro de la touche correspondant au keyval passé en paramètre
+	int get_key(Keyval keyval) const;
+
 	// Fonctions de lecture/écriture dans le fichier sous-jacent
 	void load(const std::string &path);
 	void save(const std::string &path) const;
@@ -53,11 +57,18 @@ private:
 		int &curr_no_line, std::list<int> &retval);
 	static void check_consistency(bool test, const std::string &path, int curr_no_line);
 
+	// Précalcule la table keyval -> key
+	void compute_translation_table();
+
 	// Données membres
 	int               m_nb_lines     ;
 	int               m_default_width;
 	int               m_line_width   ;
 	PhysicalKeyVector m_keys         ;
+
+	// Algo
+	bool                  translation_table_ready;
+	std::map<Keyval, int> translation_table;
 };
 
 #endif

@@ -24,13 +24,15 @@
 #include "strings.h"
 #include <translation.h>
 #include <stdexcept>
+#include <cassert>
 #include <glibmm/ustring.h>
 
 // Constructeur
 KeyboardMap::KeyboardMap() {
-	m_nb_lines      =    6;
-	m_default_width =  100;
-	m_line_width    = 2200;
+	m_nb_lines              =    7;
+	m_default_width         =  100;
+	m_line_width            = 2200;
+	translation_table_ready = false;
 }
 
 // Accesseurs
@@ -38,6 +40,16 @@ int                      KeyboardMap::nb_lines     () const { return m_nb_lines 
 int                      KeyboardMap::default_width() const { return m_default_width; }
 int                      KeyboardMap::line_width   () const { return m_line_width   ; }
 const PhysicalKeyVector &KeyboardMap::keys         () const { return m_keys         ; }
+
+// Traduction keyval -> physical key
+int KeyboardMap::get_key(Keyval keyval) const {
+	assert(translation_table_ready);
+	std::map<Keyval, int>::const_iterator it = translation_table.find(keyval);
+	if(it==translation_table.end())
+		return -1;
+	else
+		return it->second;
+}
 
 // Écriture dans un fichier
 void KeyboardMap::save(const std::string &path) const {
@@ -72,6 +84,7 @@ void KeyboardMap::save(const std::string &path) const {
 
 // Chargement depuis un fichier
 void KeyboardMap::load(const std::string &path) {
+	translation_table_ready = false;
 
 	// Ouverture du fichier source
 	std::ifstream file;
@@ -135,6 +148,7 @@ void KeyboardMap::load(const std::string &path) {
 	// Terminaison
 	check_consistency(idx==m_keys.size(), path, curr_no_line);
 	file.close();
+	compute_translation_table();
 }
 
 // Lecture d'une ligne
@@ -178,4 +192,20 @@ void KeyboardMap::check_consistency(bool test, const std::string &path, int curr
 		throw std::runtime_error(Glib::ustring::compose(
 			_("Unconsistency in the keyboard map file %1 at line #%2"), path, curr_no_line));
 	}
+}
+
+// Calcul de la table de traduction
+void KeyboardMap::compute_translation_table() {
+	translation_table.clear();
+	for(unsigned int idx=0; idx<m_keys.size(); ++idx) {
+		for(int k=0; k<m_keys[idx].nb_keyvals(); ++k) {
+			Keyval curr_keyval = m_keys[idx].keyval(k);
+			if(translation_table.find(curr_keyval)==translation_table.end()) {
+				translation_table[curr_keyval] = static_cast<int>(idx);
+			} else {
+				translation_table[curr_keyval] = -1;
+			}
+		}
+	}
+	translation_table_ready = true;
 }

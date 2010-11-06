@@ -39,6 +39,10 @@ protected:
 	// Routine de dessin
 	virtual bool on_expose_event(GdkEventExpose *event);
 
+	// Événements clavier
+	virtual bool on_key_press_event  (GdkEventKey* event);
+	virtual bool on_key_release_event(GdkEventKey* event);
+
 private:
 
 	// Force le redessin du widget

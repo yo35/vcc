@@ -26,6 +26,8 @@
 KeyboardMapWidget::KeyboardMapWidget() : Gtk::DrawingArea() {
 	m_kbm = 0;
 	set_size_request(600, 400);
+	set_events(Gdk::KEY_PRESS_MASK | Gdk::KEY_RELEASE_MASK);
+	set_can_focus(true);
 }
 
 void KeyboardMapWidget::set_keyboard_map(const KeyboardMap &kbm) {
@@ -43,6 +45,26 @@ void KeyboardMapWidget::refresh_widget() {
 	Gtk::Allocation allocation = get_allocation();
 	Gdk::Rectangle r(0, 0, allocation.get_width(), allocation.get_height());
 	window->invalidate_rect(r, false);
+}
+
+bool KeyboardMapWidget::on_key_press_event(GdkEventKey* event) {
+	if(m_kbm!=0) {
+		int key = m_kbm->get_key(event->keyval);
+		if(key>=0)
+			m_keydown[key] = true;
+		refresh_widget();
+	}
+	return true;
+}
+
+bool KeyboardMapWidget::on_key_release_event(GdkEventKey* event) {
+	if(m_kbm!=0) {
+		int key = m_kbm->get_key(event->keyval);
+		if(key>=0)
+			m_keydown[key] = false;
+		refresh_widget();
+	}
+	return true;
 }
 
 bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
