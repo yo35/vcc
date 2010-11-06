@@ -128,9 +128,9 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 
 	static int curr_no = 0;
 	file << curr_no_line << ";1;";
-	++curr_no;
 	PhysicalKey data = keycode_to_keyvals(event->hardware_keycode);
 	file << data.nb_keyvals() << ";" << curr_no*100 << ";100;";
+	++curr_no;
 	for(int k=0; k<data.nb_keyvals(); ++k) {
 		file << data.keyval(k) << ";" << data.group(k) << ";" << data.level(k) << ";";
 	}
