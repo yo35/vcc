@@ -34,6 +34,12 @@ public:
 	KeyboardMapWidget();
 	void set_keyboard_map(const KeyboardMap &kbm);
 
+	// Couleur et régions
+	int        nb_areas()        const;
+	Gdk::Color color   (int idx) const;
+	void set_nb_areas(int src);
+	void set_color   (int idx, const Gdk::Color &src);
+
 protected:
 
 	// Routine de dessin
@@ -65,8 +71,10 @@ private:
 	static double min(double s1, double s2);
 
 	// Données membres
-	const KeyboardMap *m_kbm;
-	std::vector<bool>  m_keydown;
+	const KeyboardMap      *m_kbm;
+	std::vector<bool>       m_keydown;
+	std::vector<int >       m_keyarea;
+	std::vector<Gdk::Color> m_color;
 
 	// Objets liés au dessin du widget
 	Cairo::RefPtr<Cairo::Context> cr;

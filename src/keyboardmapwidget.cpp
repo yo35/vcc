@@ -33,7 +33,34 @@ KeyboardMapWidget::KeyboardMapWidget() : Gtk::DrawingArea() {
 void KeyboardMapWidget::set_keyboard_map(const KeyboardMap &kbm) {
 	m_kbm = &kbm;
 	m_keydown.resize(m_kbm->keys().size(), false);
+	m_keyarea.resize(m_kbm->keys().size(),    -1);
+
+	set_nb_areas(2);
+	Gdk::Color col;
+	col.set_rgb_p(0.0, 0.7, 0.0); set_color(0, col);
+	col.set_rgb_p(0.0, 0.5, 1.0); set_color(1, col);
+	m_keyarea[47] = m_keyarea[48] = m_keyarea[62] = 1;
+	m_keyarea[30] = m_keyarea[31] = m_keyarea[22] = 0;
+
 	refresh_widget();
+}
+
+int KeyboardMapWidget::nb_areas() const {
+	return m_color.size();
+}
+
+Gdk::Color KeyboardMapWidget::color(int idx) const {
+	assert(idx>=0 && idx<static_cast<int>(m_color.size()));
+	return m_color[idx];
+}
+
+void KeyboardMapWidget::set_nb_areas(int src) {
+	m_color.resize(src);
+}
+
+void KeyboardMapWidget::set_color(int idx, const Gdk::Color &src) {
+	assert(idx>=0 && idx<static_cast<int>(m_color.size()));
+	m_color[idx] = src;
 }
 
 void KeyboardMapWidget::refresh_widget() {
@@ -95,7 +122,6 @@ bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
 	best_sz = 0.4;
 
 	// Touches
-	cr->set_source_rgb(0.0, 0.0, 0.0);
 	for(unsigned idx=0; idx<m_kbm->keys().size(); ++idx) {
 		draw_key_shape(idx);
 		draw_key_text (idx);
@@ -165,7 +191,18 @@ void KeyboardMapWidget::draw_key_shape(unsigned int idx) {
 	}
 
 	// Applique la couleur
-	cr->set_source_rgb(1.0, 1.0, 1.0);
+	if(m_keyarea[idx]<0) {
+		cr->set_source_rgb(1.0, 1.0, 1.0);
+	}
+	else {
+		assert(m_keyarea[idx] < static_cast<int>(m_color.size()));
+		Gdk::Color curr_color = m_color[m_keyarea[idx]];
+		cr->set_source_rgb(
+			curr_color.get_red_p  (),
+			curr_color.get_green_p(),
+			curr_color.get_blue_p ()
+		);
+	}
 	cr->fill_preserve();
 	if(m_keydown[idx]) {
 		cr->set_source_rgb(1.0, 0.5, 0.0);
