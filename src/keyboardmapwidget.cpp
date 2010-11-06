@@ -25,8 +25,11 @@
 
 KeyboardMapWidget::KeyboardMapWidget() : Gtk::DrawingArea() {
 	m_kbm = 0;
+	is_selecting = false;
+	m_active_area = -1;
 	set_size_request(600, 400);
-	set_events(Gdk::KEY_PRESS_MASK | Gdk::KEY_RELEASE_MASK);
+	set_events(Gdk::KEY_PRESS_MASK | Gdk::KEY_RELEASE_MASK |
+		Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK | Gdk::POINTER_MOTION_MASK);
 	set_can_focus(true);
 }
 
@@ -41,12 +44,17 @@ void KeyboardMapWidget::set_keyboard_map(const KeyboardMap &kbm) {
 	col.set_rgb_p(0.0, 0.5, 1.0); set_color(1, col);
 	m_keyarea[47] = m_keyarea[48] = m_keyarea[62] = 1;
 	m_keyarea[30] = m_keyarea[31] = m_keyarea[22] = 0;
+	m_active_area = 0;
 
 	refresh_widget();
 }
 
 int KeyboardMapWidget::nb_areas() const {
 	return m_color.size();
+}
+
+int KeyboardMapWidget::active_area() const {
+	return m_active_area;
 }
 
 Gdk::Color KeyboardMapWidget::color(int idx) const {
@@ -56,6 +64,11 @@ Gdk::Color KeyboardMapWidget::color(int idx) const {
 
 void KeyboardMapWidget::set_nb_areas(int src) {
 	m_color.resize(src);
+}
+
+void KeyboardMapWidget::set_active_area(int src) {
+	assert(m_active_area < static_cast<int>(m_color.size()));
+	m_active_area = src;
 }
 
 void KeyboardMapWidget::set_color(int idx, const Gdk::Color &src) {
@@ -73,12 +86,41 @@ void KeyboardMapWidget::refresh_widget() {
 	window->invalidate_rect(r, false);
 }
 
-bool KeyboardMapWidget::on_key_press_event(GdkEventKey* event) {
+bool KeyboardMapWidget::on_button_press_event(GdkEventButton *event) {
+	if(event->button!=1 || m_active_area<0)
+		return true;
+	is_selecting = true;
+	origin_sel_x = event->x;
+	origin_sel_y = event->y;
+	curr_sel_x   = event->x;
+	curr_sel_y   = event->y;
+	refresh_widget();
+	return true;
+}
+
+bool KeyboardMapWidget::on_button_release_event(GdkEventButton *event) {
+	if(event->button!=1 || m_active_area<0)
+		return true;
+	is_selecting = false;
+	refresh_widget();
+	return true;
+}
+
+bool KeyboardMapWidget::on_motion_notify_event(GdkEventMotion *event) {
+	if(!is_selecting  || m_active_area<0)
+		return true;
+	curr_sel_x = event->x;
+	curr_sel_y = event->y;
+	refresh_widget();
+	return true;
+}
+
+bool KeyboardMapWidget::on_key_press_event(GdkEventKey *event) {
 	on_key_action(event->keyval, true);
 	return true;
 }
 
-bool KeyboardMapWidget::on_key_release_event(GdkEventKey* event) {
+bool KeyboardMapWidget::on_key_release_event(GdkEventKey *event) {
 	on_key_action(event->keyval, false);
 	return true;
 }
@@ -125,6 +167,28 @@ bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
 	for(unsigned idx=0; idx<m_kbm->keys().size(); ++idx) {
 		draw_key_shape(idx);
 		draw_key_text (idx);
+	}
+
+	// Zone de sélection
+	if(is_selecting) {
+		assert(m_active_area>=0 && m_active_area<static_cast<int>(m_color.size()));
+		Gdk::Color curr_color = m_color[m_active_area];
+		cr->begin_new_path();
+		cr->rectangle(origin_sel_x, origin_sel_y, curr_sel_x-origin_sel_x, curr_sel_y-origin_sel_y);
+		cr->set_source_rgba(
+			curr_color.get_red_p  (),
+			curr_color.get_green_p(),
+			curr_color.get_blue_p (),
+			0.15
+		);
+		cr->fill_preserve();
+		cr->set_source_rgb(
+			curr_color.get_red_p  (),
+			curr_color.get_green_p(),
+			curr_color.get_blue_p ()
+		);
+		cr->set_line_width(2.0);
+		cr->stroke_preserve();
 	}
 	return true;
 }

@@ -35,19 +35,24 @@ public:
 	void set_keyboard_map(const KeyboardMap &kbm);
 
 	// Couleur et régions
-	int        nb_areas()        const;
-	Gdk::Color color   (int idx) const;
-	void set_nb_areas(int src);
-	void set_color   (int idx, const Gdk::Color &src);
+	int    nb_areas() const;
+	int active_area() const;
+	void set_nb_areas   (int src);
+	void set_active_area(int src);
+	Gdk::Color color(int idx) const;
+	void set_color(int idx, const Gdk::Color &src);
 
 protected:
 
 	// Routine de dessin
 	virtual bool on_expose_event(GdkEventExpose *event);
 
-	// Événements clavier
-	virtual bool on_key_press_event  (GdkEventKey* event);
-	virtual bool on_key_release_event(GdkEventKey* event);
+	// Événements clavier et souris
+	virtual bool on_key_press_event     (GdkEventKey    *event);
+	virtual bool on_key_release_event   (GdkEventKey    *event);
+	virtual bool on_button_press_event  (GdkEventButton *event);
+	virtual bool on_button_release_event(GdkEventButton *event);
+	virtual bool on_motion_notify_event (GdkEventMotion *event);
 
 private:
 
@@ -75,6 +80,7 @@ private:
 	std::vector<bool>       m_keydown;
 	std::vector<int >       m_keyarea;
 	std::vector<Gdk::Color> m_color;
+	int                     m_active_area;
 
 	// Objets liés au dessin du widget
 	Cairo::RefPtr<Cairo::Context> cr;
@@ -86,6 +92,14 @@ private:
 	double radius ;
 	double padding;
 	double best_sz;
+
+	// Zone de sélection souris
+	bool is_selecting;
+	double origin_sel_x;
+	double origin_sel_y;
+	double curr_sel_x;
+	double curr_sel_y;
+
 };
 
 #endif
