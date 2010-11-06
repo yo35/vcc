@@ -24,39 +24,11 @@
 #define KEYBOARDMAP_H
 
 #include "keys.h"
-#include <list>
-#include <vector>
 #include <string>
 #include <fstream>
 
 
-////////////////////////////////////////////////////////////////////////////////
-// Structures annexes
-
-// Coordonnées d'une touche sur une ligne
-typedef struct {
-	int pos  ;
-	int width;
-} KeySize;
-
-// Liste des coordonnées d'une touche (sur plusieurs lignes)
-typedef std::list<KeySize> KeySizeList;
-
-// Touche de clavier "physique"
-typedef struct {
-	KeyvalList  keyvals    ;
-	int         bottom_line;
-	KeySizeList x_lines    ;
-} PhysicalKey;
-
-// Liste de touches physiques
-typedef std::vector<PhysicalKey> PhysicalKeyVector;
-
-
-
-////////////////////////////////////////////////////////////////////////////////
 // Plan de clavier
-
 class KeyboardMap {
 
 public:
@@ -80,7 +52,6 @@ private:
 	static bool parse_line(std::ifstream &file, const std::string &path,
 		int &curr_no_line, std::list<int> &retval);
 	static void check_consistency(bool test, const std::string &path, int curr_no_line);
-
 
 	// Données membres
 	int               m_nb_lines     ;

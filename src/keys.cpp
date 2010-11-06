@@ -24,36 +24,36 @@
 #include <gdk/gdkkeysyms.h>
 #include <translation.h>
 
-std::string keyval_to_string(Keyval val) {
-	return std::string(gdk_keyval_name(val));
+// Constructeur
+PhysicalKey::PhysicalKey() {
+	m_bottom_line = 0;
 }
 
-//KeyvalList keycode_to_keyvals(Keycode code) {
-//	KeyvalList retval;
-//	guint     *keyvals;
-//	gint       n_entries;
-//	if(gdk_keymap_get_entries_for_keycode(NULL, code, NULL, &keyvals, &n_entries)) {
-//		for(int k=0; k<n_entries; ++k) {
-//			retval.push_back(keyvals[k]);
-//		}
-//		g_free(keyvals);
-//	}
-//	return retval;
-//}
-//
-//Keyval keycode_to_cannonical_keyval(Keycode code) {
-//	KeyvalList keyvals = keycode_to_keyvals(code);
-//	for(KeyvalList::const_iterator it=keyvals.begin(); it!=keyvals.end(); ++it) {
-//		if((*it>='0' && *it<='9') || (*it>='A' && *it<='Z'))
-//			return *it;
-//	}
-//	if(keyvals.empty())
-//		return 0;
-//	else
-//		return keyvals.front();
-//}
-//
+// Accesseurs
+int      PhysicalKey::bottom_line  ()        const { return m_bottom_line     ; }
+int      PhysicalKey::nb_lines     ()        const { return m_geometry.size (); }
+int      PhysicalKey::nb_keyvals   ()        const { return m_keyval_ex.size(); }
+int      PhysicalKey::pos_on_line  (int idx) const { return m_geometry [idx].pos   ; }
+int      PhysicalKey::width_on_line(int idx) const { return m_geometry [idx].width ; }
+Keyval   PhysicalKey::keyval       (int idx) const { return m_keyval_ex[idx].keyval; }
+KeyGroup PhysicalKey::group        (int idx) const { return m_keyval_ex[idx].group ; }
+KeyLevel PhysicalKey::level        (int idx) const { return m_keyval_ex[idx].level ; }
 
+// Modifieurs
+void PhysicalKey::set_bottom_line(int src) { m_bottom_line = src; }
+void PhysicalKey::set_nb_lines   (int src) { m_geometry .resize(src); }
+void PhysicalKey::set_nb_keyvals (int src) { m_keyval_ex.resize(src); }
+void PhysicalKey::set_geometry(int idx, int pos, int width) {
+	m_geometry[idx].pos   = pos  ;
+	m_geometry[idx].width = width;
+}
+void PhysicalKey::set_keyval(int idx, Keyval keyval, KeyGroup group, KeyLevel level) {
+	m_keyval_ex[idx].keyval = keyval;
+	m_keyval_ex[idx].group  = group ;
+	m_keyval_ex[idx].level  = level ;
+}
+
+// Keycodes associés à 1 keyval
 KeycodeList keyval_to_keycodes(Keyval val) {
 	KeycodeList   retval;
 	GdkKeymapKey *keys;
@@ -67,6 +67,29 @@ KeycodeList keyval_to_keycodes(Keyval val) {
 	return retval;
 }
 
+// Keyvals assocés à 1 keycode
+PhysicalKey keycode_to_keyvals(Keycode code) {
+	PhysicalKey   retval;
+	GdkKeymapKey *grouplevels;
+	Keyval       *keyvals;
+	gint          n_entries;
+	if(gdk_keymap_get_entries_for_keycode(NULL, code, &grouplevels, &keyvals, &n_entries)) {
+		retval.set_nb_keyvals(n_entries);
+		for(int k=0; k<n_entries; ++k) {
+			retval.set_keyval(k, keyvals[k], grouplevels[k].group, grouplevels[k].level);
+		}
+		g_free(grouplevels);
+		g_free(keyvals    );
+	}
+	return retval;
+}
+
+// Nom standard d'un keyval
+std::string keyval_to_string(Keyval val) {
+	return std::string(gdk_keyval_name(val));
+}
+
+// Nom "affichable" d'un keyval
 Glib::ustring keyval_to_symbol(Keyval val) {
 
 	// Caractères alpha-numériques classiques

@@ -24,29 +24,92 @@
 #define KEYS_H
 
 #include <gdk/gdk.h>
-#include <string>
+#include <vector>
 #include <list>
+#include <string>
 #include <glibmm/ustring.h>
 
 
-// Aliases
-typedef guint              Keycode    ;
-typedef guint              Keyval     ;
-typedef std::list<Keycode> KeycodeList;
-typedef std::list<Keyval > KeyvalList ;
+////////////////////////////////////////////////////////////////////////////////
+// Types
+
+
+// Types de base
+typedef guint Keycode    ;
+typedef guint Keyval     ;
+typedef guint KeyGroup   ;
+typedef guint KeyLevel   ;
+
+
+// Touche de clavier "physique"
+class PhysicalKey {
+
+public:
+
+	// Constructeur
+	PhysicalKey();
+
+	// Accesseurs
+	int      bottom_line  ()        const;
+	int      nb_lines     ()        const;
+	int      nb_keyvals   ()        const;
+	int      pos_on_line  (int idx) const;
+	int      width_on_line(int idx) const;
+	Keyval   keyval       (int idx) const;
+	KeyGroup group        (int idx) const;
+	KeyLevel level        (int idx) const;
+
+	// Modifieurs
+	void set_bottom_line(int src);
+	void set_nb_lines   (int src);
+	void set_nb_keyvals (int src);
+	void set_geometry(int idx, int pos, int width);
+	void set_keyval  (int idx, Keyval keyval, KeyGroup group, KeyLevel level);
+
+
+private:
+
+	// Géométrie d'une touche
+	typedef struct {
+		int pos  ;
+		int width;
+	} KeyGeometry;
+
+	// Valeurs associées à une touche
+	typedef struct {
+		Keyval   keyval;
+		KeyGroup group ;
+		KeyLevel level ;
+	} KeyValEx;
+
+	// Données membres
+	int                      m_bottom_line;
+	std::vector<KeyGeometry> m_geometry   ;
+	std::vector<KeyValEx   > m_keyval_ex  ;
+};
+
+
+// Containers
+typedef std::list  <Keyval     > KeyvalList       ;
+typedef std::list  <Keycode    > KeycodeList      ;
+typedef std::vector<PhysicalKey> PhysicalKeyVector;
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Fonctions algo
+
+// Récupération du ou des keycodes à partir du keyval
+KeycodeList keyval_to_keycodes(Keyval val);
+
+// Conversions keycode vers keyval
+PhysicalKey keycode_to_keyvals(Keycode code);
 
 // Nom associé à la keyval
 std::string keyval_to_string(Keyval val);
 
 // Symbole associé à la keyval
 Glib::ustring keyval_to_symbol(Keyval val);
-
-// Conversions keycode vers keyval
-//KeyvalList keycode_to_keyvals(Keycode code);
-//Keyval     keycode_to_cannonical_keyval(Keycode code);
-
-// Récupération du ou des keycodes à partir du keyval
-KeycodeList keyval_to_keycodes(Keyval val);
 
 
 #endif

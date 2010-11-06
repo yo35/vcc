@@ -89,21 +89,17 @@ void KeyboardMapWidget::draw_key_text(unsigned int idx) {
 	int no_larger_line = 0;
 	int pos_on_line    = 0;
 	int larger_width   = 0;
-	int delta_no_line  = 0;
-	for(KeySizeList::const_iterator it=m_kbm->keys()[idx].x_lines.begin();
-		it!=m_kbm->keys()[idx].x_lines.end(); ++it)
-	{
-		if(it->width >= larger_width) {
-			no_larger_line = m_kbm->keys()[idx].bottom_line + delta_no_line;
-			pos_on_line    = it->pos  ;
-			larger_width   = it->width;
+	for(int i=0; i<m_kbm->keys()[idx].nb_lines(); ++i) {
+		if(m_kbm->keys()[idx].width_on_line(i) >= larger_width) {
+			no_larger_line = m_kbm->keys()[idx].bottom_line() + i;
+			pos_on_line    = m_kbm->keys()[idx].pos_on_line  (i);
+			larger_width   = m_kbm->keys()[idx].width_on_line(i);
 		}
-		++delta_no_line;
 	}
 
 	// Écrit le texte
-	assert(!m_kbm->keys()[idx].keyvals.empty());
-	Glib::ustring txt = keyval_to_symbol(m_kbm->keys()[idx].keyvals.front());
+	assert(m_kbm->keys()[idx].nb_keyvals()!=0);
+	Glib::ustring txt = keyval_to_symbol(m_kbm->keys()[idx].keyval(0));
 	make_text(pos_on_line, no_larger_line, larger_width, 1, txt);
 	cr->set_source_rgb(0.0, 0.0, 0.0);
 	cr->fill_preserve();
@@ -115,10 +111,10 @@ void KeyboardMapWidget::draw_key_shape(unsigned int idx) {
 	assert(idx<m_kbm->keys().size());
 
 	// Cas d'une touche simple
-	if(m_kbm->keys()[idx].x_lines.size()==1) {
-		int x0 = m_kbm->keys()[idx].x_lines.front().pos;
-		int y0 = m_kbm->keys()[idx].bottom_line;
-		int dx = m_kbm->keys()[idx].x_lines.front().width;
+	if(m_kbm->keys()[idx].nb_lines()==1) {
+		int x0 = m_kbm->keys()[idx].pos_on_line(0);
+		int y0 = m_kbm->keys()[idx].bottom_line();
+		int dx = m_kbm->keys()[idx].width_on_line(0);
 		int dy = 1;
 		make_rectangle(x0, y0, dx, dy);
 	}
@@ -127,24 +123,20 @@ void KeyboardMapWidget::draw_key_shape(unsigned int idx) {
 	else {
 		std::list<int> xs;
 		std::list<int> ys;
-		for(KeySizeList::const_iterator it=m_kbm->keys()[idx].x_lines.begin();
-			it!=m_kbm->keys()[idx].x_lines.end(); ++it)
-		{
-			xs.push_back(it->pos);
+		for(int i=0; i<m_kbm->keys()[idx].nb_lines(); ++i) {
+			xs.push_back(m_kbm->keys()[idx].pos_on_line(i));
 		}
-		for(KeySizeList::const_reverse_iterator it=m_kbm->keys()[idx].x_lines.rbegin();
-			it!=m_kbm->keys()[idx].x_lines.rend(); ++it)
-		{
-			xs.push_back(it->pos + it->width);
+		for(int i=m_kbm->keys()[idx].nb_lines()-1; i>=0; --i) {
+			xs.push_back(m_kbm->keys()[idx].pos_on_line(i) + m_kbm->keys()[idx].width_on_line(i));
 		}
 		int first_x = xs.back();
 		xs.pop_back();
 		xs.push_front(first_x);
-		for(unsigned int dy=0; dy<m_kbm->keys()[idx].x_lines.size(); ++dy) {
-			ys.push_back(m_kbm->keys()[idx].bottom_line + dy);
+		for(int dy=0; dy<m_kbm->keys()[idx].nb_lines(); ++dy) {
+			ys.push_back(m_kbm->keys()[idx].bottom_line() + dy);
 		}
-		for(unsigned int dy=m_kbm->keys()[idx].x_lines.size(); dy>0; --dy) {
-			ys.push_back(m_kbm->keys()[idx].bottom_line + dy);
+		for(int dy=m_kbm->keys()[idx].nb_lines(); dy>0; --dy) {
+			ys.push_back(m_kbm->keys()[idx].bottom_line() + dy);
 		}
 		make_polygone(xs, ys);
 	}
@@ -152,8 +144,6 @@ void KeyboardMapWidget::draw_key_shape(unsigned int idx) {
 	// Applique la couleur
 	cr->set_source_rgb(1.0, 1.0, 1.0);
 	cr->fill_preserve();
-	//cr->set_source_rgb(1.0, 0.0, 0.0);
-	//cr->stroke_preserve();
 }
 
 // Dessine un texte centré dans le rectangle passé en paramètre

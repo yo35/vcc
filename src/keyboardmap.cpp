@@ -56,12 +56,12 @@ void KeyboardMap::save(const std::string &path) const {
 
 	// Boucle d'écriture pour chaque touche
 	for(PhysicalKeyVector::const_iterator it=m_keys.begin(); it!=m_keys.end(); ++it) {
-		file << it->x_lines.size() << ";" << it->bottom_line << ";";
-		for(KeySizeList::const_iterator i=it->x_lines.begin(); i!=it->x_lines.end(); ++i) {
-			file << i->pos << ";" << i->width << ";";
+		file << it->bottom_line() << ";" << it->nb_lines() << ";" << it->nb_keyvals() << ";";
+		for(int i=0; i<it->nb_lines(); ++i) {
+			file << it->pos_on_line(i) << ";" << it->width_on_line(i) << ";";
 		}
-		for(KeyvalList::const_iterator i=it->keyvals.begin(); i!=it->keyvals.end(); ++i) {
-			file << *i << ";";
+		for(int i=0; i<it->nb_keyvals(); ++i) {
+			file << it->keyval(i) << ";" << it->group(i) << ";" << it->level(i) << ";";
 		}
 		file << std::endl;
 	}
@@ -98,38 +98,37 @@ void KeyboardMap::load(const std::string &path) {
 	// Boucle de lecture pour chaque touche
 	unsigned int idx = 0;
 	while(parse_line(file, path, curr_no_line, curr_line)) {
-		PhysicalKey key;
-		int nb_line_on_kb = 0;
 
-		// Nombre de ligne de la touche courante
-		check_consistency(!curr_line.empty(), path, curr_no_line);
-		nb_line_on_kb = curr_line.front(); curr_line.pop_front();
-
-		// Numéro de la première ligne de la touche courante
-		check_consistency(!curr_line.empty(), path, curr_no_line);
-		key.bottom_line = curr_line.front(); curr_line.pop_front();
+		// Index de la première ligne, nombre de lignes et de keyvals de la touche
+		check_consistency(curr_line.size()>=3, path, curr_no_line);
+		int bottom_line      = curr_line.front(); curr_line.pop_front();
+		int nb_line_of_key   = curr_line.front(); curr_line.pop_front();
+		int nb_keyval_of_key = curr_line.front(); curr_line.pop_front();
+		m_keys[idx].set_bottom_line(bottom_line     );
+		m_keys[idx].set_nb_lines   (nb_line_of_key  );
+		m_keys[idx].set_nb_keyvals (nb_keyval_of_key);
 
 		// Liste des coordonnées de la touche sur chaque ligne du clavier
-		while(nb_line_on_kb>0) {
-			KeySize sz;
-			check_consistency(!curr_line.empty(), path, curr_no_line);
-			sz.pos = curr_line.front(); curr_line.pop_front();
-			check_consistency(!curr_line.empty(), path, curr_no_line);
-			sz.width = curr_line.front(); curr_line.pop_front();
-			key.x_lines.push_back(sz);
-			--nb_line_on_kb;
+		check_consistency(nb_line_of_key>=1 && static_cast<int>(curr_line.size())>=2*nb_line_of_key,
+			path, curr_no_line);
+		for(int i=0; i<nb_line_of_key; ++i) {
+			int curr_pos   = curr_line.front(); curr_line.pop_front();
+			int curr_width = curr_line.front(); curr_line.pop_front();
+			m_keys[idx].set_geometry(i, curr_pos, curr_width);
 		}
 
-		// Liste des keyvals associées à la touche
-		while(!curr_line.empty()) {
-			Keyval curr_keyval = curr_line.front(); curr_line.pop_front();
-			key.keyvals.push_back(curr_keyval);
+		// Liste des keyvals
+		check_consistency(nb_keyval_of_key>=1 && static_cast<int>(curr_line.size())>=3*nb_keyval_of_key,
+			path, curr_no_line);
+		for(int i=0; i<nb_keyval_of_key; ++i) {
+			Keyval   curr_keyval = curr_line.front(); curr_line.pop_front();
+			KeyGroup curr_group  = curr_line.front(); curr_line.pop_front();
+			KeyLevel curr_level  = curr_line.front(); curr_line.pop_front();
+			m_keys[idx].set_keyval(i, curr_keyval, curr_group, curr_level);
 		}
-		check_consistency(!key.keyvals.empty(), path, curr_no_line);
 
-		// Enregistrement de la touche courante
-		check_consistency(idx<m_keys.size(), path, curr_no_line);
-		m_keys[idx] = key;
+		// Touche suivante
+		check_consistency(curr_line.empty(), path, curr_no_line);
 		++idx;
 	}
 
@@ -142,6 +141,7 @@ void KeyboardMap::load(const std::string &path) {
 bool KeyboardMap::parse_line(std::ifstream &file, const std::string &path,
 	int &curr_no_line, std::list<int> &retval)
 {
+	// Trouve la première ligne non-vide qui ne soit pas un commentaire
 	std::string curr_str_line;
 	while(!file.eof()) {
 		getline(file, curr_str_line);
@@ -153,6 +153,13 @@ bool KeyboardMap::parse_line(std::ifstream &file, const std::string &path,
 	if(file.eof())
 		return false;
 
+	// Suppression du commentaire en fin de ligne éventuel
+	size_t pos_diese = curr_str_line.find('#');
+	if(pos_diese!=std::string::npos) {
+		curr_str_line = trim(curr_str_line.substr(0, pos_diese));
+	}
+
+	// Découpe la liste en fonction du séparateur ';'
 	retval.clear();
 	std::list<std::string> items = split(curr_str_line, ';');
 	for(std::list<std::string>::const_iterator it=items.begin(); it!=items.end(); ++it) {
