@@ -69,7 +69,7 @@ ClockWindow::ClockWindow() : Gtk::Window(), reinit_delayer(2),
 	btn_tctrl.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_tctrl_clicked));
 	btn_about.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_about_clicked));
 
-	kbm.load("./fr.kbm");
+	kbm.load(gp->prefix_path() + "/" VCC_SHARE_RPATH "/fr.kbm");
 	kbm_widget.set_keyboard_map(kbm);
 
 	// Toolbar
