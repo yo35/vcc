@@ -24,6 +24,7 @@
 #define KEYBOARDMAPWIDGET_H
 
 #include <gtkmm/drawingarea.h>
+#include <set>
 #include "keyboardmap.h"
 
 class KeyboardMapWidget : public Gtk::DrawingArea {
@@ -34,13 +35,20 @@ public:
 	KeyboardMapWidget();
 	void set_keyboard_map(const KeyboardMap &kbm);
 
-	// Couleur et régions
-	int    nb_areas() const;
-	int active_area() const;
-	void set_nb_areas   (int src);
-	void set_active_area(int src);
+	// Configuration régions
+	int nb_areas() const;
+	void set_nb_areas(int src);
 	Gdk::Color color(int idx) const;
 	void set_color(int idx, const Gdk::Color &src);
+
+	// Région active
+	int active_area() const;
+	void set_active_area(int src);
+
+	// Régions
+	std::set<int> get_area(int idx) const;
+	void set_area(int idx, const std::set<int> &src);
+
 
 protected:
 
@@ -79,6 +87,7 @@ private:
 	const KeyboardMap      *m_kbm;
 	std::vector<bool>       m_keydown;
 	std::vector<int >       m_keyarea;
+	std::vector<bool>       m_keyslct;
 	std::vector<Gdk::Color> m_color;
 	int                     m_active_area;
 

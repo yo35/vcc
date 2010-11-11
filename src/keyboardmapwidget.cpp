@@ -37,15 +37,7 @@ void KeyboardMapWidget::set_keyboard_map(const KeyboardMap &kbm) {
 	m_kbm = &kbm;
 	m_keydown.resize(m_kbm->keys().size(), false);
 	m_keyarea.resize(m_kbm->keys().size(),    -1);
-
-	set_nb_areas(2);
-	Gdk::Color col;
-	col.set_rgb_p(0.0, 0.7, 0.0); set_color(0, col);
-	col.set_rgb_p(0.0, 0.5, 1.0); set_color(1, col);
-	m_keyarea[47] = m_keyarea[48] = m_keyarea[62] = 1;
-	m_keyarea[30] = m_keyarea[31] = m_keyarea[22] = 0;
-	m_active_area = 0;
-
+	m_keyslct.resize(m_kbm->keys().size(), false);
 	refresh_widget();
 }
 
@@ -74,6 +66,24 @@ void KeyboardMapWidget::set_active_area(int src) {
 void KeyboardMapWidget::set_color(int idx, const Gdk::Color &src) {
 	assert(idx>=0 && idx<static_cast<int>(m_color.size()));
 	m_color[idx] = src;
+}
+
+std::set<int> KeyboardMapWidget::get_area(int idx) const {
+	assert(idx>=0 && idx<static_cast<int>(m_color.size()));
+	std::set<int> res;
+	for(unsigned int k=0; k<m_keyarea.size(); ++k) {
+		if(m_keyarea[k]==idx)
+			res.insert(static_cast<int>(k));
+	}
+	return res;
+}
+
+void KeyboardMapWidget::set_area(int idx, const std::set<int> &src) {
+	assert(idx>=0 && idx<static_cast<int>(m_color.size()));
+	for(std::set<int>::const_iterator it=src.begin(); it!=src.end(); ++it) {
+		m_keyarea[static_cast<unsigned int>(*it)] = idx;
+	}
+	refresh_widget();
 }
 
 void KeyboardMapWidget::refresh_widget() {
@@ -255,7 +265,16 @@ void KeyboardMapWidget::draw_key_shape(unsigned int idx) {
 	}
 
 	// Applique la couleur
-	if(m_keyarea[idx]<0) {
+	if(m_keyslct[idx]) {
+		assert(m_active_area>=0 && m_active_area<static_cast<int>(m_color.size()));
+		Gdk::Color curr_color = m_color[m_active_area];
+		cr->set_source_rgb(
+			curr_color.get_red_p  (),
+			curr_color.get_green_p(),
+			curr_color.get_blue_p ()
+		);
+	}
+	else if(m_keyarea[idx]<0) {
 		cr->set_source_rgb(1.0, 1.0, 1.0);
 	}
 	else {

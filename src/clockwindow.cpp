@@ -211,6 +211,22 @@ void ClockWindow::on_prefs_clicked() {
 	kbm.load(gp->prefix_path() + "/" VCC_SHARE_RPATH "/fr.kbm");
 	kbm_widget.set_keyboard_map(kbm);
 
+	kbm_widget.set_nb_areas(2);
+  Gdk::Color col;
+	col.set_rgb_p(0.0, 0.7, 0.0); kbm_widget.set_color(0, col);
+  col.set_rgb_p(0.0, 0.5, 1.0); kbm_widget.set_color(1, col);
+  std::set<int> theset;
+  theset.insert(47);
+  theset.insert(48);
+  theset.insert(62);
+  kbm_widget.set_area(0, theset);
+	theset.clear();
+  theset.insert(30);
+  theset.insert(31);
+  theset.insert(22);
+  kbm_widget.set_area(1, theset);
+  kbm_widget.set_active_area(1);
+
 	Gtk::Dialog dialog("Test dialog", *this, true, true);
 	dialog.get_vbox()->pack_start(kbm_widget);
 	dialog.show_all_children();
