@@ -22,6 +22,7 @@
 
 #include "keyboardmapwidget.h"
 #include <cassert>
+#include <cmath>
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -131,8 +132,24 @@ void KeyboardMapWidget::clear_areas() {
 // Gestion des événements
 
 bool KeyboardMapWidget::on_button_press_event(GdkEventButton *event) {
+
+	// Vérifications préliminaires
 	if(m_kbm==0 || event->button!=1 || m_active_area<0)
 		return true;
+	assert(m_active_area<=nb_areas());
+
+	// Recherche de la touche désignée par le curseur
+	int key = lookup_key_at(event->x, event->y);
+	if(key<0)
+		return true;
+	assert(key<=static_cast<int>(m_keyarea.size()));
+
+	// Modif
+	if(m_keyarea[key]==m_active_area)
+		m_keyarea[key] = -1;
+	else
+		m_keyarea[key] = m_active_area;
+	refresh_widget();
 	return true;
 }
 
@@ -160,6 +177,31 @@ void KeyboardMapWidget::on_key_action(Keyval keyval, bool is_press) {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Routines de dessin
+
+int KeyboardMapWidget::lookup_key_at(double x, double y) const {
+	if(m_kbm==0)
+		return -1;
+
+	int no_line = y_deconv(y);
+	int xcurs   = x_deconv(x);
+	for(unsigned idx=0; idx<m_kbm->keys().size(); ++idx) {
+
+		// On check la ligne
+		if(no_line >= m_kbm->keys()[idx].bottom_line() &&
+			no_line < m_kbm->keys()[idx].bottom_line()+m_kbm->keys()[idx].nb_lines())
+		{
+			int p = no_line - m_kbm->keys()[idx].bottom_line();
+
+			// On check la colonne
+			if(xcurs >= m_kbm->keys()[idx].pos_on_line(p) &&
+				xcurs < m_kbm->keys()[idx].pos_on_line(p)+m_kbm->keys()[idx].width_on_line(p))
+			{
+				return idx;
+			}
+		}
+	}
+	return -1;
+}
 
 void KeyboardMapWidget::refresh_widget() {
 	Glib::RefPtr<Gdk::Window> window = get_window();
@@ -441,9 +483,13 @@ void KeyboardMapWidget::small_arc(double xc, double yc, double r0, double angle1
 		cr->arc_negative(xc, yc, r0, angle1, angle2);
 }
 
-// Conversions x et y
+// Conversions x et y (coordonnées clavier vers widget)
 double KeyboardMapWidget::x_conv(int x) const { return static_cast<double>(x)*scale_x + delta_x; }
 double KeyboardMapWidget::y_conv(int y) const { return static_cast<double>(y)*scale_y + delta_y; }
+
+// Conversions x et y (coordonnées widget vers clavier)
+int KeyboardMapWidget::x_deconv(double x) const { return floor((x-delta_x) / scale_x); }
+int KeyboardMapWidget::y_deconv(double y) const { return floor((y-delta_y) / scale_y); }
 
 // Fonctions maths
 double KeyboardMapWidget::sgn(double src) {

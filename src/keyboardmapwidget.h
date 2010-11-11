@@ -68,6 +68,9 @@ private:
 	// Force le redessin du widget
 	void refresh_widget();
 
+	// Recherche de touche par position géométrique
+	int lookup_key_at(double x, double y) const;
+
 	// Routines de dessin
 	void draw_key_shape(unsigned int idx);
 	void draw_key_text (unsigned int idx);
@@ -75,8 +78,10 @@ private:
 	void make_rectangle(int x0, int y0, int dx, int dy);
 	void make_polygone(const std::list<int> &xs, const std::list<int> &ys);
 	void small_arc(double xc, double yc, double r0, double angle1, double angle2);
-	double x_conv(int x) const;
-	double y_conv(int y) const;
+	double x_conv  (int    x) const;
+	double y_conv  (int    y) const;
+	int    x_deconv(double x) const;
+	int    y_deconv(double y) const;
 	static double sgn(double src);
 	static double abs(double src);
 	static double min(double s1, double s2);
