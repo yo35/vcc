@@ -23,9 +23,13 @@
 #include "keyboardmapwidget.h"
 #include <cassert>
 
+
+////////////////////////////////////////////////////////////////////////////////
+// Fonctions de configuration générales
+
+// Constructeur
 KeyboardMapWidget::KeyboardMapWidget() : Gtk::DrawingArea() {
 	m_kbm = 0;
-	is_selecting = false;
 	m_active_area = -1;
 	set_size_request(600, 400);
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::KEY_RELEASE_MASK |
@@ -33,95 +37,102 @@ KeyboardMapWidget::KeyboardMapWidget() : Gtk::DrawingArea() {
 	set_can_focus(true);
 }
 
+// Structure de gestion de clavier sous-jacente
 void KeyboardMapWidget::set_keyboard_map(const KeyboardMap &kbm) {
 	m_kbm = &kbm;
-	m_keydown.resize(m_kbm->keys().size(), false);
-	m_keyarea.resize(m_kbm->keys().size(),    -1);
-	m_keyslct.resize(m_kbm->keys().size(), false);
+	reset_key_vector(m_keydown, false);
+	reset_key_vector(m_keyarea,    -1);
 	refresh_widget();
 }
 
+// Nombre de régions définissables
 int KeyboardMapWidget::nb_areas() const {
 	return m_color.size();
 }
 
+// Couleur de la région 'idx'
+Gdk::Color KeyboardMapWidget::color(int idx) const {
+	assert(idx>=0 && idx<nb_areas());
+	return m_color[idx];
+}
+
+// Modifie le nombre de région définissables
+void KeyboardMapWidget::set_nb_areas(int src) {
+	m_color.resize(src);
+	reset_key_vector(m_keyarea, -1);
+	refresh_widget();
+}
+
+// Modifie la couleur des régions
+void KeyboardMapWidget::set_color(int idx, const Gdk::Color &src) {
+	assert(idx>=0 && idx<nb_areas());
+	m_color[idx] = src;
+	refresh_widget();
+}
+
+// Initialisation des tableaux repérant les propriétés des touches
+template<class T>
+void KeyboardMapWidget::reset_key_vector(std::vector<T> &target, T value) {
+	assert(m_kbm!=0);
+	if(target.size()!=m_kbm->keys().size())
+		target.resize(m_kbm->keys().size());
+	for(unsigned int k=0; k<target.size(); ++k) {
+		target[k] = value;
+	}
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Exploitation des régions de touches
+
+// Modifie la région active
+void KeyboardMapWidget::set_active_area(int src) {
+	assert(m_active_area<nb_areas());
+	m_active_area = src;
+}
+
+// Région en train d'être définie
 int KeyboardMapWidget::active_area() const {
 	return m_active_area;
 }
 
-Gdk::Color KeyboardMapWidget::color(int idx) const {
-	assert(idx>=0 && idx<static_cast<int>(m_color.size()));
-	return m_color[idx];
-}
-
-void KeyboardMapWidget::set_nb_areas(int src) {
-	m_color.resize(src);
-}
-
-void KeyboardMapWidget::set_active_area(int src) {
-	assert(m_active_area < static_cast<int>(m_color.size()));
-	m_active_area = src;
-}
-
-void KeyboardMapWidget::set_color(int idx, const Gdk::Color &src) {
-	assert(idx>=0 && idx<static_cast<int>(m_color.size()));
-	m_color[idx] = src;
-}
-
+// Récupère l'ensemble des touches appartenant à la région 'idx'
 std::set<int> KeyboardMapWidget::get_area(int idx) const {
-	assert(idx>=0 && idx<static_cast<int>(m_color.size()));
+	assert(idx>=0 && idx<nb_areas());
 	std::set<int> res;
 	for(unsigned int k=0; k<m_keyarea.size(); ++k) {
 		if(m_keyarea[k]==idx)
-			res.insert(static_cast<int>(k));
+			res.insert(k);
 	}
 	return res;
 }
 
+// Définie la région 'idx'
 void KeyboardMapWidget::set_area(int idx, const std::set<int> &src) {
-	assert(idx>=0 && idx<static_cast<int>(m_color.size()));
+	assert(idx>=0 && idx<nb_areas());
 	for(std::set<int>::const_iterator it=src.begin(); it!=src.end(); ++it) {
-		m_keyarea[static_cast<unsigned int>(*it)] = idx;
+		assert(*it>=0 && *it<static_cast<int>(m_keyarea.size()));
+		m_keyarea[*it] = idx;
 	}
 	refresh_widget();
 }
 
-void KeyboardMapWidget::refresh_widget() {
-	Glib::RefPtr<Gdk::Window> window = get_window();
-	if(window == 0)
-		return;
-
-	Gtk::Allocation allocation = get_allocation();
-	Gdk::Rectangle r(0, 0, allocation.get_width(), allocation.get_height());
-	window->invalidate_rect(r, false);
+// Vide toutes les régions
+void KeyboardMapWidget::clear_areas() {
+	reset_key_vector(m_keyarea, -1);
+	refresh_widget();
 }
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Gestion des événements
 
 bool KeyboardMapWidget::on_button_press_event(GdkEventButton *event) {
-	if(event->button!=1 || m_active_area<0)
+	if(m_kbm==0 || event->button!=1 || m_active_area<0)
 		return true;
-	is_selecting = true;
-	origin_sel_x = event->x;
-	origin_sel_y = event->y;
-	curr_sel_x   = event->x;
-	curr_sel_y   = event->y;
-	refresh_widget();
-	return true;
-}
-
-bool KeyboardMapWidget::on_button_release_event(GdkEventButton *event) {
-	if(event->button!=1 || m_active_area<0)
-		return true;
-	is_selecting = false;
-	refresh_widget();
-	return true;
-}
-
-bool KeyboardMapWidget::on_motion_notify_event(GdkEventMotion *event) {
-	if(!is_selecting  || m_active_area<0)
-		return true;
-	curr_sel_x = event->x;
-	curr_sel_y = event->y;
-	refresh_widget();
 	return true;
 }
 
@@ -143,6 +154,21 @@ void KeyboardMapWidget::on_key_action(Keyval keyval, bool is_press) {
 	if(key>=0)
 		m_keydown[key] = is_press;
 	refresh_widget();
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Routines de dessin
+
+void KeyboardMapWidget::refresh_widget() {
+	Glib::RefPtr<Gdk::Window> window = get_window();
+	if(window == 0)
+		return;
+
+	Gtk::Allocation allocation = get_allocation();
+	Gdk::Rectangle r(0, 0, allocation.get_width(), allocation.get_height());
+	window->invalidate_rect(r, false);
 }
 
 bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
@@ -177,28 +203,6 @@ bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
 	for(unsigned idx=0; idx<m_kbm->keys().size(); ++idx) {
 		draw_key_shape(idx);
 		draw_key_text (idx);
-	}
-
-	// Zone de sélection
-	if(is_selecting) {
-		assert(m_active_area>=0 && m_active_area<static_cast<int>(m_color.size()));
-		Gdk::Color curr_color = m_color[m_active_area];
-		cr->begin_new_path();
-		cr->rectangle(origin_sel_x, origin_sel_y, curr_sel_x-origin_sel_x, curr_sel_y-origin_sel_y);
-		cr->set_source_rgba(
-			curr_color.get_red_p  (),
-			curr_color.get_green_p(),
-			curr_color.get_blue_p (),
-			0.15
-		);
-		cr->fill_preserve();
-		cr->set_source_rgb(
-			curr_color.get_red_p  (),
-			curr_color.get_green_p(),
-			curr_color.get_blue_p ()
-		);
-		cr->set_line_width(2.0);
-		cr->stroke_preserve();
 	}
 	return true;
 }
@@ -265,20 +269,11 @@ void KeyboardMapWidget::draw_key_shape(unsigned int idx) {
 	}
 
 	// Applique la couleur
-	if(m_keyslct[idx]) {
-		assert(m_active_area>=0 && m_active_area<static_cast<int>(m_color.size()));
-		Gdk::Color curr_color = m_color[m_active_area];
-		cr->set_source_rgb(
-			curr_color.get_red_p  (),
-			curr_color.get_green_p(),
-			curr_color.get_blue_p ()
-		);
-	}
-	else if(m_keyarea[idx]<0) {
+	if(m_keyarea[idx]<0) {
 		cr->set_source_rgb(1.0, 1.0, 1.0);
 	}
 	else {
-		assert(m_keyarea[idx] < static_cast<int>(m_color.size()));
+		assert(m_keyarea[idx]<nb_areas());
 		Gdk::Color curr_color = m_color[m_keyarea[idx]];
 		cr->set_source_rgb(
 			curr_color.get_red_p  (),

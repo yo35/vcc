@@ -48,7 +48,7 @@ public:
 	// Régions
 	std::set<int> get_area(int idx) const;
 	void set_area(int idx, const std::set<int> &src);
-
+	void clear_areas();
 
 protected:
 
@@ -59,8 +59,6 @@ protected:
 	virtual bool on_key_press_event     (GdkEventKey    *event);
 	virtual bool on_key_release_event   (GdkEventKey    *event);
 	virtual bool on_button_press_event  (GdkEventButton *event);
-	virtual bool on_button_release_event(GdkEventButton *event);
-	virtual bool on_motion_notify_event (GdkEventMotion *event);
 
 private:
 
@@ -83,11 +81,14 @@ private:
 	static double abs(double src);
 	static double min(double s1, double s2);
 
+	// Gestion des données membres
+	template<class T>
+	void reset_key_vector(std::vector<T> &target, T value);
+
 	// Données membres
 	const KeyboardMap      *m_kbm;
 	std::vector<bool>       m_keydown;
 	std::vector<int >       m_keyarea;
-	std::vector<bool>       m_keyslct;
 	std::vector<Gdk::Color> m_color;
 	int                     m_active_area;
 
@@ -101,14 +102,6 @@ private:
 	double radius ;
 	double padding;
 	double best_sz;
-
-	// Zone de sélection souris
-	bool is_selecting;
-	double origin_sel_x;
-	double origin_sel_y;
-	double curr_sel_x;
-	double curr_sel_y;
-
 };
 
 #endif
