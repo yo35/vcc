@@ -39,7 +39,8 @@ Params *gp;
 Params::Params(const std::string &prefix_path, const std::string &config_path) :
 	m_prefix_path(prefix_path),
 	m_config_path(config_path),
-	m_vccini_path(config_path + "/" EXECUTABLE_NAME ".ini")
+	m_vccini_path(config_path + "/" EXECUTABLE_NAME ".ini"),
+	m_kbmidx_path(prefix_path + "/" VCC_SHARE_RPATH "/keyboardmaps.ini")
 {
 	// Création du répertoire de configuration dans le dossier de l'utilisateur
 	// s'il n'existe pas déjà
@@ -61,8 +62,11 @@ Params::Params(const std::string &prefix_path, const std::string &config_path) :
 		ini_file2.close();
 	}
 
-	// Lecture du fichier INI
-	m_data.load(m_vccini_path);
+	// Lecture du fichier INI perso
+	m_data_perso.load(m_vccini_path);
+
+	// Lecture de l'index des fichiers KBM
+	m_index_kbm.load(m_kbmidx_path);
 
 	// Zones actives
 	KeyvalList    keyval_left ;
@@ -106,7 +110,7 @@ Params::Params(const std::string &prefix_path, const std::string &config_path) :
 
 // Destructeur
 Params::~Params() {
-	m_data.save(m_vccini_path);
+	m_data_perso.save(m_vccini_path);
 }
 
 // Répertoire VCC_TOP
@@ -122,35 +126,35 @@ const std::string &Params::config_path() const {
 // Cadence de jeu initiale (lecture)
 TimeControl Params::initial_time_control() const {
 	TimeControl retval;
-	retval.set_mode     (m_data.get_data("Time_Control", "Mode"           , SUDDEN_DEATH));
-	retval.set_main_time(m_data.get_data("Time_Control", "Main_Time_Left" , 3*60*1000), LEFT );
-	retval.set_main_time(m_data.get_data("Time_Control", "Main_Time_Right", 3*60*1000), RIGHT);
+	retval.set_mode     (m_data_perso.get_data("Time_Control", "Mode"           , SUDDEN_DEATH));
+	retval.set_main_time(m_data_perso.get_data("Time_Control", "Main_Time_Left" , 3*60*1000), LEFT );
+	retval.set_main_time(m_data_perso.get_data("Time_Control", "Main_Time_Right", 3*60*1000), RIGHT);
 	if(retval.mode()==FISCHER || retval.mode()==BRONSTEIN) {
-		retval.set_increment(m_data.get_data("Time_Control", "Increment_Left" , 2*1000), LEFT );
-		retval.set_increment(m_data.get_data("Time_Control", "Increment_Right", 2*1000), RIGHT);
+		retval.set_increment(m_data_perso.get_data("Time_Control", "Increment_Left" , 2*1000), LEFT );
+		retval.set_increment(m_data_perso.get_data("Time_Control", "Increment_Right", 2*1000), RIGHT);
 	}
 	return retval;
 }
 
 // Cadence de jeu initiale (écriture)
 void Params::set_initial_time_control(const TimeControl &src) {
-	m_data.set_data("Time_Control", "Mode"           , src.mode());
-	m_data.set_data("Time_Control", "Main_Time_Left" , src.main_time(LEFT ));
-	m_data.set_data("Time_Control", "Main_Time_Right", src.main_time(RIGHT));
+	m_data_perso.set_data("Time_Control", "Mode"           , src.mode());
+	m_data_perso.set_data("Time_Control", "Main_Time_Left" , src.main_time(LEFT ));
+	m_data_perso.set_data("Time_Control", "Main_Time_Right", src.main_time(RIGHT));
 	if(src.mode()==FISCHER || src.mode()==BRONSTEIN) {
-		m_data.set_data("Time_Control", "Increment_Left" , src.increment(LEFT ));
-		m_data.set_data("Time_Control", "Increment_Right", src.increment(RIGHT));
+		m_data_perso.set_data("Time_Control", "Increment_Left" , src.increment(LEFT ));
+		m_data_perso.set_data("Time_Control", "Increment_Right", src.increment(RIGHT));
 	}
 }
 
 // Demande de confirmation pour la réinitialisation de l'horloge (lecture)
 ReinitConfirm Params::reinit_confirm() const {
-	return m_data.get_data("Misc", "Confirm_When_Reinitializing", RC_IF_NOT_PAUSED);
+	return m_data_perso.get_data("Misc", "Confirm_When_Reinitializing", RC_IF_NOT_PAUSED);
 }
 
 // Demande de confirmation pour la réinitialisation de l'horloge (écriture)
 void Params::set_reinit_confirm(const ReinitConfirm &src) {
-	m_data.set_data("Misc", "Confirm_When_Reinitializing", src);
+	m_data_perso.set_data("Misc", "Confirm_When_Reinitializing", src);
 }
 
 void Params::init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right) {

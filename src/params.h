@@ -70,7 +70,9 @@ private:
 	const std::string m_prefix_path;
 	const std::string m_config_path;
 	const std::string m_vccini_path;
-	IniStruct         m_data;
+	const std::string m_kbmidx_path;
+	IniStruct         m_data_perso;
+	IniStruct         m_index_kbm;
 };
 
 extern Params *gp;
