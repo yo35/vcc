@@ -23,6 +23,7 @@
 #include "clockwindow.h"
 #include "vccaboutdialog.h"
 #include "timecontroldialog.h"
+#include "preferencesdialog.h"
 #include "keys.h"
 #include "params.h"
 #include <config.h>
@@ -205,7 +206,12 @@ void ClockWindow::on_tctrl_clicked() {
 #include "keyboardmapwidget.h"
 
 void ClockWindow::on_prefs_clicked() {
+	PreferencesDialog dialog(*this);
+	int retval = dialog.run();
+	if(retval!=Gtk::RESPONSE_OK)
+		return;
 
+	/*
 	KeyboardMap kbm;
 	KeyboardMapWidget kbm_widget;
 	kbm.load(gp->prefix_path() + "/" VCC_SHARE_RPATH "/fr.kbm");
@@ -231,6 +237,7 @@ void ClockWindow::on_prefs_clicked() {
 	dialog.get_vbox()->pack_start(kbm_widget);
 	dialog.show_all_children();
 	dialog.run();
+	*/
 }
 
 void ClockWindow::on_about_clicked() {
