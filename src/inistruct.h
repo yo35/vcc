@@ -25,6 +25,7 @@
 
 #include <string>
 #include <map>
+#include <set>
 #include "enumerable.h"
 
 class IniStruct {
@@ -40,6 +41,10 @@ public:
 	// Fonctions de lecture/écriture dans le fichier sous-jacent
 	void load(const std::string &path);
 	void save(const std::string &path) const;
+
+	// Recherche des entrées
+	std::set<Key> sections() const;
+	std::set<Key> codes(const Key &section) const;
 
 	// Lecture d'une data
 	template<class T>

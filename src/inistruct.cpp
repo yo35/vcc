@@ -144,6 +144,26 @@ bool IniStruct::is_valid_id_char(char src) {
 		|| (src>='0' && src<='9') || src=='_';
 }
 
+// Liste des sections
+std::set<IniStruct::Key> IniStruct::sections() const {
+	std::set<Key> res;
+	for(Tree::const_iterator it=root.begin(); it!=root.end(); ++it) {
+		res.insert(it->first);
+	}
+	return res;
+}
+
+// Liste des entrées dans une section
+std::set<IniStruct::Key> IniStruct::codes(const Key &section) const {
+	std::set<Key> res;
+	Tree::const_iterator sec=root.find(section);
+	if(sec==root.end())
+		return res;
+	for(Section::const_iterator it=sec->second.begin(); it!=sec->second.end(); ++it) {
+		res.insert(it->first);
+	}
+	return res;
+}
 
 // Lecture d'un entier
 int IniStruct::get_data(const Key &section, const Key &code, int default_value) const
