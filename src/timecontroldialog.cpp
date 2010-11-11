@@ -34,6 +34,7 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 
 	// Frame "mode"
 	frm_mode.set_label(_("Mode"));
+	layout_mode.set_border_width(5);
 	layout_mode.set_spacing(5);
 	mode[SUDDEN_DEATH].set_label(_("Sudden death"));
 	mode[FISCHER     ].set_label(_("Fischer"     ));
@@ -53,6 +54,7 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 		lbl_main_time[*k].set_label(_("Main time"));
 		lbl_increment[*k].set_label(_("Increment"));
 		layout_time  [*k].resize(2, 2);
+		layout_time  [*k].set_border_width(5);
 		layout_time  [*k].set_spacings(5);
 		layout_time  [*k].attach(lbl_main_time[*k], 0, 1, 0, 1);
 		layout_time  [*k].attach(lbl_increment[*k], 0, 1, 1, 2);
