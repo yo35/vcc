@@ -25,7 +25,11 @@
 
 #include <gtkmm/dialog.h>
 #include <gtkmm/notebook.h>
-
+#include <gtkmm/box.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/radiobutton.h>
+#include <gtkmm/label.h>
+#include "optionenums.h"
 
 class PreferencesDialog : public Gtk::Dialog {
 
@@ -38,6 +42,19 @@ private:
 
 	// Données membres
 	Gtk::Notebook pages;
+
+	// Onglet RAZ
+	Gtk::VBox                                   raz_page;
+	Gtk::Frame                                  raz_by_toolbar;
+	Gtk::VBox                                   raz_by_toolbar_layout;
+	Gtk::Label                                  ask_before_raz_label;
+	Gtk::RadioButton::Group                     ask_before_raz_group;
+	EnumArray<ReinitConfirm, Gtk::RadioButton>  ask_before_raz;
+	Gtk::Frame                                  raz_by_keyboard;
+	Gtk::VBox                                   raz_by_keyboard_layout;
+	Gtk::Label                                  key_combination_label;
+	Gtk::RadioButton::Group                     key_combination_group;
+	EnumArray<KeyCombination, Gtk::RadioButton> key_combination;
 };
 
 #endif
