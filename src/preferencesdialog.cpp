@@ -21,6 +21,7 @@
 
 
 #include "preferencesdialog.h"
+#include "params.h"
 #include <gtkmm/stock.h>
 #include <translation.h>
 
@@ -69,10 +70,26 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	raz_page.pack_start(raz_by_keyboard);
 	pages.append_page(raz_page, _("Reset options"));
 
-
-
 	// Géométrie générale
 	get_vbox()->set_spacing(5);
 	get_vbox()->pack_start(pages);
 	show_all_children();
+}
+
+// Chargement des paramètres
+void PreferencesDialog::load_params() {
+	ask_before_raz [gp->reinit_confirm()].set_active(true);
+	key_combination[gp->reinit_keys   ()].set_active(true);
+}
+
+// Enregistrement des paramètres
+void PreferencesDialog::save_params() {
+	for(ReinitConfirm::iterator k=ReinitConfirm::first(); k.valid(); ++k) {
+		if(ask_before_raz[*k].get_active())
+			gp->set_reinit_confirm(*k);
+	}
+	for(KeyCombination::iterator k=KeyCombination::first(); k.valid(); ++k) {
+		if(key_combination[*k].get_active())
+			gp->set_reinit_key(*k);
+	}
 }

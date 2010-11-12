@@ -38,6 +38,10 @@ public:
 	// Constructeur
 	PreferencesDialog(Gtk::Window &parent);
 
+	// Chargement et write-back des options
+	void load_params();
+	void save_params();
+
 private:
 
 	// Données membres
