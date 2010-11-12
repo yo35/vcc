@@ -172,8 +172,17 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 bool ClockWindow::on_key_release_event(GdkEventKey* event) {
 
 	// Réinitialisation par le clavier
-	if(event->keyval==65505) reinit_delayer.cancel_trigger(0);
-	if(event->keyval==65506) reinit_delayer.cancel_trigger(1);
+	KeyCombination raz_keys = gp->reinit_keys();
+	if(raz_keys==DOUBLE_CTRL) {
+		if(event->keyval==GDK_Control_L) reinit_delayer.cancel_trigger(0);
+		if(event->keyval==GDK_Control_R) reinit_delayer.cancel_trigger(1);
+	}
+	else if(raz_keys==DOUBLE_MAJ) {
+		if(event->keyval==GDK_Shift_L) reinit_delayer.cancel_trigger(0);
+		if(event->keyval==GDK_Shift_R) reinit_delayer.cancel_trigger(1);
+	}
+	else
+		assert(false);
 
 	return true;
 }
