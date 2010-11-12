@@ -26,6 +26,7 @@
 #include "optionenums.h"
 #include "inistruct.h"
 #include "timecontrol.h"
+#include "keyboardmap.h"
 #include "keys.h"
 #include <string>
 #include <set>
@@ -58,6 +59,15 @@ public:
 	int reinit_delay() const;
 	void set_reinit_delay(int src);
 
+	// Modèle de clavier préféré (code)
+	std::string curr_keyboard() const;
+	void set_curr_keyboard(const std::string &src);
+
+	// Modèles de claviers
+	std::set<std::string> keyboards() const;
+	Glib::ustring      keyboard_name(const std::string &kbcode) const;
+	const KeyboardMap &keyboard_map (const std::string &kbcode) const;
+
 	// Zones actives pour les touches clavier
 	EnumArray<Side, std::set<Keycode> > key_area;
 	void init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right);
@@ -66,12 +76,13 @@ private:
 	std::set<Keycode> aux_init_kb_areas(const KeyvalList &src);
 
 	// Données membres
-	const std::string m_prefix_path;
-	const std::string m_config_path;
-	const std::string m_vccini_path;
-	const std::string m_kbmidx_path;
-	IniStruct         m_data_perso;
-	IniStruct         m_index_kbm;
+	const std::string                          m_prefix_path;
+	const std::string                          m_config_path;
+	const std::string                          m_vccini_path;
+	const std::string                          m_kbmidx_path;
+	IniStruct                                  m_data_perso;
+	IniStruct                                  m_index_kbm;
+	mutable std::map<std::string, KeyboardMap> m_proxy_kbm;
 };
 
 extern Params *gp;

@@ -25,6 +25,14 @@
 #include <gtkmm/stock.h>
 #include <translation.h>
 
+// Modèle pour le combo box de sélection du clavier
+Gtk::TreeModelColumn<std::string  > PreferencesDialog::KbSelectorModel::code() const { return m_code; }
+Gtk::TreeModelColumn<Glib::ustring> PreferencesDialog::KbSelectorModel::name() const { return m_name; }
+PreferencesDialog::KbSelectorModel::KbSelectorModel() : Gtk::TreeModelColumnRecord() {
+	add(m_code);
+	add(m_name);
+}
+
 // Constructeur
 PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	Gtk::Dialog(_("Preferences"), parent, true, true)
@@ -80,6 +88,25 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	raz_page.pack_start(raz_by_keyboard);
 	pages.append_page(raz_page, _("Reset options"));
 
+	// Onglet keyboard
+	kb_page.set_border_width(5);
+	kb_page.set_spacing(5);
+	kb_config_layout.set_spacing(5);
+	kb_selector_label.set_label(_("Keyboard layout"));
+	kb_config_layout.pack_start(kb_selector_label, Gtk::PACK_SHRINK);
+	kb_selector_data = Gtk::ListStore::create(kb_selector_model);
+	kb_selector.set_model(kb_selector_data);
+	kb_selector.pack_start(kb_selector_model.name());
+	kb_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_kb_changed));
+	kb_config_layout.pack_start(kb_selector);
+	side_area_button[LEFT ].set_label(_("Left area" ));
+	side_area_button[RIGHT].set_label(_("Right area"));
+	kb_config_layout.pack_start(side_area_button[LEFT ], Gtk::PACK_SHRINK);
+	kb_config_layout.pack_start(side_area_button[RIGHT], Gtk::PACK_SHRINK);
+	kb_page.pack_start(kbm_widget);
+	kb_page.pack_start(kb_config_layout, Gtk::PACK_SHRINK);
+	pages.append_page(kb_page, _("Keyboard"));
+
 	// Géométrie générale
 	get_vbox()->set_spacing(5);
 	get_vbox()->pack_start(pages);
@@ -88,9 +115,24 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 
 // Chargement des paramètres
 void PreferencesDialog::load_params() {
+
+	// Paramètres RAZ
 	ask_before_raz [gp->reinit_confirm()].set_active(true);
 	key_combination[gp->reinit_keys   ()].set_active(true);
 	raz_delay.set_value(gp->reinit_delay());
+
+	// Liste des claviers
+	std::set<std::string> keyboards = gp->keyboards();
+	std::string       curr_keyboard = gp->curr_keyboard();
+	for(std::set<std::string>::const_iterator it=keyboards.begin(); it!=keyboards.end(); ++it) {
+		Glib::ustring kb_name = gp->keyboard_name(*it);
+		Gtk::TreeModel::iterator row = kb_selector_data->append();
+		(*row)[kb_selector_model.code()] = *it;
+		(*row)[kb_selector_model.name()] = kb_name;
+		if(curr_keyboard==*it) {
+			kb_selector.set_active(row);
+		}
+	}
 }
 
 // Enregistrement des paramètres
@@ -104,4 +146,10 @@ void PreferencesDialog::save_params() {
 			gp->set_reinit_key(*k);
 	}
 	gp->set_reinit_delay(raz_delay.get_value());
+}
+
+// Callback appelé sur un changement de clavier
+void PreferencesDialog::on_kb_changed() {
+	std::string kb_code = (*kb_selector.get_active())[kb_selector_model.code()];
+	kbm_widget.set_keyboard_map(gp->keyboard_map(kb_code));
 }

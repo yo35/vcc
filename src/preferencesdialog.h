@@ -30,7 +30,13 @@
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/label.h>
 #include <gtkmm/scale.h>
+#include <gtkmm/button.h>
+#include <gtkmm/combobox.h>
+#include <gtkmm/treemodelcolumn.h>
+#include <gtkmm/liststore.h>
 #include "optionenums.h"
+#include "keyboardmapwidget.h"
+#include "side.h"
 
 class PreferencesDialog : public Gtk::Dialog {
 
@@ -44,6 +50,19 @@ public:
 	void save_params();
 
 private:
+
+	// Callback appelé sur un changement de clavier
+	void on_kb_changed();
+
+	// Modèle pour le combo box de sélection du clavier
+	class KbSelectorModel : public Gtk::TreeModelColumnRecord {
+		Gtk::TreeModelColumn<std::string  > m_code;
+		Gtk::TreeModelColumn<Glib::ustring> m_name;
+	public:
+		Gtk::TreeModelColumn<std::string  > code() const;
+		Gtk::TreeModelColumn<Glib::ustring> name() const;
+		KbSelectorModel();
+	};
 
 	// Données membres
 	Gtk::Notebook pages;
@@ -63,6 +82,16 @@ private:
 	Gtk::Label                                  raz_delay_label;
 	Gtk::HBox                                   raz_delay_layout;
 	Gtk::HScale                                 raz_delay;
+
+	// Onglet keyboard
+	Gtk::VBox                    kb_page;
+	Gtk::HBox                    kb_config_layout;
+	Gtk::Label                   kb_selector_label;
+	KbSelectorModel              kb_selector_model;
+	Glib::RefPtr<Gtk::ListStore> kb_selector_data;
+	Gtk::ComboBox                kb_selector;
+	KeyboardMapWidget            kbm_widget;
+	EnumArray<Side, Gtk::Button> side_area_button;
 };
 
 #endif

@@ -173,6 +173,44 @@ void Params::set_reinit_delay(int src) {
 	m_data_perso.set_data("Reset_Options", "Delay", src);
 }
 
+// Modèle de clavier préféré (code) (lecture)
+std::string Params::curr_keyboard() const {
+	return m_data_perso.get_data("Keyboard", "KBM", "KBM_000");
+}
+
+// Modèle de clavier préféré (code) (écriture)
+void Params::set_curr_keyboard(const std::string &src) {
+	m_data_perso.set_data("Keyboard", "KBM", src);
+}
+
+// Liste des codes claviers disponibles
+std::set<std::string> Params::keyboards() const {
+	return m_index_kbm.sections();
+}
+
+// Nom d'un clavier
+Glib::ustring Params::keyboard_name(const std::string &kbcode) const {
+	std::string res = m_index_kbm.get_data(kbcode, "Name", "");
+	if(res=="") {
+		throw std::runtime_error(Glib::ustring::compose(
+			_("Unable to retrieve the name of keyboard %1"), kbcode));
+	}
+	return res;
+}
+
+// Plan de clavier
+const KeyboardMap &Params::keyboard_map(const std::string &kbcode) const {
+	if(m_proxy_kbm.find(kbcode)==m_proxy_kbm.end()) {
+		std::string kbm_filename = m_index_kbm.get_data(kbcode, "File", "");
+		if(kbm_filename=="") {
+			throw std::runtime_error(Glib::ustring::compose(
+				_("Unable to retrieve the filename of keyboard %1"), kbcode));
+		}
+		m_proxy_kbm[kbcode].load(m_prefix_path + "/" VCC_SHARE_RPATH "/" + kbm_filename);
+	}
+	return m_proxy_kbm[kbcode];
+}
+
 void Params::init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right) {
 
 	// Chargement des listes de touches gauches et droites
