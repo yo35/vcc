@@ -63,6 +63,14 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 		key_combination[*k].set_group(key_combination_group);
 		raz_by_keyboard_layout.pack_start(key_combination[*k]);
 	}
+	raz_delay_label.set_label(_("Delay"));
+	raz_delay_layout.set_spacing(5);
+	raz_delay.set_digits(0);
+	raz_delay.set_range(0, 2000);
+	raz_delay.set_increments(100, 500);
+	raz_delay_layout.pack_start(raz_delay_label, Gtk::PACK_SHRINK);
+	raz_delay_layout.pack_start(raz_delay);
+	raz_by_keyboard_layout.pack_start(raz_delay_layout);
 	raz_by_keyboard.add(raz_by_keyboard_layout);
 
 	// Onglet RAZ
@@ -80,6 +88,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 void PreferencesDialog::load_params() {
 	ask_before_raz [gp->reinit_confirm()].set_active(true);
 	key_combination[gp->reinit_keys   ()].set_active(true);
+	raz_delay.set_value(gp->reinit_delay());
 }
 
 // Enregistrement des paramètres
@@ -92,4 +101,5 @@ void PreferencesDialog::save_params() {
 		if(key_combination[*k].get_active())
 			gp->set_reinit_key(*k);
 	}
+	gp->set_reinit_delay(raz_delay.get_value());
 }

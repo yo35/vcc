@@ -46,7 +46,7 @@ ClockWindow::ClockWindow() : Gtk::Window(), reinit_delayer(2),
 	core.set_time_control(gp->initial_time_control());
 
 	// Initialisation du retardateur pour la réinitialisation de la pendule par le clavier
-	reinit_delayer.set_delay(1500);
+	reinit_delayer.set_delay(gp->reinit_delay());
 	reinit_delayer.signal_occurred().connect(
 		sigc::mem_fun(*this, &ClockWindow::on_reset_triggered_from_kb));
 
@@ -229,6 +229,7 @@ void ClockWindow::on_prefs_clicked() {
 	if(retval!=Gtk::RESPONSE_OK)
 		return;
 	dialog.save_params();
+	reinit_delayer.set_delay(gp->reinit_delay());
 }
 
 void ClockWindow::on_about_clicked() {

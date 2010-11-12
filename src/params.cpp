@@ -158,9 +158,19 @@ KeyCombination Params::reinit_keys() const {
 	return m_data_perso.get_data("Reset_Options", "Key_Combination", DOUBLE_MAJ);
 }
 
-// Combinaison de touches pour la remise à zéro (lecture)
+// Combinaison de touches pour la remise à zéro (écriture)
 void Params::set_reinit_key(const KeyCombination &src) {
 	m_data_perso.set_data("Reset_Options", "Key_Combination", src);
+}
+
+// Délai avant réinitialisation pour la remise à zéro (lecture)
+int Params::reinit_delay() const {
+	return m_data_perso.get_data("Reset_Options", "Delay", 1000);
+}
+
+// Délai avant réinitialisation pour la remise à zéro (écriture)
+void Params::set_reinit_delay(int src) {
+	m_data_perso.set_data("Reset_Options", "Delay", src);
 }
 
 void Params::init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right) {

@@ -29,6 +29,7 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/label.h>
+#include <gtkmm/scale.h>
 #include "optionenums.h"
 
 class PreferencesDialog : public Gtk::Dialog {
@@ -59,6 +60,9 @@ private:
 	Gtk::Label                                  key_combination_label;
 	Gtk::RadioButton::Group                     key_combination_group;
 	EnumArray<KeyCombination, Gtk::RadioButton> key_combination;
+	Gtk::Label                                  raz_delay_label;
+	Gtk::HBox                                   raz_delay_layout;
+	Gtk::HScale                                 raz_delay;
 };
 
 #endif

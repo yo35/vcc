@@ -54,6 +54,10 @@ public:
 	KeyCombination reinit_keys() const;
 	void set_reinit_key(const KeyCombination &src);
 
+	// Délai avant réinitialisation pour la remise à zéro
+	int reinit_delay() const;
+	void set_reinit_delay(int src);
+
 	// Zones actives pour les touches clavier
 	EnumArray<Side, std::set<Keycode> > key_area;
 	void init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right);
