@@ -74,6 +74,8 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	raz_by_keyboard.add(raz_by_keyboard_layout);
 
 	// Onglet RAZ
+	raz_page.set_border_width(5);
+	raz_page.set_spacing(5);
 	raz_page.pack_start(raz_by_toolbar );
 	raz_page.pack_start(raz_by_keyboard);
 	pages.append_page(raz_page, _("Reset options"));
