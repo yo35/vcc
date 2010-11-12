@@ -35,8 +35,8 @@ AreaSelectorWidget::AreaSelectorWidget() : Gtk::HBox() {
 	m_selector[RIGHT].set_label(_("Right"));
 
 	// Couleur
-	m_color[LEFT ].set_rgb_p(0.1, 0.8, 0.2);
-	m_color[RIGHT].set_rgb_p(0.1, 0.6, 1.0);
+	m_color[LEFT ].set_rgb_p(0.0, 0.7, 0.0);
+	m_color[RIGHT].set_rgb_p(0.0, 0.5, 1.0);
 
 	// Opérations génériques left/right
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
