@@ -87,6 +87,8 @@ void AreaSelectorWidget::on_button_clicked(Side side) {
 		m_active_side  = side;
 		uncolor_button(rev(side));
 	}
+
+	m_signal_changed.emit();
 }
 
 // Colore un bouton
