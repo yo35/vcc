@@ -41,7 +41,7 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 	mode[BRONSTEIN   ].set_label(_("Bronstein"   ));
 	mode[HOURGLASS   ].set_label(_("Hourglass"   ));
 	for(TimeControlType::iterator k=TimeControlType::first(); k.valid(); ++k) {
-		mode[*k].set_group(group);
+		mode[*k].set_group(mode_group);
 		mode[*k].signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::manage_sensitivity));
 		layout_mode.pack_start(mode[*k]);
 	}
