@@ -27,10 +27,11 @@
 #include "keys.h"
 #include "params.h"
 #include <config.h>
+#include <translation.h>
 #include <cassert>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/stock.h>
-#include <translation.h>
+#include <gdk/gdkkeysyms.h>
 
 #ifdef OS_IS_WINDOWS
 	#include <winkeyhookdll.h>
@@ -139,8 +140,17 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 	*/
 
 	// Réinitialisation par le clavier
-	if(event->keyval==65505) reinit_delayer.trigger(0);
-	if(event->keyval==65506) reinit_delayer.trigger(1);
+	KeyCombination raz_keys = gp->reinit_keys();
+	if(raz_keys==DOUBLE_CTRL) {
+		if(event->keyval==GDK_Control_L) reinit_delayer.trigger(0);
+		if(event->keyval==GDK_Control_R) reinit_delayer.trigger(1);
+	}
+	else if(raz_keys==DOUBLE_MAJ) {
+		if(event->keyval==GDK_Shift_L) reinit_delayer.trigger(0);
+		if(event->keyval==GDK_Shift_R) reinit_delayer.trigger(1);
+	}
+	else
+		assert(false);
 
 	// Décodage
 	Keycode code = event->hardware_keycode;

@@ -20,56 +20,31 @@
  ******************************************************************************/
 
 
-#ifndef PARAMS_H
-#define PARAMS_H
+#ifndef OPTIONENUMS_H
+#define OPTIONENUMS_H
 
-#include "optionenums.h"
-#include "inistruct.h"
-#include "timecontrol.h"
-#include "keys.h"
-#include <string>
-#include <set>
+#include "enumerable.h"
 
-// Paramètres généraux
-class Params {
-public:
-
-	// Constructeur
-	Params(const std::string &prefix_path, const std::string &config_path);
-	~Params();
-
-	// Pointe vers les répertoires de base
-	const std::string &prefix_path() const;
-	const std::string &config_path() const;
-
-	// Cadence de jeu
-	TimeControl initial_time_control() const;
-	void set_initial_time_control(const TimeControl &src);
-
-	// Demande de confirmation pour la réinitialisation de l'horloge
-	ReinitConfirm reinit_confirm() const;
-	void set_reinit_confirm(const ReinitConfirm &src);
-
-	// Touches à presser pour la remise à zéro
-	KeyCombination reinit_keys() const;
-	void set_reinit_key(const KeyCombination &src);
-
-	// Zones actives pour les touches clavier
-	EnumArray<Side, std::set<Keycode> > key_area;
-	void init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right);
-
-private:
-	std::set<Keycode> aux_init_kb_areas(const KeyvalList &src);
-
-	// Données membres
-	const std::string m_prefix_path;
-	const std::string m_config_path;
-	const std::string m_vccini_path;
-	const std::string m_kbmidx_path;
-	IniStruct         m_data_perso;
-	IniStruct         m_index_kbm;
+// Demande de confirmation pour la réinitialisation de l'horloge
+struct BaseReinitConfirm {
+	static const int N = 3;
 };
+typedef Enumerable<BaseReinitConfirm> ReinitConfirm;
 
-extern Params *gp;
+extern const ReinitConfirm RC_ALWAYS       ;
+extern const ReinitConfirm RC_IF_NOT_PAUSED;
+extern const ReinitConfirm RC_NEVER        ;
+
+
+
+// Combinaisons de touches permettant de déclencher la remise à zéro
+struct BaseKeyCombination {
+	static const int N = 2;
+};
+typedef Enumerable<BaseKeyCombination> KeyCombination;
+
+extern const KeyCombination DOUBLE_CTRL;
+extern const KeyCombination DOUBLE_MAJ ;
+
 
 #endif

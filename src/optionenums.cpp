@@ -20,56 +20,11 @@
  ******************************************************************************/
 
 
-#ifndef PARAMS_H
-#define PARAMS_H
-
 #include "optionenums.h"
-#include "inistruct.h"
-#include "timecontrol.h"
-#include "keys.h"
-#include <string>
-#include <set>
 
-// Paramètres généraux
-class Params {
-public:
+const ReinitConfirm RC_ALWAYS       (0);
+const ReinitConfirm RC_IF_NOT_PAUSED(1);
+const ReinitConfirm RC_NEVER        (2);
 
-	// Constructeur
-	Params(const std::string &prefix_path, const std::string &config_path);
-	~Params();
-
-	// Pointe vers les répertoires de base
-	const std::string &prefix_path() const;
-	const std::string &config_path() const;
-
-	// Cadence de jeu
-	TimeControl initial_time_control() const;
-	void set_initial_time_control(const TimeControl &src);
-
-	// Demande de confirmation pour la réinitialisation de l'horloge
-	ReinitConfirm reinit_confirm() const;
-	void set_reinit_confirm(const ReinitConfirm &src);
-
-	// Touches à presser pour la remise à zéro
-	KeyCombination reinit_keys() const;
-	void set_reinit_key(const KeyCombination &src);
-
-	// Zones actives pour les touches clavier
-	EnumArray<Side, std::set<Keycode> > key_area;
-	void init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right);
-
-private:
-	std::set<Keycode> aux_init_kb_areas(const KeyvalList &src);
-
-	// Données membres
-	const std::string m_prefix_path;
-	const std::string m_config_path;
-	const std::string m_vccini_path;
-	const std::string m_kbmidx_path;
-	IniStruct         m_data_perso;
-	IniStruct         m_index_kbm;
-};
-
-extern Params *gp;
-
-#endif
+const KeyCombination DOUBLE_CTRL(0);
+const KeyCombination DOUBLE_MAJ (1);
