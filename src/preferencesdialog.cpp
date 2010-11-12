@@ -99,10 +99,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kb_selector.pack_start(kb_selector_model.name());
 	kb_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_kb_changed));
 	kb_config_layout.pack_start(kb_selector);
-	side_area_button[LEFT ].set_label(_("Left area" ));
-	side_area_button[RIGHT].set_label(_("Right area"));
-	kb_config_layout.pack_start(side_area_button[LEFT ], Gtk::PACK_SHRINK);
-	kb_config_layout.pack_start(side_area_button[RIGHT], Gtk::PACK_SHRINK);
+	kb_config_layout.pack_start(area_selector, Gtk::PACK_SHRINK);
 	kb_page.pack_start(kbm_widget);
 	kb_page.pack_start(kb_config_layout, Gtk::PACK_SHRINK);
 	pages.append_page(kb_page, _("Keyboard"));

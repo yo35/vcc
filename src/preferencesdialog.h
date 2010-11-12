@@ -30,13 +30,12 @@
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/label.h>
 #include <gtkmm/scale.h>
-#include <gtkmm/button.h>
 #include <gtkmm/combobox.h>
 #include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/liststore.h>
 #include "optionenums.h"
 #include "keyboardmapwidget.h"
-#include "side.h"
+#include "areaselectorwidget.h"
 
 class PreferencesDialog : public Gtk::Dialog {
 
@@ -91,7 +90,7 @@ private:
 	Glib::RefPtr<Gtk::ListStore> kb_selector_data;
 	Gtk::ComboBox                kb_selector;
 	KeyboardMapWidget            kbm_widget;
-	EnumArray<Side, Gtk::Button> side_area_button;
+	AreaSelectorWidget           area_selector;
 };
 
 #endif
