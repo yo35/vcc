@@ -221,7 +221,7 @@ void Params::init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_r
 	std::set<Keycode> area_both;
 	area_both.insert(key_area[LEFT ].begin(), key_area[LEFT ].end());
 	area_both.insert(key_area[RIGHT].begin(), key_area[RIGHT].end());
-	assert(area_both.size()==key_area[LEFT].size()+key_area[RIGHT].size());
+	//assert(area_both.size()==key_area[LEFT].size()+key_area[RIGHT].size());
 }
 
 std::set<Keycode> Params::aux_init_kb_areas(const KeyvalList &src) {
