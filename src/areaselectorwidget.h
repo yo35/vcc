@@ -53,7 +53,7 @@ private:
 
 	// Données membres
 	EnumArray<Side, Gtk::ToggleButton> m_selector      ;
-	EnumArray<Side, Gdk::Color >       m_color         ;
+	EnumArray<Side, Gdk::Color       > m_color         ;
 	bool                               m_is_selecting  ;
 	Side                               m_active_side   ;
 	sigc::signal<void>                 m_signal_changed;
