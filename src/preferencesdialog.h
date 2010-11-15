@@ -50,8 +50,9 @@ public:
 
 private:
 
-	// Callback appelé sur un changement de clavier
+	// Callbacks
 	void on_kb_changed();
+	void on_area_changed();
 
 	// Modèle pour le combo box de sélection du clavier
 	class KbSelectorModel : public Gtk::TreeModelColumnRecord {

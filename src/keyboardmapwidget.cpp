@@ -74,14 +74,14 @@ void KeyboardMapWidget::set_color(int idx, const Gdk::Color &src) {
 // Initialisation des tableaux repérant les propriétés des touches
 template<class T>
 void KeyboardMapWidget::reset_key_vector(std::vector<T> &target, T value) {
-	assert(m_kbm!=0);
+	if(m_kbm==0)
+		return;
 	if(target.size()!=m_kbm->keys().size())
 		target.resize(m_kbm->keys().size());
 	for(unsigned int k=0; k<target.size(); ++k) {
 		target[k] = value;
 	}
 }
-
 
 
 

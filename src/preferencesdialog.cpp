@@ -88,16 +88,23 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	raz_page.pack_start(raz_by_keyboard);
 	pages.append_page(raz_page, _("Reset options"));
 
-	// Onglet keyboard
+	// Onglet keyboard (sauf géométrie)
+	kb_selector_label.set_label(_("Keyboard layout"));
+	kb_selector_data = Gtk::ListStore::create(kb_selector_model);
+	kb_selector.set_model(kb_selector_data);
+	kb_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_kb_changed));
+	kbm_widget.set_nb_areas(2);
+	for(Side::iterator k=Side::first(); k.valid(); ++k) {
+		kbm_widget.set_color((*k).to_int(), area_selector.color(*k));
+	}
+	area_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_area_changed));
+
+	// Onglet keyboard (géométrie)
 	kb_page.set_border_width(5);
 	kb_page.set_spacing(5);
 	kb_config_layout.set_spacing(5);
-	kb_selector_label.set_label(_("Keyboard layout"));
 	kb_config_layout.pack_start(kb_selector_label, Gtk::PACK_SHRINK);
-	kb_selector_data = Gtk::ListStore::create(kb_selector_model);
-	kb_selector.set_model(kb_selector_data);
 	kb_selector.pack_start(kb_selector_model.name());
-	kb_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_kb_changed));
 	kb_config_layout.pack_start(kb_selector);
 	kb_config_layout.pack_start(area_selector, Gtk::PACK_SHRINK);
 	kb_page.pack_start(kbm_widget);
@@ -149,4 +156,12 @@ void PreferencesDialog::save_params() {
 void PreferencesDialog::on_kb_changed() {
 	std::string kb_code = (*kb_selector.get_active())[kb_selector_model.code()];
 	kbm_widget.set_keyboard_map(gp->keyboard_map(kb_code));
+}
+
+// Changement de la zone active
+void PreferencesDialog::on_area_changed() {
+	if(area_selector.is_selecting())
+		kbm_widget.set_active_area(area_selector.active_side().to_int());
+	else
+		kbm_widget.set_active_area(-1);
 }
