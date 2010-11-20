@@ -341,27 +341,25 @@ void KeyboardMapWidget::make_text(int x0, int y0, int dx, int dy, const Glib::us
 	double yt = y_conv(y0+dy);
 
 	// Taille de la police
-	double w_box      = xr-xl;
-	double h_box      = yb-yt;
-	double ideal_size = best_sz * h_box;
-	cr->set_font_size(ideal_size);
+	double w_box     = xr-xl;
+	double h_box     = yb-yt;
+	double font_size = best_sz * h_box;
+	cr->set_font_size(font_size);
 	Cairo::TextExtents te;
 	cr->get_text_extents(txt, te);
 	if(te.width > w_box) {
-		cr->set_font_size(ideal_size * w_box / te.width);
+		font_size = font_size * w_box / te.width;
+		cr->set_font_size(font_size);
 		cr->get_text_extents(txt, te);
 	}
-	/*double w_scale_factor = w_box/te.width;
-	double h_scale_factor = h_box/te.height;
-	double scale_factor = min(h_scale_factor, w_scale_factor);
-	cr->set_font_size(ideal_size * scale_factor);*/
 
-	// Centrage
-	cr->get_text_extents(txt, te);
+	// Centrage vertical
+	Cairo::TextExtents te_model;
+	cr->get_text_extents("M", te_model);
 
 	// Dessin
-	double delta_x_box = (w_box - te.width )/2.0;
-	double delta_y_box = (h_box + te.height)/2.0;
+	double delta_x_box = (w_box - te      .width )/2.0;
+	double delta_y_box = (h_box + te_model.height)/2.0;
 	cr->begin_new_path();
 	cr->move_to(xl+delta_x_box, yt+delta_y_box);
 	cr->text_path(txt);
