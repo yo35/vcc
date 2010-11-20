@@ -156,9 +156,13 @@ void KeyboardMapWidget::on_key_action(Keyval keyval, bool is_press) {
 		return;
 
 	int key = m_kbm->get_key(keyval);
-	if(key>=0)
+	if(key>=0) {
+		assert(key<static_cast<int>(m_keydown.size()));
+		if(m_keydown[key]==is_press)
+			return;
 		m_keydown[key] = is_press;
-	refresh_widget();
+		refresh_widget();
+	}
 }
 
 
@@ -299,7 +303,10 @@ void KeyboardMapWidget::draw_key_shape(unsigned int idx) {
 	}
 
 	// Applique la couleur
-	if(m_keyarea[idx]<0) {
+	if(m_keydown[idx]) {
+		cr->set_source_rgb(1.0, 0.5, 0.0);
+	}
+	else if(m_keyarea[idx]<0) {
 		cr->set_source_rgb(1.0, 1.0, 1.0);
 	}
 	else {
@@ -312,11 +319,6 @@ void KeyboardMapWidget::draw_key_shape(unsigned int idx) {
 		);
 	}
 	cr->fill_preserve();
-	if(m_keydown[idx]) {
-		cr->set_source_rgb(1.0, 0.5, 0.0);
-		cr->set_line_width(margin * 1.5);
-		cr->stroke_preserve();
-	}
 }
 
 // Dessine un texte centré dans le rectangle passé en paramètre
