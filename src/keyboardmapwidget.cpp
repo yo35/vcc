@@ -32,10 +32,8 @@
 KeyboardMapWidget::KeyboardMapWidget() : Gtk::DrawingArea() {
 	m_kbm = 0;
 	m_active_area = -1;
-	set_size_request(600, 400);
-	set_events(Gdk::KEY_PRESS_MASK | Gdk::KEY_RELEASE_MASK |
-		Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK | Gdk::POINTER_MOTION_MASK);
-	set_can_focus(true);
+	set_size_request(600, 300);
+	set_events(Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
 }
 
 // Structure de gestion de clavier sous-jacente
@@ -150,16 +148,6 @@ bool KeyboardMapWidget::on_button_press_event(GdkEventButton *event) {
 	else
 		m_keyarea[key] = m_active_area;
 	refresh_widget();
-	return true;
-}
-
-bool KeyboardMapWidget::on_key_press_event(GdkEventKey *event) {
-	on_key_action(event->keyval, true);
-	return true;
-}
-
-bool KeyboardMapWidget::on_key_release_event(GdkEventKey *event) {
-	on_key_action(event->keyval, false);
 	return true;
 }
 

@@ -50,20 +50,18 @@ public:
 	void set_area(int idx, const std::set<int> &src);
 	void clear_areas();
 
+	// Action sur une touche clavier
+	void on_key_action(Keyval keyval, bool is_press);
+
 protected:
 
 	// Routine de dessin
 	virtual bool on_expose_event(GdkEventExpose *event);
 
 	// Événements clavier et souris
-	virtual bool on_key_press_event     (GdkEventKey    *event);
-	virtual bool on_key_release_event   (GdkEventKey    *event);
-	virtual bool on_button_press_event  (GdkEventButton *event);
+	virtual bool on_button_press_event(GdkEventButton *event);
 
 private:
-
-	// Action sur une touche clavier
-	void on_key_action(Keyval keyval, bool is_press);
 
 	// Force le redessin du widget
 	void refresh_widget();

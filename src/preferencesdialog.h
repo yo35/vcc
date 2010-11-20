@@ -49,6 +49,12 @@ public:
 	void load_params();
 	void save_params();
 
+protected:
+
+	// Event handling
+	virtual bool on_key_press_event  (GdkEventKey* event);
+	virtual bool on_key_release_event(GdkEventKey* event);
+
 private:
 
 	// Callbacks

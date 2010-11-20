@@ -37,6 +37,10 @@ PreferencesDialog::KbSelectorModel::KbSelectorModel() : Gtk::TreeModelColumnReco
 PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	Gtk::Dialog(_("Preferences"), parent, true, true)
 {
+	// Divers
+	curr_kb_code = "";
+	set_events(Gdk::KEY_PRESS_MASK | Gdk::KEY_RELEASE_MASK);
+
 	// Boutons de réponse
 	add_button(Gtk::Stock::OK    , Gtk::RESPONSE_OK    );
 	add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
@@ -89,7 +93,6 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	pages.append_page(raz_page, _("Reset options"));
 
 	// Onglet keyboard (sauf géométrie)
-	curr_kb_code = "";
 	kb_selector_label.set_label(_("Keyboard layout"));
 	kb_selector_data = Gtk::ListStore::create(kb_selector_model);
 	kb_selector.set_model(kb_selector_data);
@@ -161,6 +164,18 @@ void PreferencesDialog::save_params() {
 	save_curr_area();
 	gp->set_curr_keyboard(curr_kb_code);
 	gp->set_kam_perso(areas[curr_kb_code]);
+}
+
+// Event handling
+bool PreferencesDialog::on_key_press_event(GdkEventKey* event) {
+	kbm_widget.on_key_action(event->keyval, true);
+	return Gtk::Dialog::on_key_press_event(event);
+}
+
+// Event handling
+bool PreferencesDialog::on_key_release_event(GdkEventKey* event) {
+	kbm_widget.on_key_action(event->keyval, false);
+	return Gtk::Dialog::on_key_release_event(event);
 }
 
 // Callback appelé sur un changement de clavier
