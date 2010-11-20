@@ -20,30 +20,55 @@
  ******************************************************************************/
 
 
-#ifndef DATAFILEIN_H
-#define DATAFILEIN_H
+#ifndef DATAFILE_H
+#define DATAFILE_H
 
 #include <string>
 #include <list>
 #include <fstream>
 
-class DataFileIn {
+
+////////////////////////////////////////////////////////////////////////////////
+// Classe de base
+
+class DataFileBase {
+
+public:
+
+	// Constructeur et routines d'ouverture
+	DataFileBase(const std::string &path);
+	virtual void open   ()      =0;
+	virtual void close  ()      =0;
+	virtual bool is_open() const=0;
+
+	// Accesseurs
+	const std::string &path() const;
+
+
+private:
+
+	// Données membres
+	std::string m_path;
+};
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Classe de lecture
+
+class DataFileIn : public DataFileBase {
 
 public:
 
 	// Constructeur et routines d'ouverture
 	DataFileIn(const std::string &path);
-	~DataFileIn();
-	void open ();
-	void close();
-
-	// Accesseurs
-	const std::string &path   () const;
-	bool               is_open() const;
+	virtual void open   ()      ;
+	virtual void close  ()      ;
+	virtual bool is_open() const;
 
 	// Lecture
-	bool eof();
-	int  get();
+	bool eof() const;
+	int  get()      ;
 
 private:
 
@@ -52,11 +77,35 @@ private:
 	void check_consistency(bool test) const;
 
 	// Données membres
-	std::string    m_path;
 	std::ifstream  m_file;
 	int            m_curr_no_line;
 	bool           m_eof;
 	std::list<int> m_buff;
+};
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Classe d'écriture
+
+class DataFileOut : public DataFileBase {
+
+public:
+
+	// Constructeur et routines d'ouverture
+	DataFileOut(const std::string &path);
+	virtual void open   ()      ;
+	virtual void close  ()      ;
+	virtual bool is_open() const;
+
+	// Écriture
+	void put(int val);
+
+private:
+
+	// Données membres
+	std::ofstream m_file;
+	int           m_cpt_items_on_line;
 };
 
 #endif

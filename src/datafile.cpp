@@ -20,7 +20,7 @@
  ******************************************************************************/
 
 
-#include "datafilein.h"
+#include "datafile.h"
 #include "strings.h"
 #include <translation.h>
 #include <stdexcept>
@@ -28,25 +28,32 @@
 #include <glibmm/ustring.h>
 
 
-// Constructeur
-DataFileIn::DataFileIn(const std::string &path) {
+////////////////////////////////////////////////////////////////////////////////
+// Classe de base
+
+DataFileBase::DataFileBase(const std::string &path) {
 	m_path = path;
 }
 
-// Destructeur
-DataFileIn::~DataFileIn() {
-	if(is_open())
-		close();
+const std::string &DataFileBase::path() const {
+	return m_path;
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Classe de lecture
+
+// Constructeur
+DataFileIn::DataFileIn(const std::string &path) : DataFileBase(path) {}
 
 // Ouverture du fichier
 void DataFileIn::open() {
 	if(is_open())
 		return;
-	m_file.open(m_path.c_str());
+	m_file.open(path().c_str());
 	if(m_file.fail()) {
 		throw std::runtime_error(Glib::ustring::compose(
-			_("Unable to open the data file %1 for reading"), m_path));
+			_("Unable to open the data file %1 for reading"), path()));
 	}
 	m_curr_no_line = 0;
 	m_eof          = false;
@@ -61,12 +68,13 @@ void DataFileIn::close() {
 	m_file.close();
 }
 
-// Accesseurs
-const std::string &DataFileIn::path   () const { return m_path          ; }
-bool               DataFileIn::is_open() const { return m_file.is_open(); }
+// État d'ouverture
+bool DataFileIn::is_open() const {
+	return m_file.is_open();
+}
 
 // Test fin du fichier atteinte
-bool DataFileIn::eof() {
+bool DataFileIn::eof() const {
 	assert(is_open());
 	return m_eof;
 }
@@ -122,6 +130,49 @@ void DataFileIn::parse_line() {
 void DataFileIn::check_consistency(bool test) const {
 	if(!test) {
 		throw std::runtime_error(Glib::ustring::compose(
-			_("Unconsistency in the data file %1 at line #%2"), m_path, m_curr_no_line));
+			_("Unconsistency in the data file %1 at line #%2"), path(), m_curr_no_line));
+	}
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Classe d'écriture
+
+// Constructeur
+DataFileOut::DataFileOut(const std::string &path) : DataFileBase(path) {}
+
+// Ouverture du fichier
+void DataFileOut::open() {
+	if(is_open())
+		return;
+	m_file.open(path().c_str());
+	if(m_file.fail()) {
+		throw std::runtime_error(Glib::ustring::compose(
+			_("Unable to open the data file %1 for writing"), path()));
+	}
+	m_cpt_items_on_line = 0;
+}
+
+// Fermeture du fichier
+void DataFileOut::close() {
+	if(!is_open())
+		return;
+	m_file.close();
+}
+
+// État d'ouverture
+bool DataFileOut::is_open() const {
+	return m_file.is_open();
+}
+
+// Écriture
+void DataFileOut::put(int val) {
+	assert(is_open());
+	m_file << val << ";";
+	++m_cpt_items_on_line;
+	if(m_cpt_items_on_line==10) {
+		m_file << std::endl;
+		m_cpt_items_on_line = 0;
 	}
 }

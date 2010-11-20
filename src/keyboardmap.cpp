@@ -21,7 +21,7 @@
 
 
 #include "keyboardmap.h"
-#include "datafilein.h"
+#include "datafile.h"
 #include <translation.h>
 #include <stdexcept>
 #include <cassert>
@@ -55,27 +55,29 @@ int KeyboardMap::get_key(Keyval keyval) const {
 void KeyboardMap::save(const std::string &path) const {
 
 	// Ouverture du fichier cible
-	std::ofstream file;
-	file.open(path.c_str());
-	if(file.fail()) {
-		throw std::runtime_error(Glib::ustring::compose(
-			_("Unable to open the keyboard map file %1 for writing"), path));
-	}
+	DataFileOut file(path);
+	file.open();
 
 	// En-tête du fichier
-	file << m_nb_lines << ";" << m_default_width << ";" << m_line_width << ";"
-		<< m_keys.size() << ";" << std::endl;
+	file.put(m_nb_lines     );
+	file.put(m_default_width);
+	file.put(m_line_width   );
+	file.put(m_keys.size()  );
 
 	// Boucle d'écriture pour chaque touche
 	for(PhysicalKeyVector::const_iterator it=m_keys.begin(); it!=m_keys.end(); ++it) {
-		file << it->bottom_line() << ";" << it->nb_lines() << ";" << it->nb_keyvals() << ";";
+		file.put(it->bottom_line());
+		file.put(it->nb_lines   ());
+		file.put(it->nb_keyvals ());
 		for(int i=0; i<it->nb_lines(); ++i) {
-			file << it->pos_on_line(i) << ";" << it->width_on_line(i) << ";";
+			file.put(it->pos_on_line  (i));
+			file.put(it->width_on_line(i));
 		}
 		for(int i=0; i<it->nb_keyvals(); ++i) {
-			file << it->keyval(i) << ";" << it->group(i) << ";" << it->level(i) << ";";
+			file.put(it->keyval(i));
+			file.put(it->group (i));
+			file.put(it->level (i));
 		}
-		file << std::endl;
 	}
 
 	// Fermeture du fichier
@@ -133,6 +135,7 @@ void KeyboardMap::load(const std::string &path) {
 	}
 
 	// Terminaison
+	file.close();
 	compute_translation_table();
 }
 
