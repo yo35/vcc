@@ -100,7 +100,7 @@ private:
 	double delta_x;
   double delta_y;
   double scale_x;
-	double scale_y;
+  double scale_y;
 	double margin ;
 	double radius ;
 	double padding;

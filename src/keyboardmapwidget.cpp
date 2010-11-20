@@ -32,7 +32,7 @@
 KeyboardMapWidget::KeyboardMapWidget() : Gtk::DrawingArea() {
 	m_kbm = 0;
 	m_active_area = -1;
-	set_size_request(600, 300);
+	set_size_request(800, 300);
 	set_events(Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
 }
 
@@ -214,7 +214,7 @@ bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
 	cr->clip();
 
 	Gtk::Allocation allocation = get_allocation();
-	double width  = allocation.get_width();
+	double width  = allocation.get_width ();
 	double height = allocation.get_height();
 
 	// Le fond de l'image
@@ -224,10 +224,19 @@ bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
 		return true;
 
 	// Transformation
-	delta_x =  0.1*width ;
-	delta_y =  0.9*height;
-	scale_x =  0.8*width  / static_cast<double>(m_kbm->line_width());
-	scale_y = -0.8*height / static_cast<double>(m_kbm->nb_lines());
+	double border_x = 15;
+	double border_y = 10;
+	width   = width  - 2.0*border_x;
+	height  = height - 2.0*border_y;
+	double obj_width  = static_cast<double>(m_kbm->line_width());
+	double obj_height = static_cast<double>(m_kbm->default_width() * m_kbm->nb_lines());
+	double pseudo_scale_x = width  / obj_width ;
+	double pseudo_scale_y = height / obj_height;
+	double pseudo_scale   = min(pseudo_scale_x, pseudo_scale_y);
+	scale_x =  pseudo_scale;
+	scale_y = -pseudo_scale * static_cast<double>(m_kbm->default_width());
+	delta_x = (width  - obj_width *pseudo_scale) / 2.0 + border_x;
+	delta_y = (height + obj_height*pseudo_scale) / 2.0 + border_y;
 	margin  = 0.007*min(height, width);
 	radius  = 0.02 *min(height, width);
 	padding = 0.03 *min(height, width);
