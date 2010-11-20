@@ -34,6 +34,7 @@
 #include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/liststore.h>
 #include "optionenums.h"
+#include "areamap.h"
 #include "keyboardmapwidget.h"
 #include "areaselectorwidget.h"
 
@@ -53,6 +54,7 @@ private:
 	// Callbacks
 	void on_kb_changed();
 	void on_area_changed();
+	void save_curr_area();
 
 	// Modèle pour le combo box de sélection du clavier
 	class KbSelectorModel : public Gtk::TreeModelColumnRecord {
@@ -66,6 +68,8 @@ private:
 
 	// Données membres
 	Gtk::Notebook pages;
+	std::string curr_kb_code;
+	std::map<std::string, AreaMap> areas;
 
 	// Onglet RAZ
 	Gtk::VBox                                   raz_page;

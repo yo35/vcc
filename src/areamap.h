@@ -26,7 +26,7 @@
 #include "side.h"
 #include <vector>
 #include <string>
-
+#include <set>
 
 class AreaMap {
 
@@ -48,6 +48,11 @@ public:
 	// Fonctions de lecture/écriture dans le fichier sous-jacent
 	void load(const std::string &path);
 	void save(const std::string &path) const;
+
+	// Fonction de lecture/écriture globale d'une région
+	std::set<int> get_area(const Side &side) const;
+	void          set_area(const Side &side, const std::set<int> keys);
+	void          clear();
 
 private:
 

@@ -89,6 +89,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	pages.append_page(raz_page, _("Reset options"));
 
 	// Onglet keyboard (sauf géométrie)
+	curr_kb_code = "";
 	kb_selector_label.set_label(_("Keyboard layout"));
 	kb_selector_data = Gtk::ListStore::create(kb_selector_model);
 	kb_selector.set_model(kb_selector_data);
@@ -125,9 +126,12 @@ void PreferencesDialog::load_params() {
 	key_combination[gp->reinit_keys   ()].set_active(true);
 	raz_delay.set_value(gp->reinit_delay());
 
+	// Régions sélectionnées courantes
+	std::string curr_keyboard = gp->curr_keyboard();
+	areas[curr_keyboard]      = gp->kam_perso();
+
 	// Liste des claviers
 	std::set<std::string> keyboards = gp->keyboards();
-	std::string       curr_keyboard = gp->curr_keyboard();
 	for(std::set<std::string>::const_iterator it=keyboards.begin(); it!=keyboards.end(); ++it) {
 		Glib::ustring kb_name = gp->keyboard_name(*it);
 		Gtk::TreeModel::iterator row = kb_selector_data->append();
@@ -141,6 +145,8 @@ void PreferencesDialog::load_params() {
 
 // Enregistrement des paramètres
 void PreferencesDialog::save_params() {
+
+	// Paramètres RAZ
 	for(ReinitConfirm::iterator k=ReinitConfirm::first(); k.valid(); ++k) {
 		if(ask_before_raz[*k].get_active())
 			gp->set_reinit_confirm(*k);
@@ -150,12 +156,31 @@ void PreferencesDialog::save_params() {
 			gp->set_reinit_key(*k);
 	}
 	gp->set_reinit_delay(raz_delay.get_value());
+
+	// Paramètres de clavier
+	save_curr_area();
+	gp->set_curr_keyboard(curr_kb_code);
+	gp->set_kam_perso(areas[curr_kb_code]);
 }
 
 // Callback appelé sur un changement de clavier
 void PreferencesDialog::on_kb_changed() {
-	std::string kb_code = (*kb_selector.get_active())[kb_selector_model.code()];
-	kbm_widget.set_keyboard_map(gp->keyboard_map(kb_code));
+
+	// Enregistrement de l'état des régions précédentes
+	if(curr_kb_code != "")
+		save_curr_area();
+
+	// Modification du plan de clavier
+	curr_kb_code = (*kb_selector.get_active())[kb_selector_model.code()];
+	kbm_widget.set_keyboard_map(gp->keyboard_map(curr_kb_code));
+
+	// Chargement du plan de région courant
+	if(areas.find(curr_kb_code)==areas.end()) {
+		areas[curr_kb_code] = gp->default_area_map(curr_kb_code);
+	}
+	for(Side::iterator it=Side::first(); it.valid(); ++it) {
+		kbm_widget.set_area((*it).to_int(), areas[curr_kb_code].get_area(*it));
+	}
 }
 
 // Changement de la zone active
@@ -164,4 +189,13 @@ void PreferencesDialog::on_area_changed() {
 		kbm_widget.set_active_area(area_selector.active_side().to_int());
 	else
 		kbm_widget.set_active_area(-1);
+}
+
+// Enregistrement du plan de région courant
+void PreferencesDialog::save_curr_area() {
+	assert(curr_kb_code!="");
+	areas[curr_kb_code].clear();
+	for(Side::iterator it=Side::first(); it.valid(); ++it) {
+		areas[curr_kb_code].set_area(*it, kbm_widget.get_area((*it).to_int()));
+	}
 }
