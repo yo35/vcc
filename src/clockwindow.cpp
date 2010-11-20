@@ -210,6 +210,8 @@ void ClockWindow::on_prefs_clicked() {
 		return;
 	dialog.save_params();
 	reinit_delayer.set_delay(gp->reinit_delay());
+	curr_kbm = &gp->keyboard_map(gp->curr_keyboard());
+	curr_kam = &gp->kam_perso();
 	init_reinit_triggers();
 }
 
