@@ -35,6 +35,10 @@ public:
 	KeyboardMapWidget();
 	void set_keyboard_map(const KeyboardMap &kbm);
 
+	// Affichage pavé numérique
+	bool display_kp() const;
+	void set_display_kp(bool src);
+
 	// Configuration régions
 	int nb_areas() const;
 	void set_nb_areas(int src);
@@ -93,6 +97,7 @@ private:
 	std::vector<bool>       m_keydown;
 	std::vector<int >       m_keyarea;
 	std::vector<Gdk::Color> m_color;
+	bool                    m_display_kp;
 	int                     m_active_area;
 
 	// Objets liés au dessin du widget

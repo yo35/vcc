@@ -99,6 +99,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kb_selector.pack_start(kb_selector_model.name());
 	kb_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_kb_changed));
 	display_kp.set_label(_("Display the numeric keypad"));
+	display_kp.signal_toggled().connect(sigc::mem_fun(*this, &PreferencesDialog::on_display_kp_changed));
 	kbm_widget.set_nb_areas(2);
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		kbm_widget.set_color((*k).to_int(), area_selector.color(*k));
@@ -214,6 +215,11 @@ void PreferencesDialog::on_kb_changed() {
 	for(Side::iterator it=Side::first(); it.valid(); ++it) {
 		kbm_widget.set_area((*it).to_int(), areas[curr_kb_code].get_area(*it));
 	}
+}
+
+// Modification du choix d'affichage du pavé numérique
+void PreferencesDialog::on_display_kp_changed() {
+	kbm_widget.set_display_kp(display_kp.get_active());
 }
 
 // Changement de la zone active

@@ -31,6 +31,7 @@
 // Constructeur
 KeyboardMapWidget::KeyboardMapWidget() : Gtk::DrawingArea() {
 	m_kbm = 0;
+	m_display_kp = true;
 	m_active_area = -1;
 	set_size_request(800, 300);
 	set_events(Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
@@ -41,6 +42,17 @@ void KeyboardMapWidget::set_keyboard_map(const KeyboardMap &kbm) {
 	m_kbm = &kbm;
 	reset_key_vector(m_keydown, false);
 	reset_key_vector(m_keyarea,    -1);
+	refresh_widget();
+}
+
+// Affichage du pavé numérique
+bool KeyboardMapWidget::display_kp() const {
+	return m_display_kp;
+}
+
+// Modification de l'affichage du pavé num.
+void KeyboardMapWidget::set_display_kp(bool src) {
+	m_display_kp = src;
 	refresh_widget();
 }
 
@@ -228,7 +240,7 @@ bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
 	double border_y = 10;
 	width   = width  - 2.0*border_x;
 	height  = height - 2.0*border_y;
-	double obj_width  = static_cast<double>(m_kbm->line_width(true));
+	double obj_width  = static_cast<double>(m_kbm->line_width(m_display_kp));
 	double obj_height = static_cast<double>(m_kbm->default_width() * m_kbm->nb_lines());
 	double pseudo_scale_x = width  / obj_width ;
 	double pseudo_scale_y = height / obj_height;
@@ -244,6 +256,8 @@ bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
 
 	// Touches
 	for(unsigned idx=0; idx<m_kbm->keys().size(); ++idx) {
+		if(!m_display_kp && m_kbm->keys()[idx].in_kp())
+			continue;
 		draw_key_shape(idx);
 		draw_key_text (idx);
 	}

@@ -60,6 +60,7 @@ private:
 
 	// Callbacks
 	void on_kb_changed();
+	void on_display_kp_changed();
 	void on_area_changed();
 	void save_curr_area();
 
