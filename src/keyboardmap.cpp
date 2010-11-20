@@ -21,7 +21,7 @@
 
 
 #include "keyboardmap.h"
-#include "strings.h"
+#include "datafilein.h"
 #include <translation.h>
 #include <stdexcept>
 #include <cassert>
@@ -87,111 +87,53 @@ void KeyboardMap::load(const std::string &path) {
 	translation_table_ready = false;
 
 	// Ouverture du fichier source
-	std::ifstream file;
-	file.open(path.c_str());
-	if(file.fail()) {
-		throw std::runtime_error(Glib::ustring::compose(
-			_("Unable to open the keyboard map file %1 for reading"), path));
-	}
-
-	// Initialisation
-	int curr_no_line = 0;
-	std::list<int> curr_line;
-	m_keys.clear();
+	DataFileIn file(path);
+	file.open();
 
 	// Ligne d'en-tête
-	bool first_line_ok = parse_line(file, path, curr_no_line, curr_line);
-	check_consistency(first_line_ok && curr_line.size()==4, path, curr_no_line);
-	m_nb_lines      = curr_line.front(); curr_line.pop_front();
-	m_default_width = curr_line.front(); curr_line.pop_front();
-	m_line_width    = curr_line.front(); curr_line.pop_front();
-	int nb_keys     = curr_line.front(); curr_line.pop_front();
+	m_nb_lines      = file.get();
+	m_default_width = file.get();
+	m_line_width    = file.get();
+	int nb_keys     = file.get();
 	m_keys.resize(nb_keys);
 
 	// Boucle de lecture pour chaque touche
-	unsigned int idx = 0;
-	while(parse_line(file, path, curr_no_line, curr_line)) {
+	for(int idx=0; idx<nb_keys; ++idx) {
 
 		// Index de la première ligne, nombre de lignes et de keyvals de la touche
-		check_consistency(curr_line.size()>=3, path, curr_no_line);
-		int bottom_line      = curr_line.front(); curr_line.pop_front();
-		int nb_line_of_key   = curr_line.front(); curr_line.pop_front();
-		int nb_keyval_of_key = curr_line.front(); curr_line.pop_front();
+		int bottom_line      = file.get();
+		int nb_line_of_key   = file.get();
+		int nb_keyval_of_key = file.get();
 		m_keys[idx].set_bottom_line(bottom_line     );
 		m_keys[idx].set_nb_lines   (nb_line_of_key  );
 		m_keys[idx].set_nb_keyvals (nb_keyval_of_key);
 
 		// Liste des coordonnées de la touche sur chaque ligne du clavier
-		check_consistency(nb_line_of_key>=1 && static_cast<int>(curr_line.size())>=2*nb_line_of_key,
-			path, curr_no_line);
+		if(nb_line_of_key<1) {
+			throw std::runtime_error(Glib::ustring::compose(
+				_("The key %1 must be placed at least on one line on the keyboard"), idx));
+		}
 		for(int i=0; i<nb_line_of_key; ++i) {
-			int curr_pos   = curr_line.front(); curr_line.pop_front();
-			int curr_width = curr_line.front(); curr_line.pop_front();
+			int curr_pos   = file.get();
+			int curr_width = file.get();
 			m_keys[idx].set_geometry(i, curr_pos, curr_width);
 		}
 
 		// Liste des keyvals
-		check_consistency(nb_keyval_of_key>=1 && static_cast<int>(curr_line.size())>=3*nb_keyval_of_key,
-			path, curr_no_line);
+		if(nb_keyval_of_key<1) {
+			throw std::runtime_error(Glib::ustring::compose(
+				_("The key %1 must have at least one keyval"), idx));
+		}
 		for(int i=0; i<nb_keyval_of_key; ++i) {
-			Keyval   curr_keyval = curr_line.front(); curr_line.pop_front();
-			KeyGroup curr_group  = curr_line.front(); curr_line.pop_front();
-			KeyLevel curr_level  = curr_line.front(); curr_line.pop_front();
+			Keyval   curr_keyval = file.get();
+			KeyGroup curr_group  = file.get();
+			KeyLevel curr_level  = file.get();
 			m_keys[idx].set_keyval(i, curr_keyval, curr_group, curr_level);
 		}
-
-		// Touche suivante
-		check_consistency(curr_line.empty(), path, curr_no_line);
-		++idx;
 	}
 
 	// Terminaison
-	check_consistency(idx==m_keys.size(), path, curr_no_line);
-	file.close();
 	compute_translation_table();
-}
-
-// Lecture d'une ligne
-bool KeyboardMap::parse_line(std::ifstream &file, const std::string &path,
-	int &curr_no_line, std::list<int> &retval)
-{
-	// Trouve la première ligne non-vide qui ne soit pas un commentaire
-	std::string curr_str_line;
-	while(!file.eof()) {
-		getline(file, curr_str_line);
-		++curr_no_line;
-		curr_str_line = trim(curr_str_line);
-		if(!(curr_str_line.empty() || curr_str_line.at(0)=='#'))
-			break;
-	}
-	if(file.eof())
-		return false;
-
-	// Suppression du commentaire en fin de ligne éventuel
-	size_t pos_diese = curr_str_line.find('#');
-	if(pos_diese!=std::string::npos) {
-		curr_str_line = trim(curr_str_line.substr(0, pos_diese));
-	}
-
-	// Découpe la liste en fonction du séparateur ';'
-	retval.clear();
-	std::list<std::string> items = split(curr_str_line, ';');
-	for(std::list<std::string>::const_iterator it=items.begin(); it!=items.end(); ++it) {
-		std::string curr_item = trim(*it);
-		if(curr_item=="")
-			continue;
-		check_consistency(is_valid_int(curr_item), path, curr_no_line);
-		retval.push_back(string_to_int(curr_item));
-	}
-	return true;
-}
-
-// Routine de vérification (lance une exception si test est faux
-void KeyboardMap::check_consistency(bool test, const std::string &path, int curr_no_line) {
-	if(!test) {
-		throw std::runtime_error(Glib::ustring::compose(
-			_("Unconsistency in the keyboard map file %1 at line #%2"), path, curr_no_line));
-	}
 }
 
 // Calcul de la table de traduction

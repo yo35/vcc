@@ -20,50 +20,43 @@
  ******************************************************************************/
 
 
-#ifndef KEYBOARDMAP_H
-#define KEYBOARDMAP_H
+#ifndef DATAFILEIN_H
+#define DATAFILEIN_H
 
-#include "keys.h"
 #include <string>
+#include <list>
 #include <fstream>
-#include <map>
 
-
-// Plan de clavier
-class KeyboardMap {
+class DataFileIn {
 
 public:
 
-	// Constructeur
-	KeyboardMap();
+	// Constructeur et routines d'ouverture
+	DataFileIn(const std::string &path);
+	~DataFileIn();
+	void open ();
+	void close();
 
 	// Accesseurs
-	int                      nb_lines     () const;
-  int                      default_width() const;
-  int                      line_width   () const;
-	const PhysicalKeyVector &keys         () const;
+	const std::string &path   () const;
+	bool               is_open() const;
 
-	// Détermine le numéro de la touche correspondant au keyval passé en paramètre
-	int get_key(Keyval keyval) const;
-
-	// Fonctions de lecture/écriture dans le fichier sous-jacent
-	void load(const std::string &path);
-	void save(const std::string &path) const;
+	// Lecture
+	bool eof();
+	int  get();
 
 private:
 
-	// Précalcule la table keyval -> key
-	void compute_translation_table();
+	// Sous-routines de traitement
+	void parse_line();
+	void check_consistency(bool test) const;
 
 	// Données membres
-	int               m_nb_lines     ;
-	int               m_default_width;
-	int               m_line_width   ;
-	PhysicalKeyVector m_keys         ;
-
-	// Algo
-	bool                  translation_table_ready;
-	std::map<Keyval, int> translation_table;
+	std::string    m_path;
+	std::ifstream  m_file;
+	int            m_curr_no_line;
+	bool           m_eof;
+	std::list<int> m_buff;
 };
 
 #endif
