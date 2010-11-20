@@ -49,13 +49,17 @@ public:
 	// Lecture d'une data
 	template<class T>
 	Enumerable<T> get_data(const Key &section, const Key &code, const Enumerable<T> &default_value) const;
+	bool          get_data(const Key &section, const Key &code, bool                 default_value) const;
 	int           get_data(const Key &section, const Key &code, int                  default_value) const;
+	std::string   get_data(const Key &section, const Key &code, const char          *default_value) const;
 	std::string   get_data(const Key &section, const Key &code, const std::string   &default_value) const;
 
 	// Écriture d'une data
 	template<class T>
 	void set_data(const Key &section, const Key &code, const Enumerable<T> &value);
+	void set_data(const Key &section, const Key &code, bool                 value);
 	void set_data(const Key &section, const Key &code, int                  value);
+	void set_data(const Key &section, const Key &code, const char          *value);
 	void set_data(const Key &section, const Key &code, const std::string   &value);
 
 private:

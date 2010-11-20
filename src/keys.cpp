@@ -31,6 +31,7 @@ PhysicalKey::PhysicalKey() {
 
 // Accesseurs
 int      PhysicalKey::bottom_line  ()        const { return m_bottom_line     ; }
+bool     PhysicalKey::in_kp        ()        const { return m_in_kp           ; }
 int      PhysicalKey::nb_lines     ()        const { return m_geometry.size (); }
 int      PhysicalKey::nb_keyvals   ()        const { return m_keyval_ex.size(); }
 int      PhysicalKey::pos_on_line  (int idx) const { return m_geometry [idx].pos   ; }
@@ -40,9 +41,10 @@ KeyGroup PhysicalKey::group        (int idx) const { return m_keyval_ex[idx].gro
 KeyLevel PhysicalKey::level        (int idx) const { return m_keyval_ex[idx].level ; }
 
 // Modifieurs
-void PhysicalKey::set_bottom_line(int src) { m_bottom_line = src; }
-void PhysicalKey::set_nb_lines   (int src) { m_geometry .resize(src); }
-void PhysicalKey::set_nb_keyvals (int src) { m_keyval_ex.resize(src); }
+void PhysicalKey::set_bottom_line(int src ) { m_bottom_line = src; }
+void PhysicalKey::set_in_kp      (bool src) { m_in_kp       = src; }
+void PhysicalKey::set_nb_lines   (int src ) { m_geometry .resize(src); }
+void PhysicalKey::set_nb_keyvals (int src ) { m_keyval_ex.resize(src); }
 void PhysicalKey::set_geometry(int idx, int pos, int width) {
 	m_geometry[idx].pos   = pos  ;
 	m_geometry[idx].width = width;

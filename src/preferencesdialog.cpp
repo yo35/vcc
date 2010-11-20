@@ -98,6 +98,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kb_selector.set_model(kb_selector_data);
 	kb_selector.pack_start(kb_selector_model.name());
 	kb_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_kb_changed));
+	display_kp.set_label(_("Display the numeric keypad"));
 	kbm_widget.set_nb_areas(2);
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		kbm_widget.set_color((*k).to_int(), area_selector.color(*k));
@@ -113,6 +114,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kb_selector_layout.pack_start(kb_selector_label, Gtk::PACK_SHRINK);
 	kb_selector_layout.pack_start(kb_selector);
 	kb_page.pack_start(kb_selector_layout, Gtk::PACK_SHRINK);
+	kb_page.pack_start(display_kp, Gtk::PACK_SHRINK);
 	kb_page.pack_start(kbm_widget);
 	area_selector_layout.pack_start(area_selector_label, Gtk::PACK_SHRINK);
 	area_selector_layout.pack_start(area_selector, Gtk::PACK_SHRINK);
@@ -136,6 +138,9 @@ void PreferencesDialog::load_params() {
 	// Régions sélectionnées courantes
 	std::string curr_keyboard = gp->curr_keyboard();
 	areas[curr_keyboard]      = gp->kam_perso();
+
+	// Affichage du pavé numérique
+	display_kp.set_active(gp->display_num_pad());
 
 	// Liste des claviers
 	std::set<std::string> keyboards = gp->keyboards();
@@ -167,6 +172,7 @@ void PreferencesDialog::save_params() {
 	// Paramètres de clavier
 	save_curr_area();
 	gp->set_curr_keyboard(curr_kb_code);
+	gp->set_display_num_pad(display_kp.get_active());
 	gp->set_kam_perso(areas[curr_kb_code]);
 }
 

@@ -64,6 +64,10 @@ public:
 	std::string curr_keyboard() const;
 	void set_curr_keyboard(const std::string &src);
 
+	// Affichage du pavé numérique
+	bool display_num_pad() const;
+	void set_display_num_pad(bool src);
+
 	// Zones préférées sur le clavier
 	const AreaMap &kam_perso() const;
 	void set_kam_perso(const AreaMap &src);

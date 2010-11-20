@@ -151,6 +151,16 @@ std::string Params::curr_keyboard() const {
 	return m_data_perso.get_data("Keyboard", "KBM", "KBM_000");
 }
 
+// Affichage du pavé numérique (lecture)
+bool Params::display_num_pad() const {
+	return m_data_perso.get_data("Keyboard", "Numeric_Keypad", true);
+}
+
+// Affichage du pavé numérique (écriture)
+void Params::set_display_num_pad(bool src) {
+	m_data_perso.set_data("Keyboard", "Numeric_Keypad", src);
+}
+
 // Modèle de clavier préféré (code) (écriture)
 void Params::set_curr_keyboard(const std::string &src) {
 	m_data_perso.set_data("Keyboard", "KBM", src);

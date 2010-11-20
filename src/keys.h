@@ -51,6 +51,7 @@ public:
 
 	// Accesseurs
 	int      bottom_line  ()        const;
+	bool     in_kp        ()        const;
 	int      nb_lines     ()        const;
 	int      nb_keyvals   ()        const;
 	int      pos_on_line  (int idx) const;
@@ -60,9 +61,10 @@ public:
 	KeyLevel level        (int idx) const;
 
 	// Modifieurs
-	void set_bottom_line(int src);
-	void set_nb_lines   (int src);
-	void set_nb_keyvals (int src);
+	void set_bottom_line(int  src);
+	void set_in_kp      (bool src);
+	void set_nb_lines   (int  src);
+	void set_nb_keyvals (int  src);
 	void set_geometry(int idx, int pos, int width);
 	void set_keyval  (int idx, Keyval keyval, KeyGroup group, KeyLevel level);
 
@@ -84,6 +86,7 @@ private:
 
 	// Données membres
 	int                      m_bottom_line;
+	bool                     m_in_kp      ;
 	std::vector<KeyGeometry> m_geometry   ;
 	std::vector<KeyValEx   > m_keyval_ex  ;
 };

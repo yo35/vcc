@@ -165,6 +165,18 @@ std::set<IniStruct::Key> IniStruct::codes(const Key &section) const {
 	return res;
 }
 
+// Lecture d'un booléen
+bool IniStruct::get_data(const Key &section, const Key &code, bool default_value) const
+{
+	std::string buff = get_data(section, code, default_value ? "true" : "false");
+	if(buff=="true")
+		return true;
+	else if(buff=="false")
+		return false;
+	else
+		return default_value;
+}
+
 // Lecture d'un entier
 int IniStruct::get_data(const Key &section, const Key &code, int default_value) const
 {
@@ -176,6 +188,11 @@ int IniStruct::get_data(const Key &section, const Key &code, int default_value) 
 }
 
 // Lecture d'une chaîne de caractères
+std::string IniStruct::get_data(const Key &section, const Key &code,
+	const char *default_value) const
+{
+	return get_data(section, code, std::string(default_value));
+}
 std::string IniStruct::get_data(const Key &section, const Key &code,
 	const std::string &default_value) const
 {
@@ -191,12 +208,20 @@ std::string IniStruct::get_data(const Key &section, const Key &code,
 	}
 }
 
+// Écriture d'un booléen
+void IniStruct::set_data(const Key &section, const Key &code, bool value) {
+	set_data(section, code, value ? "true" : "false");
+}
+
 // Écriture d'un entier
 void IniStruct::set_data(const Key &section, const Key &code, int value) {
 	set_data(section, code, int_to_string(value));
 }
 
 // Écriture d'un texte
+void IniStruct::set_data(const Key &section, const Key &code, const char *value) {
+	set_data(section, code, std::string(value));
+}
 void IniStruct::set_data(const Key &section, const Key &code, const std::string &value) {
 	root[section][code] = value;
 }
