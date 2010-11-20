@@ -30,6 +30,7 @@
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/label.h>
 #include <gtkmm/scale.h>
+#include <gtkmm/invisible.h>
 #include <gtkmm/combobox.h>
 #include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/liststore.h>
@@ -82,11 +83,13 @@ private:
 	Gtk::Frame                                  raz_by_toolbar;
 	Gtk::VBox                                   raz_by_toolbar_layout;
 	Gtk::Label                                  ask_before_raz_label;
+	Gtk::HBox                                   ask_before_raz_label_layout;
 	Gtk::RadioButton::Group                     ask_before_raz_group;
 	EnumArray<ReinitConfirm, Gtk::RadioButton>  ask_before_raz;
 	Gtk::Frame                                  raz_by_keyboard;
 	Gtk::VBox                                   raz_by_keyboard_layout;
 	Gtk::Label                                  key_combination_label;
+	Gtk::HBox                                   key_combination_label_layout;
 	Gtk::RadioButton::Group                     key_combination_group;
 	EnumArray<KeyCombination, Gtk::RadioButton> key_combination;
 	Gtk::Label                                  raz_delay_label;
@@ -95,12 +98,14 @@ private:
 
 	// Onglet keyboard
 	Gtk::VBox                    kb_page;
-	Gtk::HBox                    kb_config_layout;
+	Gtk::HBox                    kb_selector_layout;
 	Gtk::Label                   kb_selector_label;
 	KbSelectorModel              kb_selector_model;
 	Glib::RefPtr<Gtk::ListStore> kb_selector_data;
 	Gtk::ComboBox                kb_selector;
 	KeyboardMapWidget            kbm_widget;
+	Gtk::HBox                    area_selector_layout;
+	Gtk::Label                   area_selector_label;
 	AreaSelectorWidget           area_selector;
 };
 

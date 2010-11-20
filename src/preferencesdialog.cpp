@@ -51,8 +51,8 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	raz_by_toolbar_layout.set_border_width(5);
 	raz_by_toolbar_layout.set_spacing(5);
 	ask_before_raz_label.set_label(_("Ask for confirmation before resetting"));
-	//ask_before_raz_label.set_justify(Gtk::JUSTIFY_LEFT);
-	raz_by_toolbar_layout.pack_start(ask_before_raz_label);
+	ask_before_raz_label_layout.pack_start(ask_before_raz_label, Gtk::PACK_SHRINK);
+	raz_by_toolbar_layout.pack_start(ask_before_raz_label_layout);
 	ask_before_raz[RC_ALWAYS       ].set_label(_("Always"                            ));
 	ask_before_raz[RC_IF_NOT_PAUSED].set_label(_("Only if the clock is still running"));
 	ask_before_raz[RC_NEVER        ].set_label(_("Never"                             ));
@@ -67,8 +67,8 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	raz_by_keyboard_layout.set_border_width(5);
   raz_by_keyboard_layout.set_spacing(5);
 	key_combination_label.set_label(_("Keys to press to reset"));
-	//key_combination_label.set_justify(Gtk::JUSTIFY_LEFT);
-	raz_by_keyboard_layout.pack_start(key_combination_label);
+	key_combination_label_layout.pack_start(key_combination_label, Gtk::PACK_SHRINK);
+	raz_by_keyboard_layout.pack_start(key_combination_label_layout);
 	key_combination[DOUBLE_CTRL].set_label(_("CTRL keys (left and right)"));
 	key_combination[DOUBLE_MAJ ].set_label(_("MAJ keys (left and right)" ));
 	for(KeyCombination::iterator k=KeyCombination::first(); k.valid(); ++k) {
@@ -88,32 +88,36 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	// Onglet RAZ
 	raz_page.set_border_width(5);
 	raz_page.set_spacing(5);
-	raz_page.pack_start(raz_by_toolbar );
-	raz_page.pack_start(raz_by_keyboard);
+	raz_page.pack_start(raz_by_toolbar , Gtk::PACK_SHRINK);
+	raz_page.pack_start(raz_by_keyboard, Gtk::PACK_SHRINK);
 	pages.append_page(raz_page, _("Reset options"));
 
 	// Onglet keyboard (sauf géométrie)
-	kb_selector_label.set_label(_("Keyboard layout"));
+	kb_selector_label.set_label(_("Select the keyboard layout you are using"));
 	kb_selector_data = Gtk::ListStore::create(kb_selector_model);
 	kb_selector.set_model(kb_selector_data);
+	kb_selector.pack_start(kb_selector_model.name());
 	kb_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_kb_changed));
 	kbm_widget.set_nb_areas(2);
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		kbm_widget.set_color((*k).to_int(), area_selector.color(*k));
 	}
+	area_selector_label.set_label(_("Sensitive areas on the keyboard when playing"));
 	area_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_area_changed));
 
 	// Onglet keyboard (géométrie)
 	kb_page.set_border_width(5);
 	kb_page.set_spacing(5);
-	kb_config_layout.set_spacing(5);
-	kb_config_layout.pack_start(kb_selector_label, Gtk::PACK_SHRINK);
-	kb_selector.pack_start(kb_selector_model.name());
-	kb_config_layout.pack_start(kb_selector);
-	kb_config_layout.pack_start(area_selector, Gtk::PACK_SHRINK);
+	kb_selector_layout.set_spacing(5);
+	area_selector_layout.set_spacing(5);
+	kb_selector_layout.pack_start(kb_selector_label, Gtk::PACK_SHRINK);
+	kb_selector_layout.pack_start(kb_selector);
+	kb_page.pack_start(kb_selector_layout, Gtk::PACK_SHRINK);
 	kb_page.pack_start(kbm_widget);
-	kb_page.pack_start(kb_config_layout, Gtk::PACK_SHRINK);
-	pages.append_page(kb_page, _("Keyboard"));
+	area_selector_layout.pack_start(area_selector_label, Gtk::PACK_SHRINK);
+	area_selector_layout.pack_start(area_selector, Gtk::PACK_SHRINK);
+	kb_page.pack_start(area_selector_layout, Gtk::PACK_SHRINK);
+	pages.append_page(kb_page, _("Keyboard sensitive areas"));
 
 	// Géométrie générale
 	get_vbox()->set_spacing(5);
