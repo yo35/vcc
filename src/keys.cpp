@@ -190,7 +190,8 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_KP_Enter   : return _("Return"  );
 		case GDK_Num_Lock   : return _("Num lock");
 
-		// Caractères ISO 8859 (de 0xA1 à 0xFF)
+		// Caractères ISO 8859 (de 0xA0 à 0xFF)
+		case GDK_nobreakspace  : return _("No break space");
 		case GDK_exclamdown    : return "¡";
 		case GDK_cent          : return "¢";
 		case GDK_sterling      : return "£";
