@@ -228,7 +228,7 @@ bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
 	double border_y = 10;
 	width   = width  - 2.0*border_x;
 	height  = height - 2.0*border_y;
-	double obj_width  = static_cast<double>(m_kbm->line_width());
+	double obj_width  = static_cast<double>(m_kbm->line_width(true));
 	double obj_height = static_cast<double>(m_kbm->default_width() * m_kbm->nb_lines());
 	double pseudo_scale_x = width  / obj_width ;
 	double pseudo_scale_y = height / obj_height;

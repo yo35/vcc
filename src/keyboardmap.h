@@ -38,9 +38,9 @@ public:
 	KeyboardMap();
 
 	// Accesseurs
-	int                      nb_lines     () const;
-  int                      default_width() const;
-  int                      line_width   () const;
+	int nb_lines     ()             const;
+  int default_width()             const;
+  int line_width   (bool with_kp) const;
 	const PhysicalKeyVector &keys         () const;
 
 	// Détermine le numéro de la touche correspondant au keyval passé en paramètre
@@ -58,7 +58,8 @@ private:
 	// Données membres
 	int               m_nb_lines     ;
 	int               m_default_width;
-	int               m_line_width   ;
+	int               m_line_width_with_kp   ;
+	int               m_line_width_without_kp;
 	PhysicalKeyVector m_keys         ;
 
 	// Algo

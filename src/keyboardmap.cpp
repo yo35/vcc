@@ -31,15 +31,16 @@
 KeyboardMap::KeyboardMap() {
 	m_nb_lines              =    7;
 	m_default_width         =  100;
-	m_line_width            = 2200;
+	m_line_width_with_kp    = 2200;
+	m_line_width_without_kp = 1800;
 	translation_table_ready = false;
 }
 
 // Accesseurs
-int                      KeyboardMap::nb_lines     () const { return m_nb_lines     ; }
-int                      KeyboardMap::default_width() const { return m_default_width; }
-int                      KeyboardMap::line_width   () const { return m_line_width   ; }
-const PhysicalKeyVector &KeyboardMap::keys         () const { return m_keys         ; }
+int KeyboardMap::nb_lines     ()             const { return m_nb_lines     ; }
+int KeyboardMap::default_width()             const { return m_default_width; }
+int KeyboardMap::line_width   (bool with_kp) const { return with_kp ? m_line_width_with_kp : m_line_width_without_kp; }
+const PhysicalKeyVector &KeyboardMap::keys() const { return m_keys         ; }
 
 // Traduction keyval -> physical key
 int KeyboardMap::get_key(Keyval keyval) const {
@@ -59,10 +60,11 @@ void KeyboardMap::save(const std::string &path) const {
 	file.open();
 
 	// En-tête du fichier
-	file.put(m_nb_lines     );
-	file.put(m_default_width);
-	file.put(m_line_width   );
-	file.put(m_keys.size()  );
+	file.put(m_nb_lines             );
+	file.put(m_default_width        );
+	file.put(m_line_width_with_kp   );
+	file.put(m_line_width_without_kp);
+	file.put(m_keys.size()          );
 
 	// Boucle d'écriture pour chaque touche
 	for(PhysicalKeyVector::const_iterator it=m_keys.begin(); it!=m_keys.end(); ++it) {
@@ -93,10 +95,11 @@ void KeyboardMap::load(const std::string &path) {
 	file.open();
 
 	// Ligne d'en-tête
-	m_nb_lines      = file.get();
-	m_default_width = file.get();
-	m_line_width    = file.get();
-	int nb_keys     = file.get();
+	m_nb_lines              = file.get();
+	m_default_width         = file.get();
+	m_line_width_with_kp    = file.get();
+	m_line_width_without_kp = file.get();
+	int nb_keys             = file.get();
 	m_keys.resize(nb_keys);
 
 	// Boucle de lecture pour chaque touche
