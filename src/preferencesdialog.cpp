@@ -106,9 +106,9 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	area_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_area_changed));
 
 	// Onglet keyboard (géométrie)
-	kb_page.set_border_width(5);
-	kb_page.set_spacing(5);
-	kb_selector_layout.set_spacing(5);
+	kb_page             .set_border_width(5);
+	kb_page             .set_spacing(5);
+	kb_selector_layout  .set_spacing(5);
 	area_selector_layout.set_spacing(5);
 	kb_selector_layout.pack_start(kb_selector_label, Gtk::PACK_SHRINK);
 	kb_selector_layout.pack_start(kb_selector);
@@ -172,14 +172,22 @@ void PreferencesDialog::save_params() {
 
 // Event handling
 bool PreferencesDialog::on_key_press_event(GdkEventKey* event) {
-	kbm_widget.on_key_action(event->keyval, true);
-	return Gtk::Dialog::on_key_press_event(event);
+	if(pages.get_current_page()==1) {
+		kbm_widget.on_key_action(event->keyval, true);
+		return true;
+	}
+	else
+		return Gtk::Dialog::on_key_press_event(event);
 }
 
 // Event handling
 bool PreferencesDialog::on_key_release_event(GdkEventKey* event) {
-	kbm_widget.on_key_action(event->keyval, false);
-	return Gtk::Dialog::on_key_release_event(event);
+	if(pages.get_current_page()==1) {
+		kbm_widget.on_key_action(event->keyval, false);
+		return true;
+	}
+	else
+		return Gtk::Dialog::on_key_release_event(event);
 }
 
 // Callback appelé sur un changement de clavier
