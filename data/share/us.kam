@@ -1,0 +1,117 @@
+104;
+
+# Ligne 0
+0;  # Ctrl gauche
+0;  # Super gauche
+0;  # Alt
+2;
+1;  # Alt Gr (ISO level3 shift)
+1;  # Super droite
+1;  # Menu
+1;  # Ctrl droite
+1;  # Flèche gauche
+1;
+1;  # Flèche droite
+2;  # KP
+2;  # KP
+2;  # KP
+
+# Ligne 1
+0;  # MAJ gauche
+0;  # W
+0;
+0;
+0;  # V
+2;
+2;
+2;
+1;  # Point-vrigule
+1;
+1;
+1;  # MAJ droite
+1;  # Flèche haut
+2;  # KP
+2;  # KP
+2;  # KP
+
+# Ligne 2
+0;  # Caps lock
+0;
+0;
+0;
+0;
+0;  # G
+2;
+2;
+1;  # K
+1;
+1;
+1;
+1;
+1;  # Touche entrée
+2;  # KP
+2;  # KP
+2;  # KP
+2;  # KP
+
+# Ligne 3
+0;  # Tabs
+0;
+0;
+0;
+0;
+0;  # T
+2;
+2;
+2;
+1;  # O
+1;
+1;
+1;
+1;  # Suppr.
+1;
+1;
+2;  # KP
+2;  # KP
+2;  # KP
+
+# Ligne 4
+0;  # 2 supérieur
+0;
+0;
+0;
+0;
+0;
+0;  # 6
+2;
+2;
+1;  # 9
+1;
+1;
+1;
+1;  # Backspace
+1;  # Inser.
+1;
+1;
+2;  # KP
+2;  # KP
+2;  # KP
+2;  # KP
+
+# Ligne 6
+0;  # Echap.
+0;  # F1
+0;
+0;
+0;  # F4
+0;  # F5
+2;
+2;
+2;  # F8
+2;  # F9
+1;  # F10
+1;
+1;  # F12
+1;  # Impr. écran
+1;  # Arrêt defil.
+1;  # Pause

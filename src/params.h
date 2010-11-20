@@ -27,9 +27,10 @@
 #include "inistruct.h"
 #include "timecontrol.h"
 #include "keyboardmap.h"
-#include "keys.h"
+#include "areamap.h"
 #include <string>
 #include <set>
+#include <map>
 
 // Paramètres généraux
 class Params {
@@ -63,26 +64,29 @@ public:
 	std::string curr_keyboard() const;
 	void set_curr_keyboard(const std::string &src);
 
+	// Zones préférées sur le clavier
+	const AreaMap &kam_perso() const;
+	void set_kam_perso(const AreaMap &src);
+
 	// Modèles de claviers
 	std::set<std::string> keyboards() const;
-	Glib::ustring      keyboard_name(const std::string &kbcode) const;
-	const KeyboardMap &keyboard_map (const std::string &kbcode) const;
-
-	// Zones actives pour les touches clavier
-	EnumArray<Side, std::set<Keycode> > key_area;
-	void init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right);
+	Glib::ustring      keyboard_name   (const std::string &kbcode) const;
+	const KeyboardMap &keyboard_map    (const std::string &kbcode) const;
+	const AreaMap     &default_area_map(const std::string &kbcode) const;
 
 private:
-	std::set<Keycode> aux_init_kb_areas(const KeyvalList &src);
 
 	// Données membres
 	const std::string                          m_prefix_path;
 	const std::string                          m_config_path;
 	const std::string                          m_vccini_path;
+	const std::string                          m_my_kam_path;
 	const std::string                          m_kbmidx_path;
 	IniStruct                                  m_data_perso;
 	IniStruct                                  m_index_kbm;
+	AreaMap                                    m_kam_perso;
 	mutable std::map<std::string, KeyboardMap> m_proxy_kbm;
+	mutable std::map<std::string, AreaMap    > m_proxy_kam;
 };
 
 extern Params *gp;

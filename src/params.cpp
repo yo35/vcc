@@ -35,7 +35,8 @@ Params *gp;
 Params::Params(const std::string &prefix_path, const std::string &config_path) :
 	m_prefix_path(prefix_path),
 	m_config_path(config_path),
-	m_vccini_path(config_path + "/" EXECUTABLE_NAME ".ini"),
+	m_vccini_path(config_path + "/vcc.ini"),
+	m_my_kam_path(config_path + "/vcc.kam"),
 	m_kbmidx_path(prefix_path + "/" VCC_SHARE_RPATH "/keyboardmaps.ini")
 {
 	// Création du répertoire de configuration dans le dossier de l'utilisateur
@@ -64,49 +65,21 @@ Params::Params(const std::string &prefix_path, const std::string &config_path) :
 	// Lecture de l'index des fichiers KBM
 	m_index_kbm.load(m_kbmidx_path);
 
-	// Zones actives
-	KeyvalList    keyval_left ;
-	KeyvalList    keyval_right;
-	KeyvalList   *curr_area = 0;
-	std::string   path = prefix_path + "/" + VCC_SHARE_RPATH  + "/keymap.txt";
-	std::ifstream file;
-	file.open(path.c_str());
-	if(file.fail())
-		throw std::runtime_error(_("Unable to open the keyboard configuration file"));
-	while(!file.eof()) {
-		std::string line;
-		getline(file, line);
-
-		// Cas d'une ligne vide
-		if(line=="")
-			continue;
-
-		// Cas d'un changement de zone
-		if(line=="LEFT")
-			curr_area = &keyval_left;
-		else if(line=="RIGHT")
-			curr_area = &keyval_right;
-
-		// Autre cas : on s'attend à un nombre
-		else {
-			int nb = 0;
-			for(unsigned int k=0; k<line.length(); ++k) {
-				if(line[k]<'0' || line[k]>'9')
-					throw std::runtime_error(_("The keyboard configuration file is corrupted"));
-				nb = nb*10 + line[k] - '0';
-			}
-			if(curr_area==0)
-				throw std::runtime_error(_("The keyboard configuration file is corrupted"));
-			curr_area->push_back(nb);
-		}
+	// Lecture du fichier .kam de l'utilisateur s'il existe
+	// Sinon, on choisit par défaut le .kam associé au clavier courant
+	static Glib::RefPtr<Gio::File> kam_perso_file = Gio::File::create_for_path(m_my_kam_path);
+	if(kam_perso_file->query_exists()) {
+		m_kam_perso.load(m_my_kam_path);
 	}
-	file.close();
-	init_kb_areas(keyval_left, keyval_right);
+	else {
+		m_kam_perso = default_area_map(curr_keyboard());
+	}
 }
 
 // Destructeur
 Params::~Params() {
 	m_data_perso.save(m_vccini_path);
+	m_kam_perso.save (m_my_kam_path);
 }
 
 // Répertoire VCC_TOP
@@ -183,6 +156,16 @@ void Params::set_curr_keyboard(const std::string &src) {
 	m_data_perso.set_data("Keyboard", "KBM", src);
 }
 
+// Zones préférées sur le clavier (lecture)
+const AreaMap &Params::kam_perso() const {
+	return m_kam_perso;
+}
+
+// Zones préférées sur le clavier (lecture)
+void Params::set_kam_perso(const AreaMap &src) {
+	m_kam_perso = src;
+}
+
 // Liste des codes claviers disponibles
 std::set<std::string> Params::keyboards() const {
 	return m_index_kbm.sections();
@@ -204,31 +187,22 @@ const KeyboardMap &Params::keyboard_map(const std::string &kbcode) const {
 		std::string kbm_filename = m_index_kbm.get_data(kbcode, "File", "");
 		if(kbm_filename=="") {
 			throw std::runtime_error(Glib::ustring::compose(
-				_("Unable to retrieve the filename of keyboard %1"), kbcode));
+				_("Unable to retrieve the name of the layout file for keyboard %1"), kbcode));
 		}
 		m_proxy_kbm[kbcode].load(m_prefix_path + "/" VCC_SHARE_RPATH "/" + kbm_filename);
 	}
 	return m_proxy_kbm[kbcode];
 }
 
-void Params::init_kb_areas(const KeyvalList &area_left, const KeyvalList &area_right) {
-
-	// Chargement des listes de touches gauches et droites
-	key_area[LEFT ] = aux_init_kb_areas(area_left );
-	key_area[RIGHT] = aux_init_kb_areas(area_right);
-
-	// On vérifie que l'intersection des deux ensembles est vide
-	std::set<Keycode> area_both;
-	area_both.insert(key_area[LEFT ].begin(), key_area[LEFT ].end());
-	area_both.insert(key_area[RIGHT].begin(), key_area[RIGHT].end());
-	//assert(area_both.size()==key_area[LEFT].size()+key_area[RIGHT].size());
-}
-
-std::set<Keycode> Params::aux_init_kb_areas(const KeyvalList &src) {
-	std::set<Keycode> retval;
-	for(KeyvalList::const_iterator it=src.begin(); it!=src.end(); ++it) {
-		KeycodeList keycodes = keyval_to_keycodes(*it);
-		retval.insert(keycodes.begin(), keycodes.end());
+// Régions définies par défaut
+const AreaMap &Params::default_area_map(const std::string &kbcode) const {
+	if(m_proxy_kam.find(kbcode)==m_proxy_kam.end()) {
+		std::string kam_filename = m_index_kbm.get_data(kbcode, "Default_areas", "");
+		if(kam_filename=="") {
+			throw std::runtime_error(Glib::ustring::compose(
+				_("Unable to retrieve the name of the default area file for keyboard %1"), kbcode));
+		}
+		m_proxy_kam[kbcode].load(m_prefix_path + "/" VCC_SHARE_RPATH "/" + kam_filename);
 	}
-	return retval;
+	return m_proxy_kam[kbcode];
 }

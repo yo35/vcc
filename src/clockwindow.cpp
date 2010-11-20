@@ -24,7 +24,6 @@
 #include "vccaboutdialog.h"
 #include "timecontroldialog.h"
 #include "preferencesdialog.h"
-#include "keys.h"
 #include "params.h"
 #include <config.h>
 #include <translation.h>
@@ -49,6 +48,11 @@ ClockWindow::ClockWindow() : Gtk::Window(), reinit_delayer(2),
 	reinit_delayer.set_delay(gp->reinit_delay());
 	reinit_delayer.signal_occurred().connect(
 		sigc::mem_fun(*this, &ClockWindow::on_reset_triggered_from_kb));
+
+	// Initialisation des objets de gestion de clavier
+	curr_kbm = &gp->keyboard_map(gp->curr_keyboard());
+	curr_kam = &gp->kam_perso();
+	init_reinit_triggers();
 
 	// Divers
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
@@ -140,30 +144,16 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 	*/
 
 	// Réinitialisation par le clavier
-	KeyCombination raz_keys = gp->reinit_keys();
-	if(raz_keys==DOUBLE_CTRL) {
-		if(event->keyval==GDK_Control_L) reinit_delayer.trigger(0);
-		if(event->keyval==GDK_Control_R) reinit_delayer.trigger(1);
-	}
-	else if(raz_keys==DOUBLE_MAJ) {
-		if(event->keyval==GDK_Shift_L) reinit_delayer.trigger(0);
-		if(event->keyval==GDK_Shift_R) reinit_delayer.trigger(1);
-	}
-	else
-		assert(false);
+	if(event->keyval==reinit_trigger[0]) reinit_delayer.trigger(0);
+	if(event->keyval==reinit_trigger[1]) reinit_delayer.trigger(1);
 
-	// Décodage
-	Keycode code = event->hardware_keycode;
-	BoolSideArray test_area;
-	for(Side::iterator k=Side::first(); k.valid(); ++k) {
-		test_area[*k] = (gp->key_area[*k].find(code) != gp->key_area[*k].end());
-	}
-
-	// On appelle la fonction qvb
-	assert(!(test_area[LEFT] && test_area[RIGHT]));
-	for(Side::iterator k=Side::first(); k.valid(); ++k) {
-		if(test_area[*k]) {
-			on_clock_button_clicked(*k);
+	// Détection de zone
+	assert(curr_kbm!=0 && curr_kam!=0);
+	int physical_key = curr_kbm->get_key(event->keyval);
+	if(physical_key>=0) {
+		assert(physical_key<curr_kam->nb_keys());
+		if(curr_kam->is_affected(physical_key)) {
+			on_clock_button_clicked(curr_kam->side(physical_key));
 		}
 	}
 	return true;
@@ -172,18 +162,8 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 bool ClockWindow::on_key_release_event(GdkEventKey* event) {
 
 	// Réinitialisation par le clavier
-	KeyCombination raz_keys = gp->reinit_keys();
-	if(raz_keys==DOUBLE_CTRL) {
-		if(event->keyval==GDK_Control_L) reinit_delayer.cancel_trigger(0);
-		if(event->keyval==GDK_Control_R) reinit_delayer.cancel_trigger(1);
-	}
-	else if(raz_keys==DOUBLE_MAJ) {
-		if(event->keyval==GDK_Shift_L) reinit_delayer.cancel_trigger(0);
-		if(event->keyval==GDK_Shift_R) reinit_delayer.cancel_trigger(1);
-	}
-	else
-		assert(false);
-
+	if(event->keyval==reinit_trigger[0]) reinit_delayer.cancel_trigger(0);
+	if(event->keyval==reinit_trigger[1]) reinit_delayer.cancel_trigger(1);
 	return true;
 }
 
@@ -230,6 +210,7 @@ void ClockWindow::on_prefs_clicked() {
 		return;
 	dialog.save_params();
 	reinit_delayer.set_delay(gp->reinit_delay());
+	init_reinit_triggers();
 }
 
 void ClockWindow::on_about_clicked() {
@@ -249,4 +230,18 @@ void ClockWindow::on_clock_button_clicked(const Side &side) {
 
 void ClockWindow::on_reset_triggered_from_kb() {
 	core.reset_timers();
+}
+
+void ClockWindow::init_reinit_triggers() {
+	KeyCombination kc = gp->reinit_keys();
+	if(kc==DOUBLE_CTRL) {
+		reinit_trigger[0] = GDK_Control_L;
+		reinit_trigger[1] = GDK_Control_R;
+	}
+	else if(kc==DOUBLE_MAJ) {
+		reinit_trigger[0] = GDK_Shift_L;
+		reinit_trigger[1] = GDK_Shift_R;
+	}
+	else
+		assert(false);
 }

@@ -104,7 +104,7 @@ void DataFileIn::parse_line() {
 		if(!(curr_str_line.empty() || curr_str_line.at(0)=='#'))
 			break;
 	}
-	if(m_file.eof()) {
+	if(m_file.eof() && curr_str_line.empty()) {
 		m_eof = true;
 		return;
 	}

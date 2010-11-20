@@ -29,10 +29,13 @@
 #include <gtkmm/separatortoolitem.h>
 #include <gtkmm/toolbar.h>
 #include <gtkmm/image.h>
+#include "icon.h"
 #include "dialwidget.h"
 #include "bitimer.h"
-#include "icon.h"
 #include "eventdelayer.h"
+#include "keys.h"
+#include "keyboardmap.h"
+#include "areamap.h"
 
 class ClockWindow : public Gtk::Window {
 
@@ -55,10 +58,16 @@ private:
 	void on_about_clicked();
 	void on_clock_button_clicked(const Side &side);
 	void on_reset_triggered_from_kb();
+	void init_reinit_triggers();
 
 	// Données membres
-	BiTimer                     core;
-	EventDelayer                reinit_delayer;
+	BiTimer            core;
+	EventDelayer       reinit_delayer;
+	Keyval             reinit_trigger[2];
+	const KeyboardMap *curr_kbm;
+	const AreaMap     *curr_kam;
+
+	// Widgets
 	EnumArray<Side, DialWidget> dial;
 	Gtk::Toolbar                toolbar;
 	Icon                        ico_reset;
