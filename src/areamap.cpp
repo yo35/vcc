@@ -75,6 +75,7 @@ void AreaMap::save(const std::string &path) const {
 	file.open();
 
 	// Boucle d'enregistrement
+	file.put(1            );
 	file.put(m_data.size());
 	for(unsigned idx=0; idx<m_data.size(); ++idx) {
 		if(m_data[idx].affected)
@@ -93,6 +94,13 @@ void AreaMap::load(const std::string &path) {
 	// Ouverture du fichier source
 	DataFileIn file(path);
 	file.open();
+
+	// Numéro de version
+	int no_version = file.get();
+	if(no_version!=1) {
+		throw std::runtime_error(Glib::ustring::compose(
+			_("The version (%1) of the area map file %2 is not supported."), no_version, path));
+	}
 
 	// Nombre de touches
 	int sz = file.get();

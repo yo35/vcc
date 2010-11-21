@@ -60,6 +60,7 @@ void KeyboardMap::save(const std::string &path) const {
 	file.open();
 
 	// En-tête du fichier
+	file.put(1                      );
 	file.put(m_nb_lines             );
 	file.put(m_default_width        );
 	file.put(m_line_width_with_kp   );
@@ -95,6 +96,13 @@ void KeyboardMap::load(const std::string &path) {
 	// Ouverture du fichier source
 	DataFileIn file(path);
 	file.open();
+
+	// Numéro de version
+	int no_version = file.get();
+	if(no_version!=1) {
+		throw std::runtime_error(Glib::ustring::compose(
+			_("The version (%1) of the keyboard map file %2 is not supported."), no_version, path));
+	}
 
 	// Ligne d'en-tête
 	m_nb_lines              = file.get();
