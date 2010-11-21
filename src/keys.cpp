@@ -111,6 +111,9 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 	// Autres
 	switch(val) {
 
+		// Caractère nul
+		case 0: return _("Null\ncharacter");
+
 		// Symboles ASCII imprimables
 		case GDK_exclam      : return "!" ;
 		case GDK_quotedbl    : return "\"";
