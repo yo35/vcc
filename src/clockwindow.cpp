@@ -36,13 +36,18 @@
 	#include <winkeyhookdll.h>
 #endif
 
-ClockWindow::ClockWindow() : Gtk::Window(), reinit_delayer(2),
+ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	ico_reset(gp->prefix_path() + "/" VCC_SHARE_RPATH "/reset.png"),
 	ico_pause(gp->prefix_path() + "/" VCC_SHARE_RPATH "/pause.png"),
 	ico_tctrl(gp->prefix_path() + "/" VCC_SHARE_RPATH "/tctrl.png")
 {
 	// Initialisation de la pendule
 	core.set_time_control(gp->initial_time_control());
+
+	// Initialisation du retardateur pour l'affichage de la fenêtre de débug
+	debug_delayer.set_delay(5*1000);
+	debug_delayer.signal_occurred().connect(
+		sigc::mem_fun(*this, &ClockWindow::on_debug_delayer_elapsed));
 
 	// Initialisation du retardateur pour la réinitialisation de la pendule par le clavier
 	reinit_delayer.set_delay(gp->reinit_delay());
@@ -122,6 +127,11 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 	if(event->keyval==reinit_trigger[0]) reinit_delayer.trigger(0);
 	if(event->keyval==reinit_trigger[1]) reinit_delayer.trigger(1);
 
+	// Fenêtre de débug
+	if(event->keyval==GDK_d || event->keyval==GDK_D) debug_delayer.trigger(0);
+	if(event->keyval==GDK_b || event->keyval==GDK_B) debug_delayer.trigger(1);
+	if(event->keyval==GDK_g || event->keyval==GDK_G) debug_delayer.trigger(2);
+
 	// Détection de zone
 	assert(curr_kbm!=0 && curr_kam!=0);
 	int physical_key = curr_kbm->get_key(event->keyval);
@@ -139,6 +149,11 @@ bool ClockWindow::on_key_release_event(GdkEventKey* event) {
 	// Réinitialisation par le clavier
 	if(event->keyval==reinit_trigger[0]) reinit_delayer.cancel_trigger(0);
 	if(event->keyval==reinit_trigger[1]) reinit_delayer.cancel_trigger(1);
+
+	// Fenêtre de débug
+	if(event->keyval==GDK_d || event->keyval==GDK_D) debug_delayer.cancel_trigger(0);
+	if(event->keyval==GDK_b || event->keyval==GDK_B) debug_delayer.cancel_trigger(1);
+	if(event->keyval==GDK_g || event->keyval==GDK_G) debug_delayer.cancel_trigger(2);
 	return true;
 }
 
@@ -207,6 +222,10 @@ void ClockWindow::on_clock_button_clicked(const Side &side) {
 
 void ClockWindow::on_reset_triggered_from_kb() {
 	core.reset_timers();
+}
+
+void ClockWindow::on_debug_delayer_elapsed() {
+	// TODO
 }
 
 void ClockWindow::init_reinit_triggers() {

@@ -58,10 +58,12 @@ private:
 	void on_about_clicked();
 	void on_clock_button_clicked(const Side &side);
 	void on_reset_triggered_from_kb();
+	void on_debug_delayer_elapsed();
 	void init_reinit_triggers();
 
 	// Données membres
 	BiTimer            core;
+	EventDelayer       debug_delayer;
 	EventDelayer       reinit_delayer;
 	Keyval             reinit_trigger[2];
 	const KeyboardMap *curr_kbm;
