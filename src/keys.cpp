@@ -146,26 +146,26 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_asciitilde  : return "~" ;
 
 		// Touches de contrôle non-symétriques sur le clavier principal
-		case GDK_space           : return _("Space"     );
-		case GDK_Caps_Lock       : return _("Caps lock" );
-		case GDK_Shift_Lock      : return _("Shift lock");
-		case GDK_Escape          : return _("Esc"       );
-		case GDK_Return          : return _("Return"    );
-		case GDK_BackSpace       : return _("Backspace" );
-		case GDK_Tab             : return _("Tabulation");
-		case GDK_ISO_Level3_Shift: return _("Alt Gr"    );
+		case GDK_space           : return _("Space"      );
+		case GDK_Caps_Lock       : return _("Caps\nlock" );
+		case GDK_Shift_Lock      : return _("Shift\nlock");
+		case GDK_Escape          : return _("Esc"        );
+		case GDK_Return          : return _("Return"     );
+		case GDK_BackSpace       : return _("Backspace"  );
+		case GDK_Tab             : return _("Tabs"       );
+		case GDK_ISO_Level3_Shift: return _("Alt Gr"     );
 
 		// Touches de navigation
-		case GDK_Delete   : case GDK_KP_Delete   : return _("Del"      );
-		case GDK_Insert   : case GDK_KP_Insert   : return _("Ins"      );
-		case GDK_Page_Up  : case GDK_KP_Page_Up  : return _("Page up"  );
-		case GDK_Page_Down: case GDK_KP_Page_Down: return _("Page down");
-		case GDK_Home     : case GDK_KP_Home     : return _("Home"     );
-		case GDK_End      : case GDK_KP_End      : return _("End"      );
-		case GDK_Left     : case GDK_KP_Left     : return _("Left"     );
-		case GDK_Right    : case GDK_KP_Right    : return _("Right"    );
-		case GDK_Up       : case GDK_KP_Up       : return _("Up"       );
-		case GDK_Down     : case GDK_KP_Down     : return _("Down"     );
+		case GDK_Delete   : case GDK_KP_Delete   : return _("Del"       );
+		case GDK_Insert   : case GDK_KP_Insert   : return _("Ins"       );
+		case GDK_Page_Up  : case GDK_KP_Page_Up  : return _("Page\nup"  );
+		case GDK_Page_Down: case GDK_KP_Page_Down: return _("Page\ndown");
+		case GDK_Home     : case GDK_KP_Home     : return _("Home"      );
+		case GDK_End      : case GDK_KP_End      : return _("End"       );
+		case GDK_Left     : case GDK_KP_Left     : return _("Left"      );
+		case GDK_Right    : case GDK_KP_Right    : return _("Right"     );
+		case GDK_Up       : case GDK_KP_Up       : return _("Up"        );
+		case GDK_Down     : case GDK_KP_Down     : return _("Down"      );
 
 		// Touche de contrôle spéciales
 		case GDK_3270_PrintScreen: return _("Print screen");
@@ -175,12 +175,12 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		// Touches de contrôle symétriques
 		#define  LEFT_KEY_NAME(name) GDK_ ## name ## _L
 		#define RIGHT_KEY_NAME(name) GDK_ ## name ## _R
-		case LEFT_KEY_NAME(Shift  ): case RIGHT_KEY_NAME(Shift  ): return _("Shift"  );
-		case LEFT_KEY_NAME(Control): case RIGHT_KEY_NAME(Control): return _("Control");
-		case LEFT_KEY_NAME(Alt    ): case RIGHT_KEY_NAME(Alt    ): return _("Alt"    );
-		case LEFT_KEY_NAME(Meta   ): case RIGHT_KEY_NAME(Meta   ): return _("Meta"   );
-		case LEFT_KEY_NAME(Super  ): case RIGHT_KEY_NAME(Super  ): return _("Super"  );
-		case LEFT_KEY_NAME(Hyper  ): case RIGHT_KEY_NAME(Hyper  ): return _("Hyper"  );
+		case LEFT_KEY_NAME(Shift  ): case RIGHT_KEY_NAME(Shift  ): return _("Shift");
+		case LEFT_KEY_NAME(Control): case RIGHT_KEY_NAME(Control): return _("Ctrl" );
+		case LEFT_KEY_NAME(Alt    ): case RIGHT_KEY_NAME(Alt    ): return _("Alt"  );
+		case LEFT_KEY_NAME(Meta   ): case RIGHT_KEY_NAME(Meta   ): return _("Meta" );
+		case LEFT_KEY_NAME(Super  ): case RIGHT_KEY_NAME(Super  ): return _("Super");
+		case LEFT_KEY_NAME(Hyper  ): case RIGHT_KEY_NAME(Hyper  ): return _("Hyper");
 
 		// Pavé numérique
 		case GDK_KP_0       : return "0";
@@ -198,11 +198,11 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_KP_Multiply: return "*";
 		case GDK_KP_Divide  : return "/";
 		case GDK_KP_Begin   : return "" ;
-		case GDK_KP_Enter   : return _("Return"  );
-		case GDK_Num_Lock   : return _("Num lock");
+		case GDK_KP_Enter   : return _("Return"   );
+		case GDK_Num_Lock   : return _("Num\nlock");
 
 		// Caractères ISO 8859 (de 0xA0 à 0xFF)
-		case GDK_nobreakspace  : return _("No break space");
+		case GDK_nobreakspace  : return _("No break\nspace");
 		case GDK_exclamdown    : return "¡";
 		case GDK_cent          : return "¢";
 		case GDK_sterling      : return "£";

@@ -301,11 +301,21 @@ void KeyboardMapWidget::draw_key_text(unsigned int idx) {
 		}
 	}
 
+	// Coupures de ligne
+	if(nb_txts==1) {
+		size_t pos_coupure = txts[0].find("\n");
+		if(pos_coupure!=Glib::ustring::npos) {
+			txts[1] = txts[0].substr(0, pos_coupure);
+			txts[0] = txts[0].substr(pos_coupure+1);
+			nb_txts = 2;
+		}
+	}
+
 	// Écrit le texte
 	if(nb_txts==0)
 		return;
 	cr->set_source_rgb(0.0, 0.0, 0.0);
-	double big_font_size   = 0.8;
+	double big_font_size   = 0.7;
 	double small_font_size = 0.4;
 
 	// Si un seul texte
@@ -316,22 +326,22 @@ void KeyboardMapWidget::draw_key_text(unsigned int idx) {
 
 	// Si deux textes
 	else if(nb_txts==2) {
-		make_text(xl+big_pad, xr-big_pad, ym, yb, txts[0], big_font_size);
+		make_text(xl+big_pad, xr-big_pad, ym, yb-sml_pad, txts[0], big_font_size);
 		cr->fill_preserve();
-		make_text(xl+big_pad, xr-big_pad, yt, ym, txts[1], big_font_size);
+		make_text(xl+big_pad, xr-big_pad, yt+sml_pad, ym, txts[1], big_font_size);
 		cr->fill_preserve();
 	}
 
 	// Si 3 ou 4 textes
 	else {
-		make_text(xl+sml_pad, xm-sml_pad, ym, yb, txts[0], big_font_size);
+		make_text(xl+sml_pad, xm, ym, yb-sml_pad, txts[0], big_font_size);
 		cr->fill_preserve();
-		make_text(xl+sml_pad, xm-sml_pad, yt, ym, txts[1], big_font_size);
+		make_text(xl+sml_pad, xm, yt+sml_pad, ym, txts[1], big_font_size);
 		cr->fill_preserve();
-		make_text(xm+sml_pad, xr-sml_pad, ym, yb, txts[2], big_font_size);
+		make_text(xm, xr-sml_pad, ym, yb-sml_pad, txts[2], big_font_size);
 		cr->fill_preserve();
 		if(nb_txts>=4) {
-			make_text(xm+sml_pad, xr-sml_pad, yt, ym, txts[3], big_font_size);
+			make_text(xm, xr-sml_pad, yt+sml_pad, ym, txts[3], big_font_size);
 			cr->fill_preserve();
 		}
 	}
