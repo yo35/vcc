@@ -251,8 +251,8 @@ bool KeyboardMapWidget::on_expose_event(GdkEventExpose *event) {
 	delta_y = (height + obj_height*pseudo_scale) / 2.0 + border_y;
 	margin  = 0.007*min(height, width);
 	radius  = 0.02 *min(height, width);
-	padding = 0.03 *min(height, width);
-	best_sz = 0.4;
+	big_pad = 0.03 *min(height, width);
+	sml_pad = 0.02 *min(height, width);
 
 	// Touches
 	for(unsigned idx=0; idx<m_kbm->keys().size(); ++idx) {
@@ -281,12 +281,91 @@ void KeyboardMapWidget::draw_key_text(unsigned int idx) {
 		}
 	}
 
+	// Coordonnées de la touche
+	double xl = x_conv(pos_on_line             );
+	double xr = x_conv(pos_on_line+larger_width);
+	double yb = y_conv(no_larger_line          );
+	double yt = y_conv(no_larger_line+1        );
+	double xm = (xl+xr) / 2.0;
+	double ym = (yt+yb) / 2.0;
+
+	// Texte à écrire
+	Glib::ustring txts[4];
+	int nb_txts = 0;
+	for(int k=0; k<m_kbm->keys()[idx].nb_keyvals(); ++k) {
+		if(m_kbm->keys()[idx].print(k)) {
+			txts[nb_txts] = keyval_to_symbol(m_kbm->keys()[idx].keyval(k));
+			++nb_txts;
+			if(nb_txts==4)
+				break;
+		}
+	}
+
 	// Écrit le texte
-	assert(m_kbm->keys()[idx].nb_keyvals()!=0);
-	Glib::ustring txt = keyval_to_symbol(m_kbm->keys()[idx].keyval(0));
-	make_text(pos_on_line, no_larger_line, larger_width, 1, txt);
+	if(nb_txts==0)
+		return;
 	cr->set_source_rgb(0.0, 0.0, 0.0);
-	cr->fill_preserve();
+	double big_font_size   = 0.8;
+	double small_font_size = 0.4;
+
+	// Si un seul texte
+	if(nb_txts==1) {
+		make_text(xl+big_pad, xr-big_pad, yt, yb, txts[0], small_font_size);
+		cr->fill_preserve();
+	}
+
+	// Si deux textes
+	else if(nb_txts==2) {
+		make_text(xl+big_pad, xr-big_pad, ym, yb, txts[0], big_font_size);
+		cr->fill_preserve();
+		make_text(xl+big_pad, xr-big_pad, yt, ym, txts[1], big_font_size);
+		cr->fill_preserve();
+	}
+
+	// Si 3 ou 4 textes
+	else {
+		make_text(xl+sml_pad, xm-sml_pad, ym, yb, txts[0], big_font_size);
+		cr->fill_preserve();
+		make_text(xl+sml_pad, xm-sml_pad, yt, ym, txts[1], big_font_size);
+		cr->fill_preserve();
+		make_text(xm+sml_pad, xr-sml_pad, ym, yb, txts[2], big_font_size);
+		cr->fill_preserve();
+		if(nb_txts>=4) {
+			make_text(xm+sml_pad, xr-sml_pad, yt, ym, txts[3], big_font_size);
+			cr->fill_preserve();
+		}
+	}
+}
+
+// Dessine un texte centré dans le rectangle passé en paramètre
+void KeyboardMapWidget::make_text(double xl, double xr, double yt, double yb,
+	const Glib::ustring &txt, double relative_font_size)
+{
+	cr->begin_new_path();
+
+	// Taille de la police
+	double w_box     = xr-xl;
+	double h_box     = yb-yt;
+	double font_size = relative_font_size * h_box;
+	cr->set_font_size(font_size);
+	Cairo::TextExtents te;
+	cr->get_text_extents(txt, te);
+	if(te.width > w_box) {
+		font_size = font_size * w_box / te.width;
+		cr->set_font_size(font_size);
+		cr->get_text_extents(txt, te);
+	}
+
+	// Centrage vertical
+	Cairo::TextExtents te_model;
+	cr->get_text_extents("M", te_model);
+
+	// Dessin
+	double delta_x_box = (w_box - te      .width )/2.0;
+	double delta_y_box = (h_box + te_model.height)/2.0;
+	cr->begin_new_path();
+	cr->move_to(xl+delta_x_box, yt+delta_y_box);
+	cr->text_path(txt);
 }
 
 // Dessine la touche sans le texte
@@ -342,41 +421,6 @@ void KeyboardMapWidget::draw_key_shape(unsigned int idx) {
 		);
 	}
 	cr->fill_preserve();
-}
-
-// Dessine un texte centré dans le rectangle passé en paramètre
-void KeyboardMapWidget::make_text(int x0, int y0, int dx, int dy, const Glib::ustring &txt) {
-	cr->begin_new_path();
-
-	// Boîte englobante max du texte
-	double xl = x_conv(x0)    + padding;
-	double xr = x_conv(x0+dx) - padding;
-	double yb = y_conv(y0)   ;
-	double yt = y_conv(y0+dy);
-
-	// Taille de la police
-	double w_box     = xr-xl;
-	double h_box     = yb-yt;
-	double font_size = best_sz * h_box;
-	cr->set_font_size(font_size);
-	Cairo::TextExtents te;
-	cr->get_text_extents(txt, te);
-	if(te.width > w_box) {
-		font_size = font_size * w_box / te.width;
-		cr->set_font_size(font_size);
-		cr->get_text_extents(txt, te);
-	}
-
-	// Centrage vertical
-	Cairo::TextExtents te_model;
-	cr->get_text_extents("M", te_model);
-
-	// Dessin
-	double delta_x_box = (w_box - te      .width )/2.0;
-	double delta_y_box = (h_box + te_model.height)/2.0;
-	cr->begin_new_path();
-	cr->move_to(xl+delta_x_box, yt+delta_y_box);
-	cr->text_path(txt);
 }
 
 // Dessine un rectangle échencré

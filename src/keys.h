@@ -59,6 +59,7 @@ public:
 	Keyval   keyval       (int idx) const;
 	KeyGroup group        (int idx) const;
 	KeyLevel level        (int idx) const;
+	bool     print        (int idx) const;
 
 	// Modifieurs
 	void set_bottom_line(int  src);
@@ -66,7 +67,7 @@ public:
 	void set_nb_lines   (int  src);
 	void set_nb_keyvals (int  src);
 	void set_geometry(int idx, int pos, int width);
-	void set_keyval  (int idx, Keyval keyval, KeyGroup group, KeyLevel level);
+	void set_keyval  (int idx, Keyval keyval, KeyGroup group, KeyLevel level, bool print);
 
 
 private:
@@ -82,6 +83,7 @@ private:
 		Keyval   keyval;
 		KeyGroup group ;
 		KeyLevel level ;
+		bool     print ;
 	} KeyValEx;
 
 	// Données membres

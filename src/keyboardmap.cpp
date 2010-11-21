@@ -69,7 +69,7 @@ void KeyboardMap::save(const std::string &path) const {
 	// Boucle d'écriture pour chaque touche
 	for(PhysicalKeyVector::const_iterator it=m_keys.begin(); it!=m_keys.end(); ++it) {
 		file.put(it->bottom_line());
-		file.put(it->in_kp      ());
+		file.put(it->in_kp      () ? 1 : 0);
 		file.put(it->nb_lines   ());
 		file.put(it->nb_keyvals ());
 		for(int i=0; i<it->nb_lines(); ++i) {
@@ -80,6 +80,7 @@ void KeyboardMap::save(const std::string &path) const {
 			file.put(it->keyval(i));
 			file.put(it->group (i));
 			file.put(it->level (i));
+			file.put(it->print (i) ? 1 : 0);
 		}
 	}
 
@@ -136,7 +137,8 @@ void KeyboardMap::load(const std::string &path) {
 			Keyval   curr_keyval = file.get();
 			KeyGroup curr_group  = file.get();
 			KeyLevel curr_level  = file.get();
-			m_keys[idx].set_keyval(i, curr_keyval, curr_group, curr_level);
+			bool     curr_print  = file.get()!=0;
+			m_keys[idx].set_keyval(i, curr_keyval, curr_group, curr_level, curr_print);
 		}
 	}
 

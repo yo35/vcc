@@ -41,7 +41,7 @@ public:
 	int nb_lines     ()             const;
   int default_width()             const;
   int line_width   (bool with_kp) const;
-	const PhysicalKeyVector &keys         () const;
+	const PhysicalKeyVector &keys() const;
 
 	// Détermine le numéro de la touche correspondant au keyval passé en paramètre
 	int get_key(Keyval keyval) const;

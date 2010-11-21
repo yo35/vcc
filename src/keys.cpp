@@ -39,6 +39,7 @@ int      PhysicalKey::width_on_line(int idx) const { return m_geometry [idx].wid
 Keyval   PhysicalKey::keyval       (int idx) const { return m_keyval_ex[idx].keyval; }
 KeyGroup PhysicalKey::group        (int idx) const { return m_keyval_ex[idx].group ; }
 KeyLevel PhysicalKey::level        (int idx) const { return m_keyval_ex[idx].level ; }
+bool     PhysicalKey::print        (int idx) const { return m_keyval_ex[idx].print ; }
 
 // Modifieurs
 void PhysicalKey::set_bottom_line(int src ) { m_bottom_line = src; }
@@ -49,10 +50,13 @@ void PhysicalKey::set_geometry(int idx, int pos, int width) {
 	m_geometry[idx].pos   = pos  ;
 	m_geometry[idx].width = width;
 }
-void PhysicalKey::set_keyval(int idx, Keyval keyval, KeyGroup group, KeyLevel level) {
+void PhysicalKey::set_keyval(int idx, Keyval keyval, KeyGroup group,
+	KeyLevel level, bool print)
+{
 	m_keyval_ex[idx].keyval = keyval;
 	m_keyval_ex[idx].group  = group ;
 	m_keyval_ex[idx].level  = level ;
+	m_keyval_ex[idx].print  = print ;
 }
 
 // Keycodes associés à 1 keyval
@@ -78,7 +82,7 @@ PhysicalKey keycode_to_keyvals(Keycode code) {
 	if(gdk_keymap_get_entries_for_keycode(NULL, code, &grouplevels, &keyvals, &n_entries)) {
 		retval.set_nb_keyvals(n_entries);
 		for(int k=0; k<n_entries; ++k) {
-			retval.set_keyval(k, keyvals[k], grouplevels[k].group, grouplevels[k].level);
+			retval.set_keyval(k, keyvals[k], grouplevels[k].group, grouplevels[k].level, true);
 		}
 		g_free(grouplevels);
 		g_free(keyvals    );
