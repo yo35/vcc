@@ -162,15 +162,15 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_Page_Down: case GDK_KP_Page_Down: return _("Page\ndown");
 		case GDK_Home     : case GDK_KP_Home     : return _("Home"      );
 		case GDK_End      : case GDK_KP_End      : return _("End"       );
-		case GDK_Left     : case GDK_KP_Left     : return _("Left"      );
-		case GDK_Right    : case GDK_KP_Right    : return _("Right"     );
-		case GDK_Up       : case GDK_KP_Up       : return _("Up"        );
-		case GDK_Down     : case GDK_KP_Down     : return _("Down"      );
+		case GDK_Left     : case GDK_KP_Left     : return "←";
+		case GDK_Right    : case GDK_KP_Right    : return "→";
+		case GDK_Up       : case GDK_KP_Up       : return "↑";
+		case GDK_Down     : case GDK_KP_Down     : return "↓";
 
 		// Touche de contrôle spéciales
-		case GDK_3270_PrintScreen: return _("Print screen");
-		case GDK_Scroll_Lock     : return _("Scroll lock" );
-		case GDK_Pause           : return _("Pause"       );
+		case GDK_3270_PrintScreen: return _("Print\nscreen");
+		case GDK_Scroll_Lock     : return _("Scroll\nlock" );
+		case GDK_Pause           : return _("Pause"        );
 
 		// Touches de contrôle symétriques
 		#define  LEFT_KEY_NAME(name) GDK_ ## name ## _L
