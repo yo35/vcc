@@ -83,6 +83,9 @@ public:
 
 private:
 
+	// Code clavier à utiliser par défaut
+	void init_default_kbm();
+
 	// Données membres
 	const std::string                          m_locale;
 	const std::string                          m_prefix_path;
@@ -92,6 +95,7 @@ private:
 	const std::string                          m_kbmidx_path;
 	IniStruct                                  m_data_perso;
 	IniStruct                                  m_index_kbm;
+	std::string                                m_default_kbm;
 	AreaMap                                    m_kam_perso;
 	mutable std::map<std::string, KeyboardMap> m_proxy_kbm;
 	mutable std::map<std::string, AreaMap    > m_proxy_kam;

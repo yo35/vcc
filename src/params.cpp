@@ -21,6 +21,7 @@
 
 
 #include "params.h"
+#include "strings.h"
 #include <config.h>
 #include <cassert>
 #include <fstream>
@@ -66,6 +67,9 @@ Params::Params(const std::string &prefix_path, const std::string &config_path,
 
 	// Lecture de l'index des fichiers KBM
 	m_index_kbm.load(m_kbmidx_path);
+
+	// Code clavier à utiliser par défaut
+	init_default_kbm();
 
 	// Lecture du fichier .kam de l'utilisateur s'il existe
 	// Sinon, on choisit par défaut le .kam associé au clavier courant
@@ -155,7 +159,12 @@ void Params::set_reinit_delay(int src) {
 
 // Modèle de clavier préféré (code) (lecture)
 std::string Params::curr_keyboard() const {
-	return m_data_perso.get_data("Keyboard", "KBM", "KBM_000");
+	return m_data_perso.get_data("Keyboard", "KBM", m_default_kbm);
+}
+
+// Modèle de clavier préféré (code) (écriture)
+void Params::set_curr_keyboard(const std::string &src) {
+	m_data_perso.set_data("Keyboard", "KBM", src);
 }
 
 // Affichage du pavé numérique (lecture)
@@ -166,11 +175,6 @@ bool Params::display_num_pad() const {
 // Affichage du pavé numérique (écriture)
 void Params::set_display_num_pad(bool src) {
 	m_data_perso.set_data("Keyboard", "Numeric_Keypad", src);
-}
-
-// Modèle de clavier préféré (code) (écriture)
-void Params::set_curr_keyboard(const std::string &src) {
-	m_data_perso.set_data("Keyboard", "KBM", src);
 }
 
 // Zones préférées sur le clavier (lecture)
@@ -222,4 +226,19 @@ const AreaMap &Params::default_area_map(const std::string &kbcode) const {
 		m_proxy_kam[kbcode].load(m_prefix_path + "/" VCC_SHARE_RPATH "/" + kam_filename);
 	}
 	return m_proxy_kam[kbcode];
+}
+
+// Code clavier à utiliser par défaut
+void Params::init_default_kbm() {
+	std::set<std::string> codes = m_index_kbm.sections();
+	for(std::set<std::string>::const_iterator it=codes.begin(); it!=codes.end(); ++it) {
+		std::list<std::string> curr_locales = split(m_index_kbm.get_data(*it, "Locales", ""), ',');
+		for(std::list<std::string>::const_iterator k=curr_locales.begin(); k!=curr_locales.end(); ++k) {
+			if(*k==m_locale) {
+				m_default_kbm = *it;
+				return;
+			}
+		}
+	}
+	m_default_kbm = "KBM_000";
 }
