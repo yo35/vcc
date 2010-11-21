@@ -98,13 +98,8 @@ std::string keyval_to_string(Keyval val) {
 // Nom "affichable" d'un keyval
 Glib::ustring keyval_to_symbol(Keyval val) {
 
-	// Lettres (majuscules et minuscules)
-	if((val>=GDK_a && val<=GDK_z) || (val>=GDK_A && val<=GDK_Z)) {
-		return keyval_to_string(val);
-	}
-
-	// Chiffres (pavé central et pavé numérique)
-	if((val>=GDK_0 && val<=GDK_9) || (val>=GDK_KP_0 && val<=GDK_KP_9)) {
+	// Caractères aplha-numérique usuels
+	if((val>=GDK_a && val<=GDK_z) || (val>=GDK_A && val<=GDK_Z) || (val>=GDK_0 && val<=GDK_9)) {
 		return keyval_to_string(val);
 	}
 
@@ -188,6 +183,16 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case LEFT_KEY_NAME(Hyper  ): case RIGHT_KEY_NAME(Hyper  ): return _("Hyper"  );
 
 		// Pavé numérique
+		case GDK_KP_0       : return "0";
+		case GDK_KP_1       : return "1";
+		case GDK_KP_2       : return "2";
+		case GDK_KP_3       : return "3";
+		case GDK_KP_4       : return "4";
+		case GDK_KP_5       : return "5";
+		case GDK_KP_6       : return "6";
+		case GDK_KP_7       : return "7";
+		case GDK_KP_8       : return "8";
+		case GDK_KP_9       : return "9";
 		case GDK_KP_Add     : return "+";
 		case GDK_KP_Subtract: return "-";
 		case GDK_KP_Multiply: return "*";
