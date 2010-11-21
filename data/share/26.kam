@@ -20,44 +20,37 @@
 ################################################################################
 
 
-[KBM_000]
-File          = default_qwerty.kbm
-Default_areas = 26.kam
-Name          = Default QWERTY
-Locales       =
+# En-tête
+1;26;
 
-[KBM_001]
-File          = default_qwertz.kbm
-Default_areas = 26.kam
-Name          = Default QWERTZ
-Locales       =
+# Ligne 0
+0;
+0;
+2;
+2;
+2;
+1;
+1;
 
-[KBM_002]
-File          = default_azerty.kbm
-Default_areas = 26.kam
-Name          = Default AZERTY
-Locales       =
+# Ligne 1
+0;
+0;
+0;
+2;
+2;
+2;
+1;
+1;
+1;
 
-[KBM_003]
-File          = us.kbm
-Default_areas = 104.kam
-Name          = US keyboard
-Locales       = en_US
-
-[KBM_004]
-File          = fr.kbm
-Default_areas = 105.kam
-Name          = Clavier français
-Locales       = fr_FR,fr_GF,fr_MQ,fr_GP,fr_RE,fr_PM,fr_YT,fr_MC,fr_AD
-
-[KBM_005]
-File          = be.kbm
-Default_areas = 105.kam
-Name          = Clavier belge
-Locales       = fr_BE
-
-[KBM_006]
-File          = ca.kbm
-Default_areas = 105.kam
-Name          = Clavier canadien multilingue
-Locales       = fr_CA
+# Ligne 2
+0;
+0;
+0;
+0;
+2;
+2;
+1;
+1;
+1;
+1;
