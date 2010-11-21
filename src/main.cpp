@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
 			throw std::runtime_error("Unable to retrieve the filename of the executable");
 		std::string exe_path = buff;
 		std::string prefix_path = Glib::path_get_dirname(exe_path)
-			+ "/" + VCC_BIN_RPATH_BACKWARD;
+			+ "/" VCC_BIN_RPATH_BACKWARD;
 	#else
 		std::string prefix_path = VCC_TOP;
 	#endif
