@@ -142,6 +142,7 @@ void PreferencesDialog::load_params() {
 
 	// Affichage du pavé numérique
 	display_kp.set_active(gp->display_num_pad());
+	on_display_kp_changed();
 
 	// Liste des claviers
 	std::set<std::string> keyboards = gp->keyboards();
