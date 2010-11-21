@@ -201,8 +201,8 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_KP_Multiply: return "*";
 		case GDK_KP_Divide  : return "/";
 		case GDK_KP_Begin   : return "" ;
-		case GDK_KP_Enter   : return _("Return"   );
-		case GDK_Num_Lock   : return _("Num\nlock");
+		case GDK_KP_Enter   : return _("Return"       );
+		case GDK_Num_Lock   : return _("Num\nlock"    );
 		case GDK_KP_Decimal : return _("Decimal\nmark");
 
 		// Caractères ISO 8859 (de 0xA0 à 0xFF)
