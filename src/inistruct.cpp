@@ -81,8 +81,8 @@ void IniStruct::load(const std::string &path) {
 				throw std::runtime_error(Glib::ustring::compose(
 					_("Unconsistency in the INI file %1 at line #%2"), path, curr_no_line));
 			}
-			Key   key = line.substr(0, pos_eq);
-			Value val = line.substr(pos_eq+1);
+			Key   key = trim(line.substr(0, pos_eq));
+			Value val = trim(line.substr(pos_eq+1));
 			if(!is_valid_key(key)) {
 				throw std::runtime_error(Glib::ustring::compose(
 					_("Unconsistency in the INI file %1 at line #%2"), path, curr_no_line));
