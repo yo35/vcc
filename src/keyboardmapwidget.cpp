@@ -302,12 +302,14 @@ void KeyboardMapWidget::draw_key_text(unsigned int idx) {
 	}
 
 	// Coupures de ligne
+	bool same_text = false;
 	if(nb_txts==1) {
 		size_t pos_coupure = txts[0].find("\n");
 		if(pos_coupure!=Glib::ustring::npos) {
-			txts[1] = txts[0].substr(0, pos_coupure);
-			txts[0] = txts[0].substr(pos_coupure+1);
-			nb_txts = 2;
+			txts[1]   = txts[0].substr(0, pos_coupure);
+			txts[0]   = txts[0].substr(pos_coupure+1);
+			nb_txts   = 2;
+			same_text = true;
 		}
 	}
 
@@ -317,56 +319,84 @@ void KeyboardMapWidget::draw_key_text(unsigned int idx) {
 	cr->set_source_rgb(0.0, 0.0, 0.0);
 	double big_font_size   = 0.7;
 	double small_font_size = 0.4;
+	double actual_size;
 
 	// Si un seul texte
 	if(nb_txts==1) {
-		make_text(xl+big_pad, xr-big_pad, yt, yb, txts[0], small_font_size);
+		actual_size = compute_text_size(xl+big_pad, xr-big_pad, yt, yb, txts[0], small_font_size);
+		make_text                      (xl+big_pad, xr-big_pad, yt, yb, txts[0], actual_size    );
 		cr->fill_preserve();
 	}
 
 	// Si deux textes
 	else if(nb_txts==2) {
-		make_text(xl+big_pad, xr-big_pad, ym, yb-sml_pad, txts[0], big_font_size);
-		cr->fill_preserve();
-		make_text(xl+big_pad, xr-big_pad, yt+sml_pad, ym, txts[1], big_font_size);
-		cr->fill_preserve();
+		if(same_text) {
+			double sz_bot = compute_text_size(xl+big_pad, xr-big_pad, ym, yb-sml_pad, txts[0], big_font_size);
+			double sz_top = compute_text_size(xl+big_pad, xr-big_pad, yt+sml_pad, ym, txts[1], big_font_size);
+			actual_size = min(sz_bot, sz_top);
+			make_text(xl+big_pad, xr-big_pad, ym, yb-sml_pad, txts[0], actual_size);
+			cr->fill_preserve();
+			make_text(xl+big_pad, xr-big_pad, yt+sml_pad, ym, txts[1], actual_size);
+			cr->fill_preserve();
+		}
+		else {
+			actual_size = compute_text_size(xl+big_pad, xr-big_pad, ym, yb-sml_pad, txts[0], big_font_size);
+			make_text                      (xl+big_pad, xr-big_pad, ym, yb-sml_pad, txts[0], actual_size  );
+			cr->fill_preserve();
+			actual_size = compute_text_size(xl+big_pad, xr-big_pad, yt+sml_pad, ym, txts[1], big_font_size);
+			make_text                      (xl+big_pad, xr-big_pad, yt+sml_pad, ym, txts[1], actual_size  );
+			cr->fill_preserve();
+		}
 	}
 
 	// Si 3 ou 4 textes
 	else {
-		make_text(xl+sml_pad, xm, ym, yb-sml_pad, txts[0], big_font_size);
+		actual_size = compute_text_size(xl+sml_pad, xm, ym, yb-sml_pad, txts[0], big_font_size);
+		make_text                      (xl+sml_pad, xm, ym, yb-sml_pad, txts[0], actual_size  );
 		cr->fill_preserve();
-		make_text(xl+sml_pad, xm, yt+sml_pad, ym, txts[1], big_font_size);
+		actual_size = compute_text_size(xl+sml_pad, xm, yt+sml_pad, ym, txts[1], big_font_size);
+		make_text                      (xl+sml_pad, xm, yt+sml_pad, ym, txts[1], actual_size  );
 		cr->fill_preserve();
-		make_text(xm, xr-sml_pad, ym, yb-sml_pad, txts[2], big_font_size);
+		actual_size = compute_text_size(xm, xr-sml_pad, ym, yb-sml_pad, txts[2], big_font_size);
+		make_text                      (xm, xr-sml_pad, ym, yb-sml_pad, txts[2], actual_size  );
 		cr->fill_preserve();
 		if(nb_txts>=4) {
-			make_text(xm, xr-sml_pad, yt+sml_pad, ym, txts[3], big_font_size);
+			actual_size = compute_text_size(xm, xr-sml_pad, yt+sml_pad, ym, txts[3], big_font_size);
+			make_text                      (xm, xr-sml_pad, yt+sml_pad, ym, txts[3], actual_size  );
 			cr->fill_preserve();
 		}
 	}
 }
 
-// Dessine un texte centré dans le rectangle passé en paramètre
-void KeyboardMapWidget::make_text(double xl, double xr, double yt, double yb,
-	const Glib::ustring &txt, double relative_font_size)
+// Calcule la taille d'un texte devant être écrit dans le rectangle passé en
+// paramètre
+double KeyboardMapWidget::compute_text_size(double xl, double xr, double yt, double yb,
+	const Glib::ustring &txt, double expected_relative_font_size)
 {
-	cr->begin_new_path();
-
-	// Taille de la police
 	double w_box     = xr-xl;
 	double h_box     = yb-yt;
-	double font_size = relative_font_size * h_box;
+	double font_size = expected_relative_font_size * h_box;
 	cr->set_font_size(font_size);
 	Cairo::TextExtents te;
 	cr->get_text_extents(txt, te);
-	if(te.width > w_box) {
+	if(te.width > w_box)
 		font_size = font_size * w_box / te.width;
-		cr->set_font_size(font_size);
-		cr->get_text_extents(txt, te);
-	}
+	return font_size;
+}
 
-	// Centrage vertical
+// Dessine un texte centré dans le rectangle passé en paramètre
+void KeyboardMapWidget::make_text(double xl, double xr, double yt, double yb,
+	const Glib::ustring &txt, double font_size)
+{
+	// Initialisation
+	cr->begin_new_path();
+	cr->set_font_size(font_size);
+
+	// Taille du texte
+	double w_box = xr-xl;
+	double h_box = yb-yt;
+	Cairo::TextExtents te;
+	cr->get_text_extents(txt, te);
 	Cairo::TextExtents te_model;
 	cr->get_text_extents("M", te_model);
 

@@ -74,10 +74,12 @@ private:
 	int lookup_key_at(double x, double y) const;
 
 	// Routines de dessin
-	void draw_key_shape(unsigned int idx);
 	void draw_key_text (unsigned int idx);
+	double compute_text_size(double xl, double xr, double yt, double yb,
+		const Glib::ustring &txt, double expected_relative_font_size);
 	void make_text(double xl, double xr, double yt, double yb,
-		const Glib::ustring &txt, double relative_font_size);
+		const Glib::ustring &txt, double font_size);
+	void draw_key_shape(unsigned int idx);
 	void make_rectangle(int x0, int y0, int dx, int dy);
 	void make_polygone(const std::list<int> &xs, const std::list<int> &ys);
 	void small_arc(double xc, double yc, double r0, double angle1, double angle2);
