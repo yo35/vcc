@@ -32,7 +32,9 @@
 
 Params *gp;
 
-Params::Params(const std::string &prefix_path, const std::string &config_path) :
+Params::Params(const std::string &prefix_path, const std::string &config_path,
+	const std::string &locale) :
+	m_locale     (locale     ),
 	m_prefix_path(prefix_path),
 	m_config_path(config_path),
 	m_vccini_path(config_path + "/vcc.ini"),
@@ -80,6 +82,11 @@ Params::Params(const std::string &prefix_path, const std::string &config_path) :
 Params::~Params() {
 	m_data_perso.save(m_vccini_path);
 	m_kam_perso.save (m_my_kam_path);
+}
+
+// Locale courante
+const std::string &Params::locale() const {
+	return m_locale;
 }
 
 // Répertoire VCC_TOP

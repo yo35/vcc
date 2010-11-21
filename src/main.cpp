@@ -66,8 +66,15 @@ int main(int argc, char *argv[]) {
 	bind_textdomain_codeset(PROJECT_NAME, "UTF-8");
 	textdomain(PROJECT_NAME);
 
+	// Détermination de la locale
+	std::string locale = setlocale(LC_ALL, 0);
+	size_t pos_sep = locale.find(".");
+	if(pos_sep!=std::string::npos) {
+		locale = locale.substr(0, pos_sep);
+	}
+
 	// Chargement des paramètres
-	gp = new Params(prefix_path, config_path);
+	gp = new Params(prefix_path, config_path, locale);
 
 	// Icône de l'application
 	std::list<std::string> icon_sizes = split(ICON_SIZES, ';');

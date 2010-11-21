@@ -37,8 +37,11 @@ class Params {
 public:
 
 	// Constructeur
-	Params(const std::string &prefix_path, const std::string &config_path);
+	Params(const std::string &prefix_path, const std::string &config_path, const std::string &locale);
 	~Params();
+
+	// Locale courante
+	const std::string &locale() const;
 
 	// Pointe vers les répertoires de base
 	const std::string &prefix_path() const;
@@ -81,6 +84,7 @@ public:
 private:
 
 	// Données membres
+	const std::string                          m_locale;
 	const std::string                          m_prefix_path;
 	const std::string                          m_config_path;
 	const std::string                          m_vccini_path;
