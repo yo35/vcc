@@ -116,32 +116,7 @@ ClockWindow::ClockWindow() : Gtk::Window(), reinit_delayer(2),
 	dial[LEFT].grab_focus();
 }
 
-/*
-#include <fstream>
-#include <iostream>
-#include "keyboardmap.h"
-*/
-
 bool ClockWindow::on_key_press_event(GdkEventKey* event) {
-
-	/*
-	std::string curr_file = "./curr_line_0.kbm";
-	int curr_no_line = 0;
-
-	static std::ofstream file;
-	if(!file.is_open())
-		file.open(curr_file.c_str());
-
-	static int curr_no = 0;
-	file << curr_no_line << ";1;";
-	PhysicalKey data = keycode_to_keyvals(event->hardware_keycode);
-	file << data.nb_keyvals() << ";" << curr_no*100 << ";100;";
-	++curr_no;
-	for(int k=0; k<data.nb_keyvals(); ++k) {
-		file << data.keyval(k) << ";" << data.group(k) << ";" << data.level(k) << ";";
-	}
-	file << std::endl;
-	*/
 
 	// Réinitialisation par le clavier
 	if(event->keyval==reinit_trigger[0]) reinit_delayer.trigger(0);
