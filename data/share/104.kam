@@ -23,118 +23,129 @@
 # En-tête
 1;104;
 
-# Ligne 0
-0;  # Ctrl gauche
-0;  # Super gauche
-0;  # Alt
-2;
-1;  # Alt Gr (ISO level3 shift)
-1;  # Super droite
-1;  # Menu
-1;  # Ctrl droite
-1;  # Flèche gauche
-1;
-1;  # Flèche droite
-2;  # KP
-2;  # KP
-2;  # KP
 
-# Ligne 1
-0;  # MAJ gauche
-0;  # W
-0;
-0;
-0;  # V
-2;
-2;
-2;
-1;  # Point-vrigule
-1;
-1;
-1;  # MAJ droite
-1;  # Flèche haut
-2;  # KP
-2;  # KP
-2;  # KP
+# Pavé principal, touches de fonction
+0;   # Tabs
+0;   # Caps lock
+0;   # MAJ gauche
+0;   # Ctrl gauche
+0;   # Super gauche
+0;   # Alt gauche
+2;   # Espace
+1;   # ISO level3 shift (i.e. Alt Gr) et Alt droite
+1;   # Super droite
+1;   # Menu
+1;   # Ctrl droite
+1;   # MAJ droite
+1;   # Backspace
 
-# Ligne 2
-0;  # Caps lock
-0;
-0;
-0;
-0;
-0;  # G
-2;
-2;
-1;  # K
-1;
-1;
-1;
-1;  # Touche entrée
-2;  # KP
-2;  # KP
-2;  # KP
-2;  # KP
+1;   # Touche entrée (sur 1 ligne)
 
-# Ligne 3
-0;  # Tabs
-0;
-0;
-0;
-0;
-0;  # T
-2;
-2;
-2;
-1;  # O
-1;
-1;
-1;
-1;
-1;  # Suppr.
-1;
-1;
-2;  # KP
-2;  # KP
-2;  # KP
 
-# Ligne 4
-0;  # 2 supérieur
-0;
-0;
-0;
-0;
-0;
-0;  # 6
-2;
-2;
-1;  # 9
-1;
-1;
-1;
-1;  # Backspace
-1;  # Inser.
-1;
-1;
-2;  # KP
-2;  # KP
-2;  # KP
-2;  # KP
+# Pavé principal, ligne 1
+0;   # Z
+0;   # X
+0;   # C
+0;   # V
+2;   # B
+2;   # N
+2;   # M
+1;   # Ponctuation
+1;   # Ponctuation
+1;   # Ponctuation
 
-# Ligne 6
-0;  # Echap.
-0;  # F1
-0;
-0;
-0;  # F4
-0;  # F5
-2;
-2;
-2;  # F8
-2;  # F9
-1;  # F10
-1;
-1;  # F12
-1;  # Impr. écran
-1;  # Arrêt defil.
-1;  # Pause
+# Pavé principal, ligne 2
+0;   # A
+0;   # S
+0;   # D
+0;   # F
+0;   # G
+2;   # H
+2;   # J
+1;   # K
+1;   # L
+1;   # Ponctuation
+1;   # Ponctuation
+1;   # Ponctuation (sur la ligne 3)
+
+# Pavé principal, ligne 3
+0;   # Q
+0;   # Z
+0;   # E
+0;   # R
+0;   # T
+2;   # Y
+2;   # U
+2;   # I
+1;   # O
+1;   # P
+1;   # Ponctuation
+1;   # Ponctuation
+
+# Pavé principal, chiffres
+0;   # Ponctuation
+0;   # 1
+0;   # 2
+0;   # 3
+0;   # 4
+0;   # 5
+0;   # 6
+2;   # 7
+2;   # 8
+1;   # 9
+1;   # 0
+1;   # Ponctuation
+1;   # Ponctuation
+
+
+# Navigation
+1;   # Flèche gauche
+1;   # Flèche bas
+1;   # Flèche droite
+1;   # Flèche haut
+1;   # Delete
+1;   # End
+1;   # Page down
+1;   # Insert
+1;   # Home
+1;   # Page up
+
+
+# Pavé numérique
+2;   # Zéro KP
+2;   # Séparateur KP
+2;   # 1 KP
+2;   # 2 KP
+2;   # 3 KP
+2;   # 4 KP
+2;   # 5 KP
+2;   # 6 KP
+2;   # 7 KP
+2;   # 8 KP
+2;   # 9 KP
+2;   # Verr. Num.
+2;   # Div. KP
+2;   # Mult. KP
+2;   # Moins KP
+
+2;   # Plus KP
+2;   # Entrée KP
+
+
+# Touches de fonction
+0;   # Echap.
+0;   # F1
+0;   # F2
+0;   # F3
+0;   # F4
+0;   # F5
+2;   # F6
+2;   # F7
+2;   # F8
+2;   # F9
+1;   # F10
+1;   # F11
+1;   # F12
+1;   # Impr. écran
+1;   # Arrêt defil.
+1;   # Pause
