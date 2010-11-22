@@ -95,7 +95,10 @@ KeyvalExList keycode_to_keyvals(Keycode code) {
 
 // Nom standard d'un keyval
 std::string keyval_to_string(Keyval val) {
-	return std::string(gdk_keyval_name(val));
+	if(val==0)
+		return "Null character";
+	else
+		return std::string(gdk_keyval_name(val));
 }
 
 // Nom "affichable" d'un keyval

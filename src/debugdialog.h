@@ -55,12 +55,14 @@ private:
 	class KeyInfoModel : public Gtk::TreeModelColumnRecord {
 		Gtk::TreeModelColumn<Keyval       > m_keyval    ;
 		Gtk::TreeModelColumn<std::string  > m_keyval_hex;
+		Gtk::TreeModelColumn<std::string  > m_name      ;
 		Gtk::TreeModelColumn<Glib::ustring> m_symbol    ;
 		Gtk::TreeModelColumn<KeyGroup     > m_group     ;
 		Gtk::TreeModelColumn<KeyLevel     > m_level     ;
 	public:
 		Gtk::TreeModelColumn<Keyval       > keyval    () const;
     Gtk::TreeModelColumn<std::string  > keyval_hex() const;
+    Gtk::TreeModelColumn<std::string  > name      () const;
     Gtk::TreeModelColumn<Glib::ustring> symbol    () const;
 		Gtk::TreeModelColumn<KeyGroup     > group     () const;
 		Gtk::TreeModelColumn<KeyLevel     > level     () const;

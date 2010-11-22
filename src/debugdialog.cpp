@@ -29,12 +29,14 @@
 // Modèle pour le widget d'affichage des infos clavier
 Gtk::TreeModelColumn<Keyval       > DebugDialog::KeyInfoModel::keyval    () const { return m_keyval    ; }
 Gtk::TreeModelColumn<std::string  > DebugDialog::KeyInfoModel::keyval_hex() const { return m_keyval_hex; }
+Gtk::TreeModelColumn<std::string  > DebugDialog::KeyInfoModel::name      () const { return m_name      ; }
 Gtk::TreeModelColumn<Glib::ustring> DebugDialog::KeyInfoModel::symbol    () const { return m_symbol    ; }
 Gtk::TreeModelColumn<KeyGroup     > DebugDialog::KeyInfoModel::group     () const { return m_group     ; }
 Gtk::TreeModelColumn<KeyLevel     > DebugDialog::KeyInfoModel::level     () const { return m_level     ; }
 DebugDialog::KeyInfoModel::KeyInfoModel() : Gtk::TreeModelColumnRecord() {
 	add(m_keyval    );
 	add(m_keyval_hex);
+	add(m_name      );
 	add(m_symbol    );
 	add(m_group     );
 	add(m_level     );
@@ -77,13 +79,14 @@ DebugDialog::DebugDialog(Gtk::Window &parent) :
 	m_keyvals.set_model(m_keyvals_data);
 	m_keyvals.append_column(_("Keyval"      ), m_keyvals_model.keyval    ());
 	m_keyvals.append_column(_("Keyval (hex)"), m_keyvals_model.keyval_hex());
+	m_keyvals.append_column(_("Name"        ), m_keyvals_model.name      ());
 	m_keyvals.append_column(_("Symbol"      ), m_keyvals_model.symbol    ());
 	m_keyvals.append_column(_("Group"       ), m_keyvals_model.group     ());
 	m_keyvals.append_column(_("Level"       ), m_keyvals_model.level     ());
 	m_keyvals.set_can_focus(false);
-	for(unsigned int k=0; k<5; ++k) {
+	for(unsigned int k=0; k<6; ++k) {
 		m_keyvals.get_column(k)->set_resizable(true);
-		m_keyvals.get_column(k)->set_min_width(100);
+		m_keyvals.get_column(k)->set_min_width(60);
 	}
 	m_keyvals_scroll.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
 	m_keyvals_scroll.add(m_keyvals);
@@ -117,6 +120,7 @@ bool DebugDialog::on_key_press_event(GdkEventKey* event) {
 		Gtk::TreeModel::iterator row = m_keyvals_data->append();
 		(*row)[m_keyvals_model.keyval    ()] = it->keyval;
 		(*row)[m_keyvals_model.keyval_hex()] = "0x" + int_to_string(it->keyval, true);
+		(*row)[m_keyvals_model.name      ()] = keyval_to_string(it->keyval);
 		(*row)[m_keyvals_model.symbol    ()] = keyval_to_symbol(it->keyval);
 		(*row)[m_keyvals_model.group     ()] = it->group;
 		(*row)[m_keyvals_model.level     ()] = it->level;
