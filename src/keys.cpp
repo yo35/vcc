@@ -24,6 +24,10 @@
 #include <gdk/gdkkeysyms.h>
 #include <translation.h>
 
+// Keyval étendu
+KeyvalEx::KeyvalEx()                                    { keyval=0 ; group=0 ; level=0 ; }
+KeyvalEx::KeyvalEx(Keyval kv, KeyGroup kg, KeyLevel kl) { keyval=kv; group=kg; level=kl; }
+
 // Constructeur
 PhysicalKey::PhysicalKey() {
 	m_bottom_line = 0;
@@ -74,15 +78,14 @@ KeycodeList keyval_to_keycodes(Keyval val) {
 }
 
 // Keyvals assocés à 1 keycode
-PhysicalKey keycode_to_keyvals(Keycode code) {
-	PhysicalKey   retval;
+KeyvalExList keycode_to_keyvals(Keycode code) {
+	KeyvalExList  retval;
 	GdkKeymapKey *grouplevels;
 	Keyval       *keyvals;
 	gint          n_entries;
 	if(gdk_keymap_get_entries_for_keycode(NULL, code, &grouplevels, &keyvals, &n_entries)) {
-		retval.set_nb_keyvals(n_entries);
 		for(int k=0; k<n_entries; ++k) {
-			retval.set_keyval(k, keyvals[k], grouplevels[k].group, grouplevels[k].level, true);
+			retval.push_back(KeyvalEx(keyvals[k], grouplevels[k].group, grouplevels[k].level));
 		}
 		g_free(grouplevels);
 		g_free(keyvals    );

@@ -67,8 +67,9 @@ std::list<std::string> split(const std::string &src, char sep) {
 }
 
 // Conversion d'un entier en chaîne de caractères
-std::string int_to_string(int src) {
+std::string int_to_string(int src, bool base16) {
 	std::stringstream buff;
+	if(base16) buff << std::hex;
 	buff << src;
 	return buff.str();
 }

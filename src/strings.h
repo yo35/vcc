@@ -33,7 +33,7 @@ std::string trim(const std::string &src);
 std::list<std::string> split(const std::string &src, char sep);
 
 // Conversion d'un entier en chaîne de caractères
-std::string int_to_string(int src);
+std::string int_to_string(int src, bool base16=false);
 
 // Conversion d'une chaîne de caractères en entier
 bool is_valid_int(const std::string &src);

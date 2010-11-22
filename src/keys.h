@@ -41,6 +41,16 @@ typedef guint KeyGroup   ;
 typedef guint KeyLevel   ;
 
 
+// Keyval étendu
+struct KeyvalEx {
+	Keyval   keyval;
+	KeyGroup group ;
+	KeyLevel level ;
+	KeyvalEx();
+	KeyvalEx(Keyval kv, KeyGroup kg, KeyLevel kl);
+};
+
+
 // Touche de clavier "physique"
 class PhysicalKey {
 
@@ -97,6 +107,7 @@ private:
 // Containers
 typedef std::list  <Keyval     > KeyvalList       ;
 typedef std::list  <Keycode    > KeycodeList      ;
+typedef std::list  <KeyvalEx   > KeyvalExList     ;
 typedef std::vector<PhysicalKey> PhysicalKeyVector;
 
 
@@ -107,8 +118,8 @@ typedef std::vector<PhysicalKey> PhysicalKeyVector;
 // Récupération du ou des keycodes à partir du keyval
 KeycodeList keyval_to_keycodes(Keyval val);
 
-// Conversions keycode vers keyval
-PhysicalKey keycode_to_keyvals(Keycode code);
+// Conversions keycode vers liste de keyvals
+KeyvalExList keycode_to_keyvals(Keycode code);
 
 // Nom associé à la keyval
 std::string keyval_to_string(Keyval val);
