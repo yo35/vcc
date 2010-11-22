@@ -24,6 +24,7 @@
 #include "vccaboutdialog.h"
 #include "timecontroldialog.h"
 #include "preferencesdialog.h"
+#include "debugdialog.h"
 #include "params.h"
 #include <config.h>
 #include <translation.h>
@@ -45,7 +46,11 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	core.set_time_control(gp->initial_time_control());
 
 	// Initialisation du retardateur pour l'affichage de la fenêtre de débug
-	debug_delayer.set_delay(5*1000);
+	#ifdef DEV_COMPILATION
+		debug_delayer.set_delay(750);
+	#else
+		debug_delayer.set_delay(5000);
+	#endif
 	debug_delayer.signal_occurred().connect(
 		sigc::mem_fun(*this, &ClockWindow::on_debug_delayer_elapsed));
 
@@ -225,7 +230,8 @@ void ClockWindow::on_reset_triggered_from_kb() {
 }
 
 void ClockWindow::on_debug_delayer_elapsed() {
-	// TODO
+	DebugDialog dialog(*this);
+	dialog.run();
 }
 
 void ClockWindow::init_reinit_triggers() {
