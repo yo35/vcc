@@ -49,7 +49,7 @@ AreaSelectorWidget::AreaSelectorWidget() : Gtk::HBox() {
 	set_spacing(5);
 	set_homogeneous(true);
 	pack_start(m_selector[LEFT ]);
-  pack_start(m_selector[RIGHT]);
+	pack_start(m_selector[RIGHT]);
 }
 
 // Accesseurs
@@ -95,7 +95,7 @@ void AreaSelectorWidget::on_button_clicked(Side side) {
 void AreaSelectorWidget::color_button(Side side) {
 	m_selector[side].modify_bg(Gtk::STATE_NORMAL  , m_color[side]);
 	m_selector[side].modify_bg(Gtk::STATE_ACTIVE  , m_color[side]);
-  m_selector[side].modify_bg(Gtk::STATE_PRELIGHT, m_color[side]);
+ 	m_selector[side].modify_bg(Gtk::STATE_PRELIGHT, m_color[side]);
 }
 
 // Décolore un bouton (il redevient gris)
