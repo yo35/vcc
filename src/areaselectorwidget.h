@@ -25,7 +25,6 @@
 
 #include <gtkmm/box.h>
 #include <gtkmm/togglebutton.h>
-#include <gtkmm/style.h>
 #include "side.h"
 
 class AreaSelectorWidget : public Gtk::HBox {
@@ -53,13 +52,11 @@ private:
 	void uncolor_button(Side side);
 
 	// Données membres
-	EnumArray<Side, Gtk::ToggleButton>         m_selector      ;
-	EnumArray<Side, Gdk::Color       >         m_color         ;
-	EnumArray<Side, Glib::RefPtr<Gtk::Style> > m_colored_style ;
-	EnumArray<Side, Glib::RefPtr<Gtk::Style> > m_default_style ;
-	bool                                       m_is_selecting  ;
-	Side                                       m_active_side   ;
-	sigc::signal<void>                         m_signal_changed;
+	EnumArray<Side, Gtk::ToggleButton> m_selector      ;
+	EnumArray<Side, Gdk::Color       > m_color         ;
+	bool                               m_is_selecting  ;
+	Side                               m_active_side   ;
+	sigc::signal<void>                 m_signal_changed;
 };
 
 #endif

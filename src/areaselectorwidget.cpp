@@ -40,11 +40,6 @@ AreaSelectorWidget::AreaSelectorWidget() : Gtk::HBox() {
 
 	// Opérations génériques left/right
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
-		m_default_style[*k] = m_selector[*k].get_style();
-		m_colored_style[*k] = m_default_style[*k]->copy();
-		m_colored_style[*k]->set_bg(Gtk::STATE_NORMAL  , m_color[*k]);
-		m_colored_style[*k]->set_bg(Gtk::STATE_ACTIVE  , m_color[*k]);
-		m_colored_style[*k]->set_bg(Gtk::STATE_PRELIGHT, m_color[*k]);
 		color_button(*k);
 		m_selector[*k].signal_released().connect(
 			sigc::bind(sigc::mem_fun(*this, &AreaSelectorWidget::on_button_clicked), *k));
@@ -98,10 +93,14 @@ void AreaSelectorWidget::on_button_clicked(Side side) {
 
 // Colore un bouton
 void AreaSelectorWidget::color_button(Side side) {
-	m_selector[side].set_style(m_colored_style[side]);
+	m_selector[side].modify_bg(Gtk::STATE_NORMAL  , m_color[side]);
+	m_selector[side].modify_bg(Gtk::STATE_ACTIVE  , m_color[side]);
+ 	m_selector[side].modify_bg(Gtk::STATE_PRELIGHT, m_color[side]);
 }
 
 // Décolore un bouton (il redevient gris)
 void AreaSelectorWidget::uncolor_button(Side side) {
-	m_selector[side].set_style(m_default_style[side]);
+	m_selector[side].unset_bg(Gtk::STATE_NORMAL  );
+	m_selector[side].unset_bg(Gtk::STATE_ACTIVE  );
+	m_selector[side].unset_bg(Gtk::STATE_PRELIGHT);
 }
