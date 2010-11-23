@@ -95,6 +95,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	// Onglet keyboard (sauf géométrie)
 	kb_selector_label.set_label(_("Select the keyboard layout you are using"));
 	kb_selector_data = Gtk::ListStore::create(kb_selector_model);
+	kb_selector_data->set_sort_column(kb_selector_model.name(), Gtk::SORT_ASCENDING);
 	kb_selector.set_model(kb_selector_data);
 	kb_selector.pack_start(kb_selector_model.name());
 	kb_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_kb_changed));
