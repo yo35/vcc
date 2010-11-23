@@ -317,6 +317,9 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_dead_macron    : return "¯";
 		case GDK_dead_diaeresis : return "¨";
 
+		// Divers
+		case GDK_EuroSign: return "€";
+
 		// Solution par défaut
 		default:
 			return keyval_to_string(val);
