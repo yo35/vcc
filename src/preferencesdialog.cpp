@@ -123,6 +123,12 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kb_page.pack_start(area_selector_layout, Gtk::PACK_SHRINK);
 	pages.append_page(kb_page, _("Keyboard sensitive areas"));
 
+	kbm_widget.set_tooltip_markup(
+		"Sensitive areas\n"
+		"<span background=\"#00B300\">        </span> : Left player\n"
+		"<span background=\"#0080FF\">        </span> : Right player"
+	);
+
 	// Géométrie générale
 	get_vbox()->set_spacing(5);
 	get_vbox()->pack_start(pages);
