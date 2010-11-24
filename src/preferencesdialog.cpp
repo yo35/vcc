@@ -116,10 +116,12 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	Glib::ustring lg1 = _("Sensitive areas where players can pull the clock when playing");
 	Glib::ustring lg2 = _("left player's area");
 	Glib::ustring lg3 = _("right player's area");
+  Glib::ustring coul2 = kbm_widget.color(LEFT ).to_string();
+	Glib::ustring coul3 = kbm_widget.color(RIGHT).to_string();
 	Glib::ustring tooltip = "";
 	tooltip += "<span weight=\"bold\">" + lg1 + "</span>\n";
-	tooltip += "<span background=\"" + kbm_widget.color(LEFT ).to_string() + "\">        </span> : " + lg2 + "\n";
-	tooltip += "<span background=\"" + kbm_widget.color(RIGHT).to_string() + "\">        </span> : " + lg3;
+	tooltip += "<span background=\"" + coul2 + "\">        </span> : " + lg2 + "\n";
+	tooltip += "<span background=\"" + coul3 + "\">        </span> : " + lg3;
 	kbm_widget.set_tooltip_markup(tooltip);
 
 	// Onglet keyboard (géométrie)
