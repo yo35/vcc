@@ -24,8 +24,9 @@
 #define KEYBOARDMAPWIDGET_H
 
 #include <gtkmm/drawingarea.h>
-#include <set>
 #include "keyboardmap.h"
+#include "areamap.h"
+#include "side.h"
 
 class KeyboardMapWidget : public Gtk::DrawingArea {
 
@@ -34,24 +35,21 @@ public:
 	// Divers
 	KeyboardMapWidget();
 	void set_keyboard_map(const KeyboardMap &kbm);
+	const Gdk::Color &color(const Side &side) const;
 
 	// Affichage pavé numérique
 	bool display_kp() const;
 	void set_display_kp(bool src);
 
-	// Configuration régions
-	int nb_areas() const;
-	void set_nb_areas(int src);
-	Gdk::Color color(int idx) const;
-	void set_color(int idx, const Gdk::Color &src);
-
 	// Région active
-	int active_area() const;
-	void set_active_area(int src);
+	bool is_active  () const;
+	Side active_side() const;
+	void set_active_side(const Side &side);
+	void unset_active_side();
 
 	// Régions
-	std::set<int> get_area(int idx) const;
-	void set_area(int idx, const std::set<int> &src);
+	const AreaMap &get_area_map() const;
+	void set_area_map(const AreaMap &src);
 	void clear_areas();
 
 	// Action sur une touche clavier
@@ -91,17 +89,14 @@ private:
 	static double abs(double src);
 	static double min(double s1, double s2);
 
-	// Gestion des données membres
-	template<class T>
-	void reset_key_vector(std::vector<T> &target, T value);
-
 	// Données membres
-	const KeyboardMap      *m_kbm;
-	std::vector<bool>       m_keydown;
-	std::vector<int >       m_keyarea;
-	std::vector<Gdk::Color> m_color;
-	bool                    m_display_kp;
-	int                     m_active_area;
+	const KeyboardMap          *m_kbm        ;
+	std::vector<bool>           m_keydown    ;
+	AreaMap                     m_keyarea    ;
+	EnumArray<Side, Gdk::Color> m_color      ;
+	bool                        m_display_kp ;
+	bool                        m_is_active  ;
+	Side                        m_active_side;
 
 	// Objets liés au dessin du widget
 	Cairo::RefPtr<Cairo::Context> cr;

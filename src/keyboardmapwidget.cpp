@@ -31,8 +31,10 @@
 // Constructeur
 KeyboardMapWidget::KeyboardMapWidget() : Gtk::DrawingArea() {
 	m_kbm = 0;
+	m_color[LEFT ].set_rgb_p(0.0, 0.7, 0.0);
+	m_color[RIGHT].set_rgb_p(0.0, 0.5, 1.0);
 	m_display_kp = true;
-	m_active_area = -1;
+	m_is_active  = false;
 	set_size_request(800, 300);
 	set_events(Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
 }
@@ -40,9 +42,14 @@ KeyboardMapWidget::KeyboardMapWidget() : Gtk::DrawingArea() {
 // Structure de gestion de clavier sous-jacente
 void KeyboardMapWidget::set_keyboard_map(const KeyboardMap &kbm) {
 	m_kbm = &kbm;
-	reset_key_vector(m_keydown, false);
-	reset_key_vector(m_keyarea,    -1);
+	m_keydown.resize(m_kbm->keys().size(), false);
+	m_keyarea.set_nb_keys(m_kbm->keys().size());
 	refresh_widget();
+}
+
+// Couleur de la région 'idx'
+const Gdk::Color &KeyboardMapWidget::color(const Side &side) const {
+	return m_color[side];
 }
 
 // Affichage du pavé numérique
@@ -56,83 +63,34 @@ void KeyboardMapWidget::set_display_kp(bool src) {
 	refresh_widget();
 }
 
-// Nombre de régions définissables
-int KeyboardMapWidget::nb_areas() const {
-	return m_color.size();
-}
-
-// Couleur de la région 'idx'
-Gdk::Color KeyboardMapWidget::color(int idx) const {
-	assert(idx>=0 && idx<nb_areas());
-	return m_color[idx];
-}
-
-// Modifie le nombre de région définissables
-void KeyboardMapWidget::set_nb_areas(int src) {
-	m_color.resize(src);
-	reset_key_vector(m_keyarea, -1);
-	refresh_widget();
-}
-
-// Modifie la couleur des régions
-void KeyboardMapWidget::set_color(int idx, const Gdk::Color &src) {
-	assert(idx>=0 && idx<nb_areas());
-	m_color[idx] = src;
-	refresh_widget();
-}
-
-// Initialisation des tableaux repérant les propriétés des touches
-template<class T>
-void KeyboardMapWidget::reset_key_vector(std::vector<T> &target, T value) {
-	if(m_kbm==0)
-		return;
-	if(target.size()!=m_kbm->keys().size())
-		target.resize(m_kbm->keys().size());
-	for(unsigned int k=0; k<target.size(); ++k) {
-		target[k] = value;
-	}
-}
-
 
 
 ////////////////////////////////////////////////////////////////////////////////
 // Exploitation des régions de touches
 
 // Modifie la région active
-void KeyboardMapWidget::set_active_area(int src) {
-	assert(m_active_area<nb_areas());
-	m_active_area = src;
-}
+void KeyboardMapWidget::set_active_side(const Side &side) { m_is_active=true ; m_active_side=side; }
+void KeyboardMapWidget::unset_active_side()               { m_is_active=false;                     }
 
 // Région en train d'être définie
-int KeyboardMapWidget::active_area() const {
-	return m_active_area;
+bool KeyboardMapWidget::is_active  () const { return m_is_active  ; }
+Side KeyboardMapWidget::active_side() const { return m_active_side; }
+
+// Récupération des régions de touches
+const AreaMap &KeyboardMapWidget::get_area_map() const {
+	return m_keyarea;
 }
 
-// Récupère l'ensemble des touches appartenant à la région 'idx'
-std::set<int> KeyboardMapWidget::get_area(int idx) const {
-	assert(idx>=0 && idx<nb_areas());
-	std::set<int> res;
-	for(unsigned int k=0; k<m_keyarea.size(); ++k) {
-		if(m_keyarea[k]==idx)
-			res.insert(k);
-	}
-	return res;
-}
-
-// Définie la région 'idx'
-void KeyboardMapWidget::set_area(int idx, const std::set<int> &src) {
-	assert(idx>=0 && idx<nb_areas());
-	for(std::set<int>::const_iterator it=src.begin(); it!=src.end(); ++it) {
-		assert(*it>=0 && *it<static_cast<int>(m_keyarea.size()));
-		m_keyarea[*it] = idx;
-	}
+// Définition des régions de touches
+void KeyboardMapWidget::set_area_map(const AreaMap &src) {
+	assert(m_kbm!=0 && static_cast<int>(m_kbm->keys().size())==src.nb_keys());
+	m_keyarea = src;
 	refresh_widget();
 }
 
 // Vide toutes les régions
 void KeyboardMapWidget::clear_areas() {
-	reset_key_vector(m_keyarea, -1);
+	m_keyarea.clear();
 	refresh_widget();
 }
 
@@ -144,21 +102,20 @@ void KeyboardMapWidget::clear_areas() {
 bool KeyboardMapWidget::on_button_press_event(GdkEventButton *event) {
 
 	// Vérifications préliminaires
-	if(m_kbm==0 || event->button!=1 || m_active_area<0)
+	if(m_kbm==0 || event->button!=1 || !m_is_active)
 		return true;
-	assert(m_active_area<=nb_areas());
 
 	// Recherche de la touche désignée par le curseur
 	int key = lookup_key_at(event->x, event->y);
 	if(key<0)
 		return true;
-	assert(key<=static_cast<int>(m_keyarea.size()));
+	assert(key<=m_keyarea.nb_keys());
 
 	// Modif
-	if(m_keyarea[key]==m_active_area)
-		m_keyarea[key] = -1;
+	if(m_keyarea.is_affected(key) && m_keyarea.side(key)==m_active_side)
+		m_keyarea.set_unaffected(key);
 	else
-		m_keyarea[key] = m_active_area;
+		m_keyarea.set_side(key, m_active_side);
 	refresh_widget();
 	return true;
 }
@@ -448,12 +405,11 @@ void KeyboardMapWidget::draw_key_shape(unsigned int idx) {
 	if(m_keydown[idx]) {
 		cr->set_source_rgb(1.0, 0.5, 0.0);
 	}
-	else if(m_keyarea[idx]<0) {
+	else if(!m_keyarea.is_affected(idx)) {
 		cr->set_source_rgb(1.0, 1.0, 1.0);
 	}
 	else {
-		assert(m_keyarea[idx]<nb_areas());
-		Gdk::Color curr_color = m_color[m_keyarea[idx]];
+		Gdk::Color curr_color = m_color[m_keyarea.side(idx)];
 		cr->set_source_rgb(
 			curr_color.get_red_p  (),
 			curr_color.get_green_p(),

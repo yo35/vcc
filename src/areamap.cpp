@@ -67,6 +67,13 @@ void AreaMap::set_side(int key, const Side &src) {
 	m_data[key].side     = src ;
 }
 
+// Désaffectation de toutes les touches
+void AreaMap::clear() {
+	for(unsigned int idx=0; idx<m_data.size(); ++idx) {
+		m_data[idx].affected = false;
+	}
+}
+
 // Enregistrement dans le fichier sous-jacent
 void AreaMap::save(const std::string &path) const {
 
@@ -128,30 +135,4 @@ void AreaMap::load(const std::string &path) {
 
 	// Terminaison
 	file.close();
-}
-
-// Fonction de lecture globale d'une région
-std::set<int> AreaMap::get_area(const Side &side) const {
-	std::set<int> res;
-	for(unsigned int idx=0; idx<m_data.size(); ++idx) {
-		if(m_data[idx].affected && m_data[idx].side==side)
-			res.insert(idx);
-	}
-	return res;
-}
-
-// Fonction d'écriture globale d'une région
-void AreaMap::set_area(const Side &side, const std::set<int> keys) {
-	for(std::set<int>::const_iterator it=keys.begin(); it!=keys.end(); ++it) {
-		assert(*it>=0 && *it<nb_keys());
-		m_data[*it].affected = true;
-		m_data[*it].side     = side;
-	}
-}
-
-// Désaffectation de toutes les touches
-void AreaMap::clear() {
-	for(unsigned int idx=0; idx<m_data.size(); ++idx) {
-		m_data[idx].affected = false;
-	}
 }

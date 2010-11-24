@@ -101,12 +101,26 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kb_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_kb_changed));
 	display_kp.set_label(_("Display the numeric keypad"));
 	display_kp.signal_toggled().connect(sigc::mem_fun(*this, &PreferencesDialog::on_display_kp_changed));
-	kbm_widget.set_nb_areas(2);
+	area_selector_label.set_label(_("Modify the sensitive areas by clicking on the keyboard:"));
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
-		kbm_widget.set_color((*k).to_int(), area_selector.color(*k));
+		area_selector[*k].set_group(area_selector_group);
+		area_selector[*k].signal_toggled().connect(
+			sigc::mem_fun(*this, &PreferencesDialog::on_area_changed));
 	}
-	area_selector_label.set_label(_("Sensitive areas on the keyboard when playing"));
-	area_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_area_changed));
+	area_selector[LEFT ].set_label("Modify the left player's area" );
+	area_selector[RIGHT].set_label("Modify the right player's area");
+	area_selector[LEFT ].set_active(true);
+	on_area_changed();
+
+	// Tooltip
+	Glib::ustring lg1 = _("Sensitive areas where players can pull the clock when playing");
+	Glib::ustring lg2 = _("left player's area");
+	Glib::ustring lg3 = _("right player's area");
+	Glib::ustring tooltip = "";
+	tooltip += "<span weight=\"bold\">" + lg1 + "</span>\n";
+	tooltip += "<span background=\"" + kbm_widget.color(LEFT ).to_string() + "\">        </span> : " + lg2 + "\n";
+	tooltip += "<span background=\"" + kbm_widget.color(RIGHT).to_string() + "\">        </span> : " + lg3;
+	kbm_widget.set_tooltip_markup(tooltip);
 
 	// Onglet keyboard (géométrie)
 	kb_page             .set_border_width(5);
@@ -119,15 +133,10 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kb_page.pack_start(display_kp, Gtk::PACK_SHRINK);
 	kb_page.pack_start(kbm_widget);
 	area_selector_layout.pack_start(area_selector_label, Gtk::PACK_SHRINK);
-	area_selector_layout.pack_start(area_selector, Gtk::PACK_SHRINK);
 	kb_page.pack_start(area_selector_layout, Gtk::PACK_SHRINK);
+	kb_page.pack_start(area_selector[LEFT ], Gtk::PACK_SHRINK);
+	kb_page.pack_start(area_selector[RIGHT], Gtk::PACK_SHRINK);
 	pages.append_page(kb_page, _("Keyboard sensitive areas"));
-
-	kbm_widget.set_tooltip_markup(
-		"Sensitive areas\n"
-		"<span background=\"#00B300\">        </span> : Left player\n"
-		"<span background=\"#0080FF\">        </span> : Right player"
-	);
 
 	// Géométrie générale
 	get_vbox()->set_spacing(5);
@@ -220,9 +229,7 @@ void PreferencesDialog::on_kb_changed() {
 	if(areas.find(curr_kb_code)==areas.end()) {
 		areas[curr_kb_code] = gp->default_area_map(curr_kb_code);
 	}
-	for(Side::iterator it=Side::first(); it.valid(); ++it) {
-		kbm_widget.set_area((*it).to_int(), areas[curr_kb_code].get_area(*it));
-	}
+	kbm_widget.set_area_map(areas[curr_kb_code]);
 }
 
 // Modification du choix d'affichage du pavé numérique
@@ -232,17 +239,14 @@ void PreferencesDialog::on_display_kp_changed() {
 
 // Changement de la zone active
 void PreferencesDialog::on_area_changed() {
-	if(area_selector.is_selecting())
-		kbm_widget.set_active_area(area_selector.active_side().to_int());
-	else
-		kbm_widget.set_active_area(-1);
+	for(Side::iterator it=Side::first(); it.valid(); ++it) {
+		if(area_selector[*it].get_active())
+			kbm_widget.set_active_side(*it);
+	}
 }
 
 // Enregistrement du plan de région courant
 void PreferencesDialog::save_curr_area() {
 	assert(curr_kb_code!="");
-	areas[curr_kb_code].clear();
-	for(Side::iterator it=Side::first(); it.valid(); ++it) {
-		areas[curr_kb_code].set_area(*it, kbm_widget.get_area((*it).to_int()));
-	}
+	areas[curr_kb_code] = kbm_widget.get_area_map();
 }

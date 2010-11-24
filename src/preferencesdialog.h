@@ -37,7 +37,6 @@
 #include "optionenums.h"
 #include "areamap.h"
 #include "keyboardmapwidget.h"
-#include "areaselectorwidget.h"
 
 class PreferencesDialog : public Gtk::Dialog {
 
@@ -98,17 +97,18 @@ private:
 	Gtk::HScale                                 raz_delay;
 
 	// Onglet keyboard
-	Gtk::VBox                    kb_page;
-	Gtk::HBox                    kb_selector_layout;
-	Gtk::Label                   kb_selector_label;
-	KbSelectorModel              kb_selector_model;
-	Glib::RefPtr<Gtk::ListStore> kb_selector_data;
-	Gtk::ComboBox                kb_selector;
-	Gtk::CheckButton             display_kp;
-	KeyboardMapWidget            kbm_widget;
-	Gtk::HBox                    area_selector_layout;
-	Gtk::Label                   area_selector_label;
-	AreaSelectorWidget           area_selector;
+	Gtk::VBox                         kb_page;
+	Gtk::HBox                         kb_selector_layout;
+	Gtk::Label                        kb_selector_label;
+	KbSelectorModel                   kb_selector_model;
+	Glib::RefPtr<Gtk::ListStore>      kb_selector_data;
+	Gtk::ComboBox                     kb_selector;
+	Gtk::CheckButton                  display_kp;
+	KeyboardMapWidget                 kbm_widget;
+	Gtk::HBox                         area_selector_layout;
+	Gtk::Label                        area_selector_label;
+	Gtk::RadioButton::Group           area_selector_group;
+	EnumArray<Side, Gtk::RadioButton> area_selector;
 };
 
 #endif
