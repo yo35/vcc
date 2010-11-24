@@ -43,7 +43,7 @@ class PreferencesDialog : public Gtk::Dialog {
 public:
 
 	// Constructeur
-	PreferencesDialog(Gtk::Window &parent);
+	PreferencesDialog(Gtk::Window &parent, bool first_launch=false);
 
 	// Chargement et write-back des options
 	void load_params();
@@ -74,6 +74,7 @@ private:
 	};
 
 	// Données membres
+	bool first_launch_config;
 	Gtk::Notebook pages;
 	std::string curr_kb_code;
 	std::map<std::string, AreaMap> areas;

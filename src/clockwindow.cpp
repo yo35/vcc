@@ -161,7 +161,7 @@ bool ClockWindow::on_key_release_event(GdkEventKey* event) {
 void ClockWindow::on_myself_shown() {
 	if(!gp->first_launch())
 		return;
-	PreferencesDialog dialog(*this);
+	PreferencesDialog dialog(*this, true);
 	dialog.load_params();
 	dialog.run();
 	dialog.save_params();
