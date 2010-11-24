@@ -35,7 +35,7 @@ PreferencesDialog::KbSelectorModel::KbSelectorModel() : Gtk::TreeModelColumnReco
 
 // Constructeur
 PreferencesDialog::PreferencesDialog(Gtk::Window &parent, bool first_launch) :
-	Gtk::Dialog(_("Preferences"), parent, true, true)
+	Gtk::Dialog(first_launch ? _("First launch") : _("Preferences"), parent, true, true)
 {
 	// Divers
 	curr_kb_code = "";
@@ -128,6 +128,14 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent, bool first_launch) :
 	tooltip += "<span background=\"" + coul3 + "\">        </span> : " + lg3;
 	kbm_widget.set_tooltip_markup(tooltip);
 
+	// Help text
+	first_launch_help.set_editable(false);
+	first_launch_help.set_left_margin(5);
+	first_launch_help.set_right_margin(5);
+	first_launch_help.get_buffer()->set_text(
+		"TODO"
+	);
+
 	// Onglet keyboard (géométrie)
 	kb_page             .set_spacing(5);
 	kb_selector_layout  .set_spacing(5);
@@ -136,7 +144,10 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent, bool first_launch) :
 	kb_page.pack_start(kb_selector_layout, Gtk::PACK_SHRINK);
 	kb_page.pack_start(display_kp, Gtk::PACK_SHRINK);
 	kb_page.pack_start(kbm_widget);
-	if(!first_launch) {
+	if(first_launch) {
+		kb_page.pack_start(first_launch_help);
+	}
+	else {
 		area_selector_layout.pack_start(area_selector_label, Gtk::PACK_SHRINK);
 		kb_page.pack_start(area_selector_layout, Gtk::PACK_SHRINK);
 		kb_page.pack_start(area_selector[LEFT ], Gtk::PACK_SHRINK);

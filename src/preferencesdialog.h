@@ -34,6 +34,7 @@
 #include <gtkmm/combobox.h>
 #include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/liststore.h>
+#include <gtkmm/textview.h>
 #include "optionenums.h"
 #include "areamap.h"
 #include "keyboardmapwidget.h"
@@ -110,6 +111,7 @@ private:
 	Gtk::Label                        area_selector_label;
 	Gtk::RadioButton::Group           area_selector_group;
 	EnumArray<Side, Gtk::RadioButton> area_selector;
+	Gtk::TextView                     first_launch_help;
 };
 
 #endif
