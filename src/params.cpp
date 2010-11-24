@@ -103,6 +103,16 @@ const std::string &Params::config_path() const {
 	return m_config_path;
 }
 
+// Premier démarrage (lecture)
+bool Params::first_launch() const {
+	return m_data_perso.get_data("Misc", "First_Launch", true);
+}
+
+// Premier démarrage (écriture)
+void Params::set_first_launch(bool src) {
+	m_data_perso.set_data("Misc", "First_Launch", src);
+}
+
 // Cadence de jeu initiale (lecture)
 TimeControl Params::initial_time_control() const {
 	TimeControl retval;

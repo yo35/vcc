@@ -51,6 +51,7 @@ protected:
 private:
 
 	// Event handling
+	void on_myself_shown();
 	void on_pause_clicked();
 	void on_reset_clicked();
 	void on_tctrl_clicked();
@@ -59,7 +60,7 @@ private:
 	void on_clock_button_clicked(const Side &side);
 	void on_reset_triggered_from_kb();
 	void on_debug_delayer_elapsed();
-	void init_reinit_triggers();
+	void retrieve_parameters_from_gp();
 
 	// Données membres
 	BiTimer            core;

@@ -54,19 +54,15 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	debug_delayer.signal_occurred().connect(
 		sigc::mem_fun(*this, &ClockWindow::on_debug_delayer_elapsed));
 
-	// Initialisation du retardateur pour la réinitialisation de la pendule par le clavier
-	reinit_delayer.set_delay(gp->reinit_delay());
+	// Initialisation des objets de gestion de clavier
 	reinit_delayer.signal_occurred().connect(
 		sigc::mem_fun(*this, &ClockWindow::on_reset_triggered_from_kb));
-
-	// Initialisation des objets de gestion de clavier
-	curr_kbm = &gp->keyboard_map(gp->curr_keyboard());
-	curr_kam = &gp->kam_perso();
-	init_reinit_triggers();
+	retrieve_parameters_from_gp();
 
 	// Divers
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
 	set_title(PROJECT_FULL_NAME " " PROJECT_VERSION_MAJOR "." PROJECT_VERSION_MINOR);
+	signal_show().connect(sigc::mem_fun(*this, &ClockWindow::on_myself_shown));
 
 	// Désactivation de la touche windows
 	#ifdef OS_IS_WINDOWS
@@ -162,6 +158,17 @@ bool ClockWindow::on_key_release_event(GdkEventKey* event) {
 	return true;
 }
 
+void ClockWindow::on_myself_shown() {
+	if(!gp->first_launch())
+		return;
+	PreferencesDialog dialog(*this);
+	dialog.load_params();
+	dialog.run();
+	dialog.save_params();
+	gp->set_first_launch(false);
+	retrieve_parameters_from_gp();
+}
+
 void ClockWindow::on_pause_clicked() {
 	if(core.mode()==BiTimer::ACTIVE)
 		core.stop_timer();
@@ -204,10 +211,7 @@ void ClockWindow::on_prefs_clicked() {
 	if(retval!=Gtk::RESPONSE_OK)
 		return;
 	dialog.save_params();
-	reinit_delayer.set_delay(gp->reinit_delay());
-	curr_kbm = &gp->keyboard_map(gp->curr_keyboard());
-	curr_kam = &gp->kam_perso();
-	init_reinit_triggers();
+	retrieve_parameters_from_gp();
 }
 
 void ClockWindow::on_about_clicked() {
@@ -234,7 +238,10 @@ void ClockWindow::on_debug_delayer_elapsed() {
 	dialog.run();
 }
 
-void ClockWindow::init_reinit_triggers() {
+void ClockWindow::retrieve_parameters_from_gp() {
+	reinit_delayer.set_delay(gp->reinit_delay());
+	curr_kbm = &gp->keyboard_map(gp->curr_keyboard());
+	curr_kam = &gp->kam_perso();
 	KeyCombination kc = gp->reinit_keys();
 	if(kc==DOUBLE_CTRL) {
 		reinit_trigger[0] = GDK_Control_L;

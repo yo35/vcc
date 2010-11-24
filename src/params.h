@@ -47,6 +47,10 @@ public:
 	const std::string &prefix_path() const;
 	const std::string &config_path() const;
 
+	// Premier démarrage
+	bool first_launch() const;
+	void set_first_launch(bool src);
+
 	// Cadence de jeu
 	TimeControl initial_time_control() const;
 	void set_initial_time_control(const TimeControl &src);
