@@ -31,6 +31,39 @@
 	#include <windows.h>
 #endif
 
+#ifdef OS_IS_WINDOWS
+
+	// Language conversion
+	std::string convert_language(const std::string &src) {
+		if(src=="English"   ) return "en";
+		if(src=="French"    ) return "fr";
+		if(src=="German"    ) return "de";
+		if(src=="Swedish"   ) return "sv";
+		if(src=="Portuguese") return "pt";
+		if(src=="Italian"   ) return "it";
+		return src;
+	}
+	
+	// Country conversion
+	std::string convert_country(const std::string &src) {
+		if(src=="United States" ) return "US";
+		if(src=="France"        ) return "FR";
+		if(src=="Monaco"        ) return "MC";
+		if(src=="Andorra"       ) return "AD";
+		if(src=="Belgium"       ) return "BE";
+		if(src=="Canada"        ) return "CA";
+		if(src=="United Kingdom") return "UK";
+		if(src=="Germany"       ) return "GE";
+		if(src=="Austria"       ) return "AT";
+		if(src=="Sweden"        ) return "SE";
+		if(src=="Portugal"      ) return "PT";
+		if(src=="Brazil"        ) return "BR";
+		if(src=="Italy"         ) return "IT";
+		return src;
+	}
+
+#endif
+
 int main(int argc, char *argv[]) {
 
 	// Initialisation GTK
@@ -72,6 +105,14 @@ int main(int argc, char *argv[]) {
 	if(pos_sep!=std::string::npos) {
 		locale = locale.substr(0, pos_sep);
 	}
+	#ifdef OS_IS_WINDOWS
+		pos_sep = locale.find("_");
+		if(pos_sep!=std::string::npos) {
+			std::string language_name = locale.substr(0, pos_sep);
+			std::string country_name  = locale.substr(pos_sep+1);
+			locale = convert_language(language_name) + "_" + convert_country(country_name);
+		}
+	#endif
 
 	// Chargement des paramètres
 	gp = new Params(prefix_path, config_path, locale);
