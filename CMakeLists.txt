@@ -124,11 +124,14 @@ file(
 	src/winkeyhook/*.c
 )
 
-# Icônes internes
+# Fichiers de données
 file(
 	GLOB
-	icon_int_files
+	data_shared_files
 	data/share/*.png
+	data/share/*.kbm
+	data/share/*.kam
+	data/share/*.ini
 )
 
 # Fichier de ressource pour l'icône de l'application (uniquement sous windows)
@@ -137,9 +140,6 @@ if(${WIN32})
 else(${WIN32})
 	set(icon_rc_file "")
 endif(${WIN32})
-
-# Fichier de keymap
-set(keymap_file data/share/keymap.txt)
 
 # Fichier desktop
 set(desktop_file data/applications/vcc.desktop)
@@ -257,11 +257,11 @@ add_custom_target(
 	COMMAND ${CMAKE_COMMAND} -E remove -f *.cmake *.tar.gz *.deb *.exe
 	COMMAND ${CMAKE_COMMAND} -E remove -f Makefile CMakeCache.txt install_manifest.txt
 	COMMAND ${CMAKE_COMMAND} -E remove -f include/config.h
-	COMMAND ${CMAKE_COMMAND} -E remove -f data/applications/vcc.desktop
 	COMMAND ${CMAKE_COMMAND} -E remove_directory bin
 	COMMAND ${CMAKE_COMMAND} -E remove_directory locale
 	COMMAND ${CMAKE_COMMAND} -E remove_directory CMakeFiles
 	COMMAND ${CMAKE_COMMAND} -E remove_directory _CPack_Packages
+	COMMAND ${CMAKE_COMMAND} -E remove_directory user_config
 )
 
 # Génération du fichier ChangeLog
@@ -317,10 +317,9 @@ else(${INSTALL_TYPE} MATCHES Dev)
 		install(FILES ${LIBRARY_OUTPUT_PATH}/${HOOKDLL_FULL_NAME}
 			DESTINATION ${VCC_BIN_RPATH})
 	endif(${WIN32})
-	install(FILES ${icon_int_files} DESTINATION ${VCC_SHARE_RPATH})
-	install(FILES ${keymap_file} DESTINATION ${VCC_SHARE_RPATH})
-	install(FILES ${readme_aso_files} DESTINATION ${VCC_DOC_RPATH})
-	install(FILES ${desktop_file} DESTINATION ${VCC_APPLICATIONS_RPATH})
+	install(FILES ${data_shared_files} DESTINATION ${VCC_SHARE_RPATH}       )
+	install(FILES ${readme_aso_files}  DESTINATION ${VCC_DOC_RPATH}         )
+	install(FILES ${desktop_file}      DESTINATION ${VCC_APPLICATIONS_RPATH})
 	foreach(loop_var ${ICON_SIZES})
 		install(DIRECTORY data/icons/unix/${loop_var} DESTINATION ${VCC_ICONS_RPATH} PATTERN ".svn" EXCLUDE)
 	endforeach(loop_var)
