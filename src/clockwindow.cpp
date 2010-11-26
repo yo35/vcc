@@ -80,6 +80,7 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	btn_pause.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_clicked));
 	btn_tctrl.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_tctrl_clicked));
 	btn_prefs.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_prefs_clicked));
+	btn_help .signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_help_clicked ));
 	btn_about.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_about_clicked));
 
 	// Toolbar
@@ -98,17 +99,20 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	btn_pause.set_label(_("Pause"       ));
 	btn_tctrl.set_label(_("Time control"));
 	btn_prefs.set_stock_id(Gtk::Stock::PREFERENCES);
+	btn_help .set_stock_id(Gtk::Stock::HELP       );
 	btn_about.set_stock_id(Gtk::Stock::ABOUT      );
-	btn_reset.set_tooltip_text(_("Reset the clock"                      ));
-	btn_pause.set_tooltip_text(_("Pause the clock"                      ));
-	btn_tctrl.set_tooltip_text(_("Change the current time control"      ));
-	btn_prefs.set_tooltip_text(_("Configuration"                        ));
-	btn_about.set_tooltip_text(_("Information about credits and license"));
+	btn_reset.set_tooltip_text(_("Reset the clock"                          ));
+	btn_pause.set_tooltip_text(_("Pause the clock"                          ));
+	btn_tctrl.set_tooltip_text(_("Change the current time control"          ));
+	btn_prefs.set_tooltip_text(_("Set the configuration and the preferences"));
+	btn_help .set_tooltip_text(_("A short help text"                        ));
+	btn_about.set_tooltip_text(_("Information about credits and license"    ));
 	toolbar.append(btn_reset  );
 	toolbar.append(btn_pause  );
 	toolbar.append(sep_toolbar);
 	toolbar.append(btn_tctrl  );
 	toolbar.append(btn_prefs  );
+	toolbar.append(btn_help   );
 	toolbar.append(btn_about  );
 
 	// Géométrie générale
@@ -161,12 +165,7 @@ bool ClockWindow::on_key_release_event(GdkEventKey* event) {
 void ClockWindow::on_myself_shown() {
 	if(!gp->first_launch())
 		return;
-	PreferencesDialog dialog(*this, true);
-	dialog.load_params();
-	dialog.run();
-	dialog.save_params();
 	gp->set_first_launch(false);
-	retrieve_parameters_from_gp();
 }
 
 void ClockWindow::on_pause_clicked() {
@@ -212,6 +211,24 @@ void ClockWindow::on_prefs_clicked() {
 		return;
 	dialog.save_params();
 	retrieve_parameters_from_gp();
+}
+
+void ClockWindow::on_help_clicked() {
+	Gtk::MessageDialog dialog(*this, "", false, Gtk::MESSAGE_INFO, Gtk::BUTTONS_OK, true);
+	dialog.set_title  (_("Help"));
+	dialog.set_message(_(
+		"To start playing and then change the running side of the clock, just pull "
+		"some keys on the keyboard. The left player have to pull a key on the left "
+		"side of the keyboard, the right player on the right side.\n"
+		"\n"
+		"If it does not work, it might be due to a mis-detection of your keyboard "
+		"layout ; you can check it and correct it through the 'Preferences' dialog. "
+		"If your actual keyboard layout is not available among those proposed by "
+		"VCC, you should select \"Default QWERTY\" or one of the default layouts that "
+		"suits good to your keyboard. Thus, only the A-Z keys will be used by VCC, "
+		"but the software will be usable."
+	));
+	dialog.run();
 }
 
 void ClockWindow::on_about_clicked() {

@@ -56,6 +56,7 @@ private:
 	void on_reset_clicked();
 	void on_tctrl_clicked();
 	void on_prefs_clicked();
+	void on_help_clicked ();
 	void on_about_clicked();
 	void on_clock_button_clicked(const Side &side);
 	void on_reset_triggered_from_kb();
@@ -83,6 +84,7 @@ private:
 	Gtk::ToolButton             btn_pause;
 	Gtk::ToolButton             btn_tctrl;
 	Gtk::ToolButton             btn_prefs;
+	Gtk::ToolButton             btn_help ;
 	Gtk::ToolButton             btn_about;
 	Gtk::SeparatorToolItem      sep_toolbar;
 	Gtk::HBox                   dial_layout;

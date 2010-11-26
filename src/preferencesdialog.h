@@ -34,7 +34,6 @@
 #include <gtkmm/combobox.h>
 #include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/liststore.h>
-#include <gtkmm/textview.h>
 #include "optionenums.h"
 #include "areamap.h"
 #include "keyboardmapwidget.h"
@@ -44,7 +43,7 @@ class PreferencesDialog : public Gtk::Dialog {
 public:
 
 	// Constructeur
-	PreferencesDialog(Gtk::Window &parent, bool first_launch=false);
+	PreferencesDialog(Gtk::Window &parent);
 
 	// Chargement et write-back des options
 	void load_params();
@@ -75,7 +74,6 @@ private:
 	};
 
 	// Données membres
-	bool first_launch_config;
 	Gtk::Notebook pages;
 	std::string curr_kb_code;
 	std::map<std::string, AreaMap> areas;
@@ -111,7 +109,6 @@ private:
 	Gtk::Label                        area_selector_label;
 	Gtk::RadioButton::Group           area_selector_group;
 	EnumArray<Side, Gtk::RadioButton> area_selector;
-	Gtk::TextView                     first_launch_help;
 };
 
 #endif
