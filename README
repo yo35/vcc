@@ -11,8 +11,8 @@ were lacking of such a stuff, so we could not blitz, so we were in bad trouble !
 
 Features
 --------
- - two active key areas on the keyboard (left and right) to trigger player shift
- - support for exotic time control modes such as Fischer, Bronstein, hour-glass
+ - two active key areas on the keyboard (left and right) to pull the clock
+ - support for exotic time control modes such as Fischer, Bronstein, hourglass
  - time resolution of 1 millisecond
  - inactivation of the window keys on Windows
 
@@ -32,6 +32,14 @@ me to improve Virtual Chess Clock. Please mention details about your OS (name,
 32 or 64 bits, aso...) and the context in which the bug occurs in your bug
 report. Of course, you can also mail me if you have a question about Virtual
 Chess Clock, or if you wish to get a new feature in further versions.
+
+
+Translation
+-----------
+If you want to translate Virtual Chess Clock in your native language, it is
+possible! Translation can be done quite quickly as VCC is not a big software,
+and you don't need to have any special proficiency in programming or software
+developping. Please contact me if you are interested.
 
 
 --

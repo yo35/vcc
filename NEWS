@@ -1,3 +1,15 @@
+Virtual Chess Clock 1.0 (November 26, 2010)
+
+	* The active keys on the keyboard are now managed through a geometric description
+	  of the keyboard layout, so that VCC can work well even if the final have not
+	  the same keyboard layout configuration than myself (I'm using a French keyboard
+	  layout). Layout description file are available for the Belgian, Brazilian,
+	  Canadian, German, French, Italian, Portuguese, Swedish, English and American
+	  keyboard layouts.
+	* Clock reset can now be performed by pulling some keys on the keyboard
+	* Customization is now available through the 'Preferences' dialog
+
+
 Virtual Chess Clock 0.999 (October 24, 2010)
 
 	* The last time control selected is now recorded when VCC closes
