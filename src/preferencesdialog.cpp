@@ -99,19 +99,19 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kb_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_kb_changed));
 	display_kp.set_label(_("Display the numeric keypad"));
 	display_kp.signal_toggled().connect(sigc::mem_fun(*this, &PreferencesDialog::on_display_kp_changed));
-	kbm_widget_frame.set_label(_("Modify the sensitive areas by clicking on the keyboard"));
+	kbm_widget_frame.set_label(_("Modify the active areas by clicking on the keyboard"));
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		area_selector[*k].set_group(area_selector_group);
 		area_selector[*k].signal_toggled().connect(
 			sigc::mem_fun(*this, &PreferencesDialog::on_area_changed));
 	}
-	area_selector[LEFT ].set_label("Modify the left player's area" );
-	area_selector[RIGHT].set_label("Modify the right player's area");
+	area_selector[LEFT ].set_label(_("Modify the left player's area" ));
+	area_selector[RIGHT].set_label(_("Modify the right player's area"));
 	area_selector[LEFT ].set_active(true);
 	on_area_changed();
 
 	// Tooltip
-	Glib::ustring lg1 = _("Sensitive areas where players can pull the clock when playing");
+	Glib::ustring lg1 = _("Active areas that players can use to pull the clock when playing");
 	Glib::ustring lg2 = _("left player's area");
 	Glib::ustring lg3 = _("right player's area");
   Glib::ustring coul2 = kbm_widget.color(LEFT ).to_string();
@@ -139,7 +139,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 
 	// Géométrie générale
 	kb_page.set_border_width(5);
-	pages.append_page(kb_page, _("Keyboard sensitive areas"));
+	pages.append_page(kb_page, _("Keyboard active areas"));
 	raz_page.set_border_width(5);
 	pages.append_page(raz_page, _("Reset options"));
 	get_vbox()->set_spacing(5);

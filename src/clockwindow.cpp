@@ -218,15 +218,15 @@ void ClockWindow::on_help_clicked() {
 	dialog.set_title  (_("Help"));
 	dialog.set_message(_(
 		"To start playing and then change the running side of the clock, just pull "
-		"some keys on the keyboard. The left player have to pull a key on the left "
+		"some keys on the keyboard. The left player have to pull some key on the left "
 		"side of the keyboard, the right player on the right side.\n"
 		"\n"
 		"If it does not work, it might be due to a mis-detection of your keyboard "
-		"layout ; you can check it and correct it through the 'Preferences' dialog. "
+		"layout; you can check it and correct it through the \"Preferences\" dialog. "
 		"If your actual keyboard layout is not available among those proposed by "
 		"VCC, you should select \"Default QWERTY\" or one of the default layouts that "
 		"suits good to your keyboard. Thus, only the A-Z keys will be used by VCC, "
-		"but the software will be usable."
+		"but the software will be usable anyway."
 	));
 	dialog.run();
 }

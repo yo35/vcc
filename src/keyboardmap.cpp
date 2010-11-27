@@ -101,7 +101,7 @@ void KeyboardMap::load(const std::string &path) {
 	int no_version = file.get();
 	if(no_version!=1) {
 		throw std::runtime_error(Glib::ustring::compose(
-			_("The version (%1) of the keyboard map file %2 is not supported."), no_version, path));
+			_("The version (%1) of the keyboard map file %2 is not supported"), no_version, path));
 	}
 
 	// Ligne d'en-tête
