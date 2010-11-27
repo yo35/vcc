@@ -99,7 +99,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kb_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_kb_changed));
 	display_kp.set_label(_("Display the numeric keypad"));
 	display_kp.signal_toggled().connect(sigc::mem_fun(*this, &PreferencesDialog::on_display_kp_changed));
-	area_selector_label.set_label(_("Modify the sensitive areas by clicking on the keyboard:"));
+	kbm_widget_frame.set_label(_("Modify the sensitive areas by clicking on the keyboard"));
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		area_selector[*k].set_group(area_selector_group);
 		area_selector[*k].signal_toggled().connect(
@@ -123,17 +123,19 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kbm_widget.set_tooltip_markup(tooltip);
 
 	// Onglet keyboard (géométrie)
-	kb_page             .set_spacing(5);
-	kb_selector_layout  .set_spacing(5);
+	kbm_widget_layout .set_spacing(5);
+	kb_page           .set_spacing(5);
+	kb_selector_layout.set_spacing(5);
+	kbm_widget_layout.pack_start(area_selector[LEFT ], Gtk::PACK_SHRINK);
+	kbm_widget_layout.pack_start(area_selector[RIGHT], Gtk::PACK_SHRINK);
+	kbm_widget_layout.pack_start(kbm_widget);
+	kbm_widget_layout.set_border_width(5);
+	kbm_widget_frame.add(kbm_widget_layout);
 	kb_selector_layout.pack_start(kb_selector_label, Gtk::PACK_SHRINK);
 	kb_selector_layout.pack_start(kb_selector);
 	kb_page.pack_start(kb_selector_layout, Gtk::PACK_SHRINK);
 	kb_page.pack_start(display_kp, Gtk::PACK_SHRINK);
-	kb_page.pack_start(kbm_widget);
-	area_selector_layout.pack_start(area_selector_label, Gtk::PACK_SHRINK);
-	kb_page.pack_start(area_selector_layout, Gtk::PACK_SHRINK);
-	kb_page.pack_start(area_selector[LEFT ], Gtk::PACK_SHRINK);
-	kb_page.pack_start(area_selector[RIGHT], Gtk::PACK_SHRINK);
+	kb_page.pack_start(kbm_widget_frame);
 
 	// Géométrie générale
 	kb_page.set_border_width(5);

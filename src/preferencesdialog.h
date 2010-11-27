@@ -104,9 +104,9 @@ private:
 	Glib::RefPtr<Gtk::ListStore>      kb_selector_data;
 	Gtk::ComboBox                     kb_selector;
 	Gtk::CheckButton                  display_kp;
+	Gtk::Frame                        kbm_widget_frame;
+	Gtk::VBox                         kbm_widget_layout;
 	KeyboardMapWidget                 kbm_widget;
-	Gtk::HBox                         area_selector_layout;
-	Gtk::Label                        area_selector_label;
 	Gtk::RadioButton::Group           area_selector_group;
 	EnumArray<Side, Gtk::RadioButton> area_selector;
 };
