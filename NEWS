@@ -1,4 +1,4 @@
-Virtual Chess Clock 1.0 (November 26, 2010)
+Virtual Chess Clock 1.0 (November 27, 2010)
 
 	* The active keys on the keyboard are now managed through a geometric description
 	  of the keyboard layout, so that VCC can work well even if the final have not
