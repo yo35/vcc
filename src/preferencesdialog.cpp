@@ -75,7 +75,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 		key_combination[*k].set_group(key_combination_group);
 		raz_by_keyboard_layout.pack_start(key_combination[*k]);
 	}
-	raz_delay_label.set_label(_("Delay"));
+	raz_delay_label.set_label(_("Delay (milliseconds)"));
 	raz_delay_layout.set_spacing(5);
 	raz_delay.set_digits(0);
 	raz_delay.set_range(0, 2000);
