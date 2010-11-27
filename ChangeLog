@@ -1,3 +1,305 @@
+2010-11-27  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* NEWS: Release 1.0 le 27/11/2010
+	* po/fr.po, po/vcc.pot, src/clockwindow.cpp, src/keyboardmap.cpp,
+	  src/preferencesdialog.cpp: Corrections + traduction français
+	* src/preferencesdialog.cpp, src/preferencesdialog.h: Ajout frame
+	  dans fenêtre config clavier
+	* src/areamap.cpp, src/preferencesdialog.cpp: Corrections textes
+
+2010-11-26  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/main.cpp: Conversion des locales pour Windows
+
+2010-11-26  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* CMakeLists.txt: Mise à jour script d'installation
+	* NEWS, README: Mise à jour des notices
+	* src/clockwindow.cpp, src/clockwindow.h,
+	  src/preferencesdialog.cpp, src/preferencesdialog.h: Texte d'aide
+	  succinct
+
+2010-11-24  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/preferencesdialog.cpp, src/preferencesdialog.h: Zone de texte
+	  pour aide premier lancement
+	* src/clockwindow.cpp, src/preferencesdialog.cpp,
+	  src/preferencesdialog.h: PreferenceDialog a un mode first_lauch
+	* src/preferencesdialog.cpp: Debug
+	* src/clockwindow.cpp, src/clockwindow.h, src/params.cpp,
+	  src/params.h: Détection du premier démarrage
+	* src/areamap.cpp, src/areamap.h, src/areaselectorwidget.cpp,
+	  src/areaselectorwidget.h, src/keyboardmapwidget.cpp,
+	  src/keyboardmapwidget.h, src/preferencesdialog.cpp,
+	  src/preferencesdialog.h: Modification mode de modif/présentation
+	  des zones actives du keyboard
+	* src/preferencesdialog.cpp: Test légende dans tooltip
+
+2010-11-23  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/areaselectorwidget.cpp, src/areaselectorwidget.h: Annulation
+	  style bypassing
+
+2010-11-23  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/areaselectorwidget.cpp, src/areaselectorwidget.h: Application
+	  d'un style en bypassant le thème GTK par défaut
+
+2010-11-23  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/preferencesdialog.cpp: Tri de la liste des claviers
+	* data/share/it.kbm, data/share/keyboardmaps.ini: Clavier italien
+	* data/share/br.kbm, data/share/keyboardmaps.ini: Clavier brésilien
+	* data/share/keyboardmaps.ini, data/share/pt.kbm: Clavier portugais
+	* data/share/keyboardmaps.ini, data/share/se.kbm: Clavier suédois
+	* data/share/de.kbm, data/share/keyboardmaps.ini: Clavier allemand
+	* data/share/uk.kbm: Debug
+	* data/share/keyboardmaps.ini, data/share/uk.kbm, src/keys.cpp:
+	  Clavier UK
+	* src/areaselectorwidget.cpp: Debug
+
+2010-11-22  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* data/share/keyboardmaps.ini: Debug
+	* data/share/be.kbm: Proprisation
+	* data/share/fr.kbm: Proprisation
+	* data/share/105.kam: Debug
+	* data/share/104.kam, data/share/105.kam, data/share/ca.kbm,
+	  data/share/us.kbm: Debug
+	* data/share/104.kam, data/share/105.kam, data/share/ca.kbm:
+	  Proprisation
+	* data/share/us.kbm: Proprisation
+	* data/share/us.kbm: Proprisation
+	* data/share/default_azerty.kbm, data/share/default_qwerty.kbm,
+	  data/share/default_qwertz.kbm: Debug claviers par défaut
+	* src/debugdialog.cpp, src/debugdialog.h, src/keys.cpp: Ajout
+	  colonne nom de la touche
+	* src/debugdialog.cpp, src/debugdialog.h, src/keys.cpp, src/keys.h,
+	  src/strings.cpp, src/strings.h: Fenêtre de débug
+	* src/clockwindow.cpp, src/debugdialog.cpp, src/debugdialog.h:
+	  Debug dialog
+
+2010-11-21  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/keys.cpp: Traitement caractère 0
+	* src/keys.cpp: Traitement caractère 0
+	* src/clockwindow.cpp, src/clockwindow.h: Delayer pour ouverture
+	  fenêtre de Debug
+	* src/clockwindow.cpp: Proprisation
+	* data/share/26.kam, data/share/default_azerty.kbm,
+	  data/share/default_qwerty.kbm, data/share/default_qwertz.kbm,
+	  data/share/keyboardmaps.ini: Claviers par défaut
+	* data/share/104.kam, data/share/105.kam, data/share/fr.kam,
+	  data/share/keyboardmaps.ini, data/share/us.kam: Renommage
+	* data/share/be.kbm, data/share/ca.kbm, data/share/fr.kbm,
+	  data/share/keyboardmaps.ini: Clavier canadien
+	* data/share/be.kbm, data/share/fr.kbm,
+	  data/share/keyboardmaps.ini: Clavier belge
+	* src/params.cpp, src/params.h: Détection automatique du clavier à
+	  utiliser par défaut en fonction des locales de l'utilisateur
+	* data/share/keyboardmaps.ini, src/inistruct.cpp: Les lignes
+	  clé=valeur sont maintenant trimées
+	* src/main.cpp, src/params.cpp, src/params.h: Détection de la
+	  locale de l'utilisateur
+	* src/main.cpp: Debug
+	* data/share/fr.kam, data/share/fr.kbm, data/share/us.kam,
+	  data/share/us.kbm, src/areamap.cpp, src/keyboardmap.cpp:
+	  Indication de version dans les fichiers .kam et .kbm
+	* data/share/fr.kam, data/share/fr.kbm,
+	  data/share/keyboardmaps.ini, data/share/us.kam,
+	  data/share/us.kbm: Infos de configuration
+	* src/keyboardmapwidget.cpp, src/keyboardmapwidget.h: Ajustement de
+	  taille pour textes coupés par \n
+	* data/share/fr.kbm, data/share/us.kam, data/share/us.kbm,
+	  src/keys.cpp: Debug
+	* src/keys.cpp: Debug
+	* src/keyboardmapwidget.cpp, src/keys.cpp: Affichage txt
+	  multi-ligne
+	* data/share/fr.kbm, src/keys.cpp: Debug
+	* data/share/fr.kbm, src/keyboardmap.cpp, src/keyboardmap.h,
+	  src/keyboardmapwidget.cpp, src/keyboardmapwidget.h, src/keys.cpp,
+	  src/keys.h: Sélection des keyval à afficher dans les .kbm
+	* src/preferencesdialog.cpp: Debug
+
+2010-11-20  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/keyboardmapwidget.cpp, src/keyboardmapwidget.h,
+	  src/preferencesdialog.cpp, src/preferencesdialog.h: Affichage
+	  optionnel du pavé num
+	* data/share/fr.kbm, data/share/us.kbm, src/inistruct.cpp,
+	  src/inistruct.h, src/keyboardmap.cpp, src/keys.cpp, src/keys.h,
+	  src/params.cpp, src/params.h, src/preferencesdialog.cpp,
+	  src/preferencesdialog.h: Affichage optionnel du pavé num
+	* data/share/fr.kbm, data/share/us.kbm, src/keyboardmap.cpp,
+	  src/keyboardmap.h, src/keyboardmapwidget.cpp: Champ pour largeur
+	  du pavé num
+	* src/keys.cpp: Ajout espace insécable
+	* src/keys.cpp: Txt touches
+	* src/keyboardmapwidget.cpp: Centrage vertical du texte sur les
+	  touches
+	* src/preferencesdialog.cpp: Debug
+	* src/preferencesdialog.cpp, src/preferencesdialog.h:
+	  Réorganisation page kb
+	* src/keyboardmapwidget.cpp, src/keyboardmapwidget.h: Ajustement
+	  taille clavier
+	* src/keyboardmapwidget.cpp: Debug
+	* src/keyboardmapwidget.cpp, src/keyboardmapwidget.h,
+	  src/preferencesdialog.cpp, src/preferencesdialog.h: Affichage des
+	  touches pressées sur le widget clavier
+	* src/areamap.cpp, src/areamap.h, src/preferencesdialog.cpp,
+	  src/preferencesdialog.h: Debug
+	* src/clockwindow.cpp: Debug
+	* data/share/fr.kam, data/share/keyboardmaps.ini,
+	  data/share/keymap.txt, data/share/us.kam, src/areamap.cpp,
+	  src/areamap.h, src/clockwindow.cpp, src/clockwindow.h,
+	  src/datafile.cpp, src/params.cpp, src/params.h: Mise-en-place du
+	  système de gestion de touche tenant compte du clavier
+	* src/datafile.cpp, src/datafile.h, src/datafilein.cpp,
+	  src/datafilein.h, src/keyboardmap.cpp: Classe d'écriture
+	* src/datafilein.cpp, src/datafilein.h, src/keyboardmap.cpp,
+	  src/keyboardmap.h: Classe pour la lecture des fichiers type .kbm
+
+2010-11-15  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/keyboardmapwidget.cpp, src/preferencesdialog.cpp,
+	  src/preferencesdialog.h: Mise-en-place widget de sélection de
+	  zones
+
+2010-11-12  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/areaselectorwidget.h: Debug
+	* src/areaselectorwidget.cpp: Debug signal_changed
+	* src/areaselectorwidget.cpp: Modif couleurs
+	* src/areaselectorwidget.cpp, src/areaselectorwidget.h,
+	  src/preferencesdialog.cpp, src/preferencesdialog.h: Widget de
+	  sélection de zone
+	* data/share/fr.kbm, data/share/keyboardmaps.ini,
+	  data/share/us.kbm, src/params.cpp: Plan pour le clavier américain
+	* src/params.cpp, src/params.h, src/preferencesdialog.cpp,
+	  src/preferencesdialog.h: Chargement et affichage des plans de
+	  clavier
+	* src/preferencesdialog.cpp: Espacements
+	* src/clockwindow.cpp, src/params.cpp, src/params.h,
+	  src/preferencesdialog.cpp, src/preferencesdialog.h:
+	  Paramétrisation du délai avant RAZ
+	* src/clockwindow.cpp, src/preferencesdialog.cpp,
+	  src/preferencesdialog.h: Sauvegarde des options de RAZ
+	* src/clockwindow.cpp: Debug
+	* src/clockwindow.cpp, src/optionenums.cpp, src/optionenums.h,
+	  src/params.cpp, src/params.h: Paramétrisation touches de RAZé
+	* src/preferencesdialog.cpp, src/preferencesdialog.h: Design page
+	  RAZ
+	* src/timecontroldialog.cpp: Commentaires
+	* src/timecontroldialog.h: Commentaires
+
+2010-11-11  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/timecontroldialog.cpp: Amélioration espacement
+	* src/clockwindow.cpp, src/preferencesdialog.cpp,
+	  src/preferencesdialog.h: Dialog préférences
+	* data/share/keyboardmaps.ini, src/params.cpp, src/params.h:
+	  Fichier d'index pour les KBM
+	* src/inistruct.cpp, src/inistruct.h: Fonctions de recherche de
+	  clés
+	* src/keyboardmapwidget.cpp, src/keyboardmapwidget.h: Sélection
+	  touche unique par la souris
+	* src/keyboardmapwidget.cpp, src/keyboardmapwidget.h:
+	  Simplification sélection
+	  é
+	* src/clockwindow.cpp, src/keyboardmapwidget.cpp,
+	  src/keyboardmapwidget.h: Récupération des zones sur le clavier
+
+2010-11-06  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/keyboardmapwidget.cpp, src/keyboardmapwidget.h: Zone de
+	  sélection rectangulaire
+	* src/keyboardmapwidget.cpp, src/keyboardmapwidget.h: Possibilité
+	  d'affecter une couleur aux touches du clavier
+	* src/keyboardmap.cpp: Acceptation de multiples instances d'un même
+	  keyval sur une même touche dans la table de traduction
+	* src/clockwindow.cpp, src/keyboardmapwidget.cpp,
+	  src/keyboardmapwidget.h: Debug
+	* src/keyboardmap.cpp, src/keyboardmap.h,
+	  src/keyboardmapwidget.cpp, src/keyboardmapwidget.h: Couche de
+	  traduction keyval->physique + affichage de la touche pressée dans
+	  le widget
+	* src/clockwindow.cpp, src/clockwindow.h: Création d'un bouton
+	  'préférences'
+	* src/clockwindow.cpp, src/keyboardmapwidget.cpp,
+	  src/keyboardmapwidget.h: Debug
+	* data/share/fr.kbm, src/clockwindow.cpp: Touche print screené
+	* data/share/fr.kbm: KB layout français
+	* src/clockwindow.cpp: Debug
+	* src/clockwindow.cpp, src/keyboardmap.cpp, src/keyboardmap.h,
+	  src/keyboardmapwidget.cpp, src/keys.cpp, src/keys.h: Proprisation
+	  structures de manipulation de touchesé
+
+2010-11-02  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/keyboardmapwidget.cpp, src/keyboardmapwidget.h, src/keys.cpp,
+	  src/keys.h: Affichage des noms de touche
+	* src/keyboardmapwidget.cpp, src/keyboardmapwidget.h: Debug petites
+	  courbure
+
+2010-11-01  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/keyboardmapwidget.cpp: Proprisation
+	* src/clockwindow.cpp, src/clockwindow.h,
+	  src/keyboardmapwidget.cpp, src/keyboardmapwidget.h: Tracés des
+	  polygones arrondis
+	* src/keyboardmap.cpp, src/keyboardmap.h,
+	  src/keyboardmapwidget.cpp, src/keyboardmapwidget.h: Gestion de la
+	  géométrie du clavier
+
+2010-10-31  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* CMakeLists.txt: Le numéro de version passe à 1.0
+	* src/clockwindow.cpp, src/clockwindow.h, src/eventdelayer.cpp,
+	  src/eventdelayer.h: Réinitialisation de l'horloge par le clavieré
+	* src/clockwindow.h, src/timer.cpp, src/timestamp.cpp,
+	  src/timestamp.h: Debug
+	* src/clockwindow.cpp, src/params.cpp, src/params.h: Paramètrage de
+	  la demande de confirmation lors de la remise à zéro
+	* src/timecontrol.h: Debug
+	* src/side.h: Debug
+	* src/inistruct.cpp, src/inistruct.h, src/inistruct.inl,
+	  src/params.cpp, src/params.h, src/strings.cpp, src/strings.h:
+	  Proprisation des fonction de lecture/écriture de clé dans une
+	  structure INI
+
+2010-10-30  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* CMakeLists.txt, data/icons/vcc_windows.xcf,
+	  data/icons/windows/vcc.ico: Proprisation install d'icones pour
+	  windaube
+	* data/icons/windows/vcc.ico: Test
+	* CMakeLists.txt, data/applications, data/applications/vcc.desktop,
+	  data/applications/vcc.desktop.in, include/config.h.in,
+	  src/main.cpp: Proprisation
+	* data/icons/unix, data/icons/unix/128x128,
+	  data/icons/unix/128x128/apps,
+	  data/icons/unix/128x128/apps/vcc.png, data/icons/unix/16x16,
+	  data/icons/unix/16x16/apps, data/icons/unix/16x16/apps/vcc.png,
+	  data/icons/unix/24x24, data/icons/unix/24x24/apps,
+	  data/icons/unix/24x24/apps/vcc.png, data/icons/unix/32x32,
+	  data/icons/unix/32x32/apps, data/icons/unix/32x32/apps/vcc.png,
+	  data/icons/unix/48x48, data/icons/unix/48x48/apps,
+	  data/icons/unix/48x48/apps/vcc.png, data/icons/unix/64x64,
+	  data/icons/unix/64x64/apps, data/icons/unix/64x64/apps/vcc.png,
+	  data/icons/vcc.ico, data/icons/vcc.png, data/icons/vcc_small.svg,
+	  data/icons/vcc_windows.xcf, data/icons/windows,
+	  data/icons/windows/vcc.ico, data/icons/windows/winicon.rc,
+	  data/icons/winicon.rc: Icônes avec tailles adaptées
+	* CMakeLists.txt, include/config.h.in, src/main.cpp: L'icône de
+	  l'application devient l'icône de toutes les fenêtres
+	* src/inistruct.cpp, src/inistruct.h, src/strings.cpp,
+	  src/strings.h: Fonctions de manipulations des chaînes de
+	  caractères
+	* src/main.cpp: Ajout d'une icone par défaut pour les fenêtres
+	* data/applications/vcc.desktop.in: Traduction en français
+	* src/timer.cpp, src/timer.h, src/timestamp.cpp, src/timestamp.h:
+	  Les fonctions de manipulation de temps deviennent publiques
+
 2010-10-24  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* CMakeLists.txt, NEWS: Update NEWS et numéro de version passe à
