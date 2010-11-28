@@ -298,8 +298,12 @@ add_custom_target(
 )
 add_dependencies(${EXECUTABLE_NAME} translations)
 
+# Informations
+message(STATUS "VCC will be build in ${CMAKE_BUILD_TYPE} mode")
+
 # Exécution
 if(${INSTALL_TYPE} MATCHES Dev)
+	message(STATUS "VCC is configured for devel")
 	add_custom_target(
 		run
 		COMMAND ${EXECUTABLE_OUTPUT_PATH}/${EXECUTABLE_NAME}
@@ -308,6 +312,7 @@ if(${INSTALL_TYPE} MATCHES Dev)
 
 # Installation
 else(${INSTALL_TYPE} MATCHES Dev)
+	message(STATUS "VCC is configured in ${INSTALL_TYPE} install mode")
 	message(STATUS "VCC will be installed in ${CMAKE_INSTALL_PREFIX}")
 
 	# Cible 'make install'
