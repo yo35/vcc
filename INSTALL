@@ -51,3 +51,14 @@ are:
 	  target; <cmake_generator> may take one of the following value:
 		- "Unix Makefiles" (Unix)
 		- "MinGW Makefiles" (MinGW compiler on Windows)
+
+Since VCC version 1.0.1, a 'configure' script both for Unix and Windows. Therefore,
+the building from sources can be performed in through the usual process for
+UNIX packages:
+	$ cd /somewhere/vcc
+	$ ./configure         <- should be replace by 'configure.win32' on Windows
+	$ make
+	$ make install
+
+The underlying default parameters defined by configure can be modified. See
+'configure --help' to get more information.
