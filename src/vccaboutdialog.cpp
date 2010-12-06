@@ -31,7 +31,7 @@ VccAboutDialog::VccAboutDialog() : Gtk::AboutDialog() {
 
 	// Nom et version du programme
 	set_program_name(PROJECT_FULL_NAME);
-	set_version(PROJECT_VERSION_MAJOR "." PROJECT_VERSION_MINOR);
+	set_version(PROJECT_VERSION_MAJOR "." PROJECT_VERSION_MINOR "." PROJECT_VERSION_PATCH);
 	set_comments(_("A simple and free chess clock software"));
 
 	// Auteur
