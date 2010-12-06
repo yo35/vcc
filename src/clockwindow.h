@@ -70,6 +70,9 @@ private:
 	Keyval             reinit_trigger[2];
 	const KeyboardMap *curr_kbm;
 	const AreaMap     *curr_kam;
+	#ifdef OS_IS_WINDOWS
+		Keycode curr_key_down;
+	#endif
 
 	// Widgets
 	EnumArray<Side, DialWidget> dial;

@@ -58,6 +58,9 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	reinit_delayer.signal_occurred().connect(
 		sigc::mem_fun(*this, &ClockWindow::on_reset_triggered_from_kb));
 	retrieve_parameters_from_gp();
+	#ifdef OS_IS_WINDOWS
+		curr_key_down = 0;
+	#endif
 
 	// Divers
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
@@ -128,6 +131,14 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 
 bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 
+	// Coupe-circuit pour gérer les problèmes d'événements multiples sous windows
+	// lorsque l'on maintient une touche enfoncée
+	#ifdef OS_IS_WINDOWS
+		if(curr_key_down==event->hardware_keycode)
+			return true;
+		curr_key_down = event->hardware_keycode;
+	#endif
+	
 	// Réinitialisation par le clavier
 	if(event->keyval==reinit_trigger[0]) reinit_delayer.trigger(0);
 	if(event->keyval==reinit_trigger[1]) reinit_delayer.trigger(1);
@@ -150,7 +161,14 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 }
 
 bool ClockWindow::on_key_release_event(GdkEventKey* event) {
-
+	
+	// Coupe-circuit pour gérer les problèmes d'événements multiples sous windows
+	// lorsque l'on maintient une touche enfoncée
+	#ifdef OS_IS_WINDOWS
+		if(curr_key_down==event->hardware_keycode)
+			curr_key_down = 0;
+	#endif
+	
 	// Réinitialisation par le clavier
 	if(event->keyval==reinit_trigger[0]) reinit_delayer.cancel_trigger(0);
 	if(event->keyval==reinit_trigger[1]) reinit_delayer.cancel_trigger(1);
