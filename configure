@@ -3,11 +3,7 @@
 # Avertissement
 echo "This script is only a frontend for cmake. You can also run cmake directly."
 
-# Paramètres par défaut
-CMAKE_INSTALL_PREFIX=/usr/local
-INSTALL_TYPE=Compile
-CMAKE_BUILD_TYPE=Release
-
+# Texte d'aide
 print_help() {
 	echo -e "Use: ./configure [options]"
 	echo -e "Available options are:"
@@ -22,6 +18,11 @@ print_help() {
 	echo -e "\t\t * Release : compilation with -O3 -DNDEBUG"
 	echo -e "Example: ./configure --build_type=RelWithDebInfo --install_type=Dev"
 }
+
+# Paramètres par défaut
+CMAKE_INSTALL_PREFIX=/usr/local
+INSTALL_TYPE=Compile
+CMAKE_BUILD_TYPE=Release
 
 # Analyse de la ligne de commande
 for ARG in "$@"
