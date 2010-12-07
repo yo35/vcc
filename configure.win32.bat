@@ -1,4 +1,25 @@
 @echo off
+rem ############################################################################
+rem #                                                                          #
+rem #    This file is part of Virtual Chess Clock, a chess clock software      #
+rem #                                                                          #
+rem #    Copyright (C) 2010  Yoann Le Montagner <yo35(at)melix(dot)net>        #
+rem #                                                                          #
+rem #    This program is free software: you can redistribute it and/or modify  #
+rem #    it under the terms of the GNU General Public License as published by  #
+rem #    the Free Software Foundation, either version 3 of the License, or     #
+rem #    (at your option) any later version.                                   #
+rem #                                                                          #
+rem #    This program is distributed in the hope that it will be useful,       #
+rem #    but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+rem #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+rem #    GNU General Public License for more details.                          #
+rem #                                                                          #
+rem #    You should have received a copy of the GNU General Public License     #
+rem #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
+rem #                                                                          #
+rem ############################################################################
+
 
 rem Avertissement
 echo This script is only a frontend for cmake. You can also run cmake directly.
@@ -36,7 +57,7 @@ rem Analyse de la ligne de commande
 	:end_read_param
 	shift
 	goto loop_parse_args
-	
+
 	:read_param_prefix
 		shift
 		set CMAKE_INSTALL_PREFIX=%1
@@ -49,7 +70,7 @@ rem Analyse de la ligne de commande
 		shift
 		set CMAKE_BUILD_TYPE=%1
 		goto end_read_param
-	
+
 :end_loop_parse_args
 
 rem Appel à cmake
