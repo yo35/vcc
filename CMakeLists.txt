@@ -270,6 +270,12 @@ add_custom_target(
 	COMMAND ./changelog.sh
 )
 
+# Affichage des statistiques
+add_custom_target(
+	stats
+	COMMAND ./statistics.sh
+)
+
 # Génération du fichier de template pour les traductions
 add_custom_target(
 	pot
