@@ -103,7 +103,7 @@ msgstr "Afficher le pavé numérique"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:102
 msgid "Modify the active areas by clicking on the keyboard"
-msgstr "Modifier les zones actives en cliquant sur le clavier"
+msgstr "Modifiez les zones actives en cliquant sur le clavier"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:108
 msgid "Modify the left player's area"
