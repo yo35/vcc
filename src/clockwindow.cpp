@@ -2,7 +2,7 @@
  *                                                                            *
  *    This file is part of Virtual Chess Clock, a chess clock software        *
  *                                                                            *
- *    Copyright (C) 2010  Yoann Le Montagner <yo35(at)melix(dot)net>          *
+ *    Copyright (C) 2010-2011  Yoann Le Montagner <yo35(at)melix(dot)net>     *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -138,7 +138,7 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 			return true;
 		curr_key_down = event->hardware_keycode;
 	#endif
-	
+
 	// Réinitialisation par le clavier
 	if(event->keyval==reinit_trigger[0]) reinit_delayer.trigger(0);
 	if(event->keyval==reinit_trigger[1]) reinit_delayer.trigger(1);
@@ -161,14 +161,14 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 }
 
 bool ClockWindow::on_key_release_event(GdkEventKey* event) {
-	
+
 	// Coupe-circuit pour gérer les problèmes d'événements multiples sous windows
 	// lorsque l'on maintient une touche enfoncée
 	#ifdef OS_IS_WINDOWS
 		if(curr_key_down==event->hardware_keycode)
 			curr_key_down = 0;
 	#endif
-	
+
 	// Réinitialisation par le clavier
 	if(event->keyval==reinit_trigger[0]) reinit_delayer.cancel_trigger(0);
 	if(event->keyval==reinit_trigger[1]) reinit_delayer.cancel_trigger(1);

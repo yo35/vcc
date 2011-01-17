@@ -2,7 +2,7 @@
  *                                                                            *
  *    This file is part of Virtual Chess Clock, a chess clock software        *
  *                                                                            *
- *    Copyright (C) 2010  Yoann Le Montagner <yo35(at)melix(dot)net>          *
+ *    Copyright (C) 2010-2011  Yoann Le Montagner <yo35(at)melix(dot)net>     *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -51,7 +51,6 @@
 #define VCC_APPLICATIONS_RPATH "@VCC_APPLICATIONS_RPATH@"
 #define VCC_DOC_RPATH          "@VCC_DOC_RPATH@"
 #define VCC_LOCALE_RPATH       "@VCC_LOCALE_RPATH@"
-
 
 
 #endif
