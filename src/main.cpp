@@ -41,6 +41,9 @@
 		if(src=="Swedish"   ) return "sv";
 		if(src=="Portuguese") return "pt";
 		if(src=="Italian"   ) return "it";
+		if(src=="Spanish"   ) return "es";
+		if(src=="Catalan"   ) return "ca";
+		if(src=="Irish"     ) return "ga";
 		return src;
 	}
 
@@ -59,6 +62,9 @@
 		if(src=="Portugal"      ) return "PT";
 		if(src=="Brazil"        ) return "BR";
 		if(src=="Italy"         ) return "IT";
+		if(src=="Ireland"       ) return "IE";
+		if(src=="Spain"         ) return "ES";
+		if(src=="Mexico"        ) return "MX";
 		return src;
 	}
 
