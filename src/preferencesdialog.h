@@ -34,6 +34,7 @@
 #include <gtkmm/combobox.h>
 #include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/liststore.h>
+#include <gdkmm/pixbuf.h>
 #include "optionenums.h"
 #include "areamap.h"
 #include "keyboardmapwidget.h"
@@ -65,11 +66,13 @@ private:
 
 	// Modèle pour le combo box de sélection du clavier
 	class KbSelectorModel : public Gtk::TreeModelColumnRecord {
-		Gtk::TreeModelColumn<std::string  > m_code;
-		Gtk::TreeModelColumn<Glib::ustring> m_name;
+		Gtk::TreeModelColumn<std::string               > m_code;
+		Gtk::TreeModelColumn<Glib::ustring             > m_name;
+		Gtk::TreeModelColumn<Glib::RefPtr<Gdk::Pixbuf> > m_icon;
 	public:
-		Gtk::TreeModelColumn<std::string  > code() const;
-		Gtk::TreeModelColumn<Glib::ustring> name() const;
+		Gtk::TreeModelColumn<std::string               > code() const;
+		Gtk::TreeModelColumn<Glib::ustring             > name() const;
+		Gtk::TreeModelColumn<Glib::RefPtr<Gdk::Pixbuf> > icon() const;
 		KbSelectorModel();
 	};
 

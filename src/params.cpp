@@ -212,6 +212,21 @@ Glib::ustring Params::keyboard_name(const std::string &kbcode) const {
 	return res;
 }
 
+// Icone du clavier
+Glib::RefPtr<Gdk::Pixbuf> Params::keyboard_icon(const std::string &kbcode) const {
+	if(m_proxy_icon.find(kbcode)==m_proxy_icon.end()) {
+		std::string icon_name = m_index_kbm.get_data(kbcode, "Icon", "");
+		if(icon_name=="") {
+			m_proxy_icon[kbcode] = Glib::RefPtr<Gdk::Pixbuf>();
+		}
+		else {
+			m_proxy_icon[kbcode] = Gdk::Pixbuf::create_from_file(
+				m_prefix_path + "/" VCC_SHARE_RPATH "/" + icon_name, 24, 24);
+		}
+	}
+	return m_proxy_icon[kbcode];
+}
+
 // Plan de clavier
 const KeyboardMap &Params::keyboard_map(const std::string &kbcode) const {
 	if(m_proxy_kbm.find(kbcode)==m_proxy_kbm.end()) {

@@ -26,11 +26,13 @@
 #include <translation.h>
 
 // Modèle pour le combo box de sélection du clavier
-Gtk::TreeModelColumn<std::string  > PreferencesDialog::KbSelectorModel::code() const { return m_code; }
-Gtk::TreeModelColumn<Glib::ustring> PreferencesDialog::KbSelectorModel::name() const { return m_name; }
+Gtk::TreeModelColumn<std::string               > PreferencesDialog::KbSelectorModel::code() const { return m_code; }
+Gtk::TreeModelColumn<Glib::ustring             > PreferencesDialog::KbSelectorModel::name() const { return m_name; }
+Gtk::TreeModelColumn<Glib::RefPtr<Gdk::Pixbuf> > PreferencesDialog::KbSelectorModel::icon() const { return m_icon; }
 PreferencesDialog::KbSelectorModel::KbSelectorModel() : Gtk::TreeModelColumnRecord() {
 	add(m_code);
 	add(m_name);
+	add(m_icon);
 }
 
 // Constructeur
@@ -95,6 +97,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kb_selector_data = Gtk::ListStore::create(kb_selector_model);
 	kb_selector_data->set_sort_column(kb_selector_model.name(), Gtk::SORT_ASCENDING);
 	kb_selector.set_model(kb_selector_data);
+	kb_selector.pack_start(kb_selector_model.icon(), false);
 	kb_selector.pack_start(kb_selector_model.name());
 	kb_selector.signal_changed().connect(sigc::mem_fun(*this, &PreferencesDialog::on_kb_changed));
 	display_kp.set_label(_("Display the numeric keypad"));
@@ -166,10 +169,12 @@ void PreferencesDialog::load_params() {
 	// Liste des claviers
 	std::set<std::string> keyboards = gp->keyboards();
 	for(std::set<std::string>::const_iterator it=keyboards.begin(); it!=keyboards.end(); ++it) {
-		Glib::ustring kb_name = gp->keyboard_name(*it);
+		Glib::ustring             kb_name = gp->keyboard_name(*it);
+		Glib::RefPtr<Gdk::Pixbuf> kb_icon = gp->keyboard_icon(*it);
 		Gtk::TreeModel::iterator row = kb_selector_data->append();
 		(*row)[kb_selector_model.code()] = *it;
 		(*row)[kb_selector_model.name()] = kb_name;
+		(*row)[kb_selector_model.icon()] = kb_icon;
 		if(curr_keyboard==*it) {
 			kb_selector.set_active(row);
 		}
