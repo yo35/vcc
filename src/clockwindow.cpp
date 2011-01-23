@@ -182,6 +182,8 @@ void ClockWindow::on_myself_shown() {
 	if(!gp->first_launch())
 		return;
 	gp->set_first_launch(false);
+	std::string curr_keyboard = gp->curr_keyboard();
+	gp->set_curr_keyboard(curr_keyboard);
 }
 
 void ClockWindow::on_pause_clicked() {
