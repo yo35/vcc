@@ -318,7 +318,13 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_dead_diaeresis : return "¨";
 
 		// Divers
-		case GDK_EuroSign: return "€";
+		case GDK_EuroSign : return "€";
+		case GDK_Scedilla : return "Ş";
+		case GDK_scedilla : return "ş​";
+		case GDK_Gbreve   : return "Ğ";
+		case GDK_gbreve   : return "ğ";
+		case GDK_Iabovedot: return "İ";
+		case GDK_idotless : return "ı";
 
 		// Solution par défaut
 		default:
