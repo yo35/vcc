@@ -57,10 +57,7 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	// Initialisation des objets de gestion de clavier
 	reinit_delayer.signal_occurred().connect(
 		sigc::mem_fun(*this, &ClockWindow::on_reset_triggered_from_kb));
-	retrieve_parameters_from_gp();
-	#ifdef OS_IS_WINDOWS
-		curr_key_down = 0;
-	#endif
+	curr_key_down = 0;
 
 	// Divers
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
@@ -76,9 +73,10 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		dial[*k].set_can_focus(true);
 		dial[*k].set_timer(core, *k);
-		dial[*k].set_display_time_after_flag_down(gp->display_time_after_flag_down());
-		dial[*k].set_display_bronstein_extra_time(gp->display_bronstein_extra_time());
 	}
+
+	// Récupération des paramètres divers
+	retrieve_parameters_from_gp();
 
 	// Gestion des événements
 	btn_reset.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_reset_clicked));
