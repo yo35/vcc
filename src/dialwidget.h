@@ -37,14 +37,17 @@ public:
 
 private:
 
-	// Rafraîchissement automatique du widget
-	bool on_timeout_elapses();
-
-	// Routine de dessin
-	virtual bool on_expose_event(GdkEventExpose *event);
-
-	// Force le redessin du widget
-	void refresh_widget();
+	// Routines diverses
+	bool               on_timeout_elapses();
+	virtual bool       on_expose_event(GdkEventExpose *event);
+	void               refresh_widget();
+	void draw_one_line_text (Cairo::RefPtr<Cairo::Context> cr, const std::string &txt);
+	void draw_two_lines_text(Cairo::RefPtr<Cairo::Context> cr,
+		const std::string &main_txt, const std::string &extra_txt);
+	double get_adjusted_font_height(Cairo::RefPtr<Cairo::Context> cr,
+		int allocable_height, int allocable_width, const std::string &txt);
+	static std::string format_time(int time);
+	static std::string get_model_txt(const std::string &src);
 
 	// Données membres
 	const BiTimer *m_bi_timer;

@@ -48,7 +48,8 @@ public:
 	Mode               mode        () const;
 	Side               active_side () const;
 	const TimeControl &time_control() const;
-	int get_time(const Side &side) const;
+	int get_time   (const Side &side)                             const;
+	int get_time_ex(const Side &side, int &bronstein_extra_delay) const;
 
 	// Modifie le cadran actif
 	void start_timer(const Side &side);

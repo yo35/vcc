@@ -51,6 +51,13 @@ int BiTimer::get_time(const Side &side) const {
 	return m_timer[side].get_time();
 }
 
+int BiTimer::get_time_ex(const Side &side, int &bronstein_extra_delay) const {
+	assert(m_time_control.mode()==BRONSTEIN);
+	int curr_time         = get_time(side);
+	bronstein_extra_delay = curr_time - m_bronstein_limit[side] + m_time_control.increment(m_active_side);
+	return curr_time;
+}
+
 // Démarre un timer
 void BiTimer::start_timer(const Side &side) {
 	assert(m_mode==PAUSED);
