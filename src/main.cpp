@@ -45,7 +45,7 @@
 		if(src=="Catalan"   ) return "ca";
 		if(src=="Irish"     ) return "ga";
 		if(src=="Turkish"   ) return "tr";
-		if(src=="Czech"     ) return "cz";
+		if(src=="Czech"     ) return "cs";
 		return src;
 	}
 
