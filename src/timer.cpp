@@ -23,29 +23,10 @@
 #include "timer.h"
 #include <glibmm/main.h>
 
-
-////////////////////////////////////////////////////////////////////////////////
-// Divers
-
 Timer::Timer() : Glib::Object() {
 	m_mode = PAUSED;
 	m_time = 0;
-	Glib::signal_timeout().connect(sigc::mem_fun(*this, &Timer::on_timeout_elapses), 150);
 }
-
-sigc::signal<void> Timer::signal_modified() const {
-	return m_signal_modified;
-}
-
-bool Timer::on_timeout_elapses() {
-	if(m_mode!=PAUSED)
-		m_signal_modified.emit();
-	return true;
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Contrôle du timer
 
 void Timer::set_mode(Mode new_mode) {
 	if(m_mode==new_mode)
@@ -56,7 +37,6 @@ void Timer::set_mode(Mode new_mode) {
 	if(new_mode != Timer::PAUSED)
 		gettimeofday(&m_start_at, 0);
 	m_mode = new_mode;
-	m_signal_modified.emit();
 }
 
 Timer::Mode Timer::get_mode() const {
@@ -68,7 +48,6 @@ void Timer::set_time(int new_time) {
 		m_mode = PAUSED;
 	}
 	m_time = new_time;
-	m_signal_modified.emit();
 }
 
 int Timer::get_time() const {

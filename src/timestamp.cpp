@@ -30,8 +30,11 @@ int difftime(const Timestamp &t2, const Timestamp &t1) {
 }
 
 // Retourne la date présente
+void get_timestamp_now(Timestamp &retval) {
+	gettimeofday(&retval, 0);
+}
 Timestamp get_timestamp_now() {
 	Timestamp res;
-	gettimeofday(&res, 0);
+	get_timestamp_now(res);
 	return res;
 }

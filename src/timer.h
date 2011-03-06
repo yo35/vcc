@@ -39,7 +39,6 @@ public:
 
 	// Divers
 	Timer();
-	sigc::signal<void> signal_modified() const;
 
 	// Contrôle du timer
 	void set_mode(Mode new_mode);
@@ -49,15 +48,10 @@ public:
 
 private:
 
-	// Routines internes
-	void refresh_time() const;
-	bool on_timeout_elapses();
-
 	// Données membres
-	Mode               m_mode;
-	int                m_time;
-	Timestamp          m_start_at;
-	sigc::signal<void> m_signal_modified;
+	Mode      m_mode    ;
+	int       m_time    ;
+	Timestamp m_start_at;
 };
 
 #endif

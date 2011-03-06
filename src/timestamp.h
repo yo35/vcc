@@ -32,6 +32,7 @@ typedef struct timeval Timestamp;
 int difftime(const Timestamp &t2, const Timestamp &t1);
 
 // Retourne la date présente
+void      get_timestamp_now(Timestamp &retval);
 Timestamp get_timestamp_now();
 
 #endif

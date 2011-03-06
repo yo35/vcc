@@ -23,10 +23,14 @@
 #include "bitimer.h"
 #include <cassert>
 
-
 // Constructeur
 BiTimer::BiTimer() : Glib::Object() {
 	reset_timers();
+}
+
+// Signal de modification
+sigc::signal<void> BiTimer::signal_state_changed() const {
+	return m_signal_state_changed;
 }
 
 // Accesseurs
@@ -43,18 +47,20 @@ const TimeControl &BiTimer::time_control() const {
 	return m_time_control;
 }
 
-const Timer &BiTimer::timer(const Side &side) const {
-	return m_timer[side];
+int BiTimer::get_time(const Side &side) const {
+	return m_timer[side].get_time();
 }
 
 // Démarre un timer
 void BiTimer::start_timer(const Side &side) {
 	assert(m_mode==PAUSED);
-	if(m_time_control.mode()==HOURGLASS)
+	if(m_time_control.mode()==HOURGLASS) {
 		m_timer[rev(side)].set_mode(Timer::INCREMENT);
+	}
 	m_timer[side].set_mode(Timer::DECREMENT);
 	m_active_side = side;
 	m_mode        = ACTIVE;
+	m_signal_state_changed.emit();
 }
 
 // Modifie le camp au trait
@@ -62,8 +68,9 @@ void BiTimer::change_timer() {
 	assert(m_mode==ACTIVE);
 
 	// En hour-glass, le timer inactif est en mode incrément
-	if(m_time_control.mode()==HOURGLASS)
+	if(m_time_control.mode()==HOURGLASS) {
 		m_timer[m_active_side].set_mode(Timer::INCREMENT);
+	}
 
 	// Sinon, il est mis en pause
 	else {
@@ -91,6 +98,7 @@ void BiTimer::change_timer() {
 	// Le nouveau timer actif passe en mode décrement
 	m_active_side = rev(m_active_side);
 	m_timer[m_active_side].set_mode(Timer::DECREMENT);
+	m_signal_state_changed.emit();
 }
 
 // Arrête la pendule
@@ -99,6 +107,7 @@ void BiTimer::stop_timer() {
 	m_timer[LEFT ].set_mode(Timer::PAUSED);
 	m_timer[RIGHT].set_mode(Timer::PAUSED);
 	m_mode = PAUSED;
+	m_signal_state_changed.emit();
 }
 
 // Réinitialise le tout
@@ -122,6 +131,7 @@ void BiTimer::reset_timers() {
 			m_bronstein_limit[*k] = start_time;
 	}
 	m_mode = PAUSED;
+	m_signal_state_changed.emit();
 }
 
 // Modifie la cadence

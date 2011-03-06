@@ -42,12 +42,13 @@ public:
 
 	// Divers
 	BiTimer();
+	sigc::signal<void> signal_state_changed() const;
 
 	// Accesseurs
 	Mode               mode        () const;
 	Side               active_side () const;
 	const TimeControl &time_control() const;
-	const Timer &timer(const Side &side) const;
+	int get_time(const Side &side) const;
 
 	// Modifie le cadran actif
 	void start_timer(const Side &side);
@@ -66,11 +67,12 @@ private:
 	typedef EnumArray<Side, Timer> TimerSideArray;
 
 	// Données membres
-	Mode           m_mode           ;
-	Side           m_active_side    ;
-	TimeControl    m_time_control   ;
-	TimerSideArray m_timer          ;
-	IntSideArray   m_bronstein_limit;
+	Mode               m_mode                ;
+	Side               m_active_side         ;
+	TimeControl        m_time_control        ;
+	TimerSideArray     m_timer               ;
+	IntSideArray       m_bronstein_limit     ;
+	sigc::signal<void> m_signal_state_changed;
 };
 
 #endif

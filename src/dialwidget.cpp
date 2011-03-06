@@ -24,13 +24,23 @@
 #include <translation.h>
 
 DialWidget::DialWidget() : Gtk::DrawingArea() {
-	m_timer = 0;
+	m_bi_timer = 0;
 	set_size_request(400, 300);
+	Glib::signal_timeout().connect(sigc::mem_fun(*this, &DialWidget::on_timeout_elapses), 150);
 }
 
-void DialWidget::set_timer(const Timer &timer) {
-	m_timer = &timer;
-	m_timer->signal_modified().connect(sigc::mem_fun(*this, &DialWidget::refresh_widget));
+void DialWidget::set_timer(const BiTimer &bi_timer, const Side &side) {
+	m_bi_timer = &bi_timer;
+	m_side     =  side    ;
+	m_bi_timer->signal_state_changed().connect(sigc::mem_fun(*this, &DialWidget::refresh_widget));
+}
+
+bool DialWidget::on_timeout_elapses() {
+	if(m_bi_timer==0 || m_bi_timer->mode()!=BiTimer::ACTIVE || m_bi_timer->active_side()!=m_side) {
+		return true;
+	}
+	refresh_widget();
+	return true;
 }
 
 void DialWidget::refresh_widget() {
@@ -50,7 +60,7 @@ bool DialWidget::on_expose_event(GdkEventExpose *event) {
 	Cairo::RefPtr<Cairo::Context> cr = window->create_cairo_context();
 	cr->rectangle(event->area.x, event->area.y, event->area.width, event->area.height);
 	cr->clip();
-	if(m_timer==0)
+	if(m_bi_timer==0)
 		return true;
 
 	Gtk::Allocation allocation = get_allocation();
@@ -58,18 +68,19 @@ bool DialWidget::on_expose_event(GdkEventExpose *event) {
 	double height = allocation.get_height();
 
 	// Le fond de l'image
-	if(m_timer->get_mode()==Timer::DECREMENT)
+	if(m_bi_timer->mode()==BiTimer::ACTIVE && m_bi_timer->active_side()==m_side)
 		cr->set_source_rgb(1.0, 1.0, 0.5);
 	else
 		cr->set_source_rgb(1.0, 1.0, 1.0);
 	cr->paint();
 
 	// Le texte à afficher
-	int curr_time = m_timer->get_time();
+	int curr_time = m_bi_timer->get_time(m_side);
 	int rounded_curr_time = (curr_time+499)/1000;
 	Glib::ustring txt;
-	if(curr_time < 0)
+	if(curr_time < 0) {
 		txt = _("Flag down");
+	}
 	else if(rounded_curr_time < 60*60) {
 		int sec = rounded_curr_time % 60;
 		int min = rounded_curr_time / 60;

@@ -75,7 +75,7 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	// Configuration des cadrans
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		dial[*k].set_can_focus(true);
-		dial[*k].set_timer(core.timer(*k));
+		dial[*k].set_timer(core, *k);
 	}
 
 	// Gestion des événements
