@@ -310,19 +310,52 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_ydiaeresis    : return "ÿ";
 
 		// Touches mortes
-		case GDK_dead_grave     : return "`";
-		case GDK_dead_acute     : return "´";
-		case GDK_dead_circumflex: return "^";
-		case GDK_dead_tilde     : return "~";
-		case GDK_dead_macron    : return "¯";
-		case GDK_dead_diaeresis : return "¨";
+		case GDK_dead_grave      : return "`";
+		case GDK_dead_acute      : return "´";
+		case GDK_dead_circumflex : return "^";
+		case GDK_dead_tilde      : return "~";
+		case GDK_dead_macron     : return "¯";
+		case GDK_dead_diaeresis  : return "¨";
+		case GDK_dead_caron      : return "ˇ";
+		case GDK_dead_cedilla    : return "¸";
+		case GDK_dead_doubleacute: return "˝";
+		case GDK_dead_abovering  : return "˚";
+		case GDK_dead_abovedot   : return "·";
+		case GDK_dead_breve      : return "˘";
+		case GDK_dead_ogonek     : return "˛";
+
+		// Caractères latins diacritiques minuscule (hors-latin1)
+		case GDK_scedilla : return "ş​";
+		case GDK_gbreve   : return "ğ";
+		case GDK_dstroke  : return "đ";
+		case GDK_lstroke  : return "ł";
+		case GDK_uring    : return "ů";
+		case GDK_ccaron   : return "č";
+		case GDK_dcaron   : return "ď​";
+		case GDK_ecaron   : return "ě";
+		case GDK_ncaron   : return "ň";
+		case GDK_rcaron   : return "ř";
+		case GDK_scaron   : return "š";
+		case GDK_zcaron   : return "ž";
+		case GDK_racute   : return "ŕ";
+
+		// Caractères latins diacritiques majuscule (hors-latin1)
+		case GDK_Scedilla : return "Ş";
+		case GDK_Gbreve   : return "Ğ";
+		case GDK_Dstroke  : return "Đ";
+		case GDK_Lstroke  : return "Ł";
+		case GDK_Uring    : return "Ů";
+		case GDK_Ccaron   : return "Č";
+		case GDK_Dcaron   : return "Ď";
+		case GDK_Ecaron   : return "Ě";
+		case GDK_Ncaron   : return "Ň";
+		case GDK_Rcaron   : return "Ř";
+		case GDK_Scaron   : return "Š";
+		case GDK_Zcaron   : return "Ž";
+		case GDK_Racute   : return "Ŕ";
 
 		// Divers
 		case GDK_EuroSign : return "€";
-		case GDK_Scedilla : return "Ş";
-		case GDK_scedilla : return "ş​";
-		case GDK_Gbreve   : return "Ğ";
-		case GDK_gbreve   : return "ğ";
 		case GDK_Iabovedot: return "İ";
 		case GDK_idotless : return "ı";
 
