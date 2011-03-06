@@ -38,7 +38,12 @@ void DialWidget::set_timer(const BiTimer &bi_timer, const Side &side) {
 
 // Rafraîchissement automatique du widget à intervals réguliers
 bool DialWidget::on_timeout_elapses() {
-	if(m_bi_timer==0 || m_bi_timer->mode()!=BiTimer::ACTIVE || m_bi_timer->active_side()!=m_side) {
+	if(m_bi_timer==0) {
+		return true;
+	}
+	if(m_bi_timer->time_control().mode()!=HOURGLASS &&
+		(m_bi_timer->mode()!=BiTimer::ACTIVE || m_bi_timer->active_side()!=m_side))
+	{
 		return true;
 	}
 	refresh_widget();

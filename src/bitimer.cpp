@@ -61,7 +61,7 @@ int BiTimer::get_time_ex(const Side &side, int &bronstein_extra_delay) const {
 // Démarre un timer
 void BiTimer::start_timer(const Side &side) {
 	assert(m_mode==PAUSED);
-	if(m_time_control.mode()==HOURGLASS) {
+	if(m_time_control.mode()==HOURGLASS && m_timer[rev(side)].get_time()>=0) {
 		m_timer[rev(side)].set_mode(Timer::INCREMENT);
 	}
 	m_timer[side].set_mode(Timer::DECREMENT);
@@ -75,7 +75,7 @@ void BiTimer::change_timer() {
 	assert(m_mode==ACTIVE);
 
 	// En hour-glass, le timer inactif est en mode incrément
-	if(m_time_control.mode()==HOURGLASS) {
+	if(m_time_control.mode()==HOURGLASS && m_timer[m_active_side].get_time()>=0) {
 		m_timer[m_active_side].set_mode(Timer::INCREMENT);
 	}
 
