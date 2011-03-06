@@ -44,6 +44,7 @@
 		if(src=="Spanish"   ) return "es";
 		if(src=="Catalan"   ) return "ca";
 		if(src=="Irish"     ) return "ga";
+		if(src=="Turkish"   ) return "tr";
 		return src;
 	}
 
@@ -65,6 +66,7 @@
 		if(src=="Ireland"       ) return "IE";
 		if(src=="Spain"         ) return "ES";
 		if(src=="Mexico"        ) return "MX";
+		if(src=="Turkey"        ) return "TR";
 		return src;
 	}
 
