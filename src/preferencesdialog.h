@@ -112,6 +112,11 @@ private:
 	KeyboardMapWidget                 kbm_widget;
 	Gtk::RadioButton::Group           area_selector_group;
 	EnumArray<Side, Gtk::RadioButton> area_selector;
+
+	// Onglet display
+	Gtk::VBox        disp_page;
+	Gtk::CheckButton display_time_after_flag_down;
+	Gtk::CheckButton display_bronstein_extra_time;
 };
 
 #endif

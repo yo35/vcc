@@ -92,6 +92,13 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	raz_page.pack_start(raz_by_toolbar , Gtk::PACK_SHRINK);
 	raz_page.pack_start(raz_by_keyboard, Gtk::PACK_SHRINK);
 
+	// Onglet displaying
+	display_time_after_flag_down.set_label(_("Display an increasing time counter when the flag is down"     ));
+	display_bronstein_extra_time.set_label(_("Display extra time information when playing in Bronstein mode"));
+	disp_page.set_spacing(5);
+	disp_page.pack_start(display_time_after_flag_down, Gtk::PACK_SHRINK);
+	disp_page.pack_start(display_bronstein_extra_time, Gtk::PACK_SHRINK);
+
 	// Onglet keyboard (sauf géométrie)
 	kb_selector_label.set_label(_("Select the keyboard layout you are using"));
 	kb_selector_data = Gtk::ListStore::create(kb_selector_model);
@@ -145,6 +152,8 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	pages.append_page(kb_page, _("Keyboard active areas"));
 	raz_page.set_border_width(5);
 	pages.append_page(raz_page, _("Reset options"));
+	disp_page.set_border_width(5);
+	pages.append_page(disp_page, _("Display options"));
 	get_vbox()->set_spacing(5);
 	get_vbox()->pack_start(pages);
 	show_all_children();
@@ -157,6 +166,10 @@ void PreferencesDialog::load_params() {
 	ask_before_raz [gp->reinit_confirm()].set_active(true);
 	key_combination[gp->reinit_keys   ()].set_active(true);
 	raz_delay.set_value(gp->reinit_delay());
+
+	// Paramètres d'affichage
+	display_time_after_flag_down.set_active(gp->display_time_after_flag_down());
+	display_bronstein_extra_time.set_active(gp->display_bronstein_extra_time());
 
 	// Régions sélectionnées courantes
 	std::string curr_keyboard = gp->curr_keyboard();
@@ -194,6 +207,10 @@ void PreferencesDialog::save_params() {
 			gp->set_reinit_key(*k);
 	}
 	gp->set_reinit_delay(raz_delay.get_value());
+
+	// Paramètres d'affichage
+	gp->set_display_time_after_flag_down(display_time_after_flag_down.get_active());
+	gp->set_display_bronstein_extra_time(display_bronstein_extra_time.get_active());
 
 	// Paramètres de clavier
 	save_curr_area();
