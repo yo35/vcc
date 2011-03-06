@@ -21,6 +21,8 @@
 
 
 #include "timecontrol.h"
+#include "strings.h"
+#include <translation.h>
 
 // Constantes pour les types de cadences
 const TimeControlType SUDDEN_DEATH(0);
@@ -81,4 +83,92 @@ bool TimeControl::both_sides_have_same_time() const {
 	if(m_mode==FISCHER || m_mode==BRONSTEIN)
 		retval = retval && (m_increment[LEFT]==m_increment[RIGHT]);
 	return retval;
+}
+
+std::string time_control_type_name(const TimeControlType &type) {
+	static bool do_initialisation = true;
+	static EnumArray<TimeControlType, std::string> retval;
+	if(do_initialisation) {
+		retval[SUDDEN_DEATH] = _("Sudden death");
+		retval[FISCHER     ] = _("Fischer"     );
+		retval[BRONSTEIN   ] = _("Bronstein"   );
+		retval[HOURGLASS   ] = _("Hourglass"   );
+		do_initialisation = false;
+	}
+	return retval[type];
+}
+
+std::string format_time(int src) {
+	assert(src>=0);
+
+	// Conversion du temps exprimé en millisecondes en un temps en secondes
+	int rounded_time = (src+499)/1000;
+
+	// Si le temps restant est de moins d'une heure, on affiche m.ss
+	if(rounded_time < 60*60) {
+		int sec = rounded_time % 60;
+		int min = rounded_time / 60;
+		std::string txt_min = int_to_string(min);
+		std::string txt_sec = int_to_string(sec);
+		if(sec < 10) {
+			txt_sec = "0" + txt_sec;
+		}
+		return txt_min + "." + txt_sec;
+	}
+
+	// Si le temps restant est de plus d'une heure, on affiche h:mm
+	else {
+		rounded_time = rounded_time / 60;
+		int min  = rounded_time % 60;
+		int hour = rounded_time / 60;
+		std::string txt_min  = int_to_string(min );
+		std::string txt_hour = int_to_string(hour);
+		if(min < 10) {
+			txt_min = "0" + txt_min;
+		}
+		return txt_hour + ":" + txt_min;
+	}
+}
+
+std::string format_time_long(int src) {
+	assert(src>=0);
+
+	// Conversion du temps exprimé en millisecondes en un temps en secondes
+	int rounded_time = (src+499)/1000;
+
+	// Cas particulier : durée nulle
+	if(rounded_time==0) {
+		return std::string("0 ") + _("sec");
+	}
+
+	// Extraction des hh/mm/ss
+	int sec =  rounded_time            % 60;
+	int min = (rounded_time /  60    ) % 60;
+	int hr  = (rounded_time / (60*60));
+
+	// Résultat
+	std::string res = "";
+	if(hr !=0) { if(!res.empty()) res+=" "; res += int_to_string(hr ) + std::string(" ") + _("hour"); }
+	if(min!=0) { if(!res.empty()) res+=" "; res += int_to_string(min) + std::string(" ") + _("min" ); }
+	if(sec!=0) { if(!res.empty()) res+=" "; res += int_to_string(sec) + std::string(" ") + _("sec" ); }
+	return res;
+}
+
+std::string TimeControl::description() const {
+	std::string res = time_control_type_name(m_mode);
+	res += "\t\t" + aux_description(LEFT);
+	if(!both_sides_have_same_time()) {
+		res += std::string(" (") + _("left" ) + std::string(")");
+		res += "\t\t" + aux_description(RIGHT);
+		res += std::string(" (") + _("right") + std::string(")");
+	}
+	return res;
+}
+
+std::string TimeControl::aux_description(const Side &side) const {
+	std::string res = format_time_long(m_main_time[side]);
+	if(m_mode==FISCHER || m_mode==BRONSTEIN) {
+		res += " + " + format_time_long(m_increment[side]) + std::string(" ") + _("by move");
+	}
+	return res;
 }

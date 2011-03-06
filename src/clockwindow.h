@@ -29,6 +29,7 @@
 #include <gtkmm/separatortoolitem.h>
 #include <gtkmm/toolbar.h>
 #include <gtkmm/image.h>
+#include <gtkmm/statusbar.h>
 #include "icon.h"
 #include "dialwidget.h"
 #include "bitimer.h"
@@ -75,6 +76,7 @@ private:
 	// Widgets
 	EnumArray<Side, DialWidget> dial;
 	Gtk::Toolbar                toolbar;
+	Gtk::Statusbar              statusbar;
 	Icon                        ico_reset;
 	Icon                        ico_pause;
 	Icon                        ico_tctrl;

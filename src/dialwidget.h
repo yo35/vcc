@@ -50,7 +50,6 @@ private:
 		const std::string &main_txt, const std::string &extra_txt);
 	double get_adjusted_font_height(Cairo::RefPtr<Cairo::Context> cr,
 		int allocable_height, int allocable_width, const std::string &txt);
-	static std::string format_time(int time);
 	static std::string get_model_txt(const std::string &src);
 
 	// Données membres

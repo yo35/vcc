@@ -25,6 +25,7 @@
 
 #include "side.h"
 #include "enumerable.h"
+#include <string>
 
 
 // Types de cadence
@@ -41,6 +42,10 @@ extern const TimeControlType FISCHER     ;
 extern const TimeControlType BRONSTEIN   ;
 extern const TimeControlType HOURGLASS   ;
 
+// Chaînes de caractère
+std::string time_control_type_name(const TimeControlType &type);
+std::string format_time     (int src);
+std::string format_time_long(int src);
 
 // Cadence
 class TimeControl {
@@ -62,10 +67,16 @@ public:
 	void set_main_time (int new_main_time, const Side &side);
 	void set_increment (int new_increment, const Side &side);
 
-	// Test si les deux côtés ont la même config
+	// Teste si les deux côtés ont la même config
 	bool both_sides_have_same_time() const;
 
+	// Chaîne de caractères descriptive
+	std::string description() const;
+
 private:
+
+	// Routines diverses
+	std::string aux_description(const Side &side) const;
 
 	// Données membres
 	TimeControlType m_mode;

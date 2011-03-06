@@ -21,7 +21,6 @@
 
 
 #include "dialwidget.h"
-#include "strings.h"
 #include <translation.h>
 
 DialWidget::DialWidget() : Gtk::DrawingArea() {
@@ -208,40 +207,6 @@ double DialWidget::get_adjusted_font_height(Cairo::RefPtr<Cairo::Context> cr,
 	double h_scale_factor = allocable_height/te.height;
 	double scale_factor   = h_scale_factor<w_scale_factor ? h_scale_factor : w_scale_factor;
 	return 100.0 * scale_factor;
-}
-
-// Formate correctement une durée sous la forme h:mm ou m.ss
-// Rq : on suppose src >= 0
-std::string DialWidget::format_time(int src) {
-	assert(src>=0);
-
-	// Conversion du temps exprimé en millisecondes en un temps en secondes
-	int rounded_time = (src+499)/1000;
-
-	// Si le temps restant est de moins d'une heure, on affiche m.ss
-	if(rounded_time < 60*60) {
-		int sec = rounded_time % 60;
-		int min = rounded_time / 60;
-		std::string txt_min = int_to_string(min);
-		std::string txt_sec = int_to_string(sec);
-		if(sec < 10) {
-			txt_sec = "0" + txt_sec;
-		}
-		return txt_min + "." + txt_sec;
-	}
-
-	// Si le temps restant est de plus d'une heure, on affiche h:mm
-	else {
-		rounded_time = rounded_time / 60;
-		int min  = rounded_time % 60;
-		int hour = rounded_time / 60;
-		std::string txt_min  = int_to_string(min );
-		std::string txt_hour = int_to_string(hour);
-		if(min < 10) {
-			txt_min = "0" + txt_min;
-		}
-		return txt_hour + ":" + txt_min;
-	}
 }
 
 // Remplace les chiffres présents dans 'src' par des '0'

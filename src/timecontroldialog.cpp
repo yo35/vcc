@@ -36,11 +36,8 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 	frm_mode.set_label(_("Mode"));
 	layout_mode.set_border_width(5);
 	layout_mode.set_spacing(5);
-	mode[SUDDEN_DEATH].set_label(_("Sudden death"));
-	mode[FISCHER     ].set_label(_("Fischer"     ));
-	mode[BRONSTEIN   ].set_label(_("Bronstein"   ));
-	mode[HOURGLASS   ].set_label(_("Hourglass"   ));
 	for(TimeControlType::iterator k=TimeControlType::first(); k.valid(); ++k) {
+		mode[*k].set_label(time_control_type_name(*k));
 		mode[*k].set_group(mode_group);
 		mode[*k].signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::manage_sensitivity));
 		layout_mode.pack_start(mode[*k]);

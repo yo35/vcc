@@ -44,6 +44,7 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 {
 	// Initialisation de la pendule
 	core.set_time_control(gp->initial_time_control());
+	statusbar.push(core.time_control().description());
 
 	// Initialisation du retardateur pour l'affichage de la fenêtre de débug
 	#ifdef DEV_COMPILATION
@@ -123,6 +124,7 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	dial_layout.pack_start(dial[RIGHT]);
 	main_layout.pack_start(toolbar, Gtk::PACK_SHRINK);
 	main_layout.pack_start(dial_layout);
+	main_layout.pack_start(statusbar, Gtk::PACK_SHRINK);
 	main_layout.set_spacing(5);
 	add(main_layout);
 	show_all_children();
@@ -218,6 +220,8 @@ void ClockWindow::on_tctrl_clicked() {
 	if(retval!=Gtk::RESPONSE_OK)
 		return;
 	core.set_time_control(dialog.get_time_control());
+	statusbar.pop();
+	statusbar.push(core.time_control().description());
 	gp->set_initial_time_control(core.time_control());
 }
 
