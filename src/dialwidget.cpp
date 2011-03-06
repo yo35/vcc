@@ -28,7 +28,7 @@ DialWidget::DialWidget() : Gtk::DrawingArea() {
 	m_display_time_after_flag_down = true;
 	m_display_bronstein_extra_time = true;
 	set_size_request(400, 300);
-	Glib::signal_timeout().connect(sigc::mem_fun(*this, &DialWidget::on_timeout_elapses), 150);
+	Glib::signal_timeout().connect(sigc::mem_fun(*this, &DialWidget::on_timeout_elapses), 100);
 }
 
 void DialWidget::set_timer(const BiTimer &bi_timer, const Side &side) {
