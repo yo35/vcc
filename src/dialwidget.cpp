@@ -25,7 +25,9 @@
 #include <translation.h>
 
 DialWidget::DialWidget() : Gtk::DrawingArea() {
-	m_bi_timer = 0;
+	m_bi_timer                     = 0   ;
+	m_display_time_after_flag_down = true;
+	m_display_bronstein_extra_time = true;
 	set_size_request(400, 300);
 	Glib::signal_timeout().connect(sigc::mem_fun(*this, &DialWidget::on_timeout_elapses), 150);
 }
@@ -34,6 +36,16 @@ void DialWidget::set_timer(const BiTimer &bi_timer, const Side &side) {
 	m_bi_timer = &bi_timer;
 	m_side     =  side    ;
 	m_bi_timer->signal_state_changed().connect(sigc::mem_fun(*this, &DialWidget::refresh_widget));
+}
+
+void DialWidget::set_display_time_after_flag_down(bool src) {
+	m_display_time_after_flag_down = src;
+	refresh_widget();
+}
+
+void DialWidget::set_display_bronstein_extra_time(bool src) {
+	m_display_bronstein_extra_time = src;
+	refresh_widget();
 }
 
 // Rafraîchissement automatique du widget à intervals réguliers
@@ -94,13 +106,18 @@ bool DialWidget::on_expose_event(GdkEventExpose *event) {
 	if(curr_time < 0) {
 		cr->set_source_rgb(0.8, 0.0, 0.0);
 		std::string  main_txt = _("Flag down");
-		std::string extra_txt = _("Since:") + std::string(" ") + format_time(-curr_time);
-		draw_two_lines_text(cr, main_txt, extra_txt);
+		if(m_display_time_after_flag_down) {
+			std::string extra_txt = _("Since:") + std::string(" ") + format_time(-curr_time);
+			draw_two_lines_text(cr, main_txt, extra_txt);
+		}
+		else {
+			draw_one_line_text(cr, main_txt);
+		}
 	}
 	else {
 		cr->set_source_rgb(0.0, 0.0, 0.0);
 		std::string txt = format_time(curr_time);
-		if(m_bi_timer->time_control().mode()==BRONSTEIN && is_active) {
+		if(m_display_bronstein_extra_time && m_bi_timer->time_control().mode()==BRONSTEIN && is_active) {
 			std::string extra_txt = bronstein_extra_delay > 0
 				? _("Extra period till:") + std::string(" ") + format_time(bronstein_extra_delay)
 				: _("Main period");

@@ -76,6 +76,8 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		dial[*k].set_can_focus(true);
 		dial[*k].set_timer(core, *k);
+		dial[*k].set_display_time_after_flag_down(gp->display_time_after_flag_down());
+		dial[*k].set_display_bronstein_extra_time(gp->display_bronstein_extra_time());
 	}
 
 	// Gestion des événements
@@ -274,9 +276,13 @@ void ClockWindow::on_debug_delayer_elapsed() {
 }
 
 void ClockWindow::retrieve_parameters_from_gp() {
-	reinit_delayer.set_delay(gp->reinit_delay());
+
+	// Clavier
 	curr_kbm = &gp->keyboard_map(gp->curr_keyboard());
 	curr_kam = &gp->kam_perso();
+
+	// Options de réinitialisation
+	reinit_delayer.set_delay(gp->reinit_delay());
 	KeyCombination kc = gp->reinit_keys();
 	if(kc==DOUBLE_CTRL) {
 		reinit_trigger[0] = GDK_Control_L;
@@ -288,4 +294,10 @@ void ClockWindow::retrieve_parameters_from_gp() {
 	}
 	else
 		assert(false);
+
+	// Options d'affichage
+	for(Side::iterator k=Side::first(); k.valid(); ++k) {
+		dial[*k].set_display_time_after_flag_down(gp->display_time_after_flag_down());
+		dial[*k].set_display_bronstein_extra_time(gp->display_bronstein_extra_time());
+	}
 }

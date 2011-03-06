@@ -167,6 +167,26 @@ void Params::set_reinit_delay(int src) {
 	m_data_perso.set_data("Reset_Options", "Delay", src);
 }
 
+// Affichage du temps après la chute du drapeau (lecture)
+bool Params::display_time_after_flag_down() const {
+	return m_data_perso.get_data("Display", "Time_After_Flag_Down", true);
+}
+
+// Affichage du temps après la chute du drapeau (écriture)
+void Params::set_display_time_after_flag_down(bool src) {
+	m_data_perso.set_data("Display", "Time_After_Flag_Down", src);
+}
+
+// Affichage des informations additionnelles en mode 'Bronstein' (lecture)
+bool Params::display_bronstein_extra_time() const {
+	return m_data_perso.get_data("Display", "Bronstein_Mode_Extra_Information", true);
+}
+
+// Affichage des informations additionnelles en mode 'Bronstein' (écriture)
+void Params::set_display_bronstein_extra_time(bool src) {
+	m_data_perso.set_data("Display", "Bronstein_Mode_Extra_Information", src);
+}
+
 // Modèle de clavier préféré (code) (lecture)
 std::string Params::curr_keyboard() const {
 	return m_data_perso.get_data("Keyboard", "KBM", m_default_kbm);

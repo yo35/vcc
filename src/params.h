@@ -68,6 +68,14 @@ public:
 	int reinit_delay() const;
 	void set_reinit_delay(int src);
 
+	// Affichage du temps après la chute du drapeau
+	bool display_time_after_flag_down() const;
+	void set_display_time_after_flag_down(bool src);
+
+	// Affichage des informations additionnelles en mode 'Bronstein'
+	bool display_bronstein_extra_time() const;
+	void set_display_bronstein_extra_time(bool src);
+
 	// Modèle de clavier préféré (code)
 	std::string curr_keyboard() const;
 	void set_curr_keyboard(const std::string &src);
