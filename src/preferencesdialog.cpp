@@ -93,9 +93,11 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	raz_page.pack_start(raz_by_keyboard, Gtk::PACK_SHRINK);
 
 	// Onglet displaying
+	display_status_bar          .set_label(_("Display the status bar at the bottom of the main window"      ));
 	display_time_after_flag_down.set_label(_("Display an increasing time counter when the flag is down"     ));
 	display_bronstein_extra_time.set_label(_("Display extra time information when playing in Bronstein mode"));
 	disp_page.set_spacing(5);
+	disp_page.pack_start(display_status_bar          , Gtk::PACK_SHRINK);
 	disp_page.pack_start(display_time_after_flag_down, Gtk::PACK_SHRINK);
 	disp_page.pack_start(display_bronstein_extra_time, Gtk::PACK_SHRINK);
 
@@ -168,6 +170,7 @@ void PreferencesDialog::load_params() {
 	raz_delay.set_value(gp->reinit_delay());
 
 	// Paramètres d'affichage
+	display_status_bar          .set_active(gp->display_status_bar          ());
 	display_time_after_flag_down.set_active(gp->display_time_after_flag_down());
 	display_bronstein_extra_time.set_active(gp->display_bronstein_extra_time());
 
@@ -209,6 +212,7 @@ void PreferencesDialog::save_params() {
 	gp->set_reinit_delay(raz_delay.get_value());
 
 	// Paramètres d'affichage
+	gp->set_display_status_bar          (display_status_bar          .get_active());
 	gp->set_display_time_after_flag_down(display_time_after_flag_down.get_active());
 	gp->set_display_bronstein_extra_time(display_bronstein_extra_time.get_active());
 

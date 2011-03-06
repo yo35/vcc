@@ -68,6 +68,10 @@ public:
 	int reinit_delay() const;
 	void set_reinit_delay(int src);
 
+	// Affichage de la barre d'état
+	bool display_status_bar() const;
+	void set_display_status_bar(bool src);
+
 	// Affichage du temps après la chute du drapeau
 	bool display_time_after_flag_down() const;
 	void set_display_time_after_flag_down(bool src);

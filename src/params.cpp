@@ -167,6 +167,16 @@ void Params::set_reinit_delay(int src) {
 	m_data_perso.set_data("Reset_Options", "Delay", src);
 }
 
+// Affichage de la barre d'état (lecture)
+bool Params::display_status_bar() const {
+	return m_data_perso.get_data("Display", "Status_Bar", true);
+}
+
+// Affichage de la barre d'état (écriture)
+void Params::set_display_status_bar(bool src) {
+	m_data_perso.set_data("Display", "Status_Bar", src);
+}
+
 // Affichage du temps après la chute du drapeau (lecture)
 bool Params::display_time_after_flag_down() const {
 	return m_data_perso.get_data("Display", "Time_After_Flag_Down", true);

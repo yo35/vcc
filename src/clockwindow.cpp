@@ -76,9 +76,6 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 		dial[*k].set_timer(core, *k);
 	}
 
-	// Récupération des paramètres divers
-	retrieve_parameters_from_gp();
-
 	// Gestion des événements
 	btn_reset.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_reset_clicked));
 	btn_pause.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_clicked));
@@ -181,11 +178,24 @@ bool ClockWindow::on_key_release_event(GdkEventKey* event) {
 }
 
 void ClockWindow::on_myself_shown() {
+
+	// Récupération des paramètres divers
+	retrieve_parameters_from_gp();
+
+	// Détection premier démarrage
 	if(!gp->first_launch())
 		return;
 	gp->set_first_launch(false);
+
+	// Enregistrement du clavier par défaut
+	// Rq : la valeur par défaut renvoyée par 'gp->curr_keyboard()' dépend de
+	// la locale. Donc, il faut absolument écrire dans vcc.ini cette valeur par
+	// défaut au premier lancement afin que le modèle de clavier (fichier .kbm)
+	// soit cohérent avec le fichier de description de zones (fichier .kam)
+	// correspondant
 	std::string curr_keyboard = gp->curr_keyboard();
 	gp->set_curr_keyboard(curr_keyboard);
+
 }
 
 void ClockWindow::on_pause_clicked() {
@@ -278,6 +288,14 @@ void ClockWindow::on_debug_delayer_elapsed() {
 }
 
 void ClockWindow::retrieve_parameters_from_gp() {
+
+	// Masquage de la barre d'état
+	if(gp->display_status_bar()) {
+		statusbar.show();
+	}
+	else {
+		statusbar.hide();
+	}
 
 	// Clavier
 	curr_kbm = &gp->keyboard_map(gp->curr_keyboard());

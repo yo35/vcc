@@ -115,6 +115,7 @@ private:
 
 	// Onglet display
 	Gtk::VBox        disp_page;
+	Gtk::CheckButton display_status_bar          ;
 	Gtk::CheckButton display_time_after_flag_down;
 	Gtk::CheckButton display_bronstein_extra_time;
 };
