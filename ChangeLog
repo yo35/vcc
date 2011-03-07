@@ -1,3 +1,51 @@
+2011-03-07  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* NEWS: MAJ news
+	* po/fr.po, po/vcc.pot: MAJ traductions
+	* src/dialwidget.cpp: Non-accumulation des temps principal et
+	  additionnel en bronstein
+	* src/main.cpp: Debug
+	* data/share/keyboardmaps.ini, data/share/sk.kbm,
+	  data/share/sk.png, data/share/sk.svg, src/keys.cpp: Support du
+	  clavier slovaque
+
+2011-03-06  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* data/share/keyboardmaps.ini, src/main.cpp: Debug
+	* src/main.cpp: Support locale tchèque
+	* data/share/cz.kbm, data/share/cz.png, data/share/cz.svg,
+	  data/share/keyboardmaps.ini, src/keys.cpp: Support du clavier
+	  tchèque
+	* data/share/keyboardmaps.ini, data/share/tr.kbm,
+	  data/share/tr_f.kbm, data/share/tr_q.kbm, src/main.cpp: Support
+	  clavier F turc
+	* data/share/keyboardmaps.ini, data/share/tr.kbm,
+	  data/share/tr.png, data/share/tr.svg, src/keys.cpp: Support du
+	  clavier Q turc
+	* src/dialwidget.cpp: Modif période de rafraichissement du widget
+	* src/clockwindow.cpp, src/params.cpp, src/params.h,
+	  src/preferencesdialog.cpp, src/preferencesdialog.h: Affichage
+	  optionnel de la barre d'état
+	* src/clockwindow.cpp, src/clockwindow.h, src/dialwidget.cpp,
+	  src/dialwidget.h, src/timecontrol.cpp, src/timecontrol.h,
+	  src/timecontroldialog.cpp: Affichage de la cadence courante dans
+	  la barre d'état
+	* src/clockwindow.cpp: Debug
+	* src/preferencesdialog.cpp, src/preferencesdialog.h: Options
+	  d'affichage
+	* src/clockwindow.cpp, src/dialwidget.cpp, src/dialwidget.h,
+	  src/params.cpp, src/params.h: Paramétrisation des options
+	  d'affichage
+	* src/bitimer.cpp, src/dialwidget.cpp: Debug mode HOURGLASS
+	* src/bitimer.cpp, src/bitimer.h, src/dialwidget.cpp,
+	  src/dialwidget.h: Affichage d'infos additionnelles sur les
+	  cadrans
+	* src/bitimer.cpp, src/bitimer.h, src/clockwindow.cpp,
+	  src/dialwidget.cpp, src/dialwidget.h, src/timer.cpp, src/timer.h,
+	  src/timestamp.cpp, src/timestamp.h: Modification interface
+	  timer/bitimer
+	* CMakeLists.txt: Passage version 1.2
+
 2011-01-24  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* NEWS: Modif date release 1.1
