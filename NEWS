@@ -1,3 +1,12 @@
+Virtual Chess Clock 1.2 (March 8, 2011)
+
+	* Status bar showing the time control mode currently in use
+	* Improved time visualization in Bronstein mode (more suited to Backgammon).
+	  Reverting to the former visualization mode is possible through the corresponding
+	  display option.
+	* Keyboard layout description files available for Turkish, Czech, Slovak keyboards
+
+
 Virtual Chess Clock 1.1 (January 24, 2011)
 
 	* The keyboard combo display an icon for each keyboard layout
