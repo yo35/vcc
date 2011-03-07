@@ -46,6 +46,7 @@
 		if(src=="Irish"     ) return "ga";
 		if(src=="Turkish"   ) return "tr";
 		if(src=="Czech"     ) return "cs";
+		if(src=="Slovak"    ) return "sk";
 		return src;
 	}
 
@@ -69,6 +70,7 @@
 		if(src=="Mexico"        ) return "MX";
 		if(src=="Turkey"        ) return "TR";
 		if(src=="Czech Republic") return "CZ";
+		if(src=="Slovakia"      ) return "SK";
 		return src;
 	}
 
