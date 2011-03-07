@@ -101,7 +101,7 @@ bool DialWidget::on_expose_event(GdkEventExpose *event) {
 		curr_time = m_bi_timer->get_time(m_side);
 	}
 
-	// Formattage et affichage
+	// Affichage (drapeau tombé)
 	if(curr_time < 0) {
 		cr->set_source_rgb(0.8, 0.0, 0.0);
 		std::string  main_txt = _("Flag down");
@@ -113,16 +113,24 @@ bool DialWidget::on_expose_event(GdkEventExpose *event) {
 			draw_one_line_text(cr, main_txt);
 		}
 	}
+
+	// Affichage (normal)
 	else {
 		cr->set_source_rgb(0.0, 0.0, 0.0);
-		std::string txt = format_time(curr_time);
-		if(m_display_bronstein_extra_time && m_bi_timer->time_control().mode()==BRONSTEIN && is_active) {
-			std::string extra_txt = bronstein_extra_delay > 0
-				? _("Extra period till:") + std::string(" ") + format_time(bronstein_extra_delay)
-				: _("Main period");
-			draw_two_lines_text(cr, txt, extra_txt);
+		if(m_display_bronstein_extra_time && m_bi_timer->time_control().mode()==BRONSTEIN) {
+			if(bronstein_extra_delay >= 0) {
+				std::string  main_txt = format_time(curr_time-bronstein_extra_delay);
+				std::string extra_txt = format_time(bronstein_extra_delay);
+				draw_two_lines_text(cr, main_txt, extra_txt);
+			}
+			else {
+				std::string  main_txt = format_time(curr_time);
+				std::string extra_txt = _("Main time");
+				draw_two_lines_text(cr, main_txt, extra_txt);
+			}
 		}
 		else {
+			std::string txt = format_time(curr_time);
 			draw_one_line_text(cr, txt);
 		}
 	}
