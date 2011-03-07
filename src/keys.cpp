@@ -333,9 +333,11 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_ccaron   : return "č";
 		case GDK_dcaron   : return "ď​";
 		case GDK_ecaron   : return "ě";
+		case GDK_lcaron   : return "ľ";
 		case GDK_ncaron   : return "ň";
 		case GDK_rcaron   : return "ř";
 		case GDK_scaron   : return "š";
+		case GDK_tcaron   : return "ť";
 		case GDK_zcaron   : return "ž";
 		case GDK_racute   : return "ŕ";
 
@@ -348,9 +350,11 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_Ccaron   : return "Č";
 		case GDK_Dcaron   : return "Ď";
 		case GDK_Ecaron   : return "Ě";
+		case GDK_Lcaron   : return "Ľ";
 		case GDK_Ncaron   : return "Ň";
 		case GDK_Rcaron   : return "Ř";
 		case GDK_Scaron   : return "Š";
+		case GDK_Tcaron   : return "Ť";
 		case GDK_Zcaron   : return "Ž";
 		case GDK_Racute   : return "Ŕ";
 
