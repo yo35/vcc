@@ -62,9 +62,8 @@ set(LIBRARY_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 
 # Fichiers ressource
 if(${WIN32})
-	set(CMAKE_RC_COMPILER windres)
-	set(CMAKE_RC_COMPILE_OBJECT "windres <SOURCE> -O coff -o <OBJECT>")
 	enable_language(RC)
+	set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
 endif(${WIN32})
 
 
