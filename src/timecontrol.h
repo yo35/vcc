@@ -31,7 +31,7 @@
 // Types de cadence
 // 4 modes de contrôle de temps sont disponibles
 struct BaseTimeControlType {
-	static const int N = 4;
+	static const int N = 5;
 };
 typedef Enumerable<BaseTimeControlType> TimeControlType;
 
@@ -41,6 +41,7 @@ extern const TimeControlType SUDDEN_DEATH;
 extern const TimeControlType FISCHER     ;
 extern const TimeControlType BRONSTEIN   ;
 extern const TimeControlType HOURGLASS   ;
+extern const TimeControlType BYO_YOMI    ;
 
 // Chaînes de caractère
 std::string time_control_type_name(const TimeControlType &type);
@@ -57,16 +58,18 @@ public:
 
 	// Accesseurs
 	TimeControlType mode() const;
-	int  main_time(const Side &side) const;
-	int  increment(const Side &side) const;
+	int  main_time (const Side &side) const;
+	int  increment (const Side &side) const;
+	int  byo_period(const Side &side) const;
 
 	// Modifieurs
 	void set_mode(const TimeControlType &new_mode);
-	void set_main_times(int new_main_times);
-	void set_increments(int new_increments);
-	void set_main_time (int new_main_time, const Side &side);
-	void set_increment (int new_increment, const Side &side);
-
+	void set_main_times (int new_main_times );
+	void set_increments (int new_increments );
+	void set_byo_periods(int new_byo_periods);
+	void set_main_time (int new_main_time , const Side &side);
+	void set_increment (int new_increment , const Side &side);
+	void set_byo_period(int new_byo_period, const Side &side);
 	// Teste si les deux côtés ont la même config
 	bool both_sides_have_same_time() const;
 
@@ -80,8 +83,9 @@ private:
 
 	// Données membres
 	TimeControlType m_mode;
-	IntSideArray    m_main_time;
-	IntSideArray    m_increment;
+	IntSideArray    m_main_time ;
+	IntSideArray    m_increment ;
+	IntSideArray    m_byo_period;
 };
 
 #endif

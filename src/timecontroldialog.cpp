@@ -48,19 +48,25 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 	frm_time[LEFT ].set_label(_("Left" ));
 	frm_time[RIGHT].set_label(_("Right"));
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
-		lbl_main_time[*k].set_label(_("Main time"));
-		lbl_increment[*k].set_label(_("Increment"));
-		layout_time  [*k].resize(2, 2);
-		layout_time  [*k].set_border_width(5);
-		layout_time  [*k].set_spacings(5);
-		layout_time  [*k].attach(lbl_main_time[*k], 0, 1, 0, 1);
-		layout_time  [*k].attach(lbl_increment[*k], 0, 1, 1, 2);
-		layout_time  [*k].attach(    main_time[*k], 1, 2, 0, 1);
-		layout_time  [*k].attach(    increment[*k], 1, 2, 1, 2);
-		frm_time     [*k].add(layout_time[*k]);
+		byo_period    [*k].set_range(1, 99);
+		byo_period    [*k].set_increments(1, 5);
+		lbl_main_time [*k].set_label(_("Main time"));
+		lbl_increment [*k].set_label(_("Increment"));
+		lbl_byo_period[*k].set_label(_("Byo-yomi periods"));
+		layout_time   [*k].resize(2, 3);
+		layout_time   [*k].set_border_width(5);
+		layout_time   [*k].set_spacings(5);
+		layout_time   [*k].attach(lbl_main_time [*k], 0, 1, 0, 1);
+		layout_time   [*k].attach(lbl_increment [*k], 0, 1, 1, 2);
+		layout_time   [*k].attach(lbl_byo_period[*k], 0, 1, 2, 3);
+		layout_time   [*k].attach(    main_time [*k], 1, 2, 0, 1);
+		layout_time   [*k].attach(    increment [*k], 1, 2, 1, 2);
+		layout_time   [*k].attach(    byo_period[*k], 1, 2, 2, 3);
+		frm_time      [*k].add(layout_time[*k]);
 	}
-	main_time[LEFT].signal_changed().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_main_time));
-	increment[LEFT].signal_changed().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_increment));
+	main_time [LEFT].signal_changed      ().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_main_time ));
+	increment [LEFT].signal_changed      ().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_increment ));
+	byo_period[LEFT].signal_value_changed().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_byo_period));
 	layout_times.set_spacing(5);
 	layout_times.pack_start(frm_time[LEFT ]);
 	layout_times.pack_start(frm_time[RIGHT]);
@@ -68,8 +74,9 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 	// Case à cocher liant les deux côtés
 	link_both_times.set_label(_("Time control values are the same for both sides"));
 	link_both_times.signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::manage_sensitivity));
-	link_both_times.signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_main_time));
-	link_both_times.signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_increment));
+	link_both_times.signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_main_time ));
+	link_both_times.signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_increment ));
+	link_both_times.signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::copy_left_byo_period));
 
 	// Géométrie générale
 	get_vbox()->set_spacing(5);
@@ -90,8 +97,12 @@ TimeControl TimeControlDialog::get_time_control() const {
 	}
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		retval.set_main_time(main_time[*k].get_time(), *k);
-		if(retval.mode()==FISCHER || retval.mode()==BRONSTEIN)
+		if(retval.mode()==FISCHER || retval.mode()==BRONSTEIN || retval.mode()==BYO_YOMI) {
 			retval.set_increment(increment[*k].get_time(), *k);
+		}
+		if(retval.mode()==BYO_YOMI) {
+			retval.set_byo_period(byo_period[*k].get_value_as_int(), *k);
+		}
 	}
 	return retval;
 }
@@ -100,11 +111,17 @@ void TimeControlDialog::set_time_control(const TimeControl &src) {
 	mode[src.mode()].set_active(true);
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		main_time[*k].set_time(src.main_time(*k));
-		if(src.mode()==FISCHER || src.mode()==BRONSTEIN) {
+		if(src.mode()==FISCHER || src.mode()==BRONSTEIN || src.mode()==BYO_YOMI) {
 			increment[*k].set_time(src.increment(*k));
 		}
 		else {
 			increment[*k].set_time(0);
+		}
+		if(src.mode()==BYO_YOMI) {
+			byo_period[*k].set_value(src.byo_period(*k));
+		}
+		else {
+			byo_period[*k].set_value(1);
 		}
 	}
 	link_both_times.set_active(src.both_sides_have_same_time());
@@ -112,19 +129,30 @@ void TimeControlDialog::set_time_control(const TimeControl &src) {
 }
 
 void TimeControlDialog::manage_sensitivity() {
-	bool enable_increment = (mode[FISCHER].get_active() || mode[BRONSTEIN].get_active());
-	bool enable_right     = !link_both_times.get_active();
-	increment[LEFT ].set_sensitive(enable_increment);
-	increment[RIGHT].set_sensitive(enable_increment && enable_right);
-	main_time[RIGHT].set_sensitive(                    enable_right);
+	bool enable_increment  = (mode[FISCHER].get_active() || mode[BRONSTEIN].get_active() || mode[BYO_YOMI].get_active());
+	bool enable_byo_period = mode[BYO_YOMI].get_active();
+	bool enable_right      = !link_both_times.get_active();
+	increment [LEFT ].set_sensitive(enable_increment );
+	byo_period[LEFT ].set_sensitive(enable_byo_period);
+	main_time [RIGHT].set_sensitive(                     enable_right);
+	increment [RIGHT].set_sensitive(enable_increment  && enable_right);
+	byo_period[RIGHT].set_sensitive(enable_byo_period && enable_right);
 }
 
 void TimeControlDialog::copy_left_main_time() {
-	if(link_both_times.get_active())
+	if(link_both_times.get_active()) {
 		main_time[RIGHT].set_time(main_time[LEFT].get_time());
+	}
 }
 
 void TimeControlDialog::copy_left_increment() {
-	if(link_both_times.get_active())
+	if(link_both_times.get_active()) {
 		increment[RIGHT].set_time(increment[LEFT].get_time());
+	}
+}
+
+void TimeControlDialog::copy_left_byo_period() {
+	if(link_both_times.get_active()) {
+		byo_period[RIGHT].set_value(byo_period[LEFT].get_value_as_int());
+	}
 }

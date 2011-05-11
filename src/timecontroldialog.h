@@ -26,6 +26,7 @@
 #include <gtkmm/dialog.h>
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/checkbutton.h>
+#include <gtkmm/spinbutton.h>
 #include <gtkmm/label.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/box.h>
@@ -48,19 +49,22 @@ private:
 
 	// Comportement interne de la boîte de dialogue
 	void manage_sensitivity();
-	void copy_left_main_time();
-	void copy_left_increment();
+	void copy_left_main_time ();
+	void copy_left_increment ();
+	void copy_left_byo_period();
 
 	// Widget
 	Gtk::CheckButton                             link_both_times;
 	EnumArray<TimeControlType, Gtk::RadioButton> mode           ;
 	Gtk::RadioButton::Group                      mode_group     ;
 	Gtk::Frame                                   frm_mode       ;
-	EnumArray<Side, TimeEntry >                  main_time      ;
-	EnumArray<Side, TimeEntry >                  increment      ;
-	EnumArray<Side, Gtk::Label>                  lbl_main_time  ;
-	EnumArray<Side, Gtk::Label>                  lbl_increment  ;
-	EnumArray<Side, Gtk::Frame>                  frm_time       ;
+	EnumArray<Side, TimeEntry      >             main_time      ;
+	EnumArray<Side, TimeEntry      >             increment      ;
+	EnumArray<Side, Gtk::SpinButton>             byo_period     ;
+	EnumArray<Side, Gtk::Label     >             lbl_main_time  ;
+	EnumArray<Side, Gtk::Label     >             lbl_increment  ;
+	EnumArray<Side, Gtk::Label     >             lbl_byo_period ;
+	EnumArray<Side, Gtk::Frame     >             frm_time       ;
 
 	// Layout
 	Gtk::VBox                   layout_mode ;

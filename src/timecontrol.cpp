@@ -29,13 +29,15 @@ const TimeControlType SUDDEN_DEATH(0);
 const TimeControlType FISCHER     (1);
 const TimeControlType BRONSTEIN   (2);
 const TimeControlType HOURGLASS   (3);
+const TimeControlType BYO_YOMI    (4);
 
 // Constructeur
 TimeControl::TimeControl() {
 	m_mode = SUDDEN_DEATH;
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
-		m_main_time[*k] = 0;
-		m_increment[*k] = 0;
+		m_main_time [*k] = 0;
+		m_increment [*k] = 0;
+		m_byo_period[*k] = 0;
 	}
 }
 
@@ -49,8 +51,13 @@ int TimeControl::main_time(const Side &side) const {
 }
 
 int TimeControl::increment(const Side &side) const {
-	assert(m_mode==FISCHER || m_mode==BRONSTEIN);
+	assert(m_mode==FISCHER || m_mode==BRONSTEIN || m_mode==BYO_YOMI);
 	return m_increment[side];
+}
+
+int TimeControl::byo_period(const Side &side) const {
+	assert(m_mode==BYO_YOMI);
+	return m_byo_period[side];
 }
 
 // Modifieurs
@@ -78,10 +85,24 @@ void TimeControl::set_increment(int new_increment, const Side &side) {
 	m_increment[side] = new_increment;
 }
 
+void TimeControl::set_byo_periods(int new_byo_periods) {
+	for(Side::iterator k=Side::first(); k.valid(); ++k) {
+		m_byo_period[*k] = new_byo_periods;
+	}
+}
+
+void TimeControl::set_byo_period(int new_byo_period, const Side &side) {
+	m_byo_period[side] = new_byo_period;
+}
+
 bool TimeControl::both_sides_have_same_time() const {
 	bool retval = m_main_time[LEFT]==m_main_time[RIGHT];
-	if(m_mode==FISCHER || m_mode==BRONSTEIN)
+	if(m_mode==FISCHER || m_mode==BRONSTEIN || m_mode==BYO_YOMI) {
 		retval = retval && (m_increment[LEFT]==m_increment[RIGHT]);
+	}
+	if(m_mode==BYO_YOMI) {
+		retval = retval && (m_byo_period[LEFT]==m_byo_period[RIGHT]);
+	}
 	return retval;
 }
 
@@ -93,6 +114,7 @@ std::string time_control_type_name(const TimeControlType &type) {
 		retval[FISCHER     ] = _("Fischer"     );
 		retval[BRONSTEIN   ] = _("Bronstein"   );
 		retval[HOURGLASS   ] = _("Hourglass"   );
+		retval[BYO_YOMI    ] = _("Byo-Yomi"    );
 		do_initialisation = false;
 	}
 	return retval[type];
@@ -169,6 +191,14 @@ std::string TimeControl::aux_description(const Side &side) const {
 	std::string res = format_time_long(m_main_time[side]);
 	if(m_mode==FISCHER || m_mode==BRONSTEIN) {
 		res += " + " + format_time_long(m_increment[side]) + std::string(" ") + _("by move");
+	}
+	else if(m_mode==BYO_YOMI) {
+		res += " + " + format_time_long(m_increment[side]) + std::string(" × ") +
+			int_to_string(m_byo_period[side]) + std::string(" ");
+		if(m_byo_period[side]<=1)
+			res += _("byo-yomi period");
+		else
+			res += _("byo-yomi periods");
 	}
 	return res;
 }
