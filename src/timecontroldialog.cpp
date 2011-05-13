@@ -32,12 +32,48 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 	add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
 	set_default_response(Gtk::RESPONSE_OK);
 
+	// Description des cadences
+	EnumArray<TimeControlType, Glib::ustring> mode_description;
+	mode_description[SUDDEN_DEATH] = _(
+		"Simplest time control mode. No additional delay is never added to the "
+		"player's main time."
+	);
+	mode_description[FISCHER] = _(
+		"At each move, the player is granted an additional delay, so that his or "
+		"her global clock time is always greater than this bonus time at the "
+		"beginning of his or her playing turn. Additional delays can be "
+		"accumulated."
+	);
+	mode_description[BRONSTEIN] = _(
+		"Same as Fischer time control mode, except that additional delays cannot "
+		"be accumulated. Bronstein mode can also be thought as a kind of sudden "
+		"death mode in which the clock waits for a certain delay before starting "
+		"to substract from the player's remaining time when engaged."
+	);
+	mode_description[HOURGLASS] = _(
+		"While the current player is deciding on his or her move, the opponent's "
+		"time is increasing. Therefore, the sum of both clocks remains always the "
+		"same."
+	);
+	mode_description[BYO_YOMI] = _(
+		"When the player's main time expires, he or she is granted one or more "
+		"additional time periods, denoted as \"byo-yomi\" periods. If the move is "
+		"completed before the current byo-yomi period expires, the clock is reset "
+		"with the whole byo-yomi time available for the next move; otherwise, the "
+		"next byo-yomi period starts. At the end of the last byo-yomi period, the "
+		"game is lost."
+	);
+
 	// Frame "mode"
 	frm_mode.set_label(_("Mode"));
 	layout_mode.set_border_width(5);
 	layout_mode.set_spacing(5);
 	for(TimeControlType::iterator k=TimeControlType::first(); k.valid(); ++k) {
-		mode[*k].set_label(time_control_type_name(*k));
+		Glib::ustring mode_name = time_control_type_name(*k);
+		Glib::ustring tooltip   = Glib::ustring::compose("<span weight=\"bold\">%1</span>\n%2",
+			mode_name, mode_description[*k]);
+		mode[*k].set_label(mode_name);
+		mode[*k].set_tooltip_markup(tooltip);
 		mode[*k].set_group(mode_group);
 		mode[*k].signal_toggled().connect(sigc::mem_fun(*this, &TimeControlDialog::manage_sensitivity));
 		layout_mode.pack_start(mode[*k]);

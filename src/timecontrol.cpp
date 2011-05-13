@@ -114,7 +114,7 @@ std::string time_control_type_name(const TimeControlType &type) {
 		retval[FISCHER     ] = _("Fischer"     );
 		retval[BRONSTEIN   ] = _("Bronstein"   );
 		retval[HOURGLASS   ] = _("Hourglass"   );
-		retval[BYO_YOMI    ] = _("Byo-Yomi"    );
+		retval[BYO_YOMI    ] = _("Byo-yomi"    );
 		do_initialisation = false;
 	}
 	return retval[type];
