@@ -249,8 +249,8 @@ void ClockWindow::on_help_clicked() {
 	Gtk::MessageDialog dialog(*this, "", false, Gtk::MESSAGE_INFO, Gtk::BUTTONS_OK, true);
 	dialog.set_title  (_("Help"));
 	dialog.set_message(_(
-		"To start playing and then change the running side of the clock, just pull "
-		"some keys on the keyboard. The left player have to pull some key on the left "
+		"To start playing and then change the running side of the clock, just push "
+		"some keys on the keyboard. The left player have to push some key on the left "
 		"side of the keyboard, the right player on the right side.\n"
 		"\n"
 		"If it does not work, it might be due to a misdetection of your keyboard "

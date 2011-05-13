@@ -11,8 +11,9 @@ were lacking of such a stuff, so we could not blitz, so we were in bad trouble !
 
 Features
 --------
- - two active key areas on the keyboard (left and right) to pull the clock
- - support for exotic time control modes such as Fischer, Bronstein, hourglass
+ - two active key areas on the keyboard (left and right) to engage the clock
+ - support for exotic time control modes such as Fischer, Bronstein, hourglass,
+   byo-yomi
  - time resolution of 1 millisecond
  - inactivation of the window keys on Windows
 

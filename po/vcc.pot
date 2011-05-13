@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtual-chess-clock 1.3.0\n"
 "Report-Msgid-Bugs-To: Yoann Le Montagner <yo35 ( at ) melix ( dot ) net>\n"
-"POT-Creation-Date: 2011-05-13 22:15+0200\n"
+"POT-Creation-Date: 2011-05-13 23:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,8 +118,8 @@ msgstr ""
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:252
 msgid ""
-"To start playing and then change the running side of the clock, just pull "
-"some keys on the keyboard. The left player have to pull some key on the left "
+"To start playing and then change the running side of the clock, just push "
+"some keys on the keyboard. The left player have to push some key on the left "
 "side of the keyboard, the right player on the right side.\n"
 "\n"
 "If it does not work, it might be due to a misdetection of your keyboard "
@@ -263,7 +263,7 @@ msgid "Modify the right player's area"
 msgstr ""
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:128
-msgid "Active areas that players can use to pull the clock when playing"
+msgid "Active areas that players can use to engage the clock when playing"
 msgstr ""
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:129

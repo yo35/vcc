@@ -125,7 +125,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	on_area_changed();
 
 	// Tooltip
-	Glib::ustring lg1 = _("Active areas that players can use to pull the clock when playing");
+	Glib::ustring lg1 = _("Active areas that players can use to engage the clock when playing");
 	Glib::ustring lg2 = _("left player's area");
 	Glib::ustring lg3 = _("right player's area");
   Glib::ustring coul2 = kbm_widget.color(LEFT ).to_string();
