@@ -119,9 +119,13 @@ TimeControl Params::initial_time_control() const {
 	retval.set_mode     (m_data_perso.get_data("Time_Control", "Mode"           , SUDDEN_DEATH));
 	retval.set_main_time(m_data_perso.get_data("Time_Control", "Main_Time_Left" , 3*60*1000), LEFT );
 	retval.set_main_time(m_data_perso.get_data("Time_Control", "Main_Time_Right", 3*60*1000), RIGHT);
-	if(retval.mode()==FISCHER || retval.mode()==BRONSTEIN) {
+	if(retval.mode()==FISCHER || retval.mode()==BRONSTEIN || retval.mode()==BYO_YOMI) {
 		retval.set_increment(m_data_perso.get_data("Time_Control", "Increment_Left" , 2*1000), LEFT );
 		retval.set_increment(m_data_perso.get_data("Time_Control", "Increment_Right", 2*1000), RIGHT);
+	}
+	if(retval.mode()==BYO_YOMI) {
+		retval.set_byo_period(m_data_perso.get_data("Time_Control", "Byo_Period_Left" , 1), LEFT );
+		retval.set_byo_period(m_data_perso.get_data("Time_Control", "Byo_Period_Right", 1), RIGHT);
 	}
 	return retval;
 }
@@ -131,9 +135,13 @@ void Params::set_initial_time_control(const TimeControl &src) {
 	m_data_perso.set_data("Time_Control", "Mode"           , src.mode());
 	m_data_perso.set_data("Time_Control", "Main_Time_Left" , src.main_time(LEFT ));
 	m_data_perso.set_data("Time_Control", "Main_Time_Right", src.main_time(RIGHT));
-	if(src.mode()==FISCHER || src.mode()==BRONSTEIN) {
+	if(src.mode()==FISCHER || src.mode()==BRONSTEIN || src.mode()==BYO_YOMI) {
 		m_data_perso.set_data("Time_Control", "Increment_Left" , src.increment(LEFT ));
 		m_data_perso.set_data("Time_Control", "Increment_Right", src.increment(RIGHT));
+	}
+	if(src.mode()==BYO_YOMI) {
+		m_data_perso.set_data("Time_Control", "Byo_Period_Left" , src.byo_period(LEFT ));
+		m_data_perso.set_data("Time_Control", "Byo_Period_Right", src.byo_period(RIGHT));
 	}
 }
 

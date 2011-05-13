@@ -82,23 +82,35 @@ void BiTimer::change_timer() {
 	// Sinon, il est mis en pause
 	else {
 		m_timer[m_active_side].set_mode(Timer::PAUSED);
+		int current_time = m_timer[m_active_side].get_time();
 
-		// En mode fischer ou bronstein, on incrémente le compteur à chaque coup,
-		// Rq : uniquement si le compteur est positif
-		if((
-			m_time_control.mode()==FISCHER ||
-			m_time_control.mode()==BRONSTEIN) &&
-			m_timer[m_active_side].get_time() >= 0)
-		{
-			int new_time = m_timer[m_active_side].get_time()
-				+ m_time_control.increment(m_active_side);
-			if(m_time_control.mode()==BRONSTEIN) {
+		// Si le joueur n'est pas tombé, on incrémente le cas échéant les compteurs
+		if(current_time>=0) {
+
+			// En mode Fischer, on incrémente le compteur à chaque coup
+			if(m_time_control.mode()==FISCHER) {
+				int new_time = current_time + m_time_control.increment(m_active_side);
+				m_timer[m_active_side].set_time(new_time);
+			}
+
+			// En mode Bronstein, on incrémente en tenant compte de la limite
+			else if(m_time_control.mode()==BRONSTEIN) {
+				int new_time = current_time + m_time_control.increment(m_active_side);
 				if(new_time > m_bronstein_limit[m_active_side])
 					new_time = m_bronstein_limit[m_active_side];
 				else
 					m_bronstein_limit[m_active_side] = new_time;
+				m_timer[m_active_side].set_time(new_time);
 			}
-			m_timer[m_active_side].set_time(new_time);
+
+			// En mode Byo-Yomi, on incrémente le compteur si l'on est dans un phase byo-yomi
+			else if(m_time_control.mode()==BYO_YOMI && m_time_control.increment(m_active_side)>0) {
+				int current_byo_period = current_time / m_time_control.increment(m_active_side) + 1;
+				if(current_byo_period<=m_time_control.byo_period(m_active_side)) {
+					int new_time = current_byo_period * m_time_control.increment(m_active_side);
+					m_timer[m_active_side].set_time(new_time);
+				}
+			}
 		}
 	}
 
@@ -126,16 +138,18 @@ void BiTimer::reset_timers() {
 
 		// Calcul du temps initial
 		int start_time = m_time_control.main_time(*k);
-		if(m_time_control.mode()==FISCHER
-			|| m_time_control.mode()==BRONSTEIN)
-		{
+		if(m_time_control.mode()==FISCHER || m_time_control.mode()==BRONSTEIN) {
 			start_time += m_time_control.increment(*k);
+		}
+		else if(m_time_control.mode()==BYO_YOMI) {
+			start_time += m_time_control.increment(*k) * m_time_control.byo_period(*k);
 		}
 
 		// Définition des flags
 		m_timer[*k].set_time(start_time);
-		if(m_time_control.mode()==BRONSTEIN)
+		if(m_time_control.mode()==BRONSTEIN) {
 			m_bronstein_limit[*k] = start_time;
+		}
 	}
 	m_mode = PAUSED;
 	m_signal_state_changed.emit();
