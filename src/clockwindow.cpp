@@ -253,7 +253,7 @@ void ClockWindow::on_help_clicked() {
 		"some keys on the keyboard. The left player have to pull some key on the left "
 		"side of the keyboard, the right player on the right side.\n"
 		"\n"
-		"If it does not work, it might be due to a mis-detection of your keyboard "
+		"If it does not work, it might be due to a misdetection of your keyboard "
 		"layout; you can check it and correct it through the \"Preferences\" dialog. "
 		"If your actual keyboard layout is not available among those proposed by "
 		"VCC, you should select \"Default QWERTY\" or one of the default layouts that "
@@ -319,5 +319,6 @@ void ClockWindow::retrieve_parameters_from_gp() {
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {
 		dial[*k].set_display_time_after_flag_down(gp->display_time_after_flag_down());
 		dial[*k].set_display_bronstein_extra_time(gp->display_bronstein_extra_time());
+		dial[*k].set_display_byo_yomi_extra_time (gp->display_byo_yomi_extra_time ());
 	}
 }

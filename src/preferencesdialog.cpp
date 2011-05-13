@@ -96,10 +96,12 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	display_status_bar          .set_label(_("Display the status bar at the bottom of the main window"      ));
 	display_time_after_flag_down.set_label(_("Display an increasing time counter when the flag is down"     ));
 	display_bronstein_extra_time.set_label(_("Display extra time information when playing in Bronstein mode"));
+	display_byo_yomi_extra_time .set_label(_("Display extra time information when playing in byo-yomi mode" ));
 	disp_page.set_spacing(5);
 	disp_page.pack_start(display_status_bar          , Gtk::PACK_SHRINK);
 	disp_page.pack_start(display_time_after_flag_down, Gtk::PACK_SHRINK);
 	disp_page.pack_start(display_bronstein_extra_time, Gtk::PACK_SHRINK);
+	disp_page.pack_start(display_byo_yomi_extra_time , Gtk::PACK_SHRINK);
 
 	// Onglet keyboard (sauf géométrie)
 	kb_selector_label.set_label(_("Select the keyboard layout you are using"));
@@ -173,6 +175,7 @@ void PreferencesDialog::load_params() {
 	display_status_bar          .set_active(gp->display_status_bar          ());
 	display_time_after_flag_down.set_active(gp->display_time_after_flag_down());
 	display_bronstein_extra_time.set_active(gp->display_bronstein_extra_time());
+	display_byo_yomi_extra_time .set_active(gp->display_byo_yomi_extra_time ());
 
 	// Régions sélectionnées courantes
 	std::string curr_keyboard = gp->curr_keyboard();
@@ -215,6 +218,7 @@ void PreferencesDialog::save_params() {
 	gp->set_display_status_bar          (display_status_bar          .get_active());
 	gp->set_display_time_after_flag_down(display_time_after_flag_down.get_active());
 	gp->set_display_bronstein_extra_time(display_bronstein_extra_time.get_active());
+	gp->set_display_byo_yomi_extra_time (display_byo_yomi_extra_time .get_active());
 
 	// Paramètres de clavier
 	save_curr_area();

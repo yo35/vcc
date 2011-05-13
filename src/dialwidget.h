@@ -38,6 +38,7 @@ public:
 	// Options
 	void set_display_time_after_flag_down(bool src);
 	void set_display_bronstein_extra_time(bool src);
+	void set_display_byo_yomi_extra_time (bool src);
 
 private:
 
@@ -57,6 +58,7 @@ private:
 	Side           m_side    ;
 	bool           m_display_time_after_flag_down;
 	bool           m_display_bronstein_extra_time;
+	bool           m_display_byo_yomi_extra_time ;
 };
 
 #endif

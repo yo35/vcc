@@ -21,12 +21,14 @@
 
 
 #include "dialwidget.h"
+#include "strings.h"
 #include <translation.h>
 
 DialWidget::DialWidget() : Gtk::DrawingArea() {
 	m_bi_timer                     = 0   ;
 	m_display_time_after_flag_down = true;
 	m_display_bronstein_extra_time = true;
+	m_display_byo_yomi_extra_time  = true;
 	set_size_request(400, 300);
 	Glib::signal_timeout().connect(sigc::mem_fun(*this, &DialWidget::on_timeout_elapses), 100);
 }
@@ -44,6 +46,11 @@ void DialWidget::set_display_time_after_flag_down(bool src) {
 
 void DialWidget::set_display_bronstein_extra_time(bool src) {
 	m_display_bronstein_extra_time = src;
+	refresh_widget();
+}
+
+void DialWidget::set_display_byo_yomi_extra_time(bool src) {
+	m_display_byo_yomi_extra_time = src;
 	refresh_widget();
 }
 
@@ -114,9 +121,11 @@ bool DialWidget::on_expose_event(GdkEventExpose *event) {
 		}
 	}
 
-	// Affichage (normal)
+	// Affichage (non-tombé)
 	else {
 		cr->set_source_rgb(0.0, 0.0, 0.0);
+
+		// Affichage spécial en mode bronstein
 		if(m_display_bronstein_extra_time && m_bi_timer->time_control().mode()==BRONSTEIN) {
 			if(bronstein_extra_delay >= 0) {
 				std::string  main_txt = format_time(curr_time-bronstein_extra_delay);
@@ -129,6 +138,29 @@ bool DialWidget::on_expose_event(GdkEventExpose *event) {
 				draw_two_lines_text(cr, main_txt, extra_txt);
 			}
 		}
+
+		// Affichage spécial en mode byo-yomi
+		else if(m_display_byo_yomi_extra_time && m_bi_timer->time_control().mode()==BYO_YOMI) {
+			int increment       = m_bi_timer->time_control().increment (m_side);
+			int byo_period      = m_bi_timer->time_control().byo_period(m_side);
+			if(increment==0 || byo_period==0 || curr_time > increment*byo_period) {
+				std::string  main_txt = format_time(curr_time - byo_period*increment);
+				std::string extra_txt = _("Main time");
+				draw_two_lines_text(cr, main_txt, extra_txt);
+			}
+			else {
+				int   curr_byo_period = (increment*byo_period-curr_time) / increment + 1;
+				std::string  main_txt = format_time(curr_time - (byo_period-curr_byo_period)*increment);
+				std::string extra_txt = _("Byo-yomi period");
+				if(byo_period>1) {
+					extra_txt += std::string(" ") + int_to_string(curr_byo_period)
+						+ std::string("/") + int_to_string(byo_period);
+				}
+				draw_two_lines_text(cr, main_txt, extra_txt);
+			}
+		}
+
+		// Affichage normal
 		else {
 			std::string txt = format_time(curr_time);
 			draw_one_line_text(cr, txt);

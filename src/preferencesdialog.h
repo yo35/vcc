@@ -118,6 +118,7 @@ private:
 	Gtk::CheckButton display_status_bar          ;
 	Gtk::CheckButton display_time_after_flag_down;
 	Gtk::CheckButton display_bronstein_extra_time;
+	Gtk::CheckButton display_byo_yomi_extra_time ;
 };
 
 #endif

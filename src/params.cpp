@@ -205,6 +205,16 @@ void Params::set_display_bronstein_extra_time(bool src) {
 	m_data_perso.set_data("Display", "Bronstein_Mode_Extra_Information", src);
 }
 
+// Affichage des informations additionnelles en mode 'Byo-Yomi' (lecture)
+bool Params::display_byo_yomi_extra_time() const {
+	return m_data_perso.get_data("Display", "Byo_Yomi_Mode_Extra_Information", true);
+}
+
+// Affichage des informations additionnelles en mode 'Byo-Yomi' (écriture)
+void Params::set_display_byo_yomi_extra_time(bool src) {
+	m_data_perso.set_data("Display", "Byo_Yomi_Mode_Extra_Information", src);
+}
+
 // Modèle de clavier préféré (code) (lecture)
 std::string Params::curr_keyboard() const {
 	return m_data_perso.get_data("Keyboard", "KBM", m_default_kbm);

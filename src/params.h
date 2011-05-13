@@ -80,6 +80,10 @@ public:
 	bool display_bronstein_extra_time() const;
 	void set_display_bronstein_extra_time(bool src);
 
+	// Affichage des informations additionnelles en mode 'Byo-Yomi'
+	bool display_byo_yomi_extra_time() const;
+	void set_display_byo_yomi_extra_time(bool src);
+
 	// Modèle de clavier préféré (code)
 	std::string curr_keyboard() const;
 	void set_curr_keyboard(const std::string &src);
