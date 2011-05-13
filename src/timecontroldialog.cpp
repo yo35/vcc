@@ -58,10 +58,9 @@ TimeControlDialog::TimeControlDialog(Gtk::Window &parent, const TimeControl &src
 	mode_description[BYO_YOMI] = _(
 		"When the player's main time expires, he or she is granted one or more "
 		"additional time periods, denoted as \"byo-yomi\" periods. If the move is "
-		"completed before the current byo-yomi period expires, the clock is reset "
-		"with the whole byo-yomi time available for the next move; otherwise, the "
-		"next byo-yomi period starts. At the end of the last byo-yomi period, the "
-		"game is lost."
+		"completed before the current byo-yomi expires, the clock is reset with "
+		"the whole byo-yomi time available for the next move; otherwise, the "
+		"next byo-yomi starts. At the end of the last byo-yomi, the game is lost."
 	);
 
 	// Frame "mode"
