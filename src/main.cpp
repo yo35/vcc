@@ -47,6 +47,7 @@
 		if(src=="Turkish"   ) return "tr";
 		if(src=="Czech"     ) return "cs";
 		if(src=="Slovak"    ) return "sk";
+		if(src=="Lithuanian") return "lt";
 		return src;
 	}
 
@@ -71,6 +72,7 @@
 		if(src=="Turkey"        ) return "TR";
 		if(src=="Czech Republic") return "CZ";
 		if(src=="Slovakia"      ) return "SK";
+		if(src=="Lithuania"     ) return "LT";
 		return src;
 	}
 

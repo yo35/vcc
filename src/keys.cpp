@@ -339,6 +339,12 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_scaron   : return "š";
 		case GDK_tcaron   : return "ť";
 		case GDK_zcaron   : return "ž";
+		case GDK_aogonek  : return "ą";
+		case GDK_eogonek  : return "ę";
+		case GDK_iogonek  : return "į";
+		case GDK_uogonek  : return "ų";
+		case GDK_umacron  : return "ū";
+		case GDK_eabovedot: return "ė";
 		case GDK_racute   : return "ŕ";
 
 		// Caractères latins diacritiques majuscule (hors-latin1)
@@ -356,6 +362,12 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_Scaron   : return "Š";
 		case GDK_Tcaron   : return "Ť";
 		case GDK_Zcaron   : return "Ž";
+		case GDK_Aogonek  : return "Ą";
+		case GDK_Eogonek  : return "Ę";
+		case GDK_Iogonek  : return "Į";
+		case GDK_Uogonek  : return "Ų";
+		case GDK_Umacron  : return "Ū";
+		case GDK_Eabovedot: return "Ė";
 		case GDK_Racute   : return "Ŕ";
 
 		// Divers
