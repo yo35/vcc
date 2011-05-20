@@ -48,6 +48,7 @@
 		if(src=="Czech"     ) return "cs";
 		if(src=="Slovak"    ) return "sk";
 		if(src=="Lithuanian") return "lt";
+		if(src=="Russian"   ) return "ru";
 		return src;
 	}
 
@@ -73,6 +74,7 @@
 		if(src=="Czech Republic") return "CZ";
 		if(src=="Slovakia"      ) return "SK";
 		if(src=="Lithuania"     ) return "LT";
+		if(src=="Russia"        ) return "RU";
 		return src;
 	}
 

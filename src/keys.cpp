@@ -324,7 +324,7 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_dead_breve      : return "˘";
 		case GDK_dead_ogonek     : return "˛";
 
-		// Caractères latins diacritiques minuscule (hors-latin1)
+		// Caractères latins diacritiques minuscules (hors-latin1)
 		case GDK_scedilla : return "ş​";
 		case GDK_gbreve   : return "ğ";
 		case GDK_dstroke  : return "đ";
@@ -347,7 +347,7 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_eabovedot: return "ė";
 		case GDK_racute   : return "ŕ";
 
-		// Caractères latins diacritiques majuscule (hors-latin1)
+		// Caractères latins diacritiques majuscules (hors-latin1)
 		case GDK_Scedilla : return "Ş";
 		case GDK_Gbreve   : return "Ğ";
 		case GDK_Dstroke  : return "Đ";
@@ -369,6 +369,76 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_Umacron  : return "Ū";
 		case GDK_Eabovedot: return "Ė";
 		case GDK_Racute   : return "Ŕ";
+
+		// Caractères cyrilliques minuscules
+		case GDK_KEY_Cyrillic_io      : return "ё";
+		case GDK_KEY_Cyrillic_yu      : return "ю";
+		case GDK_KEY_Cyrillic_a       : return "а";
+		case GDK_KEY_Cyrillic_be      : return "б";
+		case GDK_KEY_Cyrillic_tse     : return "ц";
+		case GDK_KEY_Cyrillic_de      : return "д";
+		case GDK_KEY_Cyrillic_ie      : return "е";
+		case GDK_KEY_Cyrillic_ef      : return "ф";
+		case GDK_KEY_Cyrillic_ghe     : return "г";
+		case GDK_KEY_Cyrillic_ha      : return "х";
+		case GDK_KEY_Cyrillic_i       : return "и";
+		case GDK_KEY_Cyrillic_shorti  : return "й";
+		case GDK_KEY_Cyrillic_ka      : return "к";
+		case GDK_KEY_Cyrillic_el      : return "л";
+		case GDK_KEY_Cyrillic_em      : return "м";
+		case GDK_KEY_Cyrillic_en      : return "н";
+		case GDK_KEY_Cyrillic_o       : return "о";
+		case GDK_KEY_Cyrillic_pe      : return "п";
+		case GDK_KEY_Cyrillic_ya      : return "я";
+		case GDK_KEY_Cyrillic_er      : return "р";
+		case GDK_KEY_Cyrillic_es      : return "с";
+		case GDK_KEY_Cyrillic_te      : return "т";
+		case GDK_KEY_Cyrillic_u       : return "у";
+		case GDK_KEY_Cyrillic_zhe     : return "ж";
+		case GDK_KEY_Cyrillic_ve      : return "в";
+		case GDK_KEY_Cyrillic_softsign: return "ь";
+		case GDK_KEY_Cyrillic_yeru    : return "ы";
+		case GDK_KEY_Cyrillic_ze      : return "з";
+		case GDK_KEY_Cyrillic_sha     : return "ш";
+		case GDK_KEY_Cyrillic_e       : return "э";
+		case GDK_KEY_Cyrillic_shcha   : return "щ";
+		case GDK_KEY_Cyrillic_che     : return "ч";
+		case GDK_KEY_Cyrillic_hardsign: return "ъ";
+
+		// Caractères cyrilliques majuscules
+		case GDK_KEY_Cyrillic_IO      : return "Ё";
+		case GDK_KEY_Cyrillic_YU      : return "Ю";
+		case GDK_KEY_Cyrillic_A       : return "А";
+		case GDK_KEY_Cyrillic_BE      : return "Б";
+		case GDK_KEY_Cyrillic_TSE     : return "Ц";
+		case GDK_KEY_Cyrillic_DE      : return "Д";
+		case GDK_KEY_Cyrillic_IE      : return "Е";
+		case GDK_KEY_Cyrillic_EF      : return "Ф";
+		case GDK_KEY_Cyrillic_GHE     : return "Г";
+		case GDK_KEY_Cyrillic_HA      : return "Х";
+		case GDK_KEY_Cyrillic_I       : return "И";
+		case GDK_KEY_Cyrillic_SHORTI  : return "Й";
+		case GDK_KEY_Cyrillic_KA      : return "К";
+		case GDK_KEY_Cyrillic_EL      : return "Л";
+		case GDK_KEY_Cyrillic_EM      : return "М";
+		case GDK_KEY_Cyrillic_EN      : return "Н";
+		case GDK_KEY_Cyrillic_O       : return "О";
+		case GDK_KEY_Cyrillic_PE      : return "П";
+		case GDK_KEY_Cyrillic_YA      : return "Я";
+		case GDK_KEY_Cyrillic_ER      : return "Р";
+		case GDK_KEY_Cyrillic_ES      : return "С";
+		case GDK_KEY_Cyrillic_TE      : return "Т";
+		case GDK_KEY_Cyrillic_U       : return "У";
+		case GDK_KEY_Cyrillic_ZHE     : return "Ж";
+		case GDK_KEY_Cyrillic_VE      : return "В";
+		case GDK_KEY_Cyrillic_SOFTSIGN: return "Ь";
+		case GDK_KEY_Cyrillic_YERU    : return "Ы";
+		case GDK_KEY_Cyrillic_ZE      : return "З";
+		case GDK_KEY_Cyrillic_SHA     : return "Ш";
+		case GDK_KEY_Cyrillic_E       : return "Э";
+		case GDK_KEY_Cyrillic_SHCHA   : return "Щ";
+		case GDK_KEY_Cyrillic_CHE     : return "Ч";
+		case GDK_KEY_Cyrillic_HARDSIGN: return "Ъ";
 
 		// Divers
 		case GDK_EuroSign : return "€";
