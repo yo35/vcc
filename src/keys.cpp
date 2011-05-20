@@ -211,7 +211,7 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_Num_Lock   : return _("Num\nlock"    );
 		case GDK_KP_Decimal : return _("Decimal\nmark");
 
-		// Caractères ISO 8859 (de 0xA0 à 0xFF)
+		// Caractères ISO 8859-1 (de 0xA0 à 0xFF)
 		case GDK_nobreakspace  : return _("No break\nspace");
 		case GDK_exclamdown    : return "¡";
 		case GDK_cent          : return "¢";
@@ -441,9 +441,10 @@ Glib::ustring keyval_to_symbol(Keyval val) {
 		case GDK_KEY_Cyrillic_HARDSIGN: return "Ъ";
 
 		// Divers
-		case GDK_EuroSign : return "€";
-		case GDK_Iabovedot: return "İ";
-		case GDK_idotless : return "ı";
+		case GDK_EuroSign  : return "€";
+		case GDK_Iabovedot : return "İ";
+		case GDK_idotless  : return "ı";
+		case GDK_numerosign: return "№";
 
 		// Solution par défaut
 		default:
