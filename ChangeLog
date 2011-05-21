@@ -1,5 +1,20 @@
 2011-05-21  Yoann Le Montagner <yo35(at)melix(dot)net>
 
+	* redist_win32/gtkmm/bin/intl.dll,
+	  redist_win32/gtkmm/bin/libatkmm-1.6-1.dll,
+	  redist_win32/gtkmm/bin/libcairomm-1.0-1.dll,
+	  redist_win32/gtkmm/bin/libgcc_s_sjlj-1.dll,
+	  redist_win32/gtkmm/bin/libgdkmm-2.4-1.dll,
+	  redist_win32/gtkmm/bin/libgiomm-2.4-1.dll,
+	  redist_win32/gtkmm/bin/libglibmm-2.4-1.dll,
+	  redist_win32/gtkmm/bin/libgtkmm-2.4-1.dll,
+	  redist_win32/gtkmm/bin/libpangomm-1.4-1.dll,
+	  redist_win32/gtkmm/bin/libsigc-2.0-0.dll,
+	  redist_win32/gtkmm/manifest/gtkmm_2.20.3-1_win32.mft: MAJ
+	  bibliothèques
+
+2011-05-21  Yoann Le Montagner <yo35(at)melix(dot)net>
+
 	* CMakeLists.txt, NEWS: Passage version 1.3
 	* data/share/UA.kbm, data/share/UA.png, data/share/UA.svg,
 	  data/share/keyboardmaps.ini, src/keys.cpp, src/main.cpp: Support
