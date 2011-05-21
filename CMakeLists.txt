@@ -33,11 +33,7 @@ if(NOT (
 	(${CMAKE_BUILD_TYPE} MATCHES Release))
 )
 	message(FATAL_ERROR "Must define CMAKE_BUILD_TYPE")
-endif(NOT (
-	(${CMAKE_BUILD_TYPE} MATCHES Debug) OR
-	(${CMAKE_BUILD_TYPE} MATCHES RelWithDebInfo) OR
-	(${CMAKE_BUILD_TYPE} MATCHES Release))
-)
+endif()
 
 # Mode d'installation
 if(NOT (
@@ -46,11 +42,7 @@ if(NOT (
 	(${INSTALL_TYPE} MATCHES Package))
 )
 	message(FATAL_ERROR "Must define INSTALL_TYPE")
-endif(NOT (
-	(${INSTALL_TYPE} MATCHES Dev) OR
-	(${INSTALL_TYPE} MATCHES Compile) OR
-	(${INSTALL_TYPE} MATCHES Package))
-)
+endif()
 
 # Gtkmm
 find_package(PkgConfig)
@@ -64,7 +56,7 @@ set(LIBRARY_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 if(${WIN32})
 	enable_language(RC)
 	set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
-endif(${WIN32})
+endif()
 
 
 
@@ -136,9 +128,9 @@ file(
 # Fichier de ressource pour l'icône de l'application (uniquement sous windows)
 if(${WIN32})
 	set(icon_rc_file data/icons/windows/winicon.rc)
-else(${WIN32})
+else()
 	set(icon_rc_file "")
-endif(${WIN32})
+endif()
 
 # Fichier desktop
 set(desktop_file data/applications/vcc.desktop)
@@ -209,10 +201,10 @@ if(${WIN32})
 	if(NOT (${INSTALL_TYPE} MATCHES Dev))
 		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
 	endif(NOT (${INSTALL_TYPE} MATCHES Dev))
-endif(${WIN32})
+endif()
 if(${INSTALL_TYPE} MATCHES Dev)
 	add_definitions("-DDEV_COMPILATION")
-endif(${INSTALL_TYPE} MATCHES Dev)
+endif()
 
 # Fichiers de configuration
 configure_file(
@@ -228,9 +220,9 @@ if(${WIN32})
 		${dll_c_files}
 	)
 	set(HOOKDLL_LIBRARY ${HOOKDLL_NAME})
-else(${WIN32})
+else()
 	set(HOOKDLL_LIBRARY "")
-endif(${WIN32})
+endif()
 
 # Exécutable
 add_executable(
@@ -316,7 +308,7 @@ if(${INSTALL_TYPE} MATCHES Dev)
 	)
 
 # Installation
-else(${INSTALL_TYPE} MATCHES Dev)
+else()
 	message(STATUS "VCC is configured in ${INSTALL_TYPE} install mode")
 	message(STATUS "VCC will be installed in ${CMAKE_INSTALL_PREFIX}")
 
@@ -326,7 +318,7 @@ else(${INSTALL_TYPE} MATCHES Dev)
 	if(${WIN32})
 		install(FILES ${LIBRARY_OUTPUT_PATH}/${HOOKDLL_FULL_NAME}
 			DESTINATION ${VCC_BIN_RPATH})
-	endif(${WIN32})
+	endif()
 	install(FILES ${data_shared_files} DESTINATION ${VCC_SHARE_RPATH}       )
 	install(FILES ${readme_aso_files}  DESTINATION ${VCC_DOC_RPATH}         )
 	install(FILES ${desktop_file}      DESTINATION ${VCC_APPLICATIONS_RPATH})
@@ -354,16 +346,16 @@ else(${INSTALL_TYPE} MATCHES Dev)
 			install(DIRECTORY redist_win32/gtk+/libpng/     DESTINATION "." PATTERN ".svn" EXCLUDE)
 			install(DIRECTORY redist_win32/gtk+/pango/      DESTINATION "." PATTERN ".svn" EXCLUDE)
 			install(DIRECTORY redist_win32/gtk+/zlib/       DESTINATION "." PATTERN ".svn" EXCLUDE)
-		endif(${WIN32})
-	endif(${INSTALL_TYPE} MATCHES Package)
+		endif()
+	endif()
 
 	# CPack
 	if(${INSTALL_TYPE} MATCHES Package)
 		if(${WIN32})
 			set(CPACK_GENERATOR "NSIS")
-		else(${WIN32})
+		else()
 			set(CPACK_GENERATOR "DEB")
-		endif(${WIN32})
+		endif()
 		set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 		set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 		set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
@@ -382,5 +374,5 @@ else(${INSTALL_TYPE} MATCHES Dev)
 		set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS
 			"Delete '$SMPROGRAMS\\\\$START_MENU\\\\${PROJECT_FULL_NAME}.lnk'")
 		include(CPack)
-	endif(${INSTALL_TYPE} MATCHES Package)
-endif(${INSTALL_TYPE} MATCHES Dev)
+	endif()
+endif()
