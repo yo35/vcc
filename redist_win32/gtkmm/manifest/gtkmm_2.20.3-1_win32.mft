@@ -1,6 +1,7 @@
 bin/intl.dll
 bin/libatkmm-1.6-1.dll
 bin/libcairomm-1.0-1.dll
+bin/libgcc_s_sjlj-1.dll
 bin/libgdkmm-2.4-1.dll
 bin/libgiomm-2.4-1.dll
 bin/libglibmm-2.4-1.dll
