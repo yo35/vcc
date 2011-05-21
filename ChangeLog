@@ -1,3 +1,77 @@
+2011-05-21  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* CMakeLists.txt, NEWS: Passage version 1.3
+	* data/share/UA.kbm, data/share/UA.png, data/share/UA.svg,
+	  data/share/keyboardmaps.ini, src/keys.cpp, src/main.cpp: Support
+	  du clavier ukrainien
+
+2011-05-20  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/keys.cpp: Debug
+	* data/share/RU.kbm, data/share/RU.png, data/share/RU.svg,
+	  data/share/keyboardmaps.ini, src/keys.cpp, src/main.cpp: Support
+	  du clavier russe
+	* data/share/LT.kbm, data/share/LT.png, data/share/LT.svg,
+	  data/share/keyboardmaps.ini, src/keys.cpp, src/main.cpp: Support
+	  clavier lituanien
+	* data/share/BE.kbm, data/share/BE.png, data/share/BE.svg,
+	  data/share/BR.kbm, data/share/BR.png, data/share/BR.svg,
+	  data/share/CA.kbm, data/share/CA.png, data/share/CA.svg,
+	  data/share/CZ.kbm, data/share/CZ.png, data/share/CZ.svg,
+	  data/share/DE.kbm, data/share/DE.png, data/share/DE.svg,
+	  data/share/ES.kbm, data/share/ES.png, data/share/ES.svg,
+	  data/share/FR.kbm, data/share/FR.png, data/share/FR.svg,
+	  data/share/IE.kbm, data/share/IE.png, data/share/IE.svg,
+	  data/share/IT.kbm, data/share/IT.png, data/share/IT.svg,
+	  data/share/MX.kbm, data/share/MX.png, data/share/MX.svg,
+	  data/share/PT.kbm, data/share/PT.png, data/share/PT.svg,
+	  data/share/SE.kbm, data/share/SE.png, data/share/SE.svg,
+	  data/share/SK.kbm, data/share/SK.png, data/share/SK.svg,
+	  data/share/TR.png, data/share/TR.svg, data/share/TR_f.kbm,
+	  data/share/TR_q.kbm, data/share/UK.kbm, data/share/UK.png,
+	  data/share/UK.svg, data/share/US.kbm, data/share/US.png,
+	  data/share/US.svg, data/share/be.kbm, data/share/be.png,
+	  data/share/be.svg, data/share/br.kbm, data/share/br.png,
+	  data/share/br.svg, data/share/ca.kbm, data/share/ca.png,
+	  data/share/ca.svg, data/share/cz.kbm, data/share/cz.png,
+	  data/share/cz.svg, data/share/de.kbm, data/share/de.png,
+	  data/share/de.svg, data/share/es.kbm, data/share/es.png,
+	  data/share/es.svg, data/share/fr.kbm, data/share/fr.png,
+	  data/share/fr.svg, data/share/ie.kbm, data/share/ie.png,
+	  data/share/ie.svg, data/share/it.kbm, data/share/it.png,
+	  data/share/it.svg, data/share/keyboardmaps.ini,
+	  data/share/mx.kbm, data/share/mx.png, data/share/mx.svg,
+	  data/share/pt.kbm, data/share/pt.png, data/share/pt.svg,
+	  data/share/se.kbm, data/share/se.png, data/share/se.svg,
+	  data/share/sk.kbm, data/share/sk.png, data/share/sk.svg,
+	  data/share/tr.png, data/share/tr.svg, data/share/tr_f.kbm,
+	  data/share/tr_q.kbm, data/share/uk.kbm, data/share/uk.png,
+	  data/share/uk.svg, data/share/us.kbm, data/share/us.png,
+	  data/share/us.svg: Renommage pour cohérence code pays<->majuscule
+
+2011-05-13  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* NEWS, README, po/fr.po, po/vcc.pot, src/clockwindow.cpp,
+	  src/preferencesdialog.cpp: Debug
+	* po/fr.po, po/vcc.pot, src/timecontroldialog.cpp: Traduction
+	  française
+	* src/timecontrol.cpp, src/timecontroldialog.cpp: Tooltips
+	  décrivant les cadencesé
+	* src/clockwindow.cpp, src/dialwidget.cpp, src/dialwidget.h,
+	  src/params.cpp, src/params.h, src/preferencesdialog.cpp,
+	  src/preferencesdialog.h: Gestion de l'affichage en mode byo-yomi
+	* src/bitimer.cpp, src/params.cpp: Implémentation byo-yomi
+
+2011-05-11  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* CMakeLists.txt, src/timecontrol.cpp, src/timecontrol.h,
+	  src/timecontroldialog.cpp, src/timecontroldialog.h: Mise en place
+	  cadence byo-yomi
+
+2011-04-13  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* CMakeLists.txt: Debug compilation du fichier RC
+
 2011-03-07  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* NEWS: MAJ news
