@@ -1,3 +1,7 @@
+2011-05-22  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* src/keys.cpp: Debug
+
 2011-05-21  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* redist_win32/gtk+/glib/bin/libglib-2.0-0.dll,
@@ -5,7 +9,6 @@
 	  redist_win32/gtk+/gtk+/bin/libgdk_pixbuf-2.0-0.dll,
 	  redist_win32/gtk+/gtk+/bin/libgtk-win32-2.0-0.dll: MAJ
 	  bibliothèques
-
 
 2011-05-21  Yoann Le Montagner <yo35(at)melix(dot)net>
 
