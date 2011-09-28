@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: Yoann Le Montagner <yo35 ( at ) melix ( dot ) net>\n"
 "POT-Creation-Date: 2011-09-28 12:09+0200\n"
 "PO-Revision-Date: 2011-09-28 18:36+0200\n"
-"Last-Translator: \n"
+"Last-Translator: NAME OF THE TRANSLATOR\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -20,84 +20,84 @@ msgstr ""
 #: /home/yoann/Tmp/VCC/trunk/src/timeentry.cpp:27
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:173
 msgid "hour"
-msgstr ""
+msgstr "hora"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timeentry.cpp:27
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:174
 msgid "min"
-msgstr ""
+msgstr "min"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timeentry.cpp:27
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:163
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:175
 msgid "sec"
-msgstr ""
+msgstr "seg"
 
 #: /home/yoann/Tmp/VCC/trunk/src/params.cpp:59
 msgid "Unable to create the INI configuration file at %1"
-msgstr ""
+msgstr "No se puede crear el INI archivo de configuracion en %1"
 
 #: /home/yoann/Tmp/VCC/trunk/src/params.cpp:268
 msgid "Unable to retrieve the name of keyboard %1"
-msgstr ""
+msgstr "No se puede obtener el nombre del teclado %1"
 
 #: /home/yoann/Tmp/VCC/trunk/src/params.cpp:294
 msgid "Unable to retrieve the name of the layout file for keyboard %1"
-msgstr ""
+msgstr "No se puede obtener el nombre del archivo de diseño para el teclado %1"
 
 #: /home/yoann/Tmp/VCC/trunk/src/params.cpp:307
 msgid "Unable to retrieve the name of the default area file for keyboard %1"
-msgstr ""
+msgstr "No se puede obtener el nombre de la zona predeterminada para el teclado %1"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:100
 msgid "Reset"
-msgstr ""
+msgstr "Reiniciar"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:101
 #: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:182
 msgid "Pause"
-msgstr ""
+msgstr "Pausa"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:102
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:28
 msgid "Time control"
-msgstr ""
+msgstr "Control de tiempo"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:106
 msgid "Reset the clock"
-msgstr ""
+msgstr "Reinicia el reloj"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:107
 msgid "Pause the clock"
-msgstr ""
+msgstr "Pausa el reloj"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:108
 msgid "Change the current time control"
-msgstr ""
+msgstr "Cambia el control de tiempo"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:109
 msgid "Set the configuration and the preferences"
-msgstr ""
+msgstr "Establece la configuracion y preferencias"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:110
 msgid "A short help text"
-msgstr ""
+msgstr "Un pequeño texto de ayuda"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:111
 msgid "Information about credits and license"
-msgstr ""
+msgstr "Informacion sobre creditos y licencia"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:222
 msgid "Do you really want to start a new game?"
-msgstr ""
+msgstr "Estas seguro que deseas empezar un juego nuevo?"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:224
 msgid "Stop this game?"
-msgstr ""
+msgstr "Parar este juego?"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:257
 msgid "Help"
-msgstr ""
+msgstr "Ayuda"
 
 #: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:259
 msgid ""
@@ -112,58 +112,68 @@ msgid ""
 "suits good to your keyboard. Thus, only the A-Z keys will be used by VCC, "
 "but the software will be usable anyway."
 msgstr ""
+"Para iniciar el juego y luego cambiar el lado del contador del reloj, solo "
+"presione alguna tecla. El jugador de la izquierda debe presionar alguna tecla "
+"del lado izquierdo del tablero, el jugador derecho del lado derecho.\n"
+"\n"
+"Si esto no funciona, podria ser por una mala deteccion de su tipo "
+"de teclado; podes chequearlo y corregirlo en el cuadro \"Preferences\". "
+"Si su tipo de teclado no esta disponible entre los propuestos por VCC, "
+"debes seleccionar \"Default QWERTY\" o alguno de los predeterminados que "
+"se adapte bien a su teclado. Por eso, solo las teclas A-Z seran usadas por "
+"VCC, pero el programa podra utilizarlas de todos modos."
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:47
 msgid "Debug information"
-msgstr ""
+msgstr "Informacion de depuracion"
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:54
 msgid "Current directory"
-msgstr ""
+msgstr "Directorio actual"
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:55
 msgid "Top directory"
-msgstr ""
+msgstr "Directorio arriba"
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:56
 msgid "User directory"
-msgstr ""
+msgstr "Directorio usuario"
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:57
 msgid "Locale"
-msgstr ""
+msgstr "Locale"
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:71
 msgid "Keycode"
-msgstr ""
+msgstr "Keycode"
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:80
 msgid "Keyval"
-msgstr ""
+msgstr "Keyval"
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:81
 msgid "Keyval (hex)"
-msgstr ""
+msgstr "Keyval (hex)"
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:82
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:83
 msgid "Symbol"
-msgstr ""
+msgstr "Simbolo"
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:84
 msgid "Group"
-msgstr ""
+msgstr "Grupo"
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:85
 msgid "Level"
-msgstr ""
+msgstr "Nivel"
 
 #: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:95
 msgid "Keyboard information"
-msgstr ""
+msgstr "Informacion de teclado"
 
 #: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:121
 msgid ""
@@ -296,151 +306,153 @@ msgstr ""
 
 #: /home/yoann/Tmp/VCC/trunk/src/dialwidget.cpp:114
 msgid "Flag down"
-msgstr ""
+msgstr "Bandera baja"
 
 #: /home/yoann/Tmp/VCC/trunk/src/dialwidget.cpp:116
 msgid "Since:"
-msgstr ""
+msgstr "Desde:"
 
 #: /home/yoann/Tmp/VCC/trunk/src/dialwidget.cpp:137
 #: /home/yoann/Tmp/VCC/trunk/src/dialwidget.cpp:148
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:88
 msgid "Main time"
-msgstr ""
+msgstr "Tiempo principal"
 
 #: /home/yoann/Tmp/VCC/trunk/src/dialwidget.cpp:154
 msgid "Byo-yomi period"
-msgstr ""
+msgstr "Periodo byo-yomi"
 
 #: /home/yoann/Tmp/VCC/trunk/src/keyboardmap.cpp:104
 msgid "The version (%1) of the keyboard map file %2 is not supported"
-msgstr ""
+msgstr "La version (%1) del archivo de tipo de teclado %2 no es soportada"
 
 #: /home/yoann/Tmp/VCC/trunk/src/keyboardmap.cpp:131
 msgid "The key %1 must be placed at least on one line on the keyboard"
-msgstr ""
+msgstr "La tecla %1 debe ubicarse al menos en una linea en el teclado"
 
 #: /home/yoann/Tmp/VCC/trunk/src/keyboardmap.cpp:142
 msgid "The key %1 must have at least one keyval"
-msgstr ""
+msgstr "La tecla %1 debe tener al menos un keyval"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:40
 msgid "Preferences"
-msgstr ""
+msgstr "Preferencias"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:52
 msgid "Reset through the toolbar"
-msgstr ""
+msgstr "Reiniciar mediante la barra de tareas"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:55
 msgid "Ask for confirmation before resetting"
-msgstr ""
+msgstr "Pedir confirmacion antes de reiniciar"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:58
 msgid "Always"
-msgstr ""
+msgstr "Siempre"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:59
 msgid "Only if the clock is still running"
-msgstr ""
+msgstr "Solo si el reloj sigue corriendo"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:60
 msgid "Never"
-msgstr ""
+msgstr "Nunca"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:68
 msgid "Reset through the keyboard"
-msgstr ""
+msgstr "Resetear mediante el teclado"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:71
 msgid "Keys to press to reset"
-msgstr ""
+msgstr "Teclas a presionar para reiniciar"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:74
 msgid "CTRL keys (left and right)"
-msgstr ""
+msgstr "Teclas CTRL (izquierda y derecha)"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:75
 msgid "MAJ keys (left and right)"
-msgstr ""
+msgstr "Teclas Shift (izquierda y derecha)"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:80
 msgid "Delay (milliseconds)"
-msgstr ""
+msgstr "Mantener apretado (milisegundos)"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:96
 msgid "Display the status bar at the bottom of the main window"
-msgstr ""
+msgstr "Mostrar la barra de estado en la parte de abajo de la pantalla principal"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:97
 msgid "Display an increasing time counter when the flag is down"
-msgstr ""
+msgstr "Mostrar un contador de tiempo extra cuando la bandera caiga"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:98
 msgid "Display extra time information when playing in Bronstein mode"
-msgstr ""
+msgstr "Mostrar informacion de tiempo extra cuando se juegue en modo Bronstein"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:99
 msgid "Display extra time information when playing in byo-yomi mode"
-msgstr ""
+msgstr "Mostrar informacion de tiempo extra cuando se juegue en modo byo-yomi"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:107
 msgid "Select the keyboard layout you are using"
-msgstr ""
+msgstr "Elija el tipo de teclado que esta usando"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:108
 msgid "Use the mouse buttons to switch between players"
-msgstr ""
+msgstr "Usar los botones del mouse para cambiar de jugador"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:110
 msgid ""
 "The left player must click on the left button, the right player on the right "
 "button"
 msgstr ""
+"El jugador de la izquierda debe hacer click izquierdo, el jugador de la "
+"derecha debe hacer click derecho button"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:118
 msgid "Display the numeric keypad"
-msgstr ""
+msgstr "Mostrar el teclado numerico"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:120
 msgid "Modify the active areas by clicking on the keyboard"
-msgstr ""
+msgstr "Modificar las areas activas haciendo click en el teclado"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:126
 msgid "Modify the left player's area"
-msgstr ""
+msgstr "Modificar el area del jugador de la izquierda"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:127
 msgid "Modify the right player's area"
-msgstr ""
+msgstr "Modificar el area del jugador de la derecha"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:132
 msgid "Active areas that players can use to engage the clock when playing"
-msgstr ""
+msgstr "Areas que los jugadores pueden usar para activar el reloj cuando esten jugando"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:133
 msgid "left player's area"
-msgstr ""
+msgstr "area del jugador de la izquierda"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:134
 msgid "right player's area"
-msgstr ""
+msgstr "area del jugador de la derecha"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:161
 msgid "Keyboard active areas"
-msgstr ""
+msgstr "Areas activas del teclado"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:163
 msgid "Reset options"
-msgstr ""
+msgstr "Opciones de reinicio"
 
 #: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:165
 msgid "Display options"
-msgstr ""
+msgstr "Opciones de visualizacion"
 
 #: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:39
 msgid "Unable to open the INI file %1 for reading"
-msgstr ""
+msgstr "No se puede abrir el archivo INI %1 para su lectura"
 
 #: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:64
 #: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:69
@@ -449,57 +461,59 @@ msgstr ""
 #: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:88
 #: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:96
 msgid "Unconsistency in the INI file %1 at line #%2"
-msgstr ""
+msgstr "Inconsistencia en el archivo INI %1 en la linea #%2"
 
 #: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:112
 msgid "Unable to open the INI file %1 for writing"
-msgstr ""
+msgstr "No se puede abrir el archivo INI  %1 para su escritura"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:113
 msgid "Sudden death"
-msgstr ""
+msgstr "Muerte subita"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:114
 msgid "Fischer"
-msgstr ""
+msgstr "Fischer"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:115
 msgid "Bronstein"
-msgstr ""
+msgstr "Bronstein"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:116
 msgid "Hourglass"
-msgstr ""
+msgstr "Hourglass"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:117
 msgid "Byo-yomi"
-msgstr ""
+msgstr "Byo-yomi"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:183
 msgid "left"
-msgstr ""
+msgstr "izquierda"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:185
 msgid "right"
-msgstr ""
+msgstr "derecha"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:193
 msgid "by move"
-msgstr ""
+msgstr "por movida"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:199
 msgid "byo-yomi period"
-msgstr ""
+msgstr "periodo byo-yomi"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:201
 msgid "byo-yomi periods"
-msgstr ""
+msgstr "periodos byo-yomi"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:38
 msgid ""
 "Simplest time control mode. No additional delay is never added to the "
 "player's main time."
 msgstr ""
+"Modo de control mas simple. Sin demora adicional ni tiempo agragado al"
+"tiempo principal del jugador."
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:42
 msgid ""
@@ -507,6 +521,9 @@ msgid ""
 "global clock time is always greater than this bonus time at the beginning of "
 "his or her playing turn. Additional delays can be accumulated."
 msgstr ""
+"Con cada movida, el jugador gana un tiempo adicional, asi el tiempo principal "
+"siempre es mas grande que el bonus de tiempo al principio del turno del jugado. "
+"Los bonus de tiempo se pueden acumular."
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:48
 msgid ""
@@ -515,12 +532,18 @@ msgid ""
 "mode in which the clock waits for a certain delay before starting to "
 "substract from the player's remaining time when engaged."
 msgstr ""
+"Como el modo Fischer, excepto que el bonus de tiempo no se puede acumular "
+"El modo Bronstein puede considerarse una especie de muerte subita en la "
+"cual a cada turno el reloj tiene cierta demora antes de empezar "
+"a quitarle segundos al tiempo principal del jugador."
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:54
 msgid ""
 "While the current player is deciding on his or her move, the opponent's time "
 "is increasing. Therefore, the sum of both clocks remains always the same."
 msgstr ""
+"Mientras el jugador actual decide su movida, el tiempo del oponente aumenta. "
+"Por lo tanto, la suma de los dos relojes permanece siempre igual."
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:59
 msgid ""
@@ -530,55 +553,60 @@ msgid ""
 "whole byo-yomi time available for the next move; otherwise, the next byo-"
 "yomi starts. At the end of the last byo-yomi, the game is lost."
 msgstr ""
+"Cuando el tiempo principal del jugador se acaba, al jugador se le concede "
+"uno o mas periodos de tiempo adicionales, llamados periodos \"byo-yomi\". "
+"Si la movida es completada antes de que el byo-yomi actual terminee, se cuenta con todo"
+"el periodo byo-yomi para la proxima movida; si no, el siguiente byo-yomi empieza. "
+"Cuando se termina el ultimo byo-yomi, se pierde la partida."
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:67
 msgid "Mode"
-msgstr ""
+msgstr "Tipo"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:83
 msgid "Left"
-msgstr ""
+msgstr "Izquierda"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:84
 msgid "Right"
-msgstr ""
+msgstr "Derecha"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:89
 msgid "Increment"
-msgstr ""
+msgstr "Incremento"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:90
 msgid "Byo-yomi periods"
-msgstr ""
+msgstr "Periodos byo-yomi"
 
 #: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:110
 msgid "Time control values are the same for both sides"
-msgstr ""
+msgstr "Los valores para los tiempos de control son los mismos para los dos jugadores"
 
 #: /home/yoann/Tmp/VCC/trunk/src/vccaboutdialog.cpp:35
 msgid "A simple and free chess clock software"
-msgstr ""
+msgstr "Un programa de reloj de ajedrez simple y libre"
 
 #: /home/yoann/Tmp/VCC/trunk/src/datafile.cpp:56
 msgid "Unable to open the data file %1 for reading"
-msgstr ""
+msgstr "No se puede abrir el archivo %1 para leer"
 
 #: /home/yoann/Tmp/VCC/trunk/src/datafile.cpp:133
 msgid "Unconsistency in the data file %1 at line #%2"
-msgstr ""
+msgstr "Inconsistencia en el archivo %1 en la linea #%2"
 
 #: /home/yoann/Tmp/VCC/trunk/src/datafile.cpp:152
 msgid "Unable to open the data file %1 for writing"
-msgstr ""
+msgstr "No se puede abrir el archivo %1 para escritura"
 
 #: /home/yoann/Tmp/VCC/trunk/src/areamap.cpp:109
 msgid "The version (%1) of the area map file %2 is not supported"
-msgstr ""
+msgstr "La version (%1) del archivo de area %2 no es soportado"
 
 #: /home/yoann/Tmp/VCC/trunk/src/areamap.cpp:116
 msgid "The number of keys reported the file %1 is incorrect"
-msgstr ""
+msgstr "El numero de teclas reportado en el archivo %1 es incorrecto"
 
 #: /home/yoann/Tmp/VCC/trunk/src/areamap.cpp:132
 msgid "Incorrect affectation code for the key %1 in the file %2"
-msgstr ""
+msgstr "Codigo incorrecto de afectacion para el key %1 en el archivo %2"
