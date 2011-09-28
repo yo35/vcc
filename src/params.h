@@ -84,6 +84,10 @@ public:
 	bool display_byo_yomi_extra_time() const;
 	void set_display_byo_yomi_extra_time(bool src);
 
+	// Utilisation de la souris pour actionner la pendule
+	bool use_mouse_buttons() const;
+	void set_use_mouse_buttons(bool src);
+
 	// Modèle de clavier préféré (code)
 	std::string curr_keyboard() const;
 	void set_curr_keyboard(const std::string &src);

@@ -105,6 +105,10 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 
 	// Onglet keyboard (sauf géométrie)
 	kb_selector_label.set_label(_("Select the keyboard layout you are using"));
+	use_mouse_buttons.set_label(_("Use the mouse buttons to switch between players"));
+	use_mouse_buttons.set_tooltip_text(_(
+		"The left player must click on the left button, the right player on the right button"
+	));
 	kb_selector_data = Gtk::ListStore::create(kb_selector_model);
 	kb_selector_data->set_sort_column(kb_selector_model.name(), Gtk::SORT_ASCENDING);
 	kb_selector.set_model(kb_selector_data);
@@ -150,6 +154,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kb_page.pack_start(kb_selector_layout, Gtk::PACK_SHRINK);
 	kb_page.pack_start(display_kp, Gtk::PACK_SHRINK);
 	kb_page.pack_start(kbm_widget_frame);
+	kb_page.pack_start(use_mouse_buttons, Gtk::PACK_SHRINK);
 
 	// Géométrie générale
 	kb_page.set_border_width(5);
@@ -176,6 +181,9 @@ void PreferencesDialog::load_params() {
 	display_time_after_flag_down.set_active(gp->display_time_after_flag_down());
 	display_bronstein_extra_time.set_active(gp->display_bronstein_extra_time());
 	display_byo_yomi_extra_time .set_active(gp->display_byo_yomi_extra_time ());
+
+	// Utilisation des boutons de la souris
+	use_mouse_buttons.set_active(gp->use_mouse_buttons());
 
 	// Régions sélectionnées courantes
 	std::string curr_keyboard = gp->curr_keyboard();
@@ -225,6 +233,7 @@ void PreferencesDialog::save_params() {
 	gp->set_curr_keyboard(curr_kb_code);
 	gp->set_display_num_pad(display_kp.get_active());
 	gp->set_kam_perso(areas[curr_kb_code]);
+	gp->set_use_mouse_buttons(use_mouse_buttons.get_active());
 }
 
 // Event handling

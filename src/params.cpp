@@ -215,6 +215,16 @@ void Params::set_display_byo_yomi_extra_time(bool src) {
 	m_data_perso.set_data("Display", "Byo_Yomi_Mode_Extra_Information", src);
 }
 
+// Utilisation des boutons de la souris pour actionner la pendule (lecture)
+bool Params::use_mouse_buttons() const {
+	return m_data_perso.get_data("Keyboard", "Use_Mouse_Buttons", false);
+}
+
+// Utilisation des boutons de la souris pour actionner la pendule (écriture)
+void Params::set_use_mouse_buttons(bool src) {
+	m_data_perso.set_data("Keyboard", "Use_Mouse_Buttons", src);
+}
+
 // Modèle de clavier préféré (code) (lecture)
 std::string Params::curr_keyboard() const {
 	return m_data_perso.get_data("Keyboard", "KBM", m_default_kbm);

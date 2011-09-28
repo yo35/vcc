@@ -112,6 +112,7 @@ private:
 	KeyboardMapWidget                 kbm_widget;
 	Gtk::RadioButton::Group           area_selector_group;
 	EnumArray<Side, Gtk::RadioButton> area_selector;
+	Gtk::CheckButton                  use_mouse_buttons;
 
 	// Onglet display
 	Gtk::VBox        disp_page;

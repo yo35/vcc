@@ -58,7 +58,8 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	// Initialisation des objets de gestion de clavier
 	reinit_delayer.signal_occurred().connect(
 		sigc::mem_fun(*this, &ClockWindow::on_reset_triggered_from_kb));
-	curr_key_down = 0;
+	curr_key_down     = 0;
+	use_mouse_buttons = false;
 
 	// Divers
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
@@ -177,6 +178,15 @@ bool ClockWindow::on_key_release_event(GdkEventKey* event) {
 	return true;
 }
 
+bool ClockWindow::on_button_press_event(GdkEventButton *event)
+{
+	if(use_mouse_buttons) {
+		if(event->button==1) on_clock_button_clicked(LEFT );
+		if(event->button==3) on_clock_button_clicked(RIGHT);
+	}
+	return Gtk::Window::on_button_press_event(event);
+}
+
 void ClockWindow::on_myself_shown() {
 
 	// Récupération des paramètres divers
@@ -205,12 +215,9 @@ void ClockWindow::on_pause_clicked() {
 
 void ClockWindow::on_reset_clicked() {
 
-	// Lecture du paramètre relatif à la demande de confirmation
-	ReinitConfirm confirm_mode = gp->reinit_confirm();
-
 	// On demande confirmation suivant la valeur du paramètre de demande de confirmation
-	if(confirm_mode==RC_ALWAYS ||
-		(confirm_mode==RC_IF_NOT_PAUSED && core.mode()==BiTimer::ACTIVE))
+	if(reinit_confirm_mode==RC_ALWAYS ||
+		(reinit_confirm_mode==RC_IF_NOT_PAUSED && core.mode()==BiTimer::ACTIVE))
 	{
 		Gtk::MessageDialog dialog(*this, _("Do you really want to start a new game?"),
 			false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_YES_NO, true);
@@ -298,8 +305,9 @@ void ClockWindow::retrieve_parameters_from_gp() {
 	}
 
 	// Clavier
-	curr_kbm = &gp->keyboard_map(gp->curr_keyboard());
-	curr_kam = &gp->kam_perso();
+	curr_kbm          = &gp->keyboard_map(gp->curr_keyboard());
+	curr_kam          = &gp->kam_perso();
+	use_mouse_buttons =  gp->use_mouse_buttons();
 
 	// Options de réinitialisation
 	reinit_delayer.set_delay(gp->reinit_delay());
@@ -314,6 +322,9 @@ void ClockWindow::retrieve_parameters_from_gp() {
 	}
 	else
 		assert(false);
+
+	// Mode de réinitialisation par clic dans la barre d'outils
+	reinit_confirm_mode = gp->reinit_confirm();
 
 	// Options d'affichage
 	for(Side::iterator k=Side::first(); k.valid(); ++k) {

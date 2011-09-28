@@ -37,6 +37,7 @@
 #include "keys.h"
 #include "keyboardmap.h"
 #include "areamap.h"
+#include "optionenums.h"
 
 class ClockWindow : public Gtk::Window {
 
@@ -46,8 +47,9 @@ public:
 protected:
 
 	// Event handling
-	virtual bool on_key_press_event  (GdkEventKey* event);
-	virtual bool on_key_release_event(GdkEventKey* event);
+	virtual bool on_key_press_event   (GdkEventKey    *event);
+	virtual bool on_key_release_event (GdkEventKey    *event);
+	virtual bool on_button_press_event(GdkEventButton *event);
 
 private:
 
@@ -69,9 +71,11 @@ private:
 	EventDelayer       debug_delayer;
 	EventDelayer       reinit_delayer;
 	Keyval             reinit_trigger[2];
+	ReinitConfirm      reinit_confirm_mode;
 	const KeyboardMap *curr_kbm;
 	const AreaMap     *curr_kam;
 	Keycode            curr_key_down;
+	bool               use_mouse_buttons;
 
 	// Widgets
 	EnumArray<Side, DialWidget> dial;
