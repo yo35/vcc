@@ -39,6 +39,13 @@ VccAboutDialog::VccAboutDialog() : Gtk::AboutDialog() {
 	authors.push_back("Yoann Le Montagner <yo35@melix.net>");
 	set_authors(authors);
 
+	// Traducteurs
+	set_translator_credits(
+		"English\tYoann Le Montagner\n"
+		"Español\tSantiago Paz\n"
+		"Français\tYoann Le Montagner"
+	);
+
 	// Divers
 	set_website("http://vchessclock.sourceforge.net/");
 	set_copyright("Copyright (C) 2010-2011 Yoann Le Montagner");
