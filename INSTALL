@@ -56,7 +56,7 @@ Since VCC version 1.0.1, a 'configure' script both for Unix and Windows. Therefo
 the building from sources can be performed in through the usual process for
 UNIX packages:
 	$ cd /somewhere/vcc
-	$ ./configure         <- should be replace by 'configure.win32' on Windows
+	$ ./configure         <- should be replaced by 'configure.win32' on Windows
 	$ make
 	$ make install
 
