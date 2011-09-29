@@ -1,6 +1,29 @@
+2011-09-29  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* AUTHORS: Mise-à-jour crédits
+	* NEWS: Annonce release 1.4
+	* CMakeLists.txt, src/vccaboutdialog.cpp: Passage version 1.4
+
+2011-09-28  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* data/share/keyboardmaps.ini: Traduction espagnole
+	* po/es.po, po/fr.po: Traduction espagnole
+	* po/es.po: Debug
+	* po/es.po, po/fr.po, po/vcc.pot, src/clockwindow.cpp,
+	  src/clockwindow.h, src/params.cpp, src/params.h,
+	  src/preferencesdialog.cpp, src/preferencesdialog.h: Clic souris
+	  pour déclencher la pendule
+
+2011-09-24  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* po/fr.po: Debug
+
 2011-05-22  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* src/keys.cpp: Debug
+
+2011-05-21  Yoann Le Montagner <yo35(at)melix(dot)net>
+
 
 2011-05-21  Yoann Le Montagner <yo35(at)melix(dot)net>
 
@@ -9,6 +32,9 @@
 	  redist_win32/gtk+/gtk+/bin/libgdk_pixbuf-2.0-0.dll,
 	  redist_win32/gtk+/gtk+/bin/libgtk-win32-2.0-0.dll: MAJ
 	  bibliothèques
+
+2011-05-21  Yoann Le Montagner <yo35(at)melix(dot)net>
+
 
 2011-05-21  Yoann Le Montagner <yo35(at)melix(dot)net>
 
