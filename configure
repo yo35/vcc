@@ -29,15 +29,15 @@ print_help() {
 	echo -e "Use: ./configure [options]"
 	echo -e "Available options are:"
 	echo -e "\t--prefix=PATH : top directory where VCC will be installed"
-	echo -e "\t--install_type=<Dev|Compile|Package> : installation mode:"
+	echo -e "\t--install-type=<Dev|Compile|Package> : installation mode:"
 	echo -e "\t\t * Dev : no installation ; provide a target 'make run' to run a development version of VCC from the current directory"
 	echo -e "\t\t * Compile : installation through the usual process 'configure, make, make install'"
 	echo -e "\t\t * Package : provide a target 'make package' to generate the installation packages"
-	echo -e "\t--build_type=<Debug|RelWithDebInfo|Release> : optimization level:"
+	echo -e "\t--build-type=<Debug|RelWithDebInfo|Release> : optimization level:"
 	echo -e "\t\t * Debug : compilation with -O0"
 	echo -e "\t\t * RelWithDebInfo : compilation with -O2"
 	echo -e "\t\t * Release : compilation with -O3 -DNDEBUG"
-	echo -e "Example: ./configure --build_type=RelWithDebInfo --install_type=Dev"
+	echo -e "Example: ./configure --build-type=RelWithDebInfo --install-type=Dev"
 }
 
 # Paramètres par défaut
@@ -51,10 +51,10 @@ do
 	if [ "${ARG:0:9}" == "--prefix=" ]; then
 		CMAKE_INSTALL_PREFIX=${ARG:9}
 	fi
-	if [ "${ARG:0:15}" == "--install_type=" ]; then
+	if [ "${ARG:0:15}" == "--install-type=" ]; then
 		INSTALL_TYPE=${ARG:15}
 	fi
-	if [ "${ARG:0:13}" == "--build_type=" ]; then
+	if [ "${ARG:0:13}" == "--build-type=" ]; then
 		CMAKE_BUILD_TYPE=${ARG:13}
 	fi
 	if [ "${ARG:0:6}" == "--help" ]; then

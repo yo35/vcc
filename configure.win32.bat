@@ -30,15 +30,15 @@ goto end_help
 	echo Use: ./configure.win32 [options]
 	echo Available options are:
 	echo   --prefix=PATH : top directory where VCC will be installed
-	echo   --install_type=[Dev or Compile or Package] : installation mode:
+	echo   --install-type=[Dev or Compile or Package] : installation mode:
 	echo      * Dev : no installation ; provide a target 'make run' to run a development version of VCC from the current directory
 	echo      * Compile : installation through the usual process 'configure, make, make install'
 	echo      * Package : provide a target 'make package' to generate the installation packages
-	echo   --build_type=[Debug or RelWithDebInfo or Release] : optimization level:
+	echo   --build-type=[Debug or RelWithDebInfo or Release] : optimization level:
 	echo      * Debug : compilation with -O0
 	echo      * RelWithDebInfo : compilation with -O2
 	echo      * Release : compilation with -O3 -DNDEBUG
-	echo Example: configure.win32 --build_type=RelWithDebInfo --install_type=Dev
+	echo Example: configure.win32 --build-type=RelWithDebInfo --install-type=Dev
 	goto end_of_script
 :end_help
 
@@ -51,8 +51,8 @@ rem Analyse de la ligne de commande
 :loop_parse_args
 	if %1""=="" goto end_loop_parse_args
 	if %1==--prefix goto read_param_prefix
-	if %1==--install_type goto read_param_install
-	if %1==--build_type goto read_param_build
+	if %1==--install-type goto read_param_install
+	if %1==--build-type goto read_param_build
 	if %1==--help goto begin_help
 	:end_read_param
 	shift
