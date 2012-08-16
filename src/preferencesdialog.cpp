@@ -91,6 +91,10 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	pause_by_keyboard.set_label(_("Pause through the keyboard"));
 	pause_by_keyboard_layout.set_border_width(5);
 	pause_by_keyboard_layout.set_spacing(5);
+	pause_enabled.set_label(_("Allow the game to be paused through the keyboard"));
+	pause_enabled.signal_clicked().connect(sigc::mem_fun(*this, &PreferencesDialog::on_pause_enabled_clicked));
+	on_pause_enabled_clicked();
+	pause_by_keyboard_layout.pack_start(pause_enabled);
 	pause_combination_label.set_label(_("Keys to press to pause"));
 	pause_combination_label_layout.pack_start(pause_combination_label, Gtk::PACK_SHRINK);
 	pause_by_keyboard_layout.pack_start(pause_combination_label_layout);
@@ -100,10 +104,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 		pause_combination[*k].set_group(pause_combination_group);
 		pause_by_keyboard_layout.pack_start(pause_combination[*k]);
 	}
-	pause_enabled.set_label(_("Enable the \"pause through the keyboard\" feature"));
-	pause_by_keyboard_layout.pack_start(pause_enabled);
 	pause_by_keyboard.add(pause_by_keyboard_layout);
-
 
 	// Onglet RAZ
 	raz_page.set_spacing(5);
@@ -317,4 +318,13 @@ void PreferencesDialog::on_area_changed() {
 void PreferencesDialog::save_curr_area() {
 	assert(curr_kb_code!="");
 	areas[curr_kb_code] = kbm_widget.get_area_map();
+}
+
+// Active/désactive les options liées à la mise en pause
+void PreferencesDialog::on_pause_enabled_clicked()
+{
+	bool is_pause_enabled = pause_enabled.get_active();
+	for(KeyCombination::iterator k=KeyCombination::first(); k.valid(); ++k) {
+		pause_combination[*k].set_sensitive(is_pause_enabled);
+	}
 }

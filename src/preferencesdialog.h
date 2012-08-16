@@ -63,6 +63,7 @@ private:
 	void on_display_kp_changed();
 	void on_area_changed();
 	void save_curr_area();
+	void on_pause_enabled_clicked();
 
 	// Modèle pour le combo box de sélection du clavier
 	class KbSelectorModel : public Gtk::TreeModelColumnRecord {
