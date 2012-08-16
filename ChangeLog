@@ -1,5 +1,9 @@
 2012-08-16  Yoann Le Montagner <yo35(at)melix(dot)net>
 
+	* src/vccaboutdialog.cpp: Debug
+
+2012-08-16  Yoann Le Montagner <yo35(at)melix(dot)net>
+
 	* redist_win32/mingw32/bin/libstdc++-6.dll: Mise à jour DLL libc
 	  pour MinGW
 
