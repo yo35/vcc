@@ -37,7 +37,7 @@
 	#include <winkeyhookdll.h>
 #endif
 
-ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
+ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2), pause_delayer(3),
 	ico_reset(gp->prefix_path() + "/" VCC_SHARE_RPATH "/reset.png"),
 	ico_pause(gp->prefix_path() + "/" VCC_SHARE_RPATH "/pause.png"),
 	ico_tctrl(gp->prefix_path() + "/" VCC_SHARE_RPATH "/tctrl.png")
@@ -56,10 +56,11 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 		sigc::mem_fun(*this, &ClockWindow::on_debug_delayer_elapsed));
 
 	// Initialisation des objets de gestion de clavier
-	reinit_delayer.signal_occurred().connect(
-		sigc::mem_fun(*this, &ClockWindow::on_reset_triggered_from_kb));
+	reinit_delayer.signal_occurred().connect(sigc::mem_fun(*this, &ClockWindow::on_reset_triggered_from_kb));
+	pause_delayer .signal_occurred().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_triggered_from_kb));
 	curr_key_down     = 0;
 	use_mouse_buttons = false;
+	can_pause_by_kb   = true ;
 
 	// Divers
 	set_events(Gdk::KEY_PRESS_MASK | Gdk::BUTTON_PRESS_MASK);
@@ -142,6 +143,11 @@ bool ClockWindow::on_key_press_event(GdkEventKey* event) {
 	if(event->keyval==reinit_trigger[0]) reinit_delayer.trigger(0);
 	if(event->keyval==reinit_trigger[1]) reinit_delayer.trigger(1);
 
+	// Pause par le clavier
+	if(event->keyval==pause_trigger[0]) pause_delayer.trigger(0);
+	if(event->keyval==pause_trigger[1]) pause_delayer.trigger(1);
+	if(event->keyval==pause_trigger[2]) pause_delayer.trigger(2);
+
 	// Fenêtre de débug
 	if(event->keyval==GDK_d || event->keyval==GDK_D) debug_delayer.trigger(0);
 	if(event->keyval==GDK_b || event->keyval==GDK_B) debug_delayer.trigger(1);
@@ -170,6 +176,11 @@ bool ClockWindow::on_key_release_event(GdkEventKey* event) {
 	// Réinitialisation par le clavier
 	if(event->keyval==reinit_trigger[0]) reinit_delayer.cancel_trigger(0);
 	if(event->keyval==reinit_trigger[1]) reinit_delayer.cancel_trigger(1);
+
+	// Pause par le clavier
+	if(event->keyval==pause_trigger[0]) pause_delayer.cancel_trigger(0);
+	if(event->keyval==pause_trigger[1]) pause_delayer.cancel_trigger(1);
+	if(event->keyval==pause_trigger[2]) pause_delayer.cancel_trigger(2);
 
 	// Fenêtre de débug
 	if(event->keyval==GDK_d || event->keyval==GDK_D) debug_delayer.cancel_trigger(0);
@@ -289,6 +300,12 @@ void ClockWindow::on_reset_triggered_from_kb() {
 	core.reset_timers();
 }
 
+void ClockWindow::on_pause_triggered_from_kb() {
+	if(can_pause_by_kb) {
+		on_pause_clicked();
+	}
+}
+
 void ClockWindow::on_debug_delayer_elapsed() {
 	DebugDialog dialog(*this);
 	dialog.run();
@@ -311,17 +328,34 @@ void ClockWindow::retrieve_parameters_from_gp() {
 
 	// Options de réinitialisation
 	reinit_delayer.set_delay(gp->reinit_delay());
-	KeyCombination kc = gp->reinit_keys();
-	if(kc==DOUBLE_CTRL) {
+	KeyCombination reinit_kc = gp->reinit_keys();
+	if(reinit_kc==DOUBLE_CTRL) {
 		reinit_trigger[0] = GDK_Control_L;
 		reinit_trigger[1] = GDK_Control_R;
 	}
-	else if(kc==DOUBLE_MAJ) {
+	else if(reinit_kc==DOUBLE_MAJ) {
 		reinit_trigger[0] = GDK_Shift_L;
 		reinit_trigger[1] = GDK_Shift_R;
 	}
-	else
+	else {
 		assert(false);
+	}
+
+	// Options de pause
+	KeyCombination pause_kc = gp->pause_keys();
+	if(pause_kc==DOUBLE_CTRL) {
+		pause_trigger[0] = GDK_Control_L;
+		pause_trigger[1] = GDK_Control_R;
+	}
+	else if(pause_kc==DOUBLE_MAJ) {
+		pause_trigger[0] = GDK_Shift_L;
+		pause_trigger[1] = GDK_Shift_R;
+	}
+	else {
+		assert(false);
+	}
+	pause_trigger[2] = GDK_space;
+	can_pause_by_kb = gp->can_pause_by_kb();
 
 	// Mode de réinitialisation par clic dans la barre d'outils
 	reinit_confirm_mode = gp->reinit_confirm();

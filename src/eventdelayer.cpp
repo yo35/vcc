@@ -77,11 +77,13 @@ bool EventDelayer::on_timeout_elapses() {
 	}
 
 	// On vérifie que tous ont été déclenchés depuis suffisamment longtemps
-	Timestamp now = get_timestamp_now();
-	for(unsigned int i=0; i<m_triggered_at.size(); ++i) {
-		int triggered_since = difftime(now, m_triggered_at[i]);
-		if(triggered_since < m_delay)
-			return true;
+	if(m_delay>0) {
+		Timestamp now = get_timestamp_now();
+		for(unsigned int i=0; i<m_triggered_at.size(); ++i) {
+			int triggered_since = difftime(now, m_triggered_at[i]);
+			if(triggered_since < m_delay)
+				return true;
+		}
 	}
 
 	// On déclenche l'événement, et on réset tous les triggers

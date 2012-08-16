@@ -63,14 +63,18 @@ private:
 	void on_about_clicked();
 	void on_clock_button_clicked(const Side &side);
 	void on_reset_triggered_from_kb();
+	void on_pause_triggered_from_kb();
 	void on_debug_delayer_elapsed();
 	void retrieve_parameters_from_gp();
 
 	// Données membres
 	BiTimer            core;
-	EventDelayer       debug_delayer;
+	EventDelayer       debug_delayer ;
 	EventDelayer       reinit_delayer;
+	EventDelayer       pause_delayer ;
 	Keyval             reinit_trigger[2];
+	Keyval             pause_trigger [3];
+	bool               can_pause_by_kb;
 	ReinitConfirm      reinit_confirm_mode;
 	const KeyboardMap *curr_kbm;
 	const AreaMap     *curr_kam;

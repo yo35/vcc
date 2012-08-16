@@ -91,13 +91,20 @@ private:
 	EnumArray<ReinitConfirm, Gtk::RadioButton>  ask_before_raz;
 	Gtk::Frame                                  raz_by_keyboard;
 	Gtk::VBox                                   raz_by_keyboard_layout;
-	Gtk::Label                                  key_combination_label;
-	Gtk::HBox                                   key_combination_label_layout;
-	Gtk::RadioButton::Group                     key_combination_group;
-	EnumArray<KeyCombination, Gtk::RadioButton> key_combination;
+	Gtk::Label                                  raz_combination_label;
+	Gtk::HBox                                   raz_combination_label_layout;
+	Gtk::RadioButton::Group                     raz_combination_group;
+	EnumArray<KeyCombination, Gtk::RadioButton> raz_combination;
 	Gtk::Label                                  raz_delay_label;
 	Gtk::HBox                                   raz_delay_layout;
 	Gtk::HScale                                 raz_delay;
+	Gtk::Frame                                  pause_by_keyboard;
+	Gtk::VBox                                   pause_by_keyboard_layout;
+	Gtk::Label                                  pause_combination_label;
+	Gtk::HBox                                   pause_combination_label_layout;
+	Gtk::RadioButton::Group                     pause_combination_group;
+	EnumArray<KeyCombination, Gtk::RadioButton> pause_combination;
+	Gtk::CheckButton                            pause_enabled;
 
 	// Onglet keyboard
 	Gtk::VBox                         kb_page;

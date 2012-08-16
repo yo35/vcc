@@ -175,6 +175,26 @@ void Params::set_reinit_delay(int src) {
 	m_data_perso.set_data("Reset_Options", "Delay", src);
 }
 
+// Combinaison de touches pour la pause (lecture)
+KeyCombination Params::pause_keys() const {
+	return m_data_perso.get_data("Pause_Options", "Key_Combination", DOUBLE_MAJ);
+}
+
+// Combinaison de touches pour la pause (écriture)
+void Params::set_pause_key(const KeyCombination &src) {
+	m_data_perso.set_data("Pause_Options", "Key_Combination", src);
+}
+
+// Activation de la pause par clavier (lecture)
+bool Params::can_pause_by_kb() const {
+	return m_data_perso.get_data("Pause_Options", "Enabled", true);
+}
+
+// Activation de la pause par clavier (écriture)
+void Params::set_can_pause_by_kb(bool src) {
+	m_data_perso.set_data("Pause_Options", "Enabled", src);
+}
+
 // Affichage de la barre d'état (lecture)
 bool Params::display_status_bar() const {
 	return m_data_perso.get_data("Display", "Status_Bar", true);

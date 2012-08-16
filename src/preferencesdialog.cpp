@@ -68,14 +68,14 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	raz_by_keyboard.set_label(_("Reset through the keyboard"));
 	raz_by_keyboard_layout.set_border_width(5);
 	raz_by_keyboard_layout.set_spacing(5);
-	key_combination_label.set_label(_("Keys to press to reset"));
-	key_combination_label_layout.pack_start(key_combination_label, Gtk::PACK_SHRINK);
-	raz_by_keyboard_layout.pack_start(key_combination_label_layout);
-	key_combination[DOUBLE_CTRL].set_label(_("CTRL keys (left and right)"));
-	key_combination[DOUBLE_MAJ ].set_label(_("MAJ keys (left and right)" ));
+	raz_combination_label.set_label(_("Keys to press to reset"));
+	raz_combination_label_layout.pack_start(raz_combination_label, Gtk::PACK_SHRINK);
+	raz_by_keyboard_layout.pack_start(raz_combination_label_layout);
+	raz_combination[DOUBLE_CTRL].set_label(_("CTRL keys (left and right)"));
+	raz_combination[DOUBLE_MAJ ].set_label(_("MAJ keys (left and right)" ));
 	for(KeyCombination::iterator k=KeyCombination::first(); k.valid(); ++k) {
-		key_combination[*k].set_group(key_combination_group);
-		raz_by_keyboard_layout.pack_start(key_combination[*k]);
+		raz_combination[*k].set_group(raz_combination_group);
+		raz_by_keyboard_layout.pack_start(raz_combination[*k]);
 	}
 	raz_delay_label.set_label(_("Delay (milliseconds)"));
 	raz_delay_layout.set_spacing(5);
@@ -87,10 +87,29 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	raz_by_keyboard_layout.pack_start(raz_delay_layout);
 	raz_by_keyboard.add(raz_by_keyboard_layout);
 
+	// Frame "Pause par clavier"
+	pause_by_keyboard.set_label(_("Pause through the keyboard"));
+	pause_by_keyboard_layout.set_border_width(5);
+	pause_by_keyboard_layout.set_spacing(5);
+	pause_combination_label.set_label(_("Keys to press to pause"));
+	pause_combination_label_layout.pack_start(pause_combination_label, Gtk::PACK_SHRINK);
+	pause_by_keyboard_layout.pack_start(pause_combination_label_layout);
+	pause_combination[DOUBLE_CTRL].set_label(_("CTRL keys (left and right) + space"));
+	pause_combination[DOUBLE_MAJ ].set_label(_("MAJ keys (left and right) + space" ));
+	for(KeyCombination::iterator k=KeyCombination::first(); k.valid(); ++k) {
+		pause_combination[*k].set_group(pause_combination_group);
+		pause_by_keyboard_layout.pack_start(pause_combination[*k]);
+	}
+	pause_enabled.set_label(_("Enable the \"pause through the keyboard\" feature"));
+	pause_by_keyboard_layout.pack_start(pause_enabled);
+	pause_by_keyboard.add(pause_by_keyboard_layout);
+
+
 	// Onglet RAZ
 	raz_page.set_spacing(5);
-	raz_page.pack_start(raz_by_toolbar , Gtk::PACK_SHRINK);
-	raz_page.pack_start(raz_by_keyboard, Gtk::PACK_SHRINK);
+	raz_page.pack_start(raz_by_toolbar   , Gtk::PACK_SHRINK);
+	raz_page.pack_start(raz_by_keyboard  , Gtk::PACK_SHRINK);
+	raz_page.pack_start(pause_by_keyboard, Gtk::PACK_SHRINK);
 
 	// Onglet displaying
 	display_status_bar          .set_label(_("Display the status bar at the bottom of the main window"      ));
@@ -160,7 +179,7 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	kb_page.set_border_width(5);
 	pages.append_page(kb_page, _("Keyboard active areas"));
 	raz_page.set_border_width(5);
-	pages.append_page(raz_page, _("Reset options"));
+	pages.append_page(raz_page, _("Control options"));
 	disp_page.set_border_width(5);
 	pages.append_page(disp_page, _("Display options"));
 	get_vbox()->set_spacing(5);
@@ -173,8 +192,10 @@ void PreferencesDialog::load_params() {
 
 	// Paramètres RAZ
 	ask_before_raz [gp->reinit_confirm()].set_active(true);
-	key_combination[gp->reinit_keys   ()].set_active(true);
+	raz_combination[gp->reinit_keys   ()].set_active(true);
 	raz_delay.set_value(gp->reinit_delay());
+	pause_combination[gp->pause_keys()].set_active(true);
+	pause_enabled.set_active(gp->can_pause_by_kb());
 
 	// Paramètres d'affichage
 	display_status_bar          .set_active(gp->display_status_bar          ());
@@ -217,10 +238,15 @@ void PreferencesDialog::save_params() {
 			gp->set_reinit_confirm(*k);
 	}
 	for(KeyCombination::iterator k=KeyCombination::first(); k.valid(); ++k) {
-		if(key_combination[*k].get_active())
+		if(raz_combination[*k].get_active())
 			gp->set_reinit_key(*k);
 	}
 	gp->set_reinit_delay(raz_delay.get_value());
+	for(KeyCombination::iterator k=KeyCombination::first(); k.valid(); ++k) {
+		if(pause_combination[*k].get_active())
+			gp->set_pause_key(*k);
+	}
+	gp->set_can_pause_by_kb(pause_enabled.get_active());
 
 	// Paramètres d'affichage
 	gp->set_display_status_bar          (display_status_bar          .get_active());

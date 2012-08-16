@@ -68,6 +68,14 @@ public:
 	int reinit_delay() const;
 	void set_reinit_delay(int src);
 
+	// Touches à presser pour la pause
+	KeyCombination pause_keys() const;
+	void set_pause_key(const KeyCombination &src);
+
+	// Activation de la pause par clavier
+	bool can_pause_by_kb() const;
+	void set_can_pause_by_kb(bool src);
+
 	// Affichage de la barre d'état
 	bool display_status_bar() const;
 	void set_display_status_bar(bool src);
