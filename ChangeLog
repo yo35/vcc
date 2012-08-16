@@ -1,5 +1,57 @@
+2012-08-16  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* NEWS: Mise à jour NEWS
+	* NEWS: Mise à jour NEWS
+	* po/fr.po, po/vcc.pot: Traduction
+	* src/preferencesdialog.cpp, src/preferencesdialog.h: Proprisation
+	  interface
+	* CMakeLists.txt, src/clockwindow.cpp, src/clockwindow.h,
+	  src/eventdelayer.cpp, src/params.cpp, src/params.h,
+	  src/preferencesdialog.cpp, src/preferencesdialog.h: Pause through
+	  the keyboard
+
+2012-06-11  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* configure, configure.win32.bat: Modif _ pour - dans options des
+	  scripts de config
+
+2012-02-26  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* CMakeLists.txt, README, changelog.sh, configure,
+	  configure.win32.bat, data/icons/windows/winicon.rc,
+	  data/share/104.kam, data/share/105.kam, data/share/26.kam,
+	  data/share/BE.kbm, data/share/BR.kbm, data/share/CA.kbm,
+	  data/share/CZ.kbm, data/share/DE.kbm, data/share/ES.kbm,
+	  data/share/FR.kbm, data/share/IE.kbm, data/share/IT.kbm,
+	  data/share/LT.kbm, data/share/MX.kbm, data/share/PT.kbm,
+	  data/share/RU.kbm, data/share/SE.kbm, data/share/SK.kbm,
+	  data/share/TR_f.kbm, data/share/TR_q.kbm, data/share/UA.kbm,
+	  data/share/UK.kbm, data/share/US.kbm,
+	  data/share/default_azerty.kbm, data/share/default_qwerty.kbm,
+	  data/share/default_qwertz.kbm, include/config.h.in,
+	  include/translation.h, include/winkeyhookdll.h, src/areamap.cpp,
+	  src/areamap.h, src/bitimer.cpp, src/bitimer.h,
+	  src/clockwindow.cpp, src/clockwindow.h, src/datafile.cpp,
+	  src/datafile.h, src/debugdialog.cpp, src/debugdialog.h,
+	  src/dialwidget.cpp, src/dialwidget.h, src/enumerable.h,
+	  src/eventdelayer.cpp, src/eventdelayer.h, src/icon.cpp,
+	  src/icon.h, src/inistruct.cpp, src/inistruct.h,
+	  src/inistruct.inl, src/keyboardmap.cpp, src/keyboardmap.h,
+	  src/keyboardmapwidget.cpp, src/keyboardmapwidget.h, src/keys.cpp,
+	  src/keys.h, src/main.cpp, src/optionenums.cpp, src/optionenums.h,
+	  src/params.cpp, src/params.h, src/preferencesdialog.cpp,
+	  src/preferencesdialog.h, src/side.cpp, src/side.h,
+	  src/strings.cpp, src/strings.h, src/timecontrol.cpp,
+	  src/timecontrol.h, src/timecontroldialog.cpp,
+	  src/timecontroldialog.h, src/timeentry.cpp, src/timeentry.h,
+	  src/timer.cpp, src/timer.h, src/timestamp.cpp, src/timestamp.h,
+	  src/vccaboutdialog.cpp, src/vccaboutdialog.h,
+	  src/winkeyhook/winkeyhookdll.c, statistics.sh,
+	  update-copyright.sh: MAJ copyright
+
 2011-09-29  Yoann Le Montagner <yo35(at)melix(dot)net>
 
+	* INSTALL: Debug
 	* AUTHORS: Mise-à-jour crédits
 	* NEWS: Annonce release 1.4
 	* CMakeLists.txt, src/vccaboutdialog.cpp: Passage version 1.4
