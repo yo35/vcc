@@ -48,7 +48,7 @@ VccAboutDialog::VccAboutDialog() : Gtk::AboutDialog() {
 
 	// Divers
 	set_website("http://vchessclock.sourceforge.net/");
-	set_copyright("Copyright (C) 2010-2011 Yoann Le Montagner");
+	set_copyright("Copyright (C) 2010-2012 Yoann Le Montagner");
 
 	// Logo
 	m_logo = Gdk::Pixbuf::create_from_file(
