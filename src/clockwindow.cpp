@@ -23,6 +23,7 @@
 #include "clockwindow.h"
 #include "vccaboutdialog.h"
 #include "timecontroldialog.h"
+#include "namedialog.h"
 #include "preferencesdialog.h"
 #include "debugdialog.h"
 #include "params.h"
@@ -40,11 +41,19 @@
 ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2), pause_delayer(3),
 	ico_reset(gp->prefix_path() + "/" VCC_SHARE_RPATH "/reset.png"),
 	ico_pause(gp->prefix_path() + "/" VCC_SHARE_RPATH "/pause.png"),
-	ico_tctrl(gp->prefix_path() + "/" VCC_SHARE_RPATH "/tctrl.png")
+	ico_tctrl(gp->prefix_path() + "/" VCC_SHARE_RPATH "/tctrl.png"),
+	ico_names(gp->prefix_path() + "/" VCC_SHARE_RPATH "/names.png")
 {
 	// Initialisation de la pendule
 	core.set_time_control(gp->initial_time_control());
 	statusbar.push(core.time_control().description());
+
+	// Initialisation des noms des joueurs
+	display_players_names = gp->visible_names();
+	for(Side::iterator side=Side::first(); side.valid(); ++side) {
+		dial[*side].set_display_label(display_players_names);
+		dial[*side].set_label(gp->player_name(*side));
+	}
 
 	// Initialisation du retardateur pour l'affichage de la fenêtre de débug
 	#ifdef DEV_COMPILATION
@@ -82,6 +91,7 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	btn_reset.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_reset_clicked));
 	btn_pause.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_pause_clicked));
 	btn_tctrl.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_tctrl_clicked));
+	btn_names.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_names_clicked));
 	btn_prefs.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_prefs_clicked));
 	btn_help .signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_help_clicked ));
 	btn_about.signal_clicked().connect(sigc::mem_fun(*this, &ClockWindow::on_about_clicked));
@@ -95,28 +105,34 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	img_reset.set(ico_reset.get(icon_height));
 	img_pause.set(ico_pause.get(icon_height));
 	img_tctrl.set(ico_tctrl.get(icon_height));
+	img_names.set(ico_names.get(icon_height));
 	btn_reset.set_icon_widget(img_reset);
 	btn_pause.set_icon_widget(img_pause);
 	btn_tctrl.set_icon_widget(img_tctrl);
-	btn_reset.set_label(_("Reset"       ));
-	btn_pause.set_label(_("Pause"       ));
-	btn_tctrl.set_label(_("Time control"));
+	btn_names.set_icon_widget(img_names);
+	btn_reset.set_label(_("Reset"         ));
+	btn_pause.set_label(_("Pause"         ));
+	btn_tctrl.set_label(_("Time control"  ));
+	btn_tctrl.set_label(_("Players' names"));
 	btn_prefs.set_stock_id(Gtk::Stock::PREFERENCES);
 	btn_help .set_stock_id(Gtk::Stock::HELP       );
 	btn_about.set_stock_id(Gtk::Stock::ABOUT      );
 	btn_reset.set_tooltip_text(_("Reset the clock"                          ));
 	btn_pause.set_tooltip_text(_("Pause the clock"                          ));
 	btn_tctrl.set_tooltip_text(_("Change the current time control"          ));
+	btn_names.set_tooltip_text(_("Edit the names of the players"            ));
 	btn_prefs.set_tooltip_text(_("Set the configuration and the preferences"));
 	btn_help .set_tooltip_text(_("A short help text"                        ));
 	btn_about.set_tooltip_text(_("Information about credits and license"    ));
-	toolbar.append(btn_reset  );
-	toolbar.append(btn_pause  );
-	toolbar.append(sep_toolbar);
-	toolbar.append(btn_tctrl  );
-	toolbar.append(btn_prefs  );
-	toolbar.append(btn_help   );
-	toolbar.append(btn_about  );
+	toolbar.append(btn_reset);
+	toolbar.append(btn_pause);
+	toolbar.append(sep1     );
+	toolbar.append(btn_tctrl);
+	toolbar.append(btn_names);
+	toolbar.append(sep2     );
+	toolbar.append(btn_prefs);
+	toolbar.append(btn_help );
+	toolbar.append(btn_about);
 
 	// Géométrie générale
 	dial_layout.pack_start(dial[LEFT ]);
@@ -253,6 +269,25 @@ void ClockWindow::on_tctrl_clicked() {
 	gp->set_initial_time_control(core.time_control());
 }
 
+void ClockWindow::on_names_clicked()
+{
+	NameDialog dialog(*this);
+	dialog.set_visible_names(display_players_names);
+	for(Side::iterator side=Side::first(); side.valid(); ++side) {
+		dialog.set_name(*side, dial[*side].label());
+	}
+	if(dialog.run()!=Gtk::RESPONSE_OK) {
+		return;
+	}
+	display_players_names = dialog.visible_names();
+	gp->set_visible_names(display_players_names);
+	for(Side::iterator side=Side::first(); side.valid(); ++side) {
+		dial[*side].set_display_label(display_players_names);
+		dial[*side].set_label(dialog.name(*side));
+		gp->set_player_name(*side, dial[*side].label());
+	}
+}
+
 void ClockWindow::on_prefs_clicked() {
 	PreferencesDialog dialog(*this);
 	dialog.load_params();
@@ -342,12 +377,16 @@ void ClockWindow::retrieve_parameters_from_gp() {
 	}
 
 	// Options de pause
-	KeyCombination pause_kc = gp->pause_keys();
-	if(pause_kc==DOUBLE_CTRL) {
+	KeyModifier pause_kc = gp->pause_keys();
+	if(pause_kc==MODIFIER_VOID) {
+		pause_trigger[0] = GDK_space;
+		pause_trigger[1] = GDK_space;
+	}
+	else if(pause_kc==MODIFIER_CTRL) {
 		pause_trigger[0] = GDK_Control_L;
 		pause_trigger[1] = GDK_Control_R;
 	}
-	else if(pause_kc==DOUBLE_MAJ) {
+	else if(pause_kc==MODIFIER_MAJ) {
 		pause_trigger[0] = GDK_Shift_L;
 		pause_trigger[1] = GDK_Shift_R;
 	}

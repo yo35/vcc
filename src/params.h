@@ -56,6 +56,12 @@ public:
 	TimeControl initial_time_control() const;
 	void set_initial_time_control(const TimeControl &src);
 
+	// Noms des joueurs
+	std::string player_name(Side side) const;
+	void set_player_name(Side side, const std::string &src);
+	bool visible_names() const;
+	void set_visible_names(bool src);
+
 	// Demande de confirmation pour la réinitialisation de l'horloge
 	ReinitConfirm reinit_confirm() const;
 	void set_reinit_confirm(const ReinitConfirm &src);
@@ -69,8 +75,8 @@ public:
 	void set_reinit_delay(int src);
 
 	// Touches à presser pour la pause
-	KeyCombination pause_keys() const;
-	void set_pause_key(const KeyCombination &src);
+	KeyModifier pause_keys() const;
+	void set_pause_key(const KeyModifier &src);
 
 	// Activation de la pause par clavier
 	bool can_pause_by_kb() const;

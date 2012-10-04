@@ -58,6 +58,7 @@ private:
 	void on_pause_clicked();
 	void on_reset_clicked();
 	void on_tctrl_clicked();
+	void on_names_clicked();
 	void on_prefs_clicked();
 	void on_help_clicked ();
 	void on_about_clicked();
@@ -80,6 +81,7 @@ private:
 	const AreaMap     *curr_kam;
 	Keycode            curr_key_down;
 	bool               use_mouse_buttons;
+	bool               display_players_names;
 
 	// Widgets
 	EnumArray<Side, DialWidget> dial;
@@ -88,16 +90,20 @@ private:
 	Icon                        ico_reset;
 	Icon                        ico_pause;
 	Icon                        ico_tctrl;
+	Icon                        ico_names;
 	Gtk::Image                  img_reset;
 	Gtk::Image                  img_pause;
 	Gtk::Image                  img_tctrl;
+	Gtk::Image                  img_names;
 	Gtk::ToolButton             btn_reset;
 	Gtk::ToolButton             btn_pause;
 	Gtk::ToolButton             btn_tctrl;
+	Gtk::ToolButton             btn_names;
 	Gtk::ToolButton             btn_prefs;
 	Gtk::ToolButton             btn_help ;
 	Gtk::ToolButton             btn_about;
-	Gtk::SeparatorToolItem      sep_toolbar;
+	Gtk::SeparatorToolItem      sep1;
+	Gtk::SeparatorToolItem      sep2;
 	Gtk::HBox                   dial_layout;
 	Gtk::VBox                   main_layout;
 };

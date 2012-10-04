@@ -145,6 +145,26 @@ void Params::set_initial_time_control(const TimeControl &src) {
 	}
 }
 
+std::string Params::player_name(Side side) const
+{
+	return m_data_perso.get_data("Players", side==LEFT ? "Left" : "Right", "");
+}
+
+void Params::set_player_name(Side side, const std::string &src)
+{
+	m_data_perso.set_data("Players", side==LEFT ? "Left" : "Right", src);
+}
+
+bool Params::visible_names() const
+{
+	return m_data_perso.get_data("Players", "Visible", true);
+}
+
+void Params::set_visible_names(bool src)
+{
+	m_data_perso.set_data("Players", "Visible", src);
+}
+
 // Demande de confirmation pour la réinitialisation de l'horloge (lecture)
 ReinitConfirm Params::reinit_confirm() const {
 	return m_data_perso.get_data("Reset_Options", "Confirm_When_Reinitializing", RC_IF_NOT_PAUSED);
@@ -176,12 +196,12 @@ void Params::set_reinit_delay(int src) {
 }
 
 // Combinaison de touches pour la pause (lecture)
-KeyCombination Params::pause_keys() const {
-	return m_data_perso.get_data("Pause_Options", "Key_Combination", DOUBLE_MAJ);
+KeyModifier Params::pause_keys() const {
+	return m_data_perso.get_data("Pause_Options", "Key_Combination", MODIFIER_MAJ);
 }
 
 // Combinaison de touches pour la pause (écriture)
-void Params::set_pause_key(const KeyCombination &src) {
+void Params::set_pause_key(const KeyModifier &src) {
 	m_data_perso.set_data("Pause_Options", "Key_Combination", src);
 }
 
