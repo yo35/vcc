@@ -98,9 +98,10 @@ PreferencesDialog::PreferencesDialog(Gtk::Window &parent) :
 	pause_combination_label.set_label(_("Keys to press to pause"));
 	pause_combination_label_layout.pack_start(pause_combination_label, Gtk::PACK_SHRINK);
 	pause_by_keyboard_layout.pack_start(pause_combination_label_layout);
-	pause_combination[DOUBLE_CTRL].set_label(_("CTRL keys (left and right) + space"));
-	pause_combination[DOUBLE_MAJ ].set_label(_("MAJ keys (left and right) + space" ));
-	for(KeyCombination::iterator k=KeyCombination::first(); k.valid(); ++k) {
+	pause_combination[MODIFIER_VOID].set_label(_("Only the space key"));
+	pause_combination[MODIFIER_CTRL].set_label(_("CTRL keys (left and right) + space"));
+	pause_combination[MODIFIER_MAJ ].set_label(_("MAJ keys (left and right) + space" ));
+	for(KeyModifier::iterator k=KeyModifier::first(); k.valid(); ++k) {
 		pause_combination[*k].set_group(pause_combination_group);
 		pause_by_keyboard_layout.pack_start(pause_combination[*k]);
 	}
@@ -243,7 +244,7 @@ void PreferencesDialog::save_params() {
 			gp->set_reinit_key(*k);
 	}
 	gp->set_reinit_delay(raz_delay.get_value());
-	for(KeyCombination::iterator k=KeyCombination::first(); k.valid(); ++k) {
+	for(KeyModifier::iterator k=KeyModifier::first(); k.valid(); ++k) {
 		if(pause_combination[*k].get_active())
 			gp->set_pause_key(*k);
 	}
@@ -324,7 +325,7 @@ void PreferencesDialog::save_curr_area() {
 void PreferencesDialog::on_pause_enabled_clicked()
 {
 	bool is_pause_enabled = pause_enabled.get_active();
-	for(KeyCombination::iterator k=KeyCombination::first(); k.valid(); ++k) {
+	for(KeyModifier::iterator k=KeyModifier::first(); k.valid(); ++k) {
 		pause_combination[*k].set_sensitive(is_pause_enabled);
 	}
 }

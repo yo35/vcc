@@ -104,7 +104,7 @@ private:
 	Gtk::Label                                  pause_combination_label;
 	Gtk::HBox                                   pause_combination_label_layout;
 	Gtk::RadioButton::Group                     pause_combination_group;
-	EnumArray<KeyCombination, Gtk::RadioButton> pause_combination;
+	EnumArray<KeyModifier, Gtk::RadioButton>    pause_combination;
 	Gtk::CheckButton                            pause_enabled;
 
 	// Onglet keyboard
