@@ -25,7 +25,8 @@
 #include <translation.h>
 
 DialWidget::DialWidget() : Gtk::DrawingArea() {
-	m_bi_timer                     = 0   ;
+	m_bi_timer                     = 0;
+	m_display_label                = false;
 	m_display_time_after_flag_down = true;
 	m_display_bronstein_extra_time = true;
 	m_display_byo_yomi_extra_time  = true;
@@ -33,10 +34,29 @@ DialWidget::DialWidget() : Gtk::DrawingArea() {
 	Glib::signal_timeout().connect(sigc::mem_fun(*this, &DialWidget::on_timeout_elapses), 100);
 }
 
+const std::string &DialWidget::label() const
+{
+	return m_label;
+}
+
 void DialWidget::set_timer(const BiTimer &bi_timer, const Side &side) {
 	m_bi_timer = &bi_timer;
 	m_side     =  side    ;
 	m_bi_timer->signal_state_changed().connect(sigc::mem_fun(*this, &DialWidget::refresh_widget));
+}
+
+void DialWidget::set_label(const std::string &label)
+{
+	m_label = label;
+	if(m_display_label) {
+		refresh_widget();
+	}
+}
+
+void DialWidget::set_display_label(bool src)
+{
+	m_display_label = src;
+	refresh_widget();
 }
 
 void DialWidget::set_display_time_after_flag_down(bool src) {
@@ -166,6 +186,11 @@ bool DialWidget::on_expose_event(GdkEventExpose *event) {
 			draw_one_line_text(cr, txt);
 		}
 	}
+
+	// Display the label if necessary
+	if(m_display_label) {
+		draw_label(cr);
+	}
 	return true;
 }
 
@@ -232,6 +257,34 @@ void DialWidget::draw_two_lines_text(Cairo::RefPtr<Cairo::Context> cr,
 	cr->begin_new_path();
 	cr->move_to(delta_x, delta_y);
 	cr->text_path(main_txt);
+	cr->fill_preserve();
+}
+
+// Draw the label on the top area of the dial widger
+void DialWidget::draw_label(Cairo::RefPtr<Cairo::Context> cr)
+{
+	if(m_label.empty()) {
+		return;
+	}
+
+	// Taille du widget
+	Gtk::Allocation allocation = get_allocation();
+	double width  = allocation.get_width();
+	double height = allocation.get_height();
+
+	// Calcul de la position des textes
+	double font_size = get_adjusted_font_height(cr, height*0.1, width*0.9, m_label);
+
+	// Dessin du label
+	Cairo::TextExtents te;
+	double delta_x, delta_y;
+	cr->set_font_size(font_size);
+	cr->get_text_extents(m_label, te);
+	delta_x = (width  - te.width)/2.0;
+	delta_y = 10 + te.height;
+	cr->begin_new_path();
+	cr->move_to(delta_x, delta_y);
+	cr->text_path(m_label);
 	cr->fill_preserve();
 }
 

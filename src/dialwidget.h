@@ -33,9 +33,12 @@ public:
 
 	// Divers
 	DialWidget();
+	const std::string &label() const;
 	void set_timer(const BiTimer &bi_timer, const Side &side);
+	void set_label(const std::string &label);
 
 	// Options
+	void set_display_label               (bool src);
 	void set_display_time_after_flag_down(bool src);
 	void set_display_bronstein_extra_time(bool src);
 	void set_display_byo_yomi_extra_time (bool src);
@@ -49,6 +52,7 @@ private:
 	void         draw_one_line_text (Cairo::RefPtr<Cairo::Context> cr, const std::string &txt);
 	void         draw_two_lines_text(Cairo::RefPtr<Cairo::Context> cr,
 		const std::string &main_txt, const std::string &extra_txt);
+	void         draw_label         (Cairo::RefPtr<Cairo::Context> cr);
 	double get_adjusted_font_height(Cairo::RefPtr<Cairo::Context> cr,
 		int allocable_height, int allocable_width, const std::string &txt);
 	static std::string get_model_txt(const std::string &src);
@@ -56,6 +60,8 @@ private:
 	// Données membres
 	const BiTimer *m_bi_timer;
 	Side           m_side    ;
+	std::string    m_label   ;
+	bool           m_display_label               ;
 	bool           m_display_time_after_flag_down;
 	bool           m_display_bronstein_extra_time;
 	bool           m_display_byo_yomi_extra_time ;
