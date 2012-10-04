@@ -71,7 +71,7 @@ set(PROJECT_FULL_NAME "Virtual Chess Clock")
 set(EXECUTABLE_NAME "vcc")
 set(HOOKDLL_NAME "winkeyhook")
 set(PROJECT_VERSION_MAJOR 1)
-set(PROJECT_VERSION_MINOR 5)
+set(PROJECT_VERSION_MINOR 6)
 set(PROJECT_VERSION_PATCH 0)
 
 # Noms complets
