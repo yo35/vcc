@@ -28,3 +28,7 @@ const ReinitConfirm RC_NEVER        (2);
 
 const KeyCombination DOUBLE_CTRL(0);
 const KeyCombination DOUBLE_MAJ (1);
+
+const KeyModifier MODIFIER_VOID(0);
+const KeyModifier MODIFIER_CTRL(1);
+const KeyModifier MODIFIER_MAJ (2);

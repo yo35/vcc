@@ -47,4 +47,15 @@ extern const KeyCombination DOUBLE_CTRL;
 extern const KeyCombination DOUBLE_MAJ ;
 
 
+
+// Modifiers commandant la mise en pause
+struct BaseKeyModifier {
+	static const int N = 3;
+};
+typedef Enumerable<BaseKeyModifier> KeyModifier;
+
+extern const KeyModifier MODIFIER_VOID;
+extern const KeyModifier MODIFIER_CTRL;
+extern const KeyModifier MODIFIER_MAJ ;
+
 #endif
