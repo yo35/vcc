@@ -1,5 +1,6 @@
 2012-10-05  Yoann Le Montagner <yo35(at)melix(dot)net>
 
+	* src/clockwindow.cpp: Debug
 	* NEWS: Update news
 
 2012-10-04  Yoann Le Montagner <yo35(at)melix(dot)net>
