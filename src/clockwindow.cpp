@@ -113,7 +113,7 @@ ClockWindow::ClockWindow() : Gtk::Window(), debug_delayer(3), reinit_delayer(2),
 	btn_reset.set_label(_("Reset"         ));
 	btn_pause.set_label(_("Pause"         ));
 	btn_tctrl.set_label(_("Time control"  ));
-	btn_tctrl.set_label(_("Players' names"));
+	btn_names.set_label(_("Players' names"));
 	btn_prefs.set_stock_id(Gtk::Stock::PREFERENCES);
 	btn_help .set_stock_id(Gtk::Stock::HELP       );
 	btn_about.set_stock_id(Gtk::Stock::ABOUT      );
