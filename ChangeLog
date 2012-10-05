@@ -1,3 +1,25 @@
+2012-10-05  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* NEWS: Update news
+
+2012-10-04  Yoann Le Montagner <yo35(at)melix(dot)net>
+
+	* data/share/names.png, data/share/names.svg: Proprisation icone
+	  players
+	* CMakeLists.txt: Passage v1.6
+	* ., po/fr.po, po/vcc.pot: MAJ traduction FR
+	* data/share/names.png, data/share/names.svg, src/clockwindow.cpp,
+	  src/clockwindow.h, src/params.cpp, src/params.h: Intégration noms
+	  des joueurs + possibilité mise en pause avec espace seul
+	* src/namedialog.cpp, src/namedialog.h: Dialog pour éditer les noms
+	  des joueurs
+	* src/preferencesdialog.cpp, src/preferencesdialog.h: Enum type
+	  pour raccourci clavier pause sans ctrl ni maj
+	* src/optionenums.cpp, src/optionenums.h: Enum type pour raccourci
+	  clavier pause sans ctrl ni maj
+	* src/dialwidget.cpp, src/dialwidget.h: Affichage label dans le
+	  widget Dial
+
 2012-08-16  Yoann Le Montagner <yo35(at)melix(dot)net>
 
 	* src/vccaboutdialog.cpp: Debug
