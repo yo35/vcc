@@ -1,0 +1,18 @@
+# /
+/bin
+/locale
+/user_config
+/CMakeFiles
+/_CPack_Packages
+/*.cmake
+/*.tar.gz
+/*.deb
+/*.exe
+/Makefile
+/CMakeCache.txt
+/install_manifest.txt
+/.project
+/.cproject
+
+# /include/
+/include/config.h
