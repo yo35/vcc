@@ -13,6 +13,7 @@
 /install_manifest.txt
 /.project
 /.cproject
+/.settings
 
 # /include/
 /include/config.h
