@@ -48,6 +48,43 @@ endif()
 find_package(PkgConfig)
 pkg_check_modules(GTKMM REQUIRED gtkmm-2.4)
 
+# Boost
+if(${WIN32})
+	set(Boost_INCLUDE_DIRS "C:\\Boost\\include\\boost-1_46_1")
+	set(Boost_LIBRARY_DIRS "C:\\Boost\\lib")
+	set(Boost_LIBRARIES
+		boost_system-mgw45-mt-1_46_1
+		boost_filesystem-mgw45-mt-1_46_1
+		boost_regex-mgw45-mt-1_46_1
+		boost_date_time-mgw45-mt-1_46_1
+		boost_signals-mgw45-mt-1_46_1
+	)
+else()
+	set(Boost_INCLUDE_DIRS /usr/local/include)
+	set(Boost_LIBRARY_DIRS /usr/local/lib)
+	set(Boost_LIBRARIES
+		boost_system
+		boost_filesystem
+		boost_regex
+		boost_date_time
+		boost_signals
+	)
+endif()
+
+# All librairies together
+set(all_INCLUDE_DIRS
+	${Boost_INCLUDE_DIRS}
+#	${wxWidgets_INCLUDE_DIRS}
+)
+set(all_LIBRARY_DIRS
+	${Boost_LIBRARY_DIRS}
+#	${wxWidgets_LIBRARY_DIRS}
+)
+set(all_LIBRARIES
+	${Boost_LIBRARIES}
+#	${wxWidgets_LIBRARIES}
+)
+
 # Répertoires de sortie
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(LIBRARY_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
@@ -194,8 +231,8 @@ endif(${INSTALL_TYPE} MATCHES Dev)
 
 # Flags compilo et linker
 add_definitions("-pedantic -Wall -Wextra -std=c++0x")
-include_directories(${GTKMM_INCLUDE_DIRS} include)
-link_directories(${GTKMM_LIBRARY_DIRS})
+include_directories(${all_INCLUDE_DIRS} include)
+link_directories(${all_LIBRARY_DIRS})
 if(${WIN32})
 	add_definitions("-DOS_IS_WINDOWS")
 	if(NOT (${INSTALL_TYPE} MATCHES Dev))
@@ -233,7 +270,7 @@ add_executable(
 )
 target_link_libraries(
 	${EXECUTABLE_NAME}
-	${GTKMM_LIBRARIES}
+	${all_LIBRARIES}
 	${HOOKDLL_LIBRARY}
 )
 
