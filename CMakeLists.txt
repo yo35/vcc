@@ -193,7 +193,7 @@ endif(${INSTALL_TYPE} MATCHES Dev)
 # Compilation
 
 # Flags compilo et linker
-add_definitions("-pedantic -Wall -Wextra")
+add_definitions("-pedantic -Wall -Wextra -std=c++0x")
 include_directories(${GTKMM_INCLUDE_DIRS} include)
 link_directories(${GTKMM_LIBRARY_DIRS})
 if(${WIN32})
