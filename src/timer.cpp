@@ -64,7 +64,7 @@ TimeDuration Timer::time() const
 		return m_time;
 	}
 	else {
-		TimePoint    now  = boost::posix_time::microsec_clock::local_time();
+		TimePoint    now  = current_time();
 		TimeDuration diff = (now - m_start_at);
 		if(m_mode==Mode::INCREMENT)
 			return m_time + diff;

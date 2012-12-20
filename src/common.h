@@ -60,4 +60,9 @@ extern const Side RIGHT;
  */
 Side reverse(const Side &side);
 
+/**
+ * Return the current time
+ */
+TimePoint current_time();
+
 #endif /* COMMON_H_ */

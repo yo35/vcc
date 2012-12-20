@@ -37,3 +37,11 @@ Side reverse(const Side &side)
 {
 	return Side(1-side.to_numeric());
 }
+
+/**
+ * Return the current time
+ */
+TimePoint current_time()
+{
+	return boost::posix_time::microsec_clock::local_time();
+}
