@@ -30,7 +30,7 @@
 /**
  * Base type for class Side (should not be used directly)
  */
-struct _Side { static const int N = 2; };
+struct _Side { static const std::size_t N = 2; };
 
 /**
  * Side of the clock
