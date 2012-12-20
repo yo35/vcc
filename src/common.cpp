@@ -22,13 +22,9 @@
 
 #include "common.h"
 
-/**
- * \name Available sides
- * @{
- */
+// Available sides
 const Side LEFT (0);
 const Side RIGHT(1);
-///@}
 
 /**
  * Switch from one side to the other
