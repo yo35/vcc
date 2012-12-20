@@ -23,7 +23,7 @@
 #include "common.h"
 
 /**
- * \name Initialize the constants
+ * \name Available sides
  * @{
  */
 const Side LEFT (0);
