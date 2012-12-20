@@ -24,7 +24,6 @@
 #include <translation.h>
 #include <exception.h>
 #include <sstream>
-#include <cassert>
 #include <boost/format.hpp>
 
 // Available time control modes
@@ -191,12 +190,9 @@ void TimeControl::side_description(std::ostream &stream, Side side) const
 
 /**
  * Format a duration given as a number of milliseconds
- * \pre value>=0
  */
 void TimeControl::format_time(std::ostream &stream, const TimeDuration &value)
 {
-	assert(!value.is_negative());
-
 	// Rounding the number of milliseconds to the closest full second
 	int rounded_value = (value.total_milliseconds()+500) / 1000;
 
