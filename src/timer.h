@@ -78,7 +78,7 @@ public:
 
 private:
 
-	// Member objects
+	// Private data
 	Mode         m_mode    ;
 	TimeDuration m_time    ;
 	TimePoint    m_start_at;
