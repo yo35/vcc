@@ -39,7 +39,7 @@ Side reverse(const Side &side)
 }
 
 /**
- * Return the current time
+ * Return the current time point
  */
 TimePoint current_time()
 {
