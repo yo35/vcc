@@ -20,30 +20,54 @@
  ******************************************************************************/
 
 
-#ifndef WINKEYHOOKDLL_H_
-#define WINKEYHOOKDLL_H_
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <winkeyhookdll.h>
+#include <config.h>
 
 #ifdef OS_IS_WINDOWS
 
-	/**
-	 * Enable masking of the windows key
-	 * \return -1 if the function succeed, an error code otherwise
-	 */
-	int  __declspec(dllexport) set_kbd_hook();
+	#include <windows.h>
 
-	/**
-	 * Disable masking of the windows key
-	 */
-	void __declspec(dllexport) unset_kbd_hook();
+	HHOOK hHook = 0;
 
-#endif // OS_IS_WINDOWS
+	LRESULT CALLBACK low_level_keyboard_proc(int nCode, WPARAM wParam, LPARAM lParam)
+	{
+		PKBDLLHOOKSTRUCT kb_input_event;
 
-#ifdef __cplusplus
-}
-#endif
+		/* First check */
+		if(nCode<0)
+			return CallNextHookEx(0, nCode, wParam, lParam);
+		kb_input_event = (PKBDLLHOOKSTRUCT)lParam;
 
-#endif /* WINKEYHOOKDLL_H_ */
+		/* If the event comes from a window key, don't do anything */
+		if(kb_input_event->vkCode==VK_LWIN || kb_input_event->vkCode==VK_RWIN)
+			return 1;
+
+		/* Otherwise, forward the event */
+		else
+			return CallNextHookEx(0, nCode, wParam, lParam);
+	}
+
+	int __declspec(dllexport) set_kbd_hook()
+	{
+		HMODULE hCurrModule;
+
+		/* Retrieve current module's handle */
+		hCurrModule = GetModuleHandle(HOOKDLL_FULL_NAME);
+		if(hCurrModule==NULL)
+			return GetLastError();
+
+		/* Set the hook function */
+		hHook = SetWindowsHookEx(WH_KEYBOARD_LL, low_level_keyboard_proc, hCurrModule, 0);
+		if(hHook==NULL)
+			return GetLastError();
+
+		return -1;
+	}
+
+	void __declspec(dllexport) unset_kbd_hook()
+	{
+		/* Unset the hook function */
+		UnhookWindowsHookEx(hHook);
+	}
+
+#endif /* OS_IS_WINDOWS */
