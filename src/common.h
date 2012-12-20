@@ -20,20 +20,44 @@
  ******************************************************************************/
 
 
-#include "side.h"
+#ifndef COMMON_H_
+#define COMMON_H_
+
+#include "enumerable.h"
+#include <boost/date_time/time_duration.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 /**
- * \name Initialize the constants
+ * Base type for class Side (should not be used directly)
+ */
+struct _Side { static const int N = 2; };
+
+/**
+ * Side of the clock
+ */
+typedef Enumerable<_Side> Side;
+
+/**
+ * Time duration
+ */
+typedef boost::posix_time::time_duration TimeDuration;
+
+/**
+ * Time point
+ */
+typedef boost::posix_time::ptime TimePoint;
+
+/**
+ * \name Available sides
  * @{
  */
-const Side LEFT (0);
-const Side RIGHT(1);
+extern const Side LEFT ;
+extern const Side RIGHT;
 ///@}
 
 /**
  * Switch from one side to the other
  */
-Side reverse(const Side &side)
-{
-	return Side(1-side.to_numeric());
-}
+Side reverse(const Side &side);
+
+#endif /* COMMON_H_ */

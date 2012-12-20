@@ -20,32 +20,20 @@
  ******************************************************************************/
 
 
-#ifndef SIDE_H_
-#define SIDE_H_
-
-#include "enumerable.h"
+#include "common.h"
 
 /**
- * Base type for class Side (should not be used directly)
- */
-struct _Side { static const int N = 2; };
-
-/**
- * Side of the clock
- */
-typedef Enumerable<_Side> Side;
-
-/**
- * \name Available sides
+ * \name Initialize the constants
  * @{
  */
-extern const Side LEFT ;
-extern const Side RIGHT;
+const Side LEFT (0);
+const Side RIGHT(1);
 ///@}
 
 /**
  * Switch from one side to the other
  */
-Side reverse(const Side &side);
-
-#endif /* SIDE_H_ */
+Side reverse(const Side &side)
+{
+	return Side(1-side.to_numeric());
+}
