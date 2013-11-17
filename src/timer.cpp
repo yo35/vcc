@@ -21,63 +21,45 @@
 
 
 #include "timer.h"
+#include <utility>
 
-/**
- * Constructor
- */
-Timer::Timer()
-{
-	m_mode = Mode::PAUSED;
-}
 
-/**
- * Timer behavior
- */
-Timer::Mode Timer::mode() const
-{
-	return m_mode;
-}
-
-/**
- * Change the behavior
- */
+// Change the behavior of the timer.
 void Timer::set_mode(Mode mode)
 {
-	if(m_mode==mode) {
+	if(_mode==mode) {
 		return;
 	}
-	if(m_mode!=Mode::PAUSED) {
-		m_time = time();
+	if(_mode!=Mode::PAUSED) {
+		_time = time();
 	}
 	if(mode!=Mode::PAUSED) {
-		m_start_at = boost::posix_time::microsec_clock::local_time();
+		_start_at = current_time();
 	}
-	m_mode = mode;
+	_mode = mode;
 }
 
-/**
- * Current time
- */
+
+// Current time.
 TimeDuration Timer::time() const
 {
-	if(m_mode==Mode::PAUSED) {
-		return m_time;
+	if(_mode==Mode::PAUSED) {
+		return _time;
 	}
 	else {
 		TimePoint    now  = current_time();
-		TimeDuration diff = (now - m_start_at);
-		if(m_mode==Mode::INCREMENT)
-			return m_time + diff;
-		else // m_mode==Mode::DECREMENT
-			return m_time - diff;
+		TimeDuration diff = now - _start_at;
+		if(_mode==Mode::INCREMENT)
+			return _time + diff;
+		else // _mode==Mode::DECREMENT
+			return _time - diff;
 	}
 }
 
-/**
- * Change the current time, and stop the timer if it is not already stopped
- */
+
+// Change the current time, and stop the timer if it is not already stopped.
 void Timer::set_time(TimeDuration time)
 {
-	m_mode = Mode::PAUSED;
-	m_time = std::move(time);
+	_mode = Mode::PAUSED;
+	_time = std::move(time);
 }

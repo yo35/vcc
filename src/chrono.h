@@ -20,49 +20,33 @@
  ******************************************************************************/
 
 
-#ifndef COMMON_H_
-#define COMMON_H_
+#ifndef CHRONO_H_
+#define CHRONO_H_
 
-#include "enumerable.h"
-#include <boost/date_time/time_duration.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 
-/**
- * Base type for class Side (should not be used directly)
- */
-struct _Side { static const std::size_t N = 2; };
+#include <chrono>
+#include <cstdint>
+
 
 /**
- * Side of the clock
+ * A time interval, with a resolution of one millisecond.
  */
-typedef Enumerable<_Side> Side;
+typedef std::chrono::duration<std::int64_t, std::milli> TimeDuration;
+
 
 /**
- * Time duration
+ * A reference to a point in the time.
  */
-typedef boost::posix_time::time_duration TimeDuration;
+typedef std::chrono::time_point<std::chrono::high_resolution_clock, TimeDuration> TimePoint;
+
 
 /**
- * Time point
+ * Return the current time point.
  */
-typedef boost::posix_time::ptime TimePoint;
+inline TimePoint current_time()
+{
+	return std::chrono::time_point_cast<TimePoint::duration>(std::chrono::high_resolution_clock::now());
+}
 
-/**
- * \name Available sides
- * @{
- */
-extern const Side LEFT ;
-extern const Side RIGHT;
-///@}
 
-/**
- * Switch from one side to the other
- */
-Side reverse(const Side &side);
-
-/**
- * Return the current time point
- */
-TimePoint current_time();
-
-#endif /* COMMON_H_ */
+#endif /* CHRONO_H_ */

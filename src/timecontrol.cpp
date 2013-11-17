@@ -22,179 +22,121 @@
 
 #include "timecontrol.h"
 #include <translation.h>
-#include <exception.h>
-#include <sstream>
+#include <stdexcept>
 #include <boost/format.hpp>
 
-// Available time control modes
-const TimeControl::Mode TimeControl::SUDDEN_DEATH(0);
-const TimeControl::Mode TimeControl::FISCHER     (1);
-const TimeControl::Mode TimeControl::BRONSTEIN   (2);
-const TimeControl::Mode TimeControl::HOURGLASS   (3);
-const TimeControl::Mode TimeControl::BYO_YOMI    (4);
 
-/**
- * Name of a time control mode
- */
+// Name of a time control mode.
 const std::string &TimeControl::mode_name(Mode mode)
 {
-	static bool do_init = true;
-	static EnumArray<Mode, std::string> retval;
-	if(do_init) {
-		retval[SUDDEN_DEATH] = _("Sudden death");
-		retval[FISCHER     ] = _("Fischer"     );
-		retval[BRONSTEIN   ] = _("Bronstein"   );
-		retval[HOURGLASS   ] = _("Hourglass"   );
-		retval[BYO_YOMI    ] = _("Byo-yomi"    );
-		do_init = false;
-	}
+	static const Enum::array<Mode, std::string> retval =
+	{
+		_("Sudden death"),
+		_("Fischer"     ),
+		_("Bronstein"   ),
+		_("Hourglass"   ),
+		_("Byo-yomi"    )
+	};
 	return retval[mode];
 }
 
-/**
- * Constructor
- */
-TimeControl::TimeControl()
-{
-	m_mode = SUDDEN_DEATH;
-}
 
-/**
- * Current time control mode
- */
-TimeControl::Mode TimeControl::mode() const
-{
-	return m_mode;
-}
-
-/**
- * Change the current time control mode
- */
-void TimeControl::set_mode(Mode mode)
-{
-	m_mode = mode;
-}
-
-// Getters
-const TimeDuration &TimeControl::main_time  (Side side) const { return m_state[side].main_time  ; }
-const TimeDuration &TimeControl::increment  (Side side) const { return m_state[side].increment  ; }
-int                 TimeControl::byo_periods(Side side) const { return m_state[side].byo_periods; }
-
-/**
- * Set the main time
- */
+// Set the main time.
 void TimeControl::set_main_time(Side side, TimeDuration value)
 {
-	if(value.is_negative()) {
-		THROW_EXCEPTION(RuntimeException(_("Cannot set a negative value as a main time")));
+	if(value < TimeDuration::zero()) {
+		throw std::invalid_argument(_("Cannot set a negative value as a main time."));
 	}
-	m_state[side].main_time = std::move(value);
+	_main_time[side] = std::move(value);
 }
 
-/**
- * Set the increment
- */
+
+// Set the increment.
 void TimeControl::set_increment(Side side, TimeDuration value)
 {
-	if(value.is_negative()) {
-		THROW_EXCEPTION(RuntimeException(_("Cannot set a negative value as an increment")));
+	if(value < TimeDuration::zero()) {
+		throw std::invalid_argument(_("Cannot set a negative value as an increment."));
 	}
-	m_state[side].increment = std::move(value);
+	_increment[side] = std::move(value);
 }
 
-/**
- * Set the number of byo-yomi periods
- */
+
+// Set the number of byo-yomi periods.
 void TimeControl::set_byo_periods(Side side, int value)
 {
 	if(value<0) {
-		THROW_EXCEPTION(RuntimeException(_("Cannot set a negative value as a number of byo-yomi periods")));
+		throw std::invalid_argument(_("Cannot set a negative value as a number of byo-yomi periods."));
 	}
-	m_state[side].byo_periods = value;
+	_byo_periods[side] = value;
 }
 
-/**
- * Check whether both sides have the same time parameters
- */
+
+// Check whether both sides have the same time parameters.
 bool TimeControl::both_sides_have_same_time() const
 {
-	if(m_state[LEFT].main_time!=m_state[RIGHT].main_time) {
+	if(_main_time[Side::LEFT]!=_main_time[Side::RIGHT]) {
 		return false;
 	}
-	if(m_mode==FISCHER || m_mode==BRONSTEIN) {
-		return m_state[LEFT].increment==m_state[RIGHT].increment;
+	if(_mode==Mode::FISCHER || _mode==Mode::BRONSTEIN) {
+		return _increment[Side::LEFT]==_increment[Side::RIGHT];
 	}
-	else if(m_mode==BYO_YOMI) {
+	else if(_mode==Mode::BYO_YOMI) {
 		return
-			m_state[LEFT].increment  ==m_state[RIGHT].increment   &&
-			m_state[LEFT].byo_periods==m_state[RIGHT].byo_periods;
+			_increment  [Side::LEFT]==_increment  [Side::RIGHT] &&
+			_byo_periods[Side::LEFT]==_byo_periods[Side::RIGHT];
 	}
 	else {
 		return true;
 	}
 }
 
-/**
- * Name of the current time control mode
- */
+
+// Name of the current time control mode
 const std::string &TimeControl::mode_name() const
 {
-	return mode_name(m_mode);
+	return mode_name(_mode);
 }
 
-/**
- * String describing the current time control
- */
-std::string TimeControl::description() const
-{
-	std::stringstream retval;
-	retval << *this;
-	return retval.str();
-}
 
-/**
- * Output in a stream
- */
-std::ostream &operator<<(std::ostream &lhs, const TimeControl &rhs)
+// Output the description of the time-control in a stream.
+std::ostream &operator<<(std::ostream &stream, const TimeControl &tc)
 {
-	lhs << rhs.mode_name() << "\t\t";
-	rhs.side_description(lhs, LEFT);
-	if(!rhs.both_sides_have_same_time()) {
-		lhs << " (" << _("left") << ")" << "\t\t";
-		rhs.side_description(lhs, RIGHT);
-		lhs << " (" << _("right") << ")";
+	stream << tc.mode_name() << "\t\t";
+	tc.side_description(stream, Side::LEFT);
+	if(!tc.both_sides_have_same_time()) {
+		stream << " (" << _("left") << ")" << "\t\t";
+		tc.side_description(stream, Side::RIGHT);
+		stream << " (" << _("right") << ")";
 	}
-	return lhs;
+	return stream;
 }
 
-/**
- * Description of the time affected to one of the side
- */
+
+// Description of the time associated to one of the side.
 void TimeControl::side_description(std::ostream &stream, Side side) const
 {
-	format_time(stream, m_state[side].main_time);
-	if(m_mode==FISCHER || m_mode==BRONSTEIN) {
+	format_time(stream, _main_time[side]);
+	if(_mode==Mode::FISCHER || _mode==Mode::BRONSTEIN) {
 		stream << " + ";
-		format_time(stream, m_state[side].increment);
+		format_time(stream, _increment[side]);
 		stream << " " << _("by move");
 	}
-	else if(m_mode==BYO_YOMI) {
-		int periods = m_state[side].byo_periods;
-		if(periods>=1) {
+	else if(_mode==Mode::BYO_YOMI) {
+		if(_byo_periods[side]>=1) {
 			stream << " + ";
-			format_time(stream, m_state[side].increment);
-			stream << " × " << periods << " " << (periods==1 ? _("byo-yomi period") : _("byo-yomi periods"));
+			format_time(stream, _increment[side]);
+			stream << " × " << _byo_periods[side] << " "
+				<< (_byo_periods[side]==1 ? _("byo-yomi period") : _("byo-yomi periods"));
 		}
 	}
 }
 
-/**
- * Format a duration given as a number of milliseconds
- */
+
+// Format a duration given as a number of milliseconds.
 void TimeControl::format_time(std::ostream &stream, const TimeDuration &value)
 {
 	// Rounding the number of milliseconds to the closest full second
-	int rounded_value = (value.total_milliseconds()+500) / 1000;
+	int rounded_value = (value.count()+500) / 1000;
 
 	// Special case: no time
 	if(rounded_value==0) {

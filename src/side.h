@@ -20,24 +20,30 @@
  ******************************************************************************/
 
 
-#include "common.h"
+#ifndef SIDE_H_
+#define SIDE_H_
 
-// Available sides
-const Side LEFT (0);
-const Side RIGHT(1);
+#include "enumutil.h"
+#include <cstdint>
 
-/**
- * Switch from one side to the other
- */
-Side reverse(const Side &side)
-{
-	return Side(1-side.to_numeric());
-}
 
 /**
- * Return the current time point
+ * Side of the clock.
  */
-TimePoint current_time()
+enum class Side : std::uint8_t
 {
-	return boost::posix_time::microsec_clock::local_time();
-}
+	LEFT ,
+	RIGHT
+};
+
+namespace Enum { template<> struct traits<Side> : trait_indexing<2> {}; }
+
+
+
+/**
+ * Return the opposite side of the clock with respect to `s`.
+ */
+constexpr Side flip(Side s) { return Enum::from_value<Side>(1 - Enum::to_value(s)); }
+
+
+#endif /* SIDE_H_ */

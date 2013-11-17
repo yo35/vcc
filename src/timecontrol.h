@@ -23,110 +23,111 @@
 #ifndef TIMECONTROL_H_
 #define TIMECONTROL_H_
 
-#include "common.h"
-#include "enumerable.h"
-#include "enumarray.h"
+#include <cstdint>
 #include <string>
 #include <ostream>
+#include "enumutil.h"
+#include "side.h"
+#include "chrono.h"
+
 
 /**
- * Object describing how time is affected to players in a chess/go/backgammon
- * game, and when they are out of time
+ * Type of time control.
+ * @remarks Prefer using the alias `TimeControl::Mode`.
+ */
+enum class _TimeControlMode : std::uint8_t
+{
+	SUDDEN_DEATH,
+	FISCHER     ,
+	BRONSTEIN   ,
+	HOURGLASS   ,
+	BYO_YOMI
+};
+
+namespace Enum { template<> struct traits<_TimeControlMode> : trait_indexing<5> {}; }
+
+
+
+/**
+ * Object describing how time is affected to players in a chess/go/backgammon game,
+ * and when they are out of time.
  */
 class TimeControl
 {
-	struct _Mode { static const std::size_t N = 5; };
-
 public:
 
 	/**
-	 * Type of time control
+	 * Type of time control.
 	 */
-	typedef Enumerable<_Mode> Mode;
+	typedef _TimeControlMode Mode;
 
 	/**
-	 * \name Available time control modes
-	 * @{
-	 */
-	static const Mode SUDDEN_DEATH;
-	static const Mode FISCHER     ;
-	static const Mode BRONSTEIN   ;
-	static const Mode HOURGLASS   ;
-	static const Mode BYO_YOMI    ;
-	///@}
-
-	/**
-	 * Name of a time control mode
+	 * Name of a time control mode.
 	 */
 	static const std::string &mode_name(Mode mode);
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
-	TimeControl();
+	TimeControl() : _mode(Mode::SUDDEN_DEATH), _byo_periods{0, 0} {}
 
 	/**
-	 * Current time control mode
+	 * Current time control mode.
 	 */
-	Mode mode() const;
+	Mode mode() const { return _mode; }
 
 	/**
-	 * Change the current time control mode
+	 * Change the time control mode.
 	 */
-	void set_mode(Mode mode);
+	void set_mode(Mode mode) { _mode=mode; }
 
 	/**
-	 * Main time
+	 * Main time.
 	 */
-	const TimeDuration &main_time(Side side) const;
+	const TimeDuration &main_time(Side side) const { return _main_time[side]; }
 
 	/**
-	 * Set the main time
-	 * \throw RuntimeException If value<0
+	 * Set the main time.
+	 * @throw std::invalid_argument If `value` represents a negative time duration.
 	 */
 	void set_main_time(Side side, TimeDuration value);
 
 	/**
-	 * Increment
+	 * Increment.
 	 */
-	const TimeDuration &increment(Side side) const;
+	const TimeDuration &increment(Side side) const { return _increment[side]; }
 
 	/**
 	 * Set the increment
-	 * \throw RuntimeException If value<0
+	 * @throw std::invalid_argument If `value` represents a negative time duration.
 	 */
 	void set_increment(Side side, TimeDuration value);
 
 	/**
-	 * Number of byo-yomi periods
+	 * Number of byo-yomi periods.
 	 */
-	int byo_periods(Side side) const;
+	int byo_periods(Side side) const { return _byo_periods[side]; }
 
 	/**
 	 * Set the number of byo-yomi periods
-	 * \throw RuntimeException If value<0
+	 * @throw std::invalid_argument If `value<0`.
 	 */
 	void set_byo_periods(Side side, int value);
 
 	/**
-	 * Check whether both sides have the same time parameters
+	 * Check whether both sides have the same time parameters.
 	 */
 	bool both_sides_have_same_time() const;
 
 	/**
-	 * Name of the current time control mode
+	 * Name of the current time control mode.
 	 */
 	const std::string &mode_name() const;
 
 	/**
-	 * String describing the current time control
+	 * Output the description of the time-control in a stream.
 	 */
-	std::string description() const;
-
-	/**
-	 * Output in a stream
-	 */
-	friend std::ostream &operator<<(std::ostream &lhs, const TimeControl &rhs);
+	friend std::ostream &operator<<(std::ostream &stream, const TimeControl &tc);
 
 private:
 
@@ -134,18 +135,11 @@ private:
 	void side_description(std::ostream &stream, Side side) const;
 	static void format_time(std::ostream &stream, const TimeDuration &value);
 
-	// Hold the state information associated to a given side
-	struct SideState
-	{
-		TimeDuration main_time  ;
-		TimeDuration increment  ;
-		int          byo_periods;
-		SideState() : byo_periods(0) {}
-	};
-
-	// Private data
-	Mode                       m_mode ;
-	EnumArray<Side, SideState> m_state;
+	// Private members
+	Mode                            _mode       ;
+	Enum::array<Side, TimeDuration> _main_time  ;
+	Enum::array<Side, TimeDuration> _increment  ;
+	Enum::array<Side, int         > _byo_periods;
 };
 
 #endif /* TIMECONTROL_H_ */

@@ -22,56 +22,16 @@
 
 #include "bitimer.h"
 #include <translation.h>
-#include <exception.h>
 
-/**
- * Constructor
- */
-BiTimer::BiTimer()
-{
-	reset_timers();
-}
 
-/**
- * Signal sent when the state of the timer pair changes
- */
-boost::signals::connection BiTimer::connect_state_changed(const boost::signal<void()>::slot_type &slot) const
-{
-	return m_signal_state_changed.connect(slot);
-}
-
-/**
- * Return the active side, or \p boost::none if both timers are paused
- */
-const boost::optional<Side> &BiTimer::active_side() const
-{
-	return m_active_side;
-}
-
-/**
- * Current time control
- */
-const TimeControl &BiTimer::time_control() const
-{
-	return m_time_control;
-}
-
-/**
- * Change the current time control
- */
+// Change the current time control, and resets the timers.
 void BiTimer::set_time_control(TimeControl time_control)
 {
-	m_time_control = std::move(time_control);
+	_time_control = std::move(time_control);
 	reset_timers();
 }
 
-/**
- * Current time of the timer of side \p side
- */
-TimeDuration BiTimer::time(Side side) const
-{
-	return m_timer[side].time();
-}
+#if 0
 
 /**
  * Current time, with additional information about the bronstein delay
@@ -86,140 +46,142 @@ TimeDuration BiTimer::time_bronstein(Side side, TimeDuration &bronstein_extra_de
 	return retval;
 }
 
-/**
- * Start the timer corresponding to side \p side
- */
+#endif
+
+
+// Start a timer.
 void BiTimer::start_timer(Side side)
 {
 	// Deal with the situation where one of the timers is already running
-	if(m_active_side) {
-		if(*m_active_side!=side) {
+	if(_active_side) {
+		if(*_active_side!=side) {
 			change_timer();
 		}
 		return;
 	}
 
 	// Regular situation
-	if(m_time_control.mode()==TimeControl::HOURGLASS && !m_timer[reverse(side)].time().is_negative()) {
-		m_timer[reverse(side)].set_mode(Timer::Mode::INCREMENT);
+	if(_time_control.mode()==TimeControl::Mode::HOURGLASS && _timer[flip(side)].time()>=TimeDuration::zero()) {
+		_timer[flip(side)].set_mode(Timer::Mode::INCREMENT);
 	}
-	m_timer[side].set_mode(Timer::Mode::DECREMENT);
-	m_active_side = side;
-	m_signal_state_changed();
+	_timer[side].set_mode(Timer::Mode::DECREMENT);
+	_active_side = side;
+	_signal_state_changed();
 }
 
-/**
- * Change the active side
- */
+
+// Change the active side
 void BiTimer::change_timer()
 {
 	// Nothing to do if no timer is running
-	if(!m_active_side) {
+	if(!_active_side) {
 		return;
 	}
 
 	// Regular situation
-	TimeControl::Mode current_mode = m_time_control.mode();
-	Side              active_side  = *m_active_side;
-	TimeDuration      current_time = m_timer[active_side].time();
+	TimeControl::Mode current_mode = _time_control.mode();
+	Side              active_side  = *_active_side;
+	TimeDuration      current_time = _timer[active_side].time();
 
 	// With hour-glass mode, the future "inactive" timer is incrementing
-	if(current_mode==TimeControl::HOURGLASS && !current_time.is_negative()) {
-		m_timer[active_side].set_mode(Timer::Mode::INCREMENT);
+	if(current_mode==TimeControl::Mode::HOURGLASS && current_time>=TimeDuration::zero()) {
+		_timer[active_side].set_mode(Timer::Mode::INCREMENT);
 	}
 
 	// Otherwise, it must be stopped
 	else {
-		m_timer[active_side].set_mode(Timer::Mode::PAUSED);
+		_timer[active_side].set_mode(Timer::Mode::PAUSED);
 
-		// If the current player still has time, his/her timer must be incremented
-		if(!current_time.is_negative()) {
+		// If the current player still has time, his/her timer may be incremented,
+		// depending on the time control mode.
+		if(current_time>=TimeDuration::zero()) {
 			TimeDuration new_time = current_time;
 
 			// Fischer mode => grant unconditionally the increment to the player
-			if(current_mode==TimeControl::FISCHER) {
-				new_time = current_time + m_time_control.increment(active_side);
+			if(current_mode==TimeControl::Mode::FISCHER) {
+				new_time = current_time + _time_control.increment(active_side);
 			}
 
 			// Bronstein mode => grant the increment, but clamp it to the Bronstein's threshold
-			else if(current_mode==TimeControl::BRONSTEIN) {
-				new_time = current_time + m_time_control.increment(active_side);
-				if(new_time > m_bronstein_limit[active_side])
-					new_time = m_bronstein_limit[active_side];
-				else
-					m_bronstein_limit[active_side] = new_time;
+			else if(current_mode==TimeControl::Mode::BRONSTEIN) {
+				new_time = current_time + _time_control.increment(active_side);
+				if(new_time > _bronstein_limit[active_side]) {
+					new_time = _bronstein_limit[active_side];
+				}
+				else {
+					_bronstein_limit[active_side] = new_time;
+				}
 			}
 
 			// Byo-yomi => detect if the player is currently in one of the final byo-periods,
 			// and adjust the remaining time if necessary
-			else if(current_mode==TimeControl::BYO_YOMI) {
-				long increment = m_time_control.increment(active_side).total_milliseconds();
-				if(increment>0) {
-					int current_byo_period = current_time.total_milliseconds()/increment;
-					if(current_byo_period < m_time_control.byo_periods(active_side)) {
-						new_time = m_time_control.increment(active_side) * (current_byo_period+1);
+			else if(current_mode==TimeControl::Mode::BYO_YOMI) {
+				TimeDuration increment = _time_control.increment(active_side);
+				if(increment>TimeDuration::zero()) {
+					int current_byo_period = current_time/increment;
+					if(current_byo_period < _time_control.byo_periods(active_side)) {
+						new_time = increment * (current_byo_period+1);
 					}
 				}
 			}
-			m_timer[active_side].set_time(new_time);
+
+			// Set the incremented time.
+			_timer[active_side].set_time(new_time);
 		}
 	}
 
 	// The new active timer is now decrementing
-	active_side = reverse(active_side);
-	m_timer[active_side].set_mode(Timer::Mode::DECREMENT);
-	m_active_side = active_side;
-	m_signal_state_changed();
+	active_side = flip(active_side);
+	_timer[active_side].set_mode(Timer::Mode::DECREMENT);
+	_active_side = active_side;
+	_signal_state_changed();
 }
 
-/**
- * Stop the active timer
- */
+
+// Stop the active timer.
 void BiTimer::stop_timer()
 {
-	if(!m_active_side) {
+	if(!_active_side) {
 		return;
 	}
-	m_timer[LEFT ].set_mode(Timer::Mode::PAUSED);
-	m_timer[RIGHT].set_mode(Timer::Mode::PAUSED);
-	m_active_side = boost::none;
-	m_signal_state_changed();
+	_timer[Side::LEFT ].set_mode(Timer::Mode::PAUSED);
+	_timer[Side::RIGHT].set_mode(Timer::Mode::PAUSED);
+	_active_side = boost::none;
+	_signal_state_changed();
 }
 
-/**
- * Reset the timers
- */
+
+// Stop and reset the timers.
 void BiTimer::reset_timers()
 {
 	// Stop the timers
-	m_timer[LEFT ].set_mode(Timer::Mode::PAUSED);
-	m_timer[RIGHT].set_mode(Timer::Mode::PAUSED);
+	_timer[Side::LEFT ].set_mode(Timer::Mode::PAUSED);
+	_timer[Side::RIGHT].set_mode(Timer::Mode::PAUSED);
 
 	// Set the initial time
-	m_timer[LEFT ].set_time(initial_time(LEFT ));
-	m_timer[RIGHT].set_time(initial_time(RIGHT));
-	if(m_time_control.mode()==TimeControl::BRONSTEIN) {
-		m_bronstein_limit[LEFT ] = m_timer[LEFT ].time();
-		m_bronstein_limit[RIGHT] = m_timer[RIGHT].time();
+	_timer[Side::LEFT ].set_time(initial_time(Side::LEFT ));
+	_timer[Side::RIGHT].set_time(initial_time(Side::RIGHT));
+	if(_time_control.mode()==TimeControl::Mode::BRONSTEIN) {
+		_bronstein_limit[Side::LEFT ] = _timer[Side::LEFT ].time();
+		_bronstein_limit[Side::RIGHT] = _timer[Side::RIGHT].time();
 	}
 
 	// Update the state flag and fire the signal
-	m_active_side = boost::none;
-	m_signal_state_changed();
+	_active_side = boost::none;
+	_signal_state_changed();
 }
 
-/**
- * Return the initial time to allocate to the given timer
- */
+
+// Return the initial time to allocate to the given timer.
 TimeDuration BiTimer::initial_time(Side side) const
 {
-	TimeDuration      retval       = m_time_control.main_time(side);
-	TimeControl::Mode current_mode = m_time_control.mode();
-	if(current_mode==TimeControl::FISCHER || current_mode==TimeControl::BRONSTEIN) {
-		retval += m_time_control.increment(side);
+	TimeDuration      retval       = _time_control.main_time(side);
+	TimeControl::Mode current_mode = _time_control.mode();
+	if(current_mode==TimeControl::Mode::FISCHER || current_mode==TimeControl::Mode::BRONSTEIN) {
+		retval += _time_control.increment(side);
 	}
-	else if(current_mode==TimeControl::BYO_YOMI) {
-		retval += m_time_control.increment(side) * m_time_control.byo_periods(side);
+	else if(current_mode==TimeControl::Mode::BYO_YOMI) {
+		retval += _time_control.increment(side) * _time_control.byo_periods(side);
 	}
 	return retval;
 }

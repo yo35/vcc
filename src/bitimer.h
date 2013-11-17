@@ -23,87 +23,88 @@
 #ifndef BITIMER_H_
 #define BITIMER_H_
 
-#include "common.h"
+#include "side.h"
 #include "timecontrol.h"
 #include "timer.h"
-#include "enumarray.h"
+#include <signal.h>
 #include <boost/optional.hpp>
-#include <boost/signals.hpp>
+
 
 /**
- * Two timers whose behaviors are defined and coordinated by a time control object
+ * Two timers whose behaviors are defined and coordinated by a time control object.
  */
 class BiTimer
 {
 public:
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
-	BiTimer();
+	BiTimer() { reset_timers(); }
 
 	/**
-	 * \name Copy is not allowed
+	 * @name Copy is not allowed.
 	 * @{
 	 */
 	BiTimer(const BiTimer &op) = delete;
 	BiTimer &operator=(const BiTimer &op) = delete;
-	///@}
+	/**@} */
 
 	/**
-	 * Signal sent when the state of the timer pair changes
+	 * Signal sent when the state of the timer pair changes.
 	 */
-	boost::signals::connection connect_state_changed(const boost::signal<void()>::slot_type &slot) const;
+	sig::connection connect_state_changed(const sig::signal<void()>::slot_type &slot) const
+	{
+		return _signal_state_changed.connect(slot);
+	}
 
 	/**
-	 * Return the active side, or \p boost::none if both timers are paused
+	 * Return the active side, or `boost::none` if both timers are paused.
 	 */
-	const boost::optional<Side> &active_side() const;
+	const boost::optional<Side> &active_side() const { return _active_side; }
 
 	/**
-	 * Current time control
+	 * Return the time control.
 	 */
-	const TimeControl &time_control() const;
+	const TimeControl &time_control() const { return _time_control; }
 
 	/**
-	 * Change the current time control
-	 * \remarks A call to this function automatically resets and stops the timers
+	 * Change the current time control. A call to this function automatically
+	 * stops and resets the timers.
 	 */
 	void set_time_control(TimeControl time_control);
 
 	/**
-	 * Current time of the timer of side \p side
+	 * Current time of the timer on side `side`.
 	 */
-	TimeDuration time(Side side) const;
+	TimeDuration time(Side side) const { return _timer[side].time(); }
 
 	/**
 	 * Current time, with additional information about the bronstein delay
 	 * \throw RuntimeException If time_control().mode()!=BRONSTEIN
 	 */
-	TimeDuration time_bronstein(Side side, TimeDuration &bronstein_extra_delay) const;
+	//TimeDuration time_bronstein(Side side, TimeDuration &bronstein_extra_delay) const; //TODO
 
 	/**
-	 * Start the timer corresponding to side \p side
-	 * \remarks If \p side is already active, nothing happens. If the opposite timer
-	 *          is active, the method \p change_timer() is called.
+	 * Start the timer corresponding to side `side`.
+	 *
+	 * If `side` is already active, nothing happens. If the opposite timer is active,
+	 * the method `change_timer()` is called.
 	 */
 	void start_timer(Side side);
 
 	/**
-	 * Change the active side
-	 * \remarks Nothing happens if both timers are paused
+	 * Change the active side. Nothing happens if both timers are paused.
 	 */
 	void change_timer();
 
 	/**
-	 * Stop the active timer
-	 * \remarks Nothing happens if both timers are paused
+	 * Stop the active timer. Nothing happens if both timers are paused.
 	 */
 	void stop_timer();
 
 	/**
-	 * Reset the timers
-	 * \remarks A call to this function automatically stops the timers
+	 * Reset the timers. A call to this function automatically stops the timers.
 	 */
 	void reset_timers();
 
@@ -112,12 +113,12 @@ private:
 	// Private functions
 	TimeDuration initial_time(Side side) const;
 
-	// Private data
-	mutable boost::signal<void()> m_signal_state_changed;
-	boost::optional<Side>         m_active_side         ;
-	TimeControl                   m_time_control        ;
-	EnumArray<Side, Timer>        m_timer               ;
-	EnumArray<Side, TimeDuration> m_bronstein_limit     ;
+	// Private members
+	mutable sig::signal<void()>     _signal_state_changed;
+	boost::optional<Side>           _active_side         ;
+	TimeControl                     _time_control        ;
+	Enum::array<Side, Timer>        _timer               ;
+	Enum::array<Side, TimeDuration> _bronstein_limit     ;
 };
 
 #endif /* BITIMER_H_ */

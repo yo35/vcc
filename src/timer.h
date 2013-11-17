@@ -23,65 +23,67 @@
 #ifndef TIMER_H_
 #define TIMER_H_
 
-#include "common.h"
+#include <cstdint>
+#include "chrono.h"
+
 
 /**
- * Stoppable and reversible clock
+ * Stoppable and reversible clock.
  */
 class Timer
 {
 public:
 
 	/**
-	 * Timer behavior
+	 * Timer behavior.
 	 */
-	enum class Mode : char
+	enum class Mode : std::uint8_t
 	{
-		INCREMENT, //!< Time is incrementing
-		DECREMENT, //!< Time is decrementing
-		PAUSED     //!< Time does not change
+		INCREMENT, //!< Time is incrementing.
+		DECREMENT, //!< Time is decrementing.
+		PAUSED     //!< The timer is stopped.
 	};
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
-	Timer();
+	Timer() : _mode(Mode::PAUSED) {}
 
 	/**
-	 * \name Copy is not allowed
+	 * @name Copy is not allowed.
 	 * @{
 	 */
 	Timer(const Timer &op) = delete;
 	Timer &operator=(const Timer &op) = delete;
-	///@}
+	/**@} */
 
 	/**
-	 * Timer behavior
+	 * Timer behavior.
 	 */
-	Mode mode() const;
+	Mode mode() const { return _mode; }
 
 	/**
-	 * Change the behavior
+	 * Change the behavior of the timer.
 	 */
 	void set_mode(Mode mode);
 
 	/**
-	 * Current time
+	 * Current time.
 	 */
 	TimeDuration time() const;
 
 	/**
-	 * Change the current time
-	 * \remarks This function will stop the timer (its mode will be set to \p PAUSED)
+	 * Change the current time. A call to this function stops the timer
+	 * (its mode is set to `Mode::PAUSED`).
 	 */
 	void set_time(TimeDuration time);
 
 private:
 
-	// Private data
-	Mode         m_mode    ;
-	TimeDuration m_time    ;
-	TimePoint    m_start_at;
+	// Private members
+	Mode         _mode    ;
+	TimeDuration _time    ;
+	TimePoint    _start_at;
 };
 
 #endif /* TIMER_H_ */
