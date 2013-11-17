@@ -81,7 +81,7 @@ namespace Enum
 	typename std::enable_if<traits<E>::does_index && std::is_integral<T>::value, E>::type
 	from_value(T value)
 	{
-		assert(static_cast<std::size_t>(value) < traits<E>::count);
+		//assert(static_cast<std::size_t>(value) < traits<E>::count);
 		return static_cast<E>(value);
 	}
 
