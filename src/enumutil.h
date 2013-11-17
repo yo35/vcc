@@ -24,6 +24,7 @@
 #define ENUMUTIL_H_
 
 #include <cstddef>
+#include <cassert>
 #include <type_traits>
 #include <initializer_list>
 
@@ -80,6 +81,7 @@ namespace Enum
 	typename std::enable_if<traits<E>::does_index && std::is_integral<T>::value, E>::type
 	from_value(T value)
 	{
+		assert(static_cast<std::size_t>(value) < traits<E>::count);
 		return static_cast<E>(value);
 	}
 
@@ -188,6 +190,7 @@ namespace Enum
 		 */
 		array(std::initializer_list<T> values)
 		{
+			assert(values.size()==traits<E>::count);
 			std::size_t e=0;
 			for(auto it=values.begin(); it!=values.end(); ++it, ++e) {
 				_data[e] = *it;
