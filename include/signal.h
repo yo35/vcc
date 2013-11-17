@@ -20,11 +20,11 @@
  ******************************************************************************/
 
 
-#ifndef TRANSLATION_H_
-#define TRANSLATION_H_
+#ifndef SIGNAL_H_
+#define SIGNAL_H_
 
-#include <libintl.h>
+#include <boost/signals2.hpp>
 
-#define _(txt) gettext(txt)
+namespace sig = boost::signals2;
 
-#endif /* TRANSLATION_H_ */
+#endif /* SIGNAL_H_ */
