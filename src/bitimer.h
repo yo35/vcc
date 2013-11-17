@@ -26,7 +26,7 @@
 #include "side.h"
 #include "timecontrol.h"
 #include "timer.h"
-#include <signal.h>
+#include <signals.h>
 #include <boost/optional.hpp>
 
 

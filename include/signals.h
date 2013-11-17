@@ -20,11 +20,11 @@
  ******************************************************************************/
 
 
-#ifndef SIGNAL_H_
-#define SIGNAL_H_
+#ifndef SIGNALS_H_
+#define SIGNALS_H_
 
 #include <boost/signals2.hpp>
 
 namespace sig = boost::signals2;
 
-#endif /* SIGNAL_H_ */
+#endif /* SIGNALS_H_ */
