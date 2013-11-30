@@ -23,77 +23,39 @@
 ################################################################################
 # Vérifications et configuration
 
-# Version de CMake
+# Check the CMake version
 cmake_minimum_required(VERSION 2.8)
 
-# Mode d'optimisation
+# Optimization mode
 if(NOT (
 	(${CMAKE_BUILD_TYPE} MATCHES Debug) OR
 	(${CMAKE_BUILD_TYPE} MATCHES RelWithDebInfo) OR
-	(${CMAKE_BUILD_TYPE} MATCHES Release))
-)
+	(${CMAKE_BUILD_TYPE} MATCHES Release)
+))
 	message(FATAL_ERROR "Must define CMAKE_BUILD_TYPE")
 endif()
 
-# Mode d'installation
+# Installation mode
 if(NOT (
 	(${INSTALL_TYPE} MATCHES Dev) OR
 	(${INSTALL_TYPE} MATCHES Compile) OR
-	(${INSTALL_TYPE} MATCHES Package))
-)
+	(${INSTALL_TYPE} MATCHES Package)
+))
 	message(FATAL_ERROR "Must define INSTALL_TYPE")
 endif()
 
-# Gtkmm
-find_package(PkgConfig)
-pkg_check_modules(GTKMM REQUIRED gtkmm-2.4)
-
-# Boost
-if(${WIN32})
-	set(Boost_INCLUDE_DIRS "C:\\Boost\\include\\boost-1_46_1")
-	set(Boost_LIBRARY_DIRS "C:\\Boost\\lib")
-	set(Boost_LIBRARIES
-		boost_system-mgw45-mt-1_46_1
-		boost_filesystem-mgw45-mt-1_46_1
-		boost_regex-mgw45-mt-1_46_1
-		boost_date_time-mgw45-mt-1_46_1
-		boost_signals-mgw45-mt-1_46_1
-	)
-else()
-	set(Boost_INCLUDE_DIRS /usr/local/include)
-	set(Boost_LIBRARY_DIRS /usr/local/lib)
-	set(Boost_LIBRARIES
-		boost_system
-		boost_filesystem
-		boost_regex
-		boost_date_time
-		boost_signals
-	)
-endif()
-
-# All librairies together
-set(all_INCLUDE_DIRS
-	${Boost_INCLUDE_DIRS}
-#	${wxWidgets_INCLUDE_DIRS}
-)
-set(all_LIBRARY_DIRS
-	${Boost_LIBRARY_DIRS}
-#	${wxWidgets_LIBRARY_DIRS}
-)
-set(all_LIBRARIES
-	${Boost_LIBRARIES}
-#	${wxWidgets_LIBRARIES}
-)
-
-# Répertoires de sortie
-set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
-set(LIBRARY_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
-
-# Fichiers ressource
+# Resource file (only for windows)
 if(${WIN32})
 	enable_language(RC)
 	set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
 endif()
+
+
+include(project.cmake)
+include(libraries.cmake)
+
+
+
 
 
 
@@ -101,15 +63,10 @@ endif()
 # Définition du projet
 
 # Nom du projet
-project(virtual-chess-clock)
 
 # Divers
-set(PROJECT_FULL_NAME "Virtual Chess Clock")
 set(EXECUTABLE_NAME "vcc")
 set(HOOKDLL_NAME "winkeyhook")
-set(PROJECT_VERSION_MAJOR 1)
-set(PROJECT_VERSION_MINOR 99)
-set(PROJECT_VERSION_PATCH 0)
 
 # Noms complets
 set(EXECUTABLE_FULL_NAME "${EXECUTABLE_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
@@ -189,49 +146,13 @@ file(
 
 
 
-################################################################################
-# Répertoires en runtime
-
-# Mode debug
-if(${INSTALL_TYPE} MATCHES Dev)
-	set(VCC_TOP ".")
-	set(VCC_BIN_RPATH "bin/${CMAKE_BUILD_TYPE}")
-	set(VCC_BIN_RPATH_BACKWARD "../..")
-	set(VCC_SHARE_RPATH "data/share")
-	set(VCC_ICONS_RPATH "data/icons/unix")
-	set(VCC_APPLICATIONS_RPATH "data/applications")
-	set(VCC_DOC_RPATH ".")
-	set(VCC_LOCALE_RPATH "locale")
-
-# Mode release
-else(${INSTALL_TYPE} MATCHES Dev)
-	set(VCC_TOP ${CMAKE_INSTALL_PREFIX})
-	set(VCC_BIN_RPATH "bin")
-	set(VCC_BIN_RPATH_BACKWARD "..")
-	if(${WIN32})
-		set(VCC_SHARE_RPATH "share")
-		set(VCC_ICONS_RPATH "share/icons")
-		set(VCC_APPLICATIONS_RPATH "share/applications")
-		set(VCC_DOC_RPATH ".")
-		set(VCC_LOCALE_RPATH "share/locale")
-	else(${WIN32})
-		set(VCC_SHARE_RPATH "share/${PROJECT_NAME}")
-		set(VCC_ICONS_RPATH "share/icons/hicolor")
-		set(VCC_APPLICATIONS_RPATH "share/applications")
-		set(VCC_DOC_RPATH "share/doc/${PROJECT_NAME}")
-		set(VCC_LOCALE_RPATH "share/locale")
-	endif(${WIN32})
-
-endif(${INSTALL_TYPE} MATCHES Dev)
-
-
 
 ################################################################################
 # Compilation
 
 # Flags compilo et linker
 add_definitions("-pedantic -Wall -Wextra -std=c++0x")
-include_directories(${all_INCLUDE_DIRS} include)
+include_directories(${all_INCLUDE_DIRS} include ${CMAKE_BINARY_DIR}/include)
 link_directories(${all_LIBRARY_DIRS})
 if(${WIN32})
 	add_definitions("-DOS_IS_WINDOWS")
@@ -274,6 +195,7 @@ target_link_libraries(
 	${HOOKDLL_LIBRARY}
 )
 
+qt5_use_modules(${EXECUTABLE_NAME} Widgets)
 
 
 ################################################################################
@@ -282,7 +204,7 @@ target_link_libraries(
 # Supprimer tout ce qui n'est pas sur le SVN
 add_custom_target(
 	mrproper
-	COMMAND ${CMAKE_COMMAND} -E remove -f *.cmake *.tar.gz *.deb *.exe
+	COMMAND ${CMAKE_COMMAND} -E remove -f cmake_*.cmake *.tar.gz *.deb *.exe
 	COMMAND ${CMAKE_COMMAND} -E remove -f Makefile CMakeCache.txt install_manifest.txt
 	COMMAND ${CMAKE_COMMAND} -E remove -f include/config.h
 	COMMAND ${CMAKE_COMMAND} -E remove_directory bin
@@ -340,7 +262,7 @@ if(${INSTALL_TYPE} MATCHES Dev)
 	message(STATUS "VCC is configured for devel")
 	add_custom_target(
 		run
-		COMMAND ${EXECUTABLE_OUTPUT_PATH}/${EXECUTABLE_NAME}
+		COMMAND ${EXECUTABLE_NAME}
 		DEPENDS ${EXECUTABLE_NAME}
 	)
 

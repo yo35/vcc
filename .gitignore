@@ -1,19 +1,23 @@
-# /
-/bin
-/locale
-/user_config
-/CMakeFiles
-/_CPack_Packages
-/*.cmake
-/*.tar.gz
-/*.deb
-/*.exe
-/Makefile
+# CMake's stuff
 /CMakeCache.txt
-/install_manifest.txt
+/CMakeFiles
+/cmake_*.cmake
+/Makefile
+
+# Per-user runtime files
+/user_config
+
+# Eclipse project files
 /.project
 /.cproject
 /.settings
 
-# /include/
+# Binaries
+/locale
+/vcc
+
+# Auto-generated source files
 /include/config.h
+/*_automoc.cpp
+/moc_*.cpp
+
