@@ -23,6 +23,7 @@
 #include "timecontrol.h"
 #include <translation.h>
 #include <stdexcept>
+#include <sstream>
 #include <boost/format.hpp>
 
 
@@ -98,17 +99,18 @@ const std::string &TimeControl::mode_name() const
 }
 
 
-// Output the description of the time-control in a stream.
-std::ostream &operator<<(std::ostream &stream, const TimeControl &tc)
+// Human-readable description of the time-control.
+std::string TimeControl::description() const
 {
-	stream << tc.mode_name() << "\t\t";
-	tc.side_description(stream, Side::LEFT);
-	if(!tc.both_sides_have_same_time()) {
-		stream << " (" << _("left") << ")" << "\t\t";
-		tc.side_description(stream, Side::RIGHT);
-		stream << " (" << _("right") << ")";
+	std::ostringstream buffer;
+	buffer << mode_name() << "\t\t";
+	side_description(buffer, Side::LEFT);
+	if(!both_sides_have_same_time()) {
+		buffer << " (" << _("left") << ")" << "\t\t";
+		side_description(buffer, Side::RIGHT);
+		buffer << " (" << _("right") << ")";
 	}
-	return stream;
+	return buffer.str();
 }
 
 

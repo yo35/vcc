@@ -125,9 +125,9 @@ public:
 	const std::string &mode_name() const;
 
 	/**
-	 * Output the description of the time-control in a stream.
+	 * Human-readable description of the time-control.
 	 */
-	friend std::ostream &operator<<(std::ostream &stream, const TimeControl &tc);
+	std::string description() const;
 
 private:
 
