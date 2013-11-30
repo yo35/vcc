@@ -227,7 +227,7 @@ template<typename E>
 typename std::enable_if<Enum::traits<E>::does_index, std::ostream &>::type
 operator<<(std::ostream &stream, E e)
 {
-	return stream << Enum::to_value(e);
+	return stream << static_cast<int>(Enum::to_value(e));
 }
 
 
