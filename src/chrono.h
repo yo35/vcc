@@ -26,6 +26,8 @@
 
 #include <chrono>
 #include <cstdint>
+#include <ostream>
+#include <istream>
 
 
 /**
@@ -46,6 +48,27 @@ typedef std::chrono::time_point<std::chrono::high_resolution_clock, TimeDuration
 inline TimePoint current_time()
 {
 	return std::chrono::time_point_cast<TimePoint::duration>(std::chrono::high_resolution_clock::now());
+}
+
+
+/**
+ * Output stream operator for time duration values.
+ */
+inline std::ostream &operator<<(std::ostream &stream, TimeDuration td)
+{
+	return stream << td.count();
+}
+
+
+/**
+ * Input stream operator for time duration values.
+ */
+inline std::istream &operator>>(std::istream &stream, TimeDuration &td)
+{
+	TimeDuration::rep buffer = 0;
+	stream >> buffer;
+	td = TimeDuration(buffer);
+	return stream;
 }
 
 
