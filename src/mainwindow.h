@@ -20,16 +20,58 @@
  ******************************************************************************/
 
 
-#include <iostream>
-#include <QApplication>
-#include <QStandardPaths>
-#include "mainwindow.h"
+#ifndef MAINWINDOW_H_
+#define MAINWINDOW_H_
 
-int main(int argc, char **argv)
+#include <QMainWindow>
+#include "options.h"
+#include "side.h"
+#include "bitimer.h"
+#include "dialwidget.h"
+
+
+/**
+ * Main window of the application.
+ */
+class MainWindow : public QMainWindow
 {
-	std::cout << "Hello world!" << std::endl;
-	QApplication app(argc, argv);
-	MainWindow mainWindow;
-	mainWindow.show();
-	return app.exec();
-}
+	Q_OBJECT
+
+public:
+
+	/**
+	 * Constructor.
+	 */
+	MainWindow();
+
+
+protected:
+
+	/**
+	 * Close event handler.
+	 */
+	void closeEvent(QCloseEvent *event) override;
+
+	/**
+	 * Key-press event handler.
+	 */
+	void keyPressEvent(QKeyEvent *event) override;
+
+
+private:
+
+	// Private functions
+	void onResetClicked();
+	void loadPersistentParameters();
+	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
+
+	// Widgets
+	Enum::array<Side, DialWidget *> _dial;
+	QStatusBar *_statusBar;
+
+	// Private members
+	BiTimer           _core             ;
+	ResetConfirmation _resetConfirmation;
+};
+
+#endif /* MAINWINDOW_H_ */
