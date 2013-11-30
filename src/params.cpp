@@ -96,7 +96,7 @@ const std::string &Params::ptree_filename()
 
 // Private constructor.
 Params::Params() :
-	_app_short_name("vcc"), _app_name("virtual-chess-clock"), _app_full_name("Virtual Chess Clock"),
+	_app_short_name(APP_SHORT_NAME), _app_name(APP_NAME), _app_full_name(APP_FULL_NAME),
 	_root(nullptr), _ptree_loaded(false), _ptree_saved(true)
 {}
 
