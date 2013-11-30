@@ -27,6 +27,8 @@
 #include <cassert>
 #include <type_traits>
 #include <initializer_list>
+#include <ostream>
+#include <istream>
 
 
 /**
@@ -215,6 +217,37 @@ namespace Enum
 		T _data[traits<E>::count];
 	};
 
-} // Enum
+} // namespace Enum
+
+
+/**
+ * Output stream operator for enum values.
+ */
+template<typename E>
+typename std::enable_if<Enum::traits<E>::does_index, std::ostream &>::type
+operator<<(std::ostream &stream, E e)
+{
+	return stream << Enum::to_value(e);
+}
+
+
+/**
+ * Input stream operator for enum values.
+ */
+template<typename E>
+typename std::enable_if<Enum::traits<E>::does_index, std::istream &>::type
+operator>>(std::istream &stream, E &e)
+{
+	int buffer = 0;
+	stream >> buffer;
+	if(buffer>=0 && buffer<static_cast<int>(Enum::traits<E>::count)) {
+		e = Enum::from_value<E>(buffer);
+	}
+	else {
+		stream.setstate(std::ios_base::failbit);
+	}
+	return stream;
+}
+
 
 #endif /* ENUMUTIL_H_ */
