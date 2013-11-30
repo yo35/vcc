@@ -59,6 +59,11 @@ public:
 	}
 
 	/**
+	 * Check whether one of the side is active, or if both timers are paused.
+	 */
+	bool is_active() const { return _active_side; }
+
+	/**
 	 * Return the active side, or `boost::none` if both timers are paused.
 	 */
 	const boost::optional<Side> &active_side() const { return _active_side; }

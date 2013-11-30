@@ -32,8 +32,8 @@
  */
 enum class ResetConfirmation : std::uint8_t
 {
-	ALWAYS    ,
-	IF_RUNNING,
+	ALWAYS   ,
+	IF_ACTIVE,
 	NEVER
 };
 

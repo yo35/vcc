@@ -265,7 +265,7 @@ void Params::set_time_control(const TimeControl &value)
 // Reset confirmation option.
 ResetConfirmation Params::reset_confirmation()
 {
-	return get_atomic_value("reset-confirmation", ResetConfirmation::IF_RUNNING);
+	return get_atomic_value("reset-confirmation", ResetConfirmation::IF_ACTIVE);
 }
 
 

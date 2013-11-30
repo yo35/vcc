@@ -113,7 +113,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::onResetClicked()
 {
 	if(_resetConfirmation==ResetConfirmation::ALWAYS ||
-		(_resetConfirmation==ResetConfirmation::IF_RUNNING && _core.active_side()))
+		(_resetConfirmation==ResetConfirmation::IF_ACTIVE && _core.is_active()))
 	{
 		auto response = QMessageBox::question(this, _("Stop this game?"), _("Do you really want to start a new game?"));
 		if(response!=QMessageBox::Yes) {
