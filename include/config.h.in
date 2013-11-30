@@ -20,37 +20,25 @@
  ******************************************************************************/
 
 
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef CONFIG_H_
+#define CONFIG_H_
 
-/* Projet */
-#define PROJECT_NAME          "@PROJECT_NAME@"
-#define PROJECT_FULL_NAME     "@PROJECT_FULL_NAME@"
-#define PROJECT_VERSION_MAJOR "@PROJECT_VERSION_MAJOR@"
-#define PROJECT_VERSION_MINOR "@PROJECT_VERSION_MINOR@"
-#define PROJECT_VERSION_PATCH "@PROJECT_VERSION_PATCH@"
-
-/* Exécutable */
-#define EXECUTABLE_NAME      "@EXECUTABLE_NAME@"
-#define EXECUTABLE_FULL_NAME "@EXECUTABLE_FULL_NAME@"
-
-/* DLL additionnelle */
-#define HOOKDLL_NAME      "@HOOKDLL_NAME@"
-#define HOOKDLL_FULL_NAME "@HOOKDLL_FULL_NAME@"
-
-/* Icônes de l'application */
-#define ICON_SIZES "@ICON_SIZES@"
-#define ICON_NAME  "@ICON_NAME@"
+/* Application */
+#define APP_SHORT_NAME    "@APP_SHORT_NAME@"
+#define APP_NAME          "@APP_NAME@"
+#define APP_FULL_NAME     "@APP_FULL_NAME@"
+#define APP_VERSION_MAJOR "@APP_VERSION_MAJOR@"
+#define APP_VERSION_MINOR "@APP_VERSION_MINOR@"
+#define APP_VERSION_PATCH "@APP_VERSION_PATCH@"
 
 /* Paths */
-#define VCC_TOP                "@VCC_TOP@"
-#define VCC_BIN_RPATH          "@VCC_BIN_RPATH@"
-#define VCC_BIN_RPATH_BACKWARD "@VCC_BIN_RPATH_BACKWARD@"
-#define VCC_SHARE_RPATH        "@VCC_SHARE_RPATH@"
-#define VCC_ICONS_RPATH        "@VCC_ICONS_RPATH@"
-#define VCC_APPLICATIONS_RPATH "@VCC_APPLICATIONS_RPATH@"
-#define VCC_DOC_RPATH          "@VCC_DOC_RPATH@"
-#define VCC_LOCALE_RPATH       "@VCC_LOCALE_RPATH@"
+#define PATH_TOP           "@PATH_TOP@"
+#define RPATH_BIN          "@RPATH_BIN@"
+#define RPATH_BIN_BACKWARD "@RPATH_BIN_BACKWARD@"
+#define RPATH_SHARE        "@RPATH_SHARE@"
+#define RPATH_ICONS        "@RPATH_ICONS@"
+#define RPATH_APPLICATIONS "@RPATH_APPLICATIONS@"
+#define RPATH_LOCALE       "@RPATH_LOCALE@"
+#define RPATH_DOC          "@RPATH_DOC@"
 
-
-#endif
+#endif /* CONFIG_H_ */
