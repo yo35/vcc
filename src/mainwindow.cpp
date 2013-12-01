@@ -105,7 +105,10 @@ void MainWindow::closeEvent(QCloseEvent *)
 // Key-press event handler.
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-	std::cout << "Key press: " << event->key() << std::endl;
+	std::cout << "Key press, key=" << event->key()
+		<< " nativeScanCode=" << event->nativeScanCode()
+		<< " nativeVirtualKey=" << event->nativeVirtualKey()
+		<< std::endl;
 	int keyCode = event->key();
 	if(keyCode==65) // Key A
 		_core.start_timer(Side::LEFT);
