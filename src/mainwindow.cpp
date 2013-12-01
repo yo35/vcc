@@ -72,6 +72,7 @@ MainWindow::MainWindow()
 	connect(actPause, &QAction::triggered, this, &MainWindow::onPauseClicked);
 	connect(actTCtrl, &QAction::triggered, this, &MainWindow::onTCtrlClicked);
 	connect(actHelp , &QAction::triggered, this, &MainWindow::onHelpClicked );
+	connect(actAbout, &QAction::triggered, this, &MainWindow::onAboutClicked);
 
 	// Create the widgets
 	QHBoxLayout *dialLayout = new QHBoxLayout;
@@ -164,6 +165,14 @@ void MainWindow::onHelpClicked()
 		"suits good to your keyboard. Thus, only the A-Z keys will be used by VCC, "
 		"but the software will be usable anyway."
 	));
+}
+
+
+// About button handler.
+void MainWindow::onAboutClicked()
+{
+	///TODO: customize the about dialog.
+	QMessageBox::about(this, "About VCC", "A simple and free chess clock software");
 }
 
 
