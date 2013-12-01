@@ -129,7 +129,13 @@ void MainWindow::onResetClicked()
 void MainWindow::onTCtrlClicked()
 {
 	TimeControlDialog dialog(this);
-	dialog.exec();
+	dialog.setTimeControl(_core.time_control());
+	if(dialog.exec()!=QDialog::Accepted) {
+		return;
+	}
+	_core.set_time_control(dialog.timeControl());
+	_statusBar->showMessage(QString::fromStdString(_core.time_control().description()));
+	Params::get().set_time_control(_core.time_control());
 }
 
 
