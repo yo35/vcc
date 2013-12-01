@@ -24,11 +24,11 @@
 #define DIALWIDGET_H_
 
 #include <QWidget>
-#include <QTimer>
 #include <memory>
-#include <signals.h>
-#include "side.h"
 #include "bitimer.h"
+QT_BEGIN_NAMESPACE
+	class QTimer;
+QT_END_NAMESPACE
 
 
 /**

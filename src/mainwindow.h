@@ -25,9 +25,8 @@
 
 #include <QMainWindow>
 #include "options.h"
-#include "side.h"
 #include "bitimer.h"
-#include "dialwidget.h"
+class DialWidget;
 
 
 /**

@@ -23,6 +23,7 @@
 #include "dialwidget.h"
 #include <translation.h>
 #include <QPainter>
+#include <QTimer>
 
 
 // Constructor.

@@ -22,6 +22,7 @@
 
 #include "mainwindow.h"
 #include "params.h"
+#include "dialwidget.h"
 #include "timecontroldialog.h"
 #include <translation.h>
 #include <QKeyEvent>
