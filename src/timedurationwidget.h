@@ -64,7 +64,7 @@ signals:
 private:
 
 	// Private function
-	void onFieldChanged(int v);
+	void onFieldChanged();
 
 	// Private members
 	bool _shuntSignal;

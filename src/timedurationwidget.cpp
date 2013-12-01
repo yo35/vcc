@@ -82,7 +82,7 @@ void TimeDurationWidget::setTimeDuration(const TimeDuration &value)
 
 
 // Handler for the value-changed signal of the spin box fields
-void TimeDurationWidget::onFieldChanged(int)
+void TimeDurationWidget::onFieldChanged()
 {
 	if(_shuntSignal) {
 		return;
