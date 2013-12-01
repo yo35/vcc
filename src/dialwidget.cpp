@@ -22,7 +22,6 @@
 
 #include "dialwidget.h"
 #include <translation.h>
-#include <cmath>
 #include <QPainter>
 
 
@@ -115,7 +114,7 @@ void DialWidget::paintEvent(QPaintEvent *)
 
 	// Current time
 	TimeDuration currentTime = _biTimer->time(_side);
-	long seconds = std::lround(static_cast<double>(currentTime.count()) / static_cast<double>(TimeDuration::period::den));
+	long seconds = to_seconds(currentTime);
 
 	// Draw the current time
 	QFont font = painter.font();

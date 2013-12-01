@@ -26,6 +26,7 @@
 
 #include <chrono>
 #include <cstdint>
+#include <cmath>
 #include <ostream>
 #include <istream>
 
@@ -48,6 +49,25 @@ typedef std::chrono::time_point<std::chrono::high_resolution_clock, TimeDuration
 inline TimePoint current_time()
 {
 	return std::chrono::time_point_cast<TimePoint::duration>(std::chrono::high_resolution_clock::now());
+}
+
+
+/**
+ * Return the TimeDuration object corresponding to the given number of seconds.
+ */
+inline TimeDuration from_seconds(long sec)
+{
+	return TimeDuration(static_cast<TimeDuration::rep>(sec)*static_cast<TimeDuration::rep>(1000));
+}
+
+
+/**
+ * Extract the total (rounded) number of seconds represented by a TimeDuration object.
+ */
+inline long to_seconds(const TimeDuration &td)
+{
+	auto retval = std::div(td.count(), static_cast<TimeDuration::rep>(1000));
+	return retval.quot + (retval.rem>=500 ? 1 : (retval.rem<-500 ? -1: 0));
 }
 
 
