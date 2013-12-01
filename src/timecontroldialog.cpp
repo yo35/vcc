@@ -131,6 +131,7 @@ TimeControlDialog::TimeControlDialog(QWidget *parent) : QDialog(parent), _shuntS
 	QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, this);
 	connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
 	connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
+	mainLayout->addStretch(1);
 	mainLayout->addWidget(buttons);
 
 	// Initial state
