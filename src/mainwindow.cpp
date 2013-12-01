@@ -68,6 +68,7 @@ MainWindow::MainWindow()
 	actHelp ->setToolTip(_("Show a short help message"                ));
 	actAbout->setToolTip(_("Information about credits and license"    ));
 	connect(actReset, &QAction::triggered, this, &MainWindow::onResetClicked);
+	connect(actPause, &QAction::triggered, this, &MainWindow::onPauseClicked);
 	connect(actTCtrl, &QAction::triggered, this, &MainWindow::onTCtrlClicked);
 
 	// Create the widgets
@@ -125,6 +126,13 @@ void MainWindow::onResetClicked()
 }
 
 
+// Pause button handler.
+void MainWindow::onPauseClicked()
+{
+	_core.stop_timer();
+}
+
+
 // Time control button handler.
 void MainWindow::onTCtrlClicked()
 {
@@ -146,7 +154,7 @@ void MainWindow::loadPersistentParameters()
 	_resetConfirmation = Params::get().reset_confirmation();
 
 	// Status bar
-	statusBar()->setVisible(Params::get().show_status_bar());
+	_statusBar->setVisible(Params::get().show_status_bar());
 }
 
 
