@@ -47,12 +47,12 @@ public:
 	/**
 	 * Value displayed in the widget.
 	 */
-	TimeDuration timeDuration() const;
+	TimeDuration value() const;
 
 	/**
 	 * Change the value displayed in the widget.
 	 */
-	void setTimeDuration(const TimeDuration &value);
+	void setValue(const TimeDuration &td);
 
 signals:
 

@@ -37,9 +37,9 @@ TimeDurationWidget::TimeDurationWidget(QWidget *parent) : QWidget(parent), _shun
 	_hrs->setRange(0, 99);
 	_min->setRange(0, 59);
 	_sec->setRange(0, 59);
-	connect(_hrs, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &TimeDurationWidget::onFieldChanged);
-	connect(_min, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &TimeDurationWidget::onFieldChanged);
-	connect(_sec, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &TimeDurationWidget::onFieldChanged);
+	connect(_hrs, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &TimeDurationWidget::onFieldChanged);
+	connect(_min, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &TimeDurationWidget::onFieldChanged);
+	connect(_sec, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &TimeDurationWidget::onFieldChanged);
 
 	// Geometry
 	QHBoxLayout *layout = new QHBoxLayout;
@@ -52,19 +52,19 @@ TimeDurationWidget::TimeDurationWidget(QWidget *parent) : QWidget(parent), _shun
 
 
 // Value displayed in the widget.
-TimeDuration TimeDurationWidget::timeDuration() const
+TimeDuration TimeDurationWidget::value() const
 {
 	return from_seconds(_hrs->value()*3600 + _min->value()*60 + _sec->value());
 }
 
 
 // Change the value displayed in the widget.
-void TimeDurationWidget::setTimeDuration(const TimeDuration &value)
+void TimeDurationWidget::setValue(const TimeDuration &td)
 {
-	if(value==timeDuration()) {
+	if(td==value()) {
 		return;
 	}
-	long sec = to_seconds(value);
+	long sec = to_seconds(td);
 	_shuntSignal = true;
 	if(sec<=0) {
 		_sec->setValue(0);
