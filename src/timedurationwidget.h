@@ -20,20 +20,20 @@
  ******************************************************************************/
 
 
-#ifndef MAINWINDOW_H_
-#define MAINWINDOW_H_
+#ifndef TIMEDURATIONWIDGET_H_
+#define TIMEDURATIONWIDGET_H_
 
-#include <QMainWindow>
-#include "options.h"
-#include "side.h"
-#include "bitimer.h"
-#include "dialwidget.h"
+#include <QWidget>
+#include "chrono.h"
+QT_BEGIN_NAMESPACE
+	class QSpinBox;
+QT_END_NAMESPACE
 
 
 /**
- * Main window of the application.
+ * Widget to display and edit a time duration.
  */
-class MainWindow : public QMainWindow
+class TimeDurationWidget : public QWidget
 {
 	Q_OBJECT
 
@@ -42,37 +42,35 @@ public:
 	/**
 	 * Constructor.
 	 */
-	MainWindow();
-
-
-protected:
+	TimeDurationWidget(QWidget *parent=0);
 
 	/**
-	 * Close event handler.
+	 * Value displayed in the widget.
 	 */
-	void closeEvent(QCloseEvent *event) override;
+	TimeDuration timeDuration() const;
 
 	/**
-	 * Key-press event handler.
+	 * Change the value displayed in the widget.
 	 */
-	void keyPressEvent(QKeyEvent *event) override;
+	void setTimeDuration(const TimeDuration &value);
 
+signals:
+
+	/**
+	 * Signal emitted when the time duration value in the widget changes.
+	 */
+	void valueChanged();
 
 private:
 
-	// Private functions
-	void onResetClicked();
-	void onTCtrlClicked();
-	void loadPersistentParameters();
-	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
-
-	// Widgets
-	Enum::array<Side, DialWidget *> _dial;
-	QStatusBar *_statusBar;
+	// Private function
+	void onFieldChanged(int v);
 
 	// Private members
-	BiTimer           _core             ;
-	ResetConfirmation _resetConfirmation;
+	bool _shuntSignal;
+	QSpinBox *_hrs;
+	QSpinBox *_min;
+	QSpinBox *_sec;
 };
 
-#endif /* MAINWINDOW_H_ */
+#endif /* TIMEDURATIONWIDGET_H_ */

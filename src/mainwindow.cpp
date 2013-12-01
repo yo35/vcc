@@ -22,8 +22,8 @@
 
 #include "mainwindow.h"
 #include "params.h"
+#include "timecontroldialog.h"
 #include <translation.h>
-#include <boost/lexical_cast.hpp>
 #include <QKeyEvent>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -68,6 +68,7 @@ MainWindow::MainWindow()
 	actHelp ->setToolTip(_("Show a short help message"                ));
 	actAbout->setToolTip(_("Information about credits and license"    ));
 	connect(actReset, &QAction::triggered, this, &MainWindow::onResetClicked);
+	connect(actTCtrl, &QAction::triggered, this, &MainWindow::onTCtrlClicked);
 
 	// Create the widgets
 	QHBoxLayout *dialLayout = new QHBoxLayout;
@@ -121,6 +122,14 @@ void MainWindow::onResetClicked()
 		}
 	}
 	_core.reset_timers();
+}
+
+
+// Time control button handler.
+void MainWindow::onTCtrlClicked()
+{
+	TimeControlDialog dialog(this);
+	dialog.exec();
 }
 
 
