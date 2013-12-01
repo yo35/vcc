@@ -64,6 +64,7 @@ private:
 	void onResetClicked();
 	void onPauseClicked();
 	void onTCtrlClicked();
+	void onHelpClicked ();
 	void loadPersistentParameters();
 	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
 

@@ -70,6 +70,7 @@ MainWindow::MainWindow()
 	connect(actReset, &QAction::triggered, this, &MainWindow::onResetClicked);
 	connect(actPause, &QAction::triggered, this, &MainWindow::onPauseClicked);
 	connect(actTCtrl, &QAction::triggered, this, &MainWindow::onTCtrlClicked);
+	connect(actHelp , &QAction::triggered, this, &MainWindow::onHelpClicked );
 
 	// Create the widgets
 	QHBoxLayout *dialLayout = new QHBoxLayout;
@@ -144,6 +145,24 @@ void MainWindow::onTCtrlClicked()
 	_core.set_time_control(dialog.timeControl());
 	_statusBar->showMessage(QString::fromStdString(_core.time_control().description()));
 	Params::get().set_time_control(_core.time_control());
+}
+
+
+// Help button handler.
+void MainWindow::onHelpClicked()
+{
+	QMessageBox::information(this, _("Help"), _(
+		"To start playing and then change the running side of the clock, just push "
+		"some keys on the keyboard. The left player have to push some key on the left "
+		"side of the keyboard, the right player on the right side.\n"
+		"\n"
+		"If it does not work, it might be due to a misdetection of your keyboard "
+		"layout; you can check it and correct it through the \"Preferences\" dialog. "
+		"If your actual keyboard layout is not available among those proposed by "
+		"VCC, you should select \"Default QWERTY\" or one of the default layouts that "
+		"suits good to your keyboard. Thus, only the A-Z keys will be used by VCC, "
+		"but the software will be usable anyway."
+	));
 }
 
 
