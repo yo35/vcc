@@ -24,6 +24,7 @@
 #include "params.h"
 #include "dialwidget.h"
 #include "timecontroldialog.h"
+#include "preferencedialog.h"
 #include <translation.h>
 #include <QKeyEvent>
 #include <QHBoxLayout>
@@ -71,6 +72,7 @@ MainWindow::MainWindow()
 	connect(actReset, &QAction::triggered, this, &MainWindow::onResetClicked);
 	connect(actPause, &QAction::triggered, this, &MainWindow::onPauseClicked);
 	connect(actTCtrl, &QAction::triggered, this, &MainWindow::onTCtrlClicked);
+	connect(actPrefs, &QAction::triggered, this, &MainWindow::onPrefsClicked);
 	connect(actHelp , &QAction::triggered, this, &MainWindow::onHelpClicked );
 	connect(actAbout, &QAction::triggered, this, &MainWindow::onAboutClicked);
 
@@ -147,6 +149,19 @@ void MainWindow::onTCtrlClicked()
 	_core.set_time_control(dialog.timeControl());
 	_statusBar->showMessage(QString::fromStdString(_core.time_control().description()));
 	Params::get().set_time_control(_core.time_control());
+}
+
+
+// Preference button handler.
+void MainWindow::onPrefsClicked()
+{
+	PreferenceDialog dialog(this);
+	dialog.loadParameters();
+	if(dialog.exec()!=QDialog::Accepted) {
+		return;
+	}
+	dialog.saveParameters();
+	loadPersistentParameters();
 }
 
 

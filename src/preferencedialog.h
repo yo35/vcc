@@ -20,19 +20,19 @@
  ******************************************************************************/
 
 
-#ifndef MAINWINDOW_H_
-#define MAINWINDOW_H_
+#ifndef PREFERENCEDIALOG_H_
+#define PREFERENCEDIALOG_H_
 
-#include <QMainWindow>
-#include "options.h"
-#include "bitimer.h"
-class DialWidget;
+#include <QDialog>
+QT_BEGIN_NAMESPACE
+	class QCheckBox;
+QT_END_NAMESPACE
 
 
 /**
- * Main window of the application.
+ * Dialog to edit user's preferences.
  */
-class MainWindow : public QMainWindow
+class PreferenceDialog : public QDialog
 {
 	Q_OBJECT
 
@@ -41,41 +41,28 @@ public:
 	/**
 	 * Constructor.
 	 */
-	MainWindow();
-
-
-protected:
+	PreferenceDialog(QWidget *parent=0);
 
 	/**
-	 * Close event handler.
+	 * Load the dialog with the parameters saved in the Params singleton object.
 	 */
-	void closeEvent(QCloseEvent *event) override;
+	void loadParameters();
 
 	/**
-	 * Key-press event handler.
+	 * Save the new parameters defined from the dialog in the Params singleton object.
 	 */
-	void keyPressEvent(QKeyEvent *event) override;
-
+	void saveParameters();
 
 private:
 
 	// Private functions
-	void onResetClicked();
-	void onPauseClicked();
-	void onTCtrlClicked();
-	void onPrefsClicked();
-	void onHelpClicked ();
-	void onAboutClicked();
-	void loadPersistentParameters();
-	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
+	QWidget *createDisplayPage();
 
-	// Widgets
-	Enum::array<Side, DialWidget *> _dial;
-	QStatusBar *_statusBar;
-
-	// Private members
-	BiTimer           _core             ;
-	ResetConfirmation _resetConfirmation;
+	// Display page
+	QCheckBox *_displayStatusBar         ;
+	QCheckBox *_displayTimeAfterFlagDown ;
+	QCheckBox *_displayBronsteinExtraTime;
+	QCheckBox *_displayByoYomiExtraTime  ;
 };
 
-#endif /* MAINWINDOW_H_ */
+#endif /* PREFERENCEDIALOG_H_ */
