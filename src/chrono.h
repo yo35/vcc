@@ -26,7 +26,7 @@
 
 #include <chrono>
 #include <cstdint>
-#include <cmath>
+#include <cstdlib>
 #include <ostream>
 #include <istream>
 
