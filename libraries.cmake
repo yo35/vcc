@@ -26,7 +26,6 @@ find_package(Boost COMPONENTS system filesystem)
 
 # Qt
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/opt/yoann/Qt5.1.1/5.1.1/gcc_64/lib/cmake/Qt5Widgets") #TODO
 find_package(Qt5Widgets)
 
 
