@@ -43,7 +43,7 @@ const std::string &Params::prefix_path()
 		#ifdef OS_IS_WINDOWS
 			char buff[2048];
 			if(GetModuleFileName(NULL, buff, 2048)==0) {
-				throw std::runtime_error(_("Unable to retrieve the filename of the executable"));
+				throw std::runtime_error(_("Unable to retrieve the filename of the executable."));
 			}
 			boost::filesystem::path exe_path(buff);
 			_prefix_path = exe_path.parent_path().string() + "/" RPATH_BIN_BACKWARD;
@@ -97,7 +97,8 @@ const std::string &Params::ptree_filename()
 // Private constructor.
 Params::Params() :
 	_app_short_name(APP_SHORT_NAME), _app_name(APP_NAME), _app_full_name(APP_FULL_NAME),
-	_root(nullptr), _ptree_loaded(false), _ptree_saved(true)
+	_root(nullptr), _ptree_loaded(false), _ptree_saved(true),
+	_key_board_map_loaded(false)
 {}
 
 
@@ -116,7 +117,7 @@ void Params::load()
 			boost::property_tree::read_xml(ptree_filename(), _ptree, boost::property_tree::xml_parser::trim_whitespace);
 		}
 		catch(boost::property_tree::xml_parser_error &) {
-			throw std::runtime_error(_("An error has occurred while reading the preference file"));
+			throw std::runtime_error(_("An error has occurred while reading the preference file."));
 		}
 	}
 
@@ -146,7 +147,7 @@ void Params::save()
 		boost::property_tree::write_xml(ptree_filename(), _ptree, std::locale(), settings);
 	}
 	catch(boost::property_tree::xml_parser_error &) {
-		throw std::runtime_error(_("An error has occurred while writing the preference file"));
+		throw std::runtime_error(_("An error has occurred while writing the preference file."));
 	}
 
 	// Set the saved flag to true
@@ -287,4 +288,51 @@ bool Params::show_status_bar()
 void Params::set_show_status_bar(bool value)
 {
 	put_atomic_value("display.status-bar", value);
+}
+
+
+// Load the key-board map files if not done yet.
+void Params::ensure_key_board_maps_loaded()
+{
+	if(_key_board_map_loaded) {
+		return;
+	}
+	boost::filesystem::directory_iterator end;
+	for(boost::filesystem::directory_iterator it(share_path()); it!=end; ++it) {
+		if(it->path().extension()!=".kbm") {
+			continue;
+		}
+
+		// Try to load the current file
+		try {
+			KeyBoardMap kbm;
+			kbm.load(it->path().c_str());
+			_key_board_maps.insert(kbm.id());
+			_key_board_map_data[kbm.id()] = std::move(kbm);
+		}
+		catch(boost::property_tree::ptree_error &) {}
+	}
+	_key_board_map_loaded = true;
+}
+
+
+// Return the IDs of the available key-board maps.
+const std::set<std::string> &Params::key_board_maps()
+{
+	ensure_key_board_maps_loaded();
+	return _key_board_maps;
+}
+
+
+// Return the key-board map corresponding to the given ID.
+const KeyBoardMap &Params::key_board_map(const std::string &id)
+{
+	ensure_key_board_maps_loaded();
+	auto it = _key_board_map_data.find(id);
+	if(it==_key_board_map_data.end()) {
+		throw std::invalid_argument(_("Invalid key-board map ID."));
+	}
+	else {
+		return it->second;
+	}
 }

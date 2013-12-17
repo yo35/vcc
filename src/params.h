@@ -25,10 +25,13 @@
 
 #include <string>
 #include <memory>
+#include <map>
+#include <set>
 #include <boost/optional.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include "timecontrol.h"
 #include "options.h"
+#include "keyboardmap.h"
 
 
 /**
@@ -107,6 +110,16 @@ public:
 	 */
 	void set_show_status_bar(bool value);
 
+	/**
+	 * Return the IDs of the available key-board maps.
+	 */
+	const std::set<std::string> &key_board_maps();
+
+	/**
+	 * Return the key-board map corresponding to the given ID.
+	 */
+	const KeyBoardMap &key_board_map(const std::string &id);
+
 private:
 
 	// Useful alias
@@ -119,6 +132,7 @@ private:
 	void load();
 	void save();
 	void ensure_config_path_exists();
+	void ensure_key_board_maps_loaded();
 
 	// Utility functions to manage the property tree holding the user-related data.
 	ptree &fetch(const std::string &key);
@@ -142,6 +156,11 @@ private:
 	ptree *_root        ;
 	bool   _ptree_loaded;
 	bool   _ptree_saved ;
+
+	// Key-board maps
+	bool                               _key_board_map_loaded;
+	std::map<std::string, KeyBoardMap> _key_board_map_data  ;
+	std::set<std::string>              _key_board_maps      ;
 
 	// Singleton object
 	static std::unique_ptr<Params> _instance;
