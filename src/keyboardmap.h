@@ -37,6 +37,11 @@ class KeyboardMap
 {
 public:
 
+	/**
+	 * Minimal key size.
+	 */
+	static const int MINIMUM_KEY_SIZE = 20;
+
 
 	/**
 	 * Physical description of a single key.
@@ -199,7 +204,7 @@ public:
 private:
 
 	// Private functions
-	static std::vector<int> parse_int_list(const std::string &data, std::size_t expected_count, int default_value);
+	static std::vector<int> parse_int_list(const std::string &data, std::size_t expected_count, int default_value, int min_value);
 
 	// Private members
 	std::string                _id         ;

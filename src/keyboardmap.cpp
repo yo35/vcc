@@ -51,8 +51,8 @@ KeyboardMap::KeyDescriptor &KeyboardMap::KeyDescriptor::load(const boost::proper
 	_line_bottom = std::max(line1, line2);
 	_line_top    = std::min(line1, line2);
 	std::size_t line_count = _line_bottom - _line_top + 1;
-	_per_line_x     = parse_int_list(data.get<std::string>("geometry.x"    ), line_count,   0);
-	_per_line_width = parse_int_list(data.get<std::string>("geometry.width"), line_count, 100);
+	_per_line_x     = parse_int_list(data.get<std::string>("geometry.x"    ), line_count,   0, 0);
+	_per_line_width = parse_int_list(data.get<std::string>("geometry.width"), line_count, 100, MINIMUM_KEY_SIZE);
 
 	// ID & Label
 	_id    = data.get<std::string>("id"   );
@@ -89,7 +89,7 @@ KeyboardMap &KeyboardMap::load(const boost::property_tree::ptree &data)
 
 	// Key-lines
 	std::size_t key_line_count = data.get<std::size_t>("key-line.count");
-	_line_height = parse_int_list(data.get<std::string>("key-line.height"), key_line_count, 100);
+	_line_height = parse_int_list(data.get<std::string>("key-line.height"), key_line_count, 100, MINIMUM_KEY_SIZE);
 	_line_y.resize(key_line_count);
 	if(key_line_count>0) {
 		_line_y[0] = 0;
@@ -128,10 +128,10 @@ KeyboardMap &KeyboardMap::load(const boost::property_tree::ptree &data)
 
 
 // Parse a list of comma-separated integers
-std::vector<int> KeyboardMap::parse_int_list(const std::string &data, std::size_t expected_count, int default_value)
+std::vector<int> KeyboardMap::parse_int_list(const std::string &data, std::size_t expected_count, int default_value, int min_value)
 {
 	// Allocate the returned object
-	std::vector<int> retval(expected_count, default_value);
+	std::vector<int> retval(expected_count, std::max(default_value, min_value));
 
 	// Split the string
 	std::list<std::string> values;
@@ -144,7 +144,7 @@ std::vector<int> KeyboardMap::parse_int_list(const std::string &data, std::size_
 			if(idx>=retval.size()) {
 				break;
 			}
-			retval[idx] = boost::lexical_cast<int>(boost::trim_copy(it));
+			retval[idx] = std::max(boost::lexical_cast<int>(boost::trim_copy(it)), min_value);
 			++idx;
 		}
 	}

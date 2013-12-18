@@ -126,7 +126,7 @@ void KeyboardMapWidget::paintEvent(QPaintEvent *)
 
 	// Prepare the rendering of the keys
 	_painter = &painter;
-	_keyMargin =  5;
+	_keyMargin = std::min(5, KeyboardMap::MINIMUM_KEY_SIZE/2);
 	_keyRadius = 15;
 
 	//painter.setBrush(Qt::red);
