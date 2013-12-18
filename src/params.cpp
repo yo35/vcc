@@ -98,7 +98,7 @@ const std::string &Params::ptree_filename()
 Params::Params() :
 	_app_short_name(APP_SHORT_NAME), _app_name(APP_NAME), _app_full_name(APP_FULL_NAME),
 	_root(nullptr), _ptree_loaded(false), _ptree_saved(true),
-	_key_board_map_loaded(false)
+	_keyboard_map_loaded(false)
 {}
 
 
@@ -291,10 +291,10 @@ void Params::set_show_status_bar(bool value)
 }
 
 
-// Load the key-board map files if not done yet.
-void Params::ensure_key_board_maps_loaded()
+// Load the keyboard map files if not done yet.
+void Params::ensure_keyboard_maps_loaded()
 {
-	if(_key_board_map_loaded) {
+	if(_keyboard_map_loaded) {
 		return;
 	}
 	boost::filesystem::directory_iterator end;
@@ -305,32 +305,32 @@ void Params::ensure_key_board_maps_loaded()
 
 		// Try to load the current file
 		try {
-			KeyBoardMap kbm;
+			KeyboardMap kbm;
 			kbm.load(it->path().c_str());
-			_key_board_maps.insert(kbm.id());
-			_key_board_map_data[kbm.id()] = std::move(kbm);
+			_keyboard_maps.insert(kbm.id());
+			_keyboard_map_data[kbm.id()] = std::move(kbm);
 		}
 		catch(boost::property_tree::ptree_error &) {}
 	}
-	_key_board_map_loaded = true;
+	_keyboard_map_loaded = true;
 }
 
 
-// Return the IDs of the available key-board maps.
-const std::set<std::string> &Params::key_board_maps()
+// Return the IDs of the available keyboard maps.
+const std::set<std::string> &Params::keyboard_maps()
 {
-	ensure_key_board_maps_loaded();
-	return _key_board_maps;
+	ensure_keyboard_maps_loaded();
+	return _keyboard_maps;
 }
 
 
-// Return the key-board map corresponding to the given ID.
-const KeyBoardMap &Params::key_board_map(const std::string &id)
+// Return the keyboard map corresponding to the given ID.
+const KeyboardMap &Params::keyboard_map(const std::string &id)
 {
-	ensure_key_board_maps_loaded();
-	auto it = _key_board_map_data.find(id);
-	if(it==_key_board_map_data.end()) {
-		throw std::invalid_argument(_("Invalid key-board map ID."));
+	ensure_keyboard_maps_loaded();
+	auto it = _keyboard_map_data.find(id);
+	if(it==_keyboard_map_data.end()) {
+		throw std::invalid_argument(_("Invalid keyboard map ID."));
 	}
 	else {
 		return it->second;

@@ -111,14 +111,14 @@ public:
 	void set_show_status_bar(bool value);
 
 	/**
-	 * Return the IDs of the available key-board maps.
+	 * Return the IDs of the available keyboard maps.
 	 */
-	const std::set<std::string> &key_board_maps();
+	const std::set<std::string> &keyboard_maps();
 
 	/**
-	 * Return the key-board map corresponding to the given ID.
+	 * Return the keyboard map corresponding to the given ID.
 	 */
-	const KeyBoardMap &key_board_map(const std::string &id);
+	const KeyboardMap &keyboard_map(const std::string &id);
 
 private:
 
@@ -132,7 +132,7 @@ private:
 	void load();
 	void save();
 	void ensure_config_path_exists();
-	void ensure_key_board_maps_loaded();
+	void ensure_keyboard_maps_loaded();
 
 	// Utility functions to manage the property tree holding the user-related data.
 	ptree &fetch(const std::string &key);
@@ -157,10 +157,10 @@ private:
 	bool   _ptree_loaded;
 	bool   _ptree_saved ;
 
-	// Key-board maps
-	bool                               _key_board_map_loaded;
-	std::map<std::string, KeyBoardMap> _key_board_map_data  ;
-	std::set<std::string>              _key_board_maps      ;
+	// Keyboard maps
+	bool                               _keyboard_map_loaded;
+	std::map<std::string, KeyboardMap> _keyboard_map_data  ;
+	std::set<std::string>              _keyboard_maps      ;
 
 	// Singleton object
 	static std::unique_ptr<Params> _instance;

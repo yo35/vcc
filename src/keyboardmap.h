@@ -31,9 +31,9 @@
 
 
 /**
- * Physical representation of a key-board.
+ * Physical representation of a keyboard.
  */
-class KeyBoardMap
+class KeyboardMap
 {
 public:
 
@@ -137,32 +137,32 @@ public:
 	/**
 	 * Constructor.
 	 */
-	KeyBoardMap();
+	KeyboardMap();
 
 	/**
-	 * Load the key-board map from a file.
+	 * Load the keyboard map from a file.
 	 * @returns `*this`
 	 */
-	KeyBoardMap &load(const std::string &path);
+	KeyboardMap &load(const std::string &path);
 
 	/**
-	 * Load the key-board map from a property tree.
+	 * Load the keyboard map from a property tree.
 	 * @returns `*this`
 	 */
-	KeyBoardMap &load(const boost::property_tree::ptree &data);
+	KeyboardMap &load(const boost::property_tree::ptree &data);
 
 	/**
-	 * ID of the key-board map.
+	 * ID of the keyboard map.
 	 */
 	const std::string &id() const { return _id; }
 
 	/**
-	 * Human-readable name of the key-board map (localized if possible, otherwise in English).
+	 * Human-readable name of the keyboard map (localized if possible, otherwise in English).
 	 */
 	const std::string &name() const { return _name; }
 
 	/**
-	 * Number of key-lines of the key-board.
+	 * Number of key-lines of the keyboard.
 	 */
 	std::size_t line_count() const { return _line_height.size(); }
 
@@ -187,12 +187,12 @@ public:
 	const KeyDescriptor &key(std::size_t idx) const { return _keys[idx]; }
 
 	/**
-	 * Total height of the key-board.
+	 * Total height of the keyboard.
 	 */
 	int total_height() const { return _total_height; }
 
 	/**
-	 * Total width of the key-board, with of without the numeric keypad.
+	 * Total width of the keyboard, with of without the numeric keypad.
 	 */
 	int total_width(bool with_numeric_keypad) const { return with_numeric_keypad ? _total_width_with_nkp : _total_width_without_nkp; }
 

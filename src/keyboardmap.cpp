@@ -28,7 +28,7 @@
 
 
 // Constructor of the KeyDescriptor class.
-KeyBoardMap::KeyDescriptor::KeyDescriptor() :
+KeyboardMap::KeyDescriptor::KeyDescriptor() :
 	_scan_code_unix   (0),
 	_scan_code_windows(0),
 	_in_numeric_keypad(false),
@@ -38,7 +38,7 @@ KeyBoardMap::KeyDescriptor::KeyDescriptor() :
 
 
 // Load the key-descriptor from a property tree.
-KeyBoardMap::KeyDescriptor &KeyBoardMap::KeyDescriptor::load(const boost::property_tree::ptree &data)
+KeyboardMap::KeyDescriptor &KeyboardMap::KeyDescriptor::load(const boost::property_tree::ptree &data)
 {
 	// Scan codes
 	_scan_code_unix    = data.get<std::uint32_t>("scan-code.unix"   );
@@ -64,24 +64,24 @@ KeyBoardMap::KeyDescriptor &KeyBoardMap::KeyDescriptor::load(const boost::proper
 
 
 // Constructor.
-KeyBoardMap::KeyBoardMap() :
+KeyboardMap::KeyboardMap() :
 	_total_height           (0),
 	_total_width_with_nkp   (0),
 	_total_width_without_nkp(0)
 {}
 
 
-// Load the key-board map from a file.
-KeyBoardMap &KeyBoardMap::load(const std::string &path)
+// Load the keyboard map from a file.
+KeyboardMap &KeyboardMap::load(const std::string &path)
 {
 	boost::property_tree::ptree data;
 	boost::property_tree::read_xml(path, data, boost::property_tree::xml_parser::trim_whitespace);
-	return load(data.get_child("key-board-map"));
+	return load(data.get_child("keyboard-map"));
 }
 
 
-// Load the key-board map from a property tree.
-KeyBoardMap &KeyBoardMap::load(const boost::property_tree::ptree &data)
+// Load the keyboard map from a property tree.
+KeyboardMap &KeyboardMap::load(const boost::property_tree::ptree &data)
 {
 	// Headers
 	_id   = data.get<std::string>("id"  );
@@ -128,7 +128,7 @@ KeyBoardMap &KeyBoardMap::load(const boost::property_tree::ptree &data)
 
 
 // Parse a list of comma-separated integers
-std::vector<int> KeyBoardMap::parse_int_list(const std::string &data, std::size_t expected_count, int default_value)
+std::vector<int> KeyboardMap::parse_int_list(const std::string &data, std::size_t expected_count, int default_value)
 {
 	// Allocate the returned object
 	std::vector<int> retval(expected_count, default_value);
