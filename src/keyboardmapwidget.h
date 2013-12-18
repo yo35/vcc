@@ -24,7 +24,11 @@
 #define KEYBOARDMAPWIDGET_H_
 
 #include <QWidget>
+#include <vector>
 #include "keyboardmap.h"
+QT_BEGIN_NAMESPACE
+	class QPainter;
+QT_END_NAMESPACE
 
 
 /**
@@ -40,6 +44,16 @@ public:
 	 * Constructor
 	 */
 	KeyboardMapWidget(QWidget *parent=0);
+
+	/**
+	 * Whether the numeric keypad should be displayed or not.
+	 */
+	bool displayNumericKeypad() const { return _displayNumericKeypad; }
+
+	/**
+	 * Set whether the numeric keypad should be displayed or not.
+	 */
+	void setDisplayNumericKeypad(bool value);
 
 	/**
 	 * Check whether a keyboard map is binded to the widget or not.
@@ -81,9 +95,21 @@ private:
 
 	// Private functions
 	void ensureKeyboardMapBinded() const;
+	void drawKeyShape(std::size_t idx);
+	void drawRectangularKeyShape(int x, int y, int w, int h);
+	void drawPolygonalKeyShape(int x0, int y0, int dxTop, int dxBottom,
+		const std::vector<int> &dxLeft , const std::vector<int> &dyLeft ,
+		const std::vector<int> &dxRight, const std::vector<int> &dyRight);
 
 	// Private members
-	const KeyboardMap *_keyboardMap;
+	bool               _displayNumericKeypad;
+	const KeyboardMap *_keyboardMap         ;
+
+	// Temporary members used at rendering time
+	// (should not be used outside the `paintEvent` method).
+	QPainter *_painter  ;
+	int       _keyMargin;
+	int       _keyRadius;
 };
 
 #endif /* KEYBOARDMAPWIDGET_H_ */
