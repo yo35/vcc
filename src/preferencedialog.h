@@ -27,6 +27,7 @@
 QT_BEGIN_NAMESPACE
 	class QCheckBox;
 QT_END_NAMESPACE
+class KeyboardMapWidget;
 
 
 /**
@@ -56,7 +57,13 @@ public:
 private:
 
 	// Private functions
-	QWidget *createDisplayPage();
+	QWidget *createKeyboardPage();
+	QWidget *createDisplayPage ();
+	void onDisplayNumericKeypadToggled();
+
+	// Keyboard page
+	QCheckBox         *_displayNumericKeypad;
+	KeyboardMapWidget *_keyboardMapWidget   ;
 
 	// Display page
 	QCheckBox *_displayStatusBar         ;

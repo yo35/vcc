@@ -111,6 +111,16 @@ public:
 	void set_show_status_bar(bool value);
 
 	/**
+	 * Wether the numeric keypad should be displayed with the keyboard map or not.
+	 */
+	bool show_numeric_keypad();
+
+	/**
+	 * Wether the numeric keypad should be displayed with the keyboard map or not.
+	 */
+	void set_show_numeric_keypad(bool value);
+
+	/**
 	 * Return the IDs of the available keyboard maps.
 	 */
 	const std::set<std::string> &keyboard_maps();

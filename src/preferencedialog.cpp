@@ -22,6 +22,7 @@
 
 #include "preferencedialog.h"
 #include "params.h"
+#include "keyboardmapwidget.h"
 #include <translation.h>
 #include <QTabWidget>
 #include <QDialogButtonBox>
@@ -40,13 +41,38 @@ PreferenceDialog::PreferenceDialog(QWidget *parent) : QDialog(parent)
 	// Tabs
 	QTabWidget *tabs = new QTabWidget(this);
 	mainLayout->addWidget(tabs, 1);
-	tabs->addTab(createDisplayPage(), _("Display options"));
+	tabs->addTab(createKeyboardPage(), _("Keyboard set-up"));
+	tabs->addTab(createDisplayPage (), _("Display options"));
 
 	// Validation buttons
 	QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, this);
 	connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
 	connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
 	mainLayout->addWidget(buttons);
+}
+
+
+// Create the keyboard page.
+QWidget *PreferenceDialog::createKeyboardPage()
+{
+	// Page widget
+	QWidget *page = new QWidget(this);
+	QVBoxLayout *layout = new QVBoxLayout;
+	page->setLayout(layout);
+
+	// Display numeric-keypad check-box
+	_displayNumericKeypad = new QCheckBox(_("Display the numeric keypad"), this);
+	connect(_displayNumericKeypad, &QCheckBox::toggled, this, &PreferenceDialog::onDisplayNumericKeypadToggled);
+	layout->addWidget(_displayNumericKeypad);
+
+	// Keyboard map widget
+	_keyboardMapWidget = new KeyboardMapWidget(this);
+	_keyboardMapWidget->setDisplayNumericKeypad(_displayNumericKeypad->isChecked());
+	_keyboardMapWidget->bindKeyboardMap(Params::get().keyboard_map("FR"));
+	layout->addWidget(_keyboardMapWidget, 1);
+
+	// Return the page widget
+	return page;
 }
 
 
@@ -74,9 +100,19 @@ QWidget *PreferenceDialog::createDisplayPage()
 }
 
 
+// Action performed when the state of the display-numeric-keypad checkbox changes.
+void PreferenceDialog::onDisplayNumericKeypadToggled()
+{
+	_keyboardMapWidget->setDisplayNumericKeypad(_displayNumericKeypad->isChecked());
+}
+
+
 // Load the dialog with the parameters saved in the Params singleton object.
 void PreferenceDialog::loadParameters()
 {
+	// Keyboard page
+	_displayNumericKeypad->setChecked(Params::get().show_numeric_keypad());
+
 	// Display page
 	_displayStatusBar->setChecked(Params::get().show_status_bar());
 	///TODO
@@ -86,6 +122,9 @@ void PreferenceDialog::loadParameters()
 // Save the new parameters defined from the dialog in the Params singleton object.
 void PreferenceDialog::saveParameters()
 {
+	// Keyboard page
+	Params::get().set_show_numeric_keypad(_displayNumericKeypad->isChecked());
+
 	// Display page
 	Params::get().set_show_status_bar(_displayStatusBar->isChecked());
 	///TODO

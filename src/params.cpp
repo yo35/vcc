@@ -291,6 +291,20 @@ void Params::set_show_status_bar(bool value)
 }
 
 
+// Wether the numeric keypad should be displayed with the keyboard map or not.
+bool Params::show_numeric_keypad()
+{
+	return get_atomic_value("display.numeric-keypad", true);
+}
+
+
+// Wether the numeric keypad should be displayed with the keyboard map or not.
+void Params::set_show_numeric_keypad(bool value)
+{
+	put_atomic_value("display.numeric-keypad", value);
+}
+
+
 // Load the keyboard map files if not done yet.
 void Params::ensure_keyboard_maps_loaded()
 {
