@@ -25,6 +25,7 @@
 #include <cassert>
 #include <algorithm>
 #include <numeric>
+#include <cstdlib>
 #include <translation.h>
 #include <QPainter>
 
@@ -125,8 +126,8 @@ void KeyboardMapWidget::paintEvent(QPaintEvent *)
 
 	// Prepare the rendering of the keys
 	_painter = &painter;
-	_keyMargin = 10;
-	_keyRadius = 0;
+	_keyMargin =  5;
+	_keyRadius = 15;
 
 	//painter.setBrush(Qt::red);
 	//painter.drawRect(0, 0, keyboardWidth, keyboardHeight);
@@ -261,36 +262,74 @@ void KeyboardMapWidget::drawPolygonalKeyShape(int x0, int y0, int dxTop, int dxB
 	const std::vector<int> &dxRight, const std::vector<int> &dyRight)
 {
 	assert(dxLeft .size()+1==dyLeft .size());
-	assert(dxRight.size()+1==dxRight.size());
-	assert(std::accumulate(dyLeft.begin(),dyLeft.end())==std::accumulate(dyRight.begin(),dyRight.end()));
-	assert(std::accumulate(dxLeft.begin(),dxLeft.end())+dxBottom==dxTop+std::accumulate(dyLeft.begin(),dyLeft.end()));
+	assert(dxRight.size()+1==dyRight.size());
+	assert(std::accumulate(dyLeft.begin(),dyLeft.end(),0)         ==std::accumulate(dyRight.begin(),dyRight.end(),0)      );
+	assert(std::accumulate(dxLeft.begin(),dxLeft.end(),0)+dxBottom==std::accumulate(dxRight.begin(),dxRight.end(),0)+dxTop);
+
+	// Determine the radius of the arcs to apply to the corners
+	std::vector<int> radiusLeft (determineCornerRadius(dxTop, dxBottom, dxLeft , dyLeft ));
+	std::vector<int> radiusRight(determineCornerRadius(dxTop, dxBottom, dxRight, dyRight));
 
 	// Initialize the path
 	int x = x0;
 	int y = y0;
-	QPainterPath path(QPoint(x,y));
+	std::size_t k = 0;
+	QPainterPath path(QPoint(x+radiusLeft[0], y));
 
 	// Left edges
-	y += dyLeft[0]; path.lineTo(x,y);
-	for(std::size_t k=0; k<dxLeft.size(); ++k) {
-		x += dxLeft[k  ]; path.lineTo(x,y);
-		y += dyLeft[k+1]; path.lineTo(x,y);
+	while(true) {
+		// 0 <= k < dyLeft.size()
+		path.quadTo(QPoint(x, y), QPoint(x, y+radiusLeft[2*k]));
+		y += dyLeft[k]; path.lineTo(x, y-radiusLeft[2*k+1]);
+		if(k>=dxLeft.size()) {
+			break;
+		}
+		// 0 <= k < dxLeft.size()
+		path.quadTo(QPoint(x, y), QPoint(x+(dxLeft[k] ? 1 : -1)*radiusLeft[2*k+1], y));
+		x += dxLeft[k]; path.lineTo(x-(dxLeft[k] ? 1 : -1)*radiusLeft[2*k+2], y);
+		++k;
 	}
 
 	// Bottom edge
-	x += dxBottom; path.lineTo(x,y);
+	path.quadTo(QPoint(x, y), QPoint(x+radiusLeft[2*k], y));
+	k = dxRight.size();
+	x += dxBottom; path.lineTo(x-radiusRight[2*k+1], y);
 
 	// Right edges
-	for(std::size_t k=dxRight.size(); k>=1; --k) {
-		y -= dyRight[k  ]; path.lineTo(x,y);
-		x -= dxRight[k-1]; path.lineTo(x,y);
+	while(true) {
+		// 0 <= k < dyRight.size()
+		path.quadTo(QPoint(x, y), QPoint(x, y-radiusRight[2*k+1]));
+		y -= dyRight[k]; path.lineTo(x, y+radiusRight[2*k]);
+		if(k==0) {
+			break;
+		}
+		// 0 <= k-1 < dxRight.size()
+		path.quadTo(QPoint(x, y), QPoint(x-(dxRight[k-1] ? 1 : -1)*radiusRight[2*k], y));
+		x -= dxRight[k-1]; path.lineTo(x+(dxRight[k-1] ? 1 : -1)*radiusRight[2*k-1], y);
+		--k;
 	}
-	y -= dyRight[0]; path.lineTo(x,y);
 
 	// Top edge
+	path.quadTo(QPoint(x, y), QPoint(x-radiusRight[0], y));
 	x -= dxTop;
 	path.closeSubpath();
 
 	// Fill the path
 	_painter->fillPath(path, _painter->brush());
+}
+
+
+// Determine the radius of the arcs to apply to the corners when drawing
+// a polygonal key shape.
+std::vector<int> KeyboardMapWidget::determineCornerRadius(int dxTop, int dxBottom,
+	const std::vector<int> &dx, const std::vector<int> &dy) const
+{
+	std::size_t n = dy.size();
+	assert(dx.size()+1==n);
+	std::vector<int> retval(2*n);
+	for(std::size_t k=0; k<n; ++k) {
+		retval[2*k  ] = std::min(_keyRadius, std::min(std::abs(k==0   ? dxTop    : dx[k-1]), dy[k]) / 2);
+		retval[2*k+1] = std::min(_keyRadius, std::min(std::abs(k==n-1 ? dxBottom : dx[k  ]), dy[k]) / 2);
+	}
+	return std::move(retval);
 }
