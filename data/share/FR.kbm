@@ -119,13 +119,13 @@
 		</key>
 		<key>
 			<id>main-04</id>
-			<label>",3,#</label>
+			<label>&quot;,3,#</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>300</x><width>100</width></geometry>
 			<scan-code><unix>12</unix><windows>0</windows></scan-code>
 		</key>
 		<key>
 			<id>main-05</id>
-			<label>',4,\{</label>
+			<label>&apos;,4,\{</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>400</x><width>100</width></geometry>
 			<scan-code><unix>13</unix><windows>0</windows></scan-code>
 		</key>
