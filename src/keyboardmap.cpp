@@ -29,8 +29,8 @@
 
 // Constructor of the KeyDescriptor class.
 KeyBoardMap::KeyDescriptor::KeyDescriptor() :
-	_unix_scan_code   (0),
-	_windows_scan_code(0),
+	_scan_code_unix   (0),
+	_scan_code_windows(0),
 	_in_numeric_keypad(false),
 	_line_bottom      (0),
 	_line_top         (0)
@@ -41,8 +41,8 @@ KeyBoardMap::KeyDescriptor::KeyDescriptor() :
 KeyBoardMap::KeyDescriptor &KeyBoardMap::KeyDescriptor::load(const boost::property_tree::ptree &data)
 {
 	// Scan codes
-	_unix_scan_code    = data.get<std::uint32_t>("scan-code.unix"   );
-	_windows_scan_code = data.get<std::uint32_t>("scan-code.windows");
+	_scan_code_unix    = data.get<std::uint32_t>("scan-code.unix"   );
+	_scan_code_windows = data.get<std::uint32_t>("scan-code.windows");
 
 	// Geometry
 	_in_numeric_keypad = data.get<bool>("geometry.in-nkp");

@@ -72,22 +72,22 @@ public:
 		std::uint32_t scan_code() const
 		{
 #ifdef OS_IS_UNIX
-			return _unix_scan_code;
+			return _scan_code_unix;
 #endif
 #ifdef OS_IS_WINDOWS
-			return _windows_scan_code;
+			return _scan_code_windows;
 #endif
 		}
 
 		/**
 		 * Scan-code on a Unix platform.
 		 */
-		std::uint32_t unix_code() const { return _unix_scan_code; }
+		std::uint32_t scan_code_unix() const { return _scan_code_unix; }
 
 		/**
 		 * Scan-code on a Windows platform.
 		 */
-		std::uint32_t windows_code() const { return _windows_scan_code; }
+		std::uint32_t scan_code_windows() const { return _scan_code_windows; }
 
 		/**
 		 * Whether the given key lies in the numeric key-pad.
@@ -124,8 +124,8 @@ public:
 		// Private members
 		std::string      _id               ;
 		std::string      _label            ;
-		std::uint32_t    _unix_scan_code   ;
-		std::uint32_t    _windows_scan_code;
+		std::uint32_t    _scan_code_unix   ;
+		std::uint32_t    _scan_code_windows;
 		bool             _in_numeric_keypad;
 		std::size_t      _line_bottom      ;
 		std::size_t      _line_top         ;
