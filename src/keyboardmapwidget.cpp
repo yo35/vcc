@@ -285,8 +285,8 @@ void KeyboardMapWidget::drawPolygonalKeyShape(int x0, int y0, int dxTop, int dxB
 			break;
 		}
 		// 0 <= k < dxLeft.size()
-		path.quadTo(QPoint(x, y), QPoint(x+(dxLeft[k] ? 1 : -1)*radiusLeft[2*k+1], y));
-		x += dxLeft[k]; path.lineTo(x-(dxLeft[k] ? 1 : -1)*radiusLeft[2*k+2], y);
+		path.quadTo(QPoint(x, y), QPoint(x+(dxLeft[k]>0 ? 1 : -1)*radiusLeft[2*k+1], y));
+		x += dxLeft[k]; path.lineTo(x-(dxLeft[k]>0 ? 1 : -1)*radiusLeft[2*k+2], y);
 		++k;
 	}
 
@@ -304,8 +304,8 @@ void KeyboardMapWidget::drawPolygonalKeyShape(int x0, int y0, int dxTop, int dxB
 			break;
 		}
 		// 0 <= k-1 < dxRight.size()
-		path.quadTo(QPoint(x, y), QPoint(x-(dxRight[k-1] ? 1 : -1)*radiusRight[2*k], y));
-		x -= dxRight[k-1]; path.lineTo(x+(dxRight[k-1] ? 1 : -1)*radiusRight[2*k-1], y);
+		path.quadTo(QPoint(x, y), QPoint(x-(dxRight[k-1]>0 ? 1 : -1)*radiusRight[2*k], y));
+		x -= dxRight[k-1]; path.lineTo(x+(dxRight[k-1]>0 ? 1 : -1)*radiusRight[2*k-1], y);
 		--k;
 	}
 
