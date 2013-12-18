@@ -267,8 +267,8 @@ void KeyboardMapWidget::drawPolygonalKeyShape(int x0, int y0, int dxTop, int dxB
 	assert(std::accumulate(dxLeft.begin(),dxLeft.end(),0)+dxBottom==std::accumulate(dxRight.begin(),dxRight.end(),0)+dxTop);
 
 	// Determine the radius of the arcs to apply to the corners
-	std::vector<int> radiusLeft (determineCornerRadius(dxTop, dxBottom, dxLeft , dyLeft ));
-	std::vector<int> radiusRight(determineCornerRadius(dxTop, dxBottom, dxRight, dyRight));
+	std::vector<int> radiusLeft (computeCornerRadius(dxTop, dxBottom, dxLeft , dyLeft ));
+	std::vector<int> radiusRight(computeCornerRadius(dxTop, dxBottom, dxRight, dyRight));
 
 	// Initialize the path
 	int x = x0;
@@ -321,7 +321,7 @@ void KeyboardMapWidget::drawPolygonalKeyShape(int x0, int y0, int dxTop, int dxB
 
 // Determine the radius of the arcs to apply to the corners when drawing
 // a polygonal key shape.
-std::vector<int> KeyboardMapWidget::determineCornerRadius(int dxTop, int dxBottom,
+std::vector<int> KeyboardMapWidget::computeCornerRadius(int dxTop, int dxBottom,
 	const std::vector<int> &dx, const std::vector<int> &dy) const
 {
 	std::size_t n = dy.size();

@@ -100,7 +100,7 @@ private:
 	void drawPolygonalKeyShape(int x0, int y0, int dxTop, int dxBottom,
 		const std::vector<int> &dxLeft , const std::vector<int> &dyLeft ,
 		const std::vector<int> &dxRight, const std::vector<int> &dyRight);
-	std::vector<int> determineCornerRadius(int dxTop, int dxBottom,
+	std::vector<int> computeCornerRadius(int dxTop, int dxBottom,
 		const std::vector<int> &dx, const std::vector<int> &dy) const;
 
 	// Private members
