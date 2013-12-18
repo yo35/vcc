@@ -116,7 +116,7 @@ KeyboardMap &KeyboardMap::load(const boost::property_tree::ptree &data)
 		for(std::size_t line=key.line_top(); line<=key.line_bottom(); ++line) {
 			int x_at_key_right = key.x(line) + key.width(line);
 			_total_width_with_nkp = std::max(_total_width_with_nkp, x_at_key_right);
-			if(key.in_numeric_keypad()) {
+			if(!key.in_numeric_keypad()) {
 				_total_width_without_nkp = std::max(_total_width_without_nkp, x_at_key_right);
 			}
 		}
