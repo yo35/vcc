@@ -448,8 +448,8 @@
 			<scan-code><unix>113</unix><windows>0</windows></scan-code>
 		</key>
 		<key>
-			<id>arrow-bottom</id>
-			<label>{arrow-bottom}</label>
+			<id>arrow-down</id>
+			<label>{arrow-down}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1630</x><width>100</width></geometry>
 			<scan-code><unix>116</unix><windows>0</windows></scan-code>
 		</key>
