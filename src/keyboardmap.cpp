@@ -21,6 +21,7 @@
 
 
 #include "keyboardmap.h"
+#include <translation.h>
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
@@ -40,6 +41,13 @@ KeyboardMap::KeyDescriptor::KeyDescriptor() :
 // Load the key-descriptor from a property tree.
 KeyboardMap::KeyDescriptor &KeyboardMap::KeyDescriptor::load(const boost::property_tree::ptree &data)
 {
+	// ID
+	_id = data.get<std::string>("id");
+
+	// Label
+	std::string rawLabel = data.get<std::string>("label");
+	parseLabel(rawLabel);
+
 	// Scan codes
 	_scan_code_unix    = data.get<std::uint32_t>("scan-code.unix"   );
 	_scan_code_windows = data.get<std::uint32_t>("scan-code.windows");
@@ -54,12 +62,99 @@ KeyboardMap::KeyDescriptor &KeyboardMap::KeyDescriptor::load(const boost::proper
 	_per_line_x     = parse_int_list(data.get<std::string>("geometry.x"    ), line_count,   0, 0);
 	_per_line_width = parse_int_list(data.get<std::string>("geometry.width"), line_count, 100, MINIMUM_KEY_SIZE);
 
-	// ID & Label
-	_id    = data.get<std::string>("id"   );
-	_label = data.get<std::string>("label");
-
 	// Return a reference to the object
 	return *this;
+}
+
+
+// Label parsing method.
+void KeyboardMap::KeyDescriptor::parseLabel(const std::string &rawLabel)
+{
+	static const boost::regex re_special_label("\\{(.+)\\}");
+	static const boost::regex re_label_field("(?:^|,)((?:[^,\\\\]|\\\\[,\\\\{}])*)");
+	static const boost::regex re_escaped_pattern("\\\\[,\\\\{}]");
+	boost::smatch m;
+	_label.clear();
+
+	// Special label (for instance: `{caps-lock}`).
+	if(boost::regex_match(rawLabel, m, re_special_label) && m.size()==2) {
+		_label.push_back(translateSpecialLabel(m[1]));
+	}
+
+	// List of labels separated with commas (for instance: `A` or `5,%`).
+	else {
+		boost::sregex_token_iterator it(rawLabel.begin(), rawLabel.end(), re_label_field, 1), end;
+		while(it!=end && _label.size()<4) {
+			std::string value = boost::regex_replace(std::string(*it), re_escaped_pattern,
+				&KeyboardMap::KeyDescriptor::translateEscapedChar);
+			_label.push_back(std::move(value));
+			++it;
+		}
+	}
+}
+
+
+// Translate the escaped character in key labels read from KBM files.
+std::string KeyboardMap::KeyDescriptor::translateEscapedChar(const boost::smatch &m)
+{
+	std::string in = m[0];
+	if     (in=="\\\\") return "\\";
+	else if(in=="\\," ) return "," ;
+	else if(in=="\\{" ) return "{" ;
+	else if(in=="\\}" ) return "}" ;
+	else return in;
+}
+
+
+// Translate special label IDs into localized strings.
+std::string KeyboardMap::KeyDescriptor::translateSpecialLabel(const std::string &code)
+{
+	static const boost::regex re_f_key("f([0-9]+)");
+	boost::smatch m;
+
+	// An empty code is invalid.
+	if(code.empty()) return _("Invalid");
+
+	// Match code that is `f` + one or more digit
+	else if(boost::regex_match(code, m, re_f_key) && m.size()==2) return "F"+m[1];
+
+	// Main pad keys
+	else if(code=="ctrl"       ) return _("Ctrl"      );
+	else if(code=="shift"      ) return _("Shift"     );
+	else if(code=="alt"        ) return _("Alt"       );
+	else if(code=="alt-gr"     ) return _("Alt Gr"    );
+	else if(code=="super"      ) return _("Super"     );
+	else if(code=="tab"        ) return _("Tab"       );
+	else if(code=="caps-lock"  ) return _("Caps\nLock");
+	else if(code=="space"      ) return _("Space"     );
+	else if(code=="menu"       ) return _("Menu"      );
+	else if(code=="back-space" ) return _("Back Space");
+	else if(code=="enter"      ) return _("Enter"     );
+
+	// Special function keys
+	else if(code=="esc"         ) return _("Esc"          );
+	else if(code=="print-screen") return _("Print\nScreen");
+	else if(code=="scroll-lock" ) return _("Scroll\nLock" );
+	else if(code=="pause"       ) return _("Pause"        );
+
+	// Numeric keypad
+	else if(code=="num-lock" ) return _("Num\nLock");
+	else if(code=="enter-nkp") return _("Enter"    );
+
+	// Navigation keys
+	else if(code=="insert"     ) return _("Ins"       );
+	else if(code=="delete"     ) return _("Del"       );
+	else if(code=="home"       ) return _("Home"      );
+	else if(code=="end"        ) return _("End"       );
+	else if(code=="page-up"    ) return _("Page\nUp"  );
+	else if(code=="page-down"  ) return _("Page\nDown");
+	else if(code=="arrow-up"   ) return "↑";
+	else if(code=="arrow-left" ) return "←";
+	else if(code=="arrow-down" ) return "↓";
+	else if(code=="arrow-right") return "→";
+
+	// Unknown code -> return it "as-is"
+	else return code;
 }
 
 

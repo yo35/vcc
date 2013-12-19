@@ -27,6 +27,7 @@
 #include <cstdint>
 #include <cstring>
 #include <vector>
+#include <boost/regex.hpp>
 #include <boost/property_tree/ptree.hpp>
 
 
@@ -69,7 +70,7 @@ public:
 		/**
 		 * Label of the key.
 		 */
-		const std::string &label() const { return _label; }
+		const std::vector<std::string> &label() const { return _label; }
 
 		/**
 		 * Scan-code on the current platform.
@@ -126,16 +127,21 @@ public:
 
 	private:
 
+		// Private functions
+		void parseLabel(const std::string &rawLabel);
+		static std::string translateEscapedChar(const boost::smatch &m);
+		static std::string translateSpecialLabel(const std::string &code);
+
 		// Private members
-		std::string      _id               ;
-		std::string      _label            ;
-		std::uint32_t    _scan_code_unix   ;
-		std::uint32_t    _scan_code_windows;
-		bool             _in_numeric_keypad;
-		std::size_t      _line_bottom      ;
-		std::size_t      _line_top         ;
-		std::vector<int> _per_line_x       ;
-		std::vector<int> _per_line_width   ;
+		std::string              _id               ;
+		std::vector<std::string> _label            ;
+		std::uint32_t            _scan_code_unix   ;
+		std::uint32_t            _scan_code_windows;
+		bool                     _in_numeric_keypad;
+		std::size_t              _line_bottom      ;
+		std::size_t              _line_top         ;
+		std::vector<int>         _per_line_x       ;
+		std::vector<int>         _per_line_width   ;
 	};
 
 
