@@ -104,6 +104,7 @@ private:
 
 	// Private functions
 	void ensureKeyboardMapBinded() const;
+	void drawKeyLabel(std::size_t idx);
 	void drawKeyShape(std::size_t idx);
 	void drawRectangularKeyShape(int x, int y, int w, int h);
 	void drawPolygonalKeyShape(int x0, int y0, int dxTop, int dxBottom,
@@ -111,6 +112,7 @@ private:
 		const std::vector<int> &dxRight, const std::vector<int> &dyRight);
 	std::vector<int> computeCornerRadius(int dxTop, int dxBottom,
 		const std::vector<int> &dx, const std::vector<int> &dy) const;
+	double computeFontFactor(double w, double h, const std::vector<QString> &texts) const;
 
 	// Private members
 	bool                    _displayNumericKeypad;

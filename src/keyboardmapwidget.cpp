@@ -26,6 +26,7 @@
 #include <algorithm>
 #include <numeric>
 #include <cstdlib>
+#include <cfloat>
 #include <translation.h>
 #include <QPainter>
 #include <QKeyEvent>
@@ -154,31 +155,76 @@ void KeyboardMapWidget::paintEvent(QPaintEvent *)
 	_painter = &painter;
 	_keyMargin = std::min(5, KeyboardMap::MINIMUM_KEY_SIZE/2);
 	_keyRadius = 15;
+	painter.setBrush(_colorKeyDefault);
 
-	//painter.setBrush(Qt::red);
-	//painter.drawRect(0, 0, keyboardWidth, keyboardHeight);
-
-
-	//painter.setPen(QPen(Qt::black, 0, Qt::SolidLine, Qt::))
-	painter.setBrush(Qt::white);
-	painter.setBrush(Qt::blue);
-
-	for(std::size_t k=0; k<_keyboardMap->key_count(); ++k) {
-
-		painter.setBrush(_keyboardMap->key(k).line_extent()==1 ? Qt::blue : Qt::red);
+	// Draw the keys
+	for(std::size_t k=0; k<_keyboardMap->key_count(); ++k)
+	{
+		painter.save();
 		if(_keyDown.count(_keyboardMap->key(k).scan_code())>0) {
 			painter.setBrush(_colorKeyDown);
 		}
 		drawKeyShape(k);
+		painter.setPen(Qt::black);
+		drawKeyLabel(k);
+		painter.restore();
+	}
+}
+
+
+// Draw the label of the key corresponding to the given index.
+void KeyboardMapWidget::drawKeyLabel(std::size_t idx)
+{
+	const KeyboardMap::KeyDescriptor &key(_keyboardMap->key(idx));
+	std::size_t line = key.line_top();
+
+	// The label is drawn on the key-line corresponding to the larger area of the key.
+	//  -> Search this key-line.
+	for(std::size_t k=line+1; k<key.line_bottom(); ++k) {
+		if(key.width(k)>key.width(line)) {
+			line = k;
+		}
 	}
 
-	//drawRectangularKeyShape(0, 0, 130, 100);
-	//drawRectangularKeyShape(130, 0, 100, 100);
-	//drawRectangularKeyShape(0, 100, 250, 100);
-	//painter.drawRect(0, 0, 130, 100);
+	// Convert the label fields into QStrings
+	std::vector<QString> field(key.label().size());
+	std::transform(key.label().begin(), key.label().end(), field.begin(), &QString::fromStdString);
 
+	// Draw the label (that may be composed of several fields) in a rectangle
+	// of size (w,h) located at (x,y).
+	double x = key.x    (line) + _keyMargin;
+	double w = key.width(line) - 2*_keyMargin;
+	double y = _keyboardMap->line_y     (line) + _keyMargin;
+	double h = _keyboardMap->line_height(line) - 2*_keyMargin;
 
-	//TODO
+	// Actual available size for each field, and remaining spaces
+	double aw = field.size()<=2 ? w*0.8  : (w*0.9)/2;
+	double ah = field.size()<=1 ? h*0.65 : (h*0.9)/2;
+	double rw = w - aw*(field.size()<=2 ? 1 : 2);
+	double rh = h - ah*(field.size()<=1 ? 1 : 2);
+
+	// Re-scale the font
+	double factor = computeFontFactor(aw, ah, field);
+	QFont font = _painter->font();
+	font.setPointSizeF(font.pointSizeF() * factor);
+	_painter->setFont(font);
+
+	// Draw the fields
+	if(field.size()==1) {
+		_painter->drawText(QRectF(x+rw/2, y+rh/2, aw, ah), Qt::AlignCenter, field[0]);
+	}
+	else if(field.size()==2) {
+		_painter->drawText(QRectF(x+rw/2, y   +rh/2, aw, ah), Qt::AlignCenter, field[1]);
+		_painter->drawText(QRectF(x+rw/2, y+ah+rh/2, aw, ah), Qt::AlignCenter, field[0]);
+	}
+	else if(field.size()==3 || field.size()==4) {
+		_painter->drawText(QRectF(x   +rw/2, y   +rh/2, aw, ah), Qt::AlignCenter, field[1]);
+		_painter->drawText(QRectF(x   +rw/2, y+ah+rh/2, aw, ah), Qt::AlignCenter, field[0]);
+		_painter->drawText(QRectF(x+aw+rw/2, y+ah+rh/2, aw, ah), Qt::AlignCenter, field[2]);
+		if(field.size()==4) {
+			_painter->drawText(QRectF(x+aw+rw/2, y   +rh/2, aw, ah), Qt::AlignCenter, field[3]);
+		}
+	}
 }
 
 
@@ -361,4 +407,17 @@ std::vector<int> KeyboardMapWidget::computeCornerRadius(int dxTop, int dxBottom,
 		retval[2*k+1] = std::min(_keyRadius, std::min(std::abs(k==n-1 ? dxBottom : dx[k  ]), dy[k]) / 2);
 	}
 	return std::move(retval);
+}
+
+
+// Determine the factor to apply to the current to make each string in `texts`
+// fit into a rectangle of size (w,h)
+double KeyboardMapWidget::computeFontFactor(double w, double h, const std::vector<QString> &texts) const
+{
+	double retval = DBL_MAX;
+	for(const auto &text : texts) {
+		QRectF br = _painter->boundingRect(QRectF(0, 0, w, h), Qt::AlignCenter, text);
+		retval = std::min(retval, std::min(w/br.width(), h/br.height()));
+	}
+	return retval;
 }
