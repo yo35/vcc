@@ -43,6 +43,11 @@ public:
 	 */
 	static const int MINIMUM_KEY_SIZE = 20;
 
+	/**
+	 * Maximal number of key label fields
+	 */
+	static const std::size_t MAXIMAL_KEY_LABEL_FIELDS = 4;
+
 
 	/**
 	 * Physical description of a single key.

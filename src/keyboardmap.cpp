@@ -84,7 +84,7 @@ void KeyboardMap::KeyDescriptor::parseLabel(const std::string &rawLabel)
 	// List of labels separated with commas (for instance: `A` or `5,%`).
 	else {
 		boost::sregex_token_iterator it(rawLabel.begin(), rawLabel.end(), re_label_field, 1), end;
-		while(it!=end && _label.size()<4) {
+		while(it!=end && _label.size()<MAXIMAL_KEY_LABEL_FIELDS) {
 			std::string value = boost::regex_replace(std::string(*it), re_escaped_pattern,
 				&KeyboardMap::KeyDescriptor::translateEscapedChar);
 			_label.push_back(std::move(value));
