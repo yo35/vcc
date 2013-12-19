@@ -21,7 +21,7 @@
 
 
 # Boost
-find_package(Boost COMPONENTS system filesystem)
+find_package(Boost COMPONENTS system filesystem regex)
 
 
 # Qt
