@@ -26,25 +26,25 @@
 		</key>
 		<key>
 			<id>shift-left</id>
-			<label>{shift-left}</label>
+			<label>{shift}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>0</x><width>120</width></geometry>
 			<scan-code><unix>50</unix><windows>0</windows></scan-code>
 		</key>
 		<key>
 			<id>ctrl-left</id>
-			<label>{ctrl-left}</label>
+			<label>{ctrl}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>0</x><width>130</width></geometry>
 			<scan-code><unix>37</unix><windows>0</windows></scan-code>
 		</key>
 		<key>
 			<id>super-left</id>
-			<label>{super-left}</label>
+			<label>{super}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>130</x><width>130</width></geometry>
 			<scan-code><unix>0</unix><windows>0</windows></scan-code>
 		</key>
 		<key>
 			<id>alt-left</id>
-			<label>{alt-left}</label>
+			<label>{alt}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>260</x><width>130</width></geometry>
 			<scan-code><unix>64</unix><windows>0</windows></scan-code>
 		</key>
@@ -62,7 +62,7 @@
 		</key>
 		<key>
 			<id>super-right</id>
-			<label>{super-right}</label>
+			<label>{super}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1090</x><width>130</width></geometry>
 			<scan-code><unix>0</unix><windows>0</windows></scan-code>
 		</key>
@@ -74,13 +74,13 @@
 		</key>
 		<key>
 			<id>ctrl-right</id>
-			<label>{ctrl-right}</label>
+			<label>{ctrl}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1350</x><width>130</width></geometry>
 			<scan-code><unix>105</unix><windows>0</windows></scan-code>
 		</key>
 		<key>
 			<id>shift-right</id>
-			<label>{shift-right}</label>
+			<label>{shift}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>1220</x><width>260</width></geometry>
 			<scan-code><unix>62</unix><windows>0</windows></scan-code>
 		</key>
