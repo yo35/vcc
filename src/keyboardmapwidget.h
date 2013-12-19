@@ -25,6 +25,7 @@
 
 #include <QWidget>
 #include <vector>
+#include <set>
 #include "keyboardmap.h"
 QT_BEGIN_NAMESPACE
 	class QPainter;
@@ -87,6 +88,14 @@ public:
 protected:
 
 	/**
+	 * @name Key event handlers.
+	 * @{
+	 */
+	void keyPressEvent(QKeyEvent *event) override;
+	void keyReleaseEvent(QKeyEvent *event) override;
+	/**@} */
+
+	/**
 	 * Widget rendering method.
 	 */
 	void paintEvent(QPaintEvent *event) override;
@@ -104,8 +113,14 @@ private:
 		const std::vector<int> &dx, const std::vector<int> &dy) const;
 
 	// Private members
-	bool               _displayNumericKeypad;
-	const KeyboardMap *_keyboardMap         ;
+	bool                    _displayNumericKeypad;
+	const KeyboardMap      *_keyboardMap         ;
+	std::set<std::uint32_t> _keyDown             ;
+
+	// Colors
+	QColor _colorBackground;
+	QColor _colorKeyDefault;
+	QColor _colorKeyDown   ;
 
 	// Temporary members used at rendering time
 	// (should not be used outside the `paintEvent` method).

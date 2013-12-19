@@ -28,13 +28,17 @@
 #include <cstdlib>
 #include <translation.h>
 #include <QPainter>
+#include <QKeyEvent>
 
 
 // Constructor.
 KeyboardMapWidget::KeyboardMapWidget(QWidget *parent) :
 	QWidget(parent), _displayNumericKeypad(true), _keyboardMap(nullptr),
+	_colorBackground(208,255,208), _colorKeyDefault(Qt::white), _colorKeyDown(255,128,0),
 	_painter(nullptr), _keyMargin(0), _keyRadius(0)
-{}
+{
+	setFocusPolicy(Qt::StrongFocus);
+}
 
 
 // Throw an exception if no keyboard map is binded to the widget.
@@ -93,6 +97,28 @@ QSize KeyboardMapWidget::minimumSizeHint() const { return QSize(500, 200); }
 QSize KeyboardMapWidget::sizeHint       () const { return QSize(800, 300); }
 
 
+// Key-press event handler.
+void KeyboardMapWidget::keyPressEvent(QKeyEvent *event)
+{
+	if(event->isAutoRepeat()) {
+		return;
+	}
+	_keyDown.insert(event->nativeScanCode());
+	update();
+}
+
+
+// Key-release event handler.
+void KeyboardMapWidget::keyReleaseEvent(QKeyEvent *event)
+{
+	if(event->isAutoRepeat()) {
+		return;
+	}
+	_keyDown.erase(event->nativeScanCode());
+	update();
+}
+
+
 // Widget rendering method.
 void KeyboardMapWidget::paintEvent(QPaintEvent *)
 {
@@ -102,7 +128,7 @@ void KeyboardMapWidget::paintEvent(QPaintEvent *)
 	painter.setPen(Qt::NoPen);
 
 	// Background
-	painter.setBrush(QColor(208, 255, 208));
+	painter.setBrush(_colorBackground);
 	painter.drawRect(0, 0, width(), height());
 	if(_keyboardMap==nullptr) {
 		return;
@@ -140,6 +166,9 @@ void KeyboardMapWidget::paintEvent(QPaintEvent *)
 	for(std::size_t k=0; k<_keyboardMap->key_count(); ++k) {
 
 		painter.setBrush(_keyboardMap->key(k).line_extent()==1 ? Qt::blue : Qt::red);
+		if(_keyDown.count(_keyboardMap->key(k).scan_code())>0) {
+			painter.setBrush(_colorKeyDown);
+		}
 		drawKeyShape(k);
 	}
 
