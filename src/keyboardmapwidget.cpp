@@ -35,7 +35,7 @@
 // Constructor.
 KeyboardMapWidget::KeyboardMapWidget(QWidget *parent) :
 	QWidget(parent), _displayNumericKeypad(true), _keyboardMap(nullptr),
-	_colorBackground(208,255,208), _colorKeyDefault(Qt::white), _colorKeyDown(255,128,0),
+	_colorBackground(208,255,208), _colorText(Qt::black), _colorKeyDefault(Qt::white), _colorKeyDown(255,128,0),
 	_painter(nullptr), _keyMargin(0), _keyRadius(0)
 {
 	setFocusPolicy(Qt::StrongFocus);
@@ -165,7 +165,7 @@ void KeyboardMapWidget::paintEvent(QPaintEvent *)
 			painter.setBrush(_colorKeyDown);
 		}
 		drawKeyShape(k);
-		painter.setPen(Qt::black);
+		painter.setPen(_colorText);
 		drawKeyLabel(k);
 		painter.restore();
 	}

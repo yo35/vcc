@@ -121,6 +121,7 @@ private:
 
 	// Colors
 	QColor _colorBackground;
+	QColor _colorText      ;
 	QColor _colorKeyDefault;
 	QColor _colorKeyDown   ;
 
