@@ -23,8 +23,71 @@
 #ifndef TRANSLATION_H_
 #define TRANSLATION_H_
 
-#include <libintl.h>
+#include <QObject>
+#include <string>
+#include <utility>
+#include <ostream>
 
-#define _(txt) gettext(txt)
+
+/**
+ * Mark a string `s` for translation.
+ */
+#define _(s) QStringWrapper(QObject::tr(s))
+
+
+/**
+ * This class is used in the macro `_()` to wrap the QString object returned by
+ * the translation function `QObject::tr()`, to provide automatic cast into
+ * the common string classes while avoiding as much as possible useless conversions.
+ *
+ * `QStringWrapper` is not supposed to be used in a different context.
+ */
+class QStringWrapper
+{
+public:
+
+	/**
+	 * @name Neither copy nor move is allowed.
+	 * @{
+	 */
+	QStringWrapper(const QStringWrapper &op) = delete;
+	QStringWrapper(QStringWrapper &&op) = delete;
+	QStringWrapper &operator=(const QStringWrapper &op) = delete;
+	QStringWrapper &operator=(QStringWrapper &&op) = delete;
+	/**@} */
+
+	/**
+	 * Constructor.
+	 */
+	explicit QStringWrapper(QString &&data) : _data(std::move(data)) {}
+
+	/**
+	 * Native conversion.
+	 */
+	operator QString() { return std::move(_data); }
+
+	/**
+	 * Conversion into a standard C++ string.
+	 */
+	operator std::string() const { return _data.toStdString(); }
+
+	/**
+	 * Conversion into a null-terminated char array.
+	 */
+	explicit operator const char *() const { return _data.toLocal8Bit().constData(); }
+
+	/**
+	 * Output stream operator.
+	 */
+	friend std::ostream &operator<<(std::ostream &stream, const QStringWrapper &wrapper)
+	{
+		return stream << static_cast<const char *>(wrapper);
+	}
+
+private:
+
+	// Private members
+	QString _data;
+};
 
 #endif /* TRANSLATION_H_ */
