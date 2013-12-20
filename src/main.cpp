@@ -22,13 +22,19 @@
 
 #include <iostream>
 #include <QApplication>
-#include <QStandardPaths>
+#include <QTranslator>
+#include <QLibraryInfo>
 #include "mainwindow.h"
 
 int main(int argc, char **argv)
 {
 	std::cout << "Hello world!" << std::endl;
 	QApplication app(argc, argv);
+
+	QTranslator qtTranslator;
+	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	app.installTranslator(&qtTranslator);
+
 	MainWindow mainWindow;
 	mainWindow.show();
 	return app.exec();
