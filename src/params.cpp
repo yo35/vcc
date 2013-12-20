@@ -320,7 +320,7 @@ void Params::ensure_keyboard_maps_loaded()
 		// Try to load the current file
 		try {
 			KeyboardMap kbm;
-			kbm.load(it->path().c_str());
+			kbm.load(it->path().string());
 			_keyboard_maps.insert(kbm.id());
 			_keyboard_map_data[kbm.id()] = std::move(kbm);
 		}
