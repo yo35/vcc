@@ -20,20 +20,19 @@
  ******************************************************************************/
 
 
-#ifndef MAINWINDOW_H_
-#define MAINWINDOW_H_
+#ifndef DEBUGDIALOG_H_
+#define DEBUGDIALOG_H_
 
-#include <QMainWindow>
-#include "options.h"
-#include "bitimer.h"
-class DialWidget;
-class DebugDialog;
+#include <QDialog>
+QT_BEGIN_NAMESPACE
+	class QLineEdit;
+QT_END_NAMESPACE
 
 
 /**
- * Main window of the application.
+ * Dialog providing extra-information for debugging purposes.
  */
-class MainWindow : public QMainWindow
+class DebugDialog : public QDialog
 {
 	Q_OBJECT
 
@@ -42,43 +41,22 @@ public:
 	/**
 	 * Constructor.
 	 */
-	MainWindow();
-
+	DebugDialog(QWidget *parent=0);
 
 protected:
-
-	/**
-	 * Close event handler.
-	 */
-	void closeEvent(QCloseEvent *event) override;
 
 	/**
 	 * Key-press event handler.
 	 */
 	void keyPressEvent(QKeyEvent *event) override;
 
-
 private:
 
-	// Private functions
-	void onResetClicked();
-	void onPauseClicked();
-	void onTCtrlClicked();
-	void onPrefsClicked();
-	void onHelpClicked ();
-	void onDebugClicked();
-	void onAboutClicked();
-	void loadPersistentParameters();
-	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
-
-	// Widgets
-	Enum::array<Side, DialWidget *> _dial;
-	QStatusBar *_statusBar;
-	DebugDialog *_debugDialog;
-
 	// Private members
-	BiTimer           _core             ;
-	ResetConfirmation _resetConfirmation;
+	QLineEdit *_infoKeyID      ;
+	QLineEdit *_infoKeyText    ;
+	QLineEdit *_infoKeyNativeID;
+	QLineEdit *_infoKeyScanCode;
 };
 
-#endif /* MAINWINDOW_H_ */
+#endif /* DEBUGDIALOG_H_ */

@@ -25,6 +25,7 @@
 #include "dialwidget.h"
 #include "timecontroldialog.h"
 #include "preferencedialog.h"
+#include "debugdialog.h"
 #include <translation.h>
 #include <QKeyEvent>
 #include <QHBoxLayout>
@@ -38,7 +39,7 @@
 
 
 // Constructor.
-MainWindow::MainWindow()
+MainWindow::MainWindow() : _debugDialog(nullptr)
 {
 	setWindowTitle(QString::fromStdString(Params::get().app_full_name()));
 	setWindowIcon(fetchIcon("logo", false));
@@ -59,21 +60,24 @@ MainWindow::MainWindow()
 	QAction *actTCtrl = toolBar->addAction(fetchIcon("tctrl", false), _("Time control"  ));
 	QAction *actNames = toolBar->addAction(fetchIcon("names", false), _("Players' names"));
 	toolBar->addSeparator();
-	QAction *actPrefs = toolBar->addAction(fetchIcon("preferences-desktop"), _("Preferences"));
-	QAction *actHelp  = toolBar->addAction(fetchIcon("help-contents"      ), _("Help"       ));
-	QAction *actAbout = toolBar->addAction(fetchIcon("help-about"         ), _("About"      ));
+	QAction *actPrefs = toolBar->addAction(fetchIcon("preferences-desktop"   ), _("Preferences"));
+	QAction *actHelp  = toolBar->addAction(fetchIcon("help-contents"         ), _("Help"       ));
+	QAction *actDebug = toolBar->addAction(fetchIcon("applications-utilities"), _("Debug"      ));
+	QAction *actAbout = toolBar->addAction(fetchIcon("help-about"            ), _("About"      ));
 	actReset->setToolTip(_("Reset the clock"                          ));
 	actPause->setToolTip(_("Pause the clock"                          ));
 	actTCtrl->setToolTip(_("Change the current time control"          ));
 	actNames->setToolTip(_("Edit the names of the players"            ));
 	actPrefs->setToolTip(_("Set the configuration and the preferences"));
 	actHelp ->setToolTip(_("Show a short help message"                ));
+	actDebug->setToolTip(_("Debug information"                        ));
 	actAbout->setToolTip(_("Information about credits and license"    ));
 	connect(actReset, &QAction::triggered, this, &MainWindow::onResetClicked);
 	connect(actPause, &QAction::triggered, this, &MainWindow::onPauseClicked);
 	connect(actTCtrl, &QAction::triggered, this, &MainWindow::onTCtrlClicked);
 	connect(actPrefs, &QAction::triggered, this, &MainWindow::onPrefsClicked);
 	connect(actHelp , &QAction::triggered, this, &MainWindow::onHelpClicked );
+	connect(actDebug, &QAction::triggered, this, &MainWindow::onDebugClicked);
 	connect(actAbout, &QAction::triggered, this, &MainWindow::onAboutClicked);
 
 	// Create the widgets
@@ -183,6 +187,16 @@ void MainWindow::onHelpClicked()
 		"suits good to your keyboard. Thus, only the A-Z keys will be used by VCC, "
 		"but the software will be usable anyway."
 	));
+}
+
+
+// Debug button handler.
+void MainWindow::onDebugClicked()
+{
+	if(_debugDialog==nullptr) {
+		_debugDialog = new DebugDialog(this);
+	}
+	_debugDialog->show();
 }
 
 
