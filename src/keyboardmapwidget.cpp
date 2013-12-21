@@ -412,7 +412,7 @@ std::vector<int> KeyboardMapWidget::computeCornerRadius(int dxTop, int dxBottom,
 
 
 // Determine the factor to apply to the current to make each string in `texts`
-// fit into a rectangle of size (w,h)
+// fit into a rectangle of size (w,h).
 double KeyboardMapWidget::computeFontFactor(double w, double h, const std::vector<QString> &texts) const
 {
 	double retval = DBL_MAX;
