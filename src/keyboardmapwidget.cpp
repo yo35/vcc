@@ -27,6 +27,7 @@
 #include <numeric>
 #include <cstdlib>
 #include <cfloat>
+#include <cmath>
 #include <translation.h>
 #include <QPainter>
 #include <QKeyEvent>
@@ -198,8 +199,8 @@ void KeyboardMapWidget::drawKeyLabel(std::size_t idx)
 	double h = _keyboardMap->line_height(line) - 2*_keyMargin;
 
 	// Actual available size for each field, and remaining spaces
-	double aw = field.size()<=2 ? w*0.8  : (w*0.9)/2;
-	double ah = field.size()<=1 ? h*0.65 : (h*0.9)/2;
+	double aw = field.size()<=2 ? w*0.8 : (w*0.9)/2;
+	double ah = field.size()<=1 ? h*0.6 : (h*0.9)/2;
 	double rw = w - aw*(field.size()<=2 ? 1 : 2);
 	double rh = h - ah*(field.size()<=1 ? 1 : 2);
 
@@ -419,5 +420,5 @@ double KeyboardMapWidget::computeFontFactor(double w, double h, const std::vecto
 		QRectF br = _painter->boundingRect(QRectF(0, 0, w, h), Qt::AlignCenter, text);
 		retval = std::min(retval, std::min(w/br.width(), h/br.height()));
 	}
-	return retval;
+	return std::round(retval*4)/4;
 }
