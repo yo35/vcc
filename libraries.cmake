@@ -27,15 +27,21 @@ find_package(Boost COMPONENTS system filesystem regex)
 # Qt
 set(CMAKE_AUTOMOC ON)
 find_package(Qt5Widgets)
+find_package(Qt5X11Extras)
+
+
+# XCB
+find_package(PkgConfig)
+pkg_check_modules(Xcb REQUIRED xcb)
 
 
 # All librairies together
 set(all_INCLUDE_DIRS
-	${Boost_INCLUDE_DIRS}
+	${Boost_INCLUDE_DIRS} ${Xcb_INCLUDE_DIRS}
 )
 set(all_LIBRARY_DIRS
-	${Boost_LIBRARY_DIRS}
+	${Boost_LIBRARY_DIRS} ${Xcb_LIBRARY_DIRS}
 )
 set(all_LIBRARIES
-	${Boost_LIBRARIES}
+	${Boost_LIBRARIES} ${Xcb_LIBRARIES}
 )

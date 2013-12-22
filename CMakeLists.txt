@@ -197,7 +197,7 @@ target_link_libraries(
 	${HOOKDLL_LIBRARY}
 )
 
-qt5_use_modules(${EXECUTABLE_NAME} Widgets)
+qt5_use_modules(${EXECUTABLE_NAME} Widgets X11Extras)
 
 
 ################################################################################
