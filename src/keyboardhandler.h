@@ -20,21 +20,25 @@
  ******************************************************************************/
 
 
-#ifndef MAINWINDOW_H_
-#define MAINWINDOW_H_
+#ifndef KEYBOARDHANDLER_H_
+#define KEYBOARDHANDLER_H_
 
-#include <QMainWindow>
-#include "options.h"
-#include "bitimer.h"
-class KeyboardHandler;
-class DialWidget;
-class DebugDialog;
+#include <QObject>
+#include <cstdint>
+#include <set>
+QT_BEGIN_NAMESPACE
+	class QWidget;
+QT_END_NAMESPACE
+
+#include <QAbstractNativeEventFilter>
+class xcb_connection_t;
+class xcb_screen_t    ;
 
 
 /**
- * Main window of the application.
+ * TODO
  */
-class MainWindow : public QMainWindow
+class KeyboardHandler : public QObject
 {
 	Q_OBJECT
 
@@ -43,38 +47,71 @@ public:
 	/**
 	 * Constructor.
 	 */
-	MainWindow();
-
-protected:
+	KeyboardHandler(QWidget *parent);
 
 	/**
-	 * Close event handler.
+	 * Destructor.
 	 */
-	void closeEvent(QCloseEvent *event) override;
+	virtual ~KeyboardHandler();
+
+	/**
+	 * Return a set containing the scan-codes of all keys currently down.
+	 */
+	const std::set<std::uint32_t> &keysDown() const { return _keysDown; }
+
+	/**
+	 * Check whether a given key is or not currently down.
+	 */
+	bool isDown(std::uint32_t scanCode) const { return _keysDown.count(scanCode)>0; }
+
+signals:
+
+	/**
+	 * Signal emitted when a key is pressed.
+	 */
+	void keyPressed(std::uint32_t scanCode);
+
+	/**
+	 * Signal emitted when a key is released.
+	 */
+	void keyReleased(std::uint32_t scanCode);
 
 private:
 
-	// Private functions
-	void onKeyPressed(std::uint32_t scanCode);
-	void onResetClicked();
-	void onPauseClicked();
-	void onTCtrlClicked();
-	void onPrefsClicked();
-	void onHelpClicked ();
-	void onDebugClicked();
-	void onAboutClicked();
-	void loadPersistentParameters();
-	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
+	/**
+	 * Event filter used to alter the behavior ot the regular Qt event dispatcher.
+	 */
+	class EventFilter : public QAbstractNativeEventFilter
+	{
+	public:
 
-	// Widgets
-	Enum::array<Side, DialWidget *> _dial;
-	QStatusBar *_statusBar;
-	DebugDialog *_debugDialog;
-	KeyboardHandler *_keyboardHandler;
+		/**
+		 * Constructor.
+		 */
+		EventFilter(KeyboardHandler *owner);
+
+		/**
+		 * Implementation of the event filter method.
+		 */
+		bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
+
+	private:
+
+		// Private members
+		KeyboardHandler *_owner;
+	};
+
+	// Private functions
+	void notifyKeyPressed (std::uint32_t scanCode);
+	void notifyKeyReleased(std::uint32_t scanCode);
 
 	// Private members
-	BiTimer           _core             ;
-	ResetConfirmation _resetConfirmation;
+	std::set<std::uint32_t> _keysDown;
+
+	// XCB implementation
+	EventFilter       _eventFilter;
+	xcb_connection_t *_connection ;
+	xcb_screen_t     *_screen     ;
 };
 
-#endif /* MAINWINDOW_H_ */
+#endif /* KEYBOARDHANDLER_H_ */

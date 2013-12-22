@@ -23,6 +23,7 @@
 #include "mainwindow.h"
 #include "params.h"
 #include "dialwidget.h"
+#include "keyboardhandler.h"
 #include "timecontroldialog.h"
 #include "preferencedialog.h"
 #include "debugdialog.h"
@@ -93,6 +94,10 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	// Status bar
 	_statusBar = statusBar();
 
+	// Low-level keyboard handler
+	_keyboardHandler = new KeyboardHandler(this);
+	connect(_keyboardHandler, &KeyboardHandler::keyPressed, this, &MainWindow::onKeyPressed);
+
 	_core.set_time_control(Params::get().time_control());
 	_statusBar->showMessage(QString::fromStdString(_core.time_control().description()));
 	loadPersistentParameters();
@@ -107,19 +112,9 @@ void MainWindow::closeEvent(QCloseEvent *)
 
 
 // Key-press event handler.
-void MainWindow::keyPressEvent(QKeyEvent *event)
+void MainWindow::onKeyPressed(std::uint32_t scanCode)
 {
-	std::cout << "Key press, key=" << event->key()
-		<< " nativeScanCode=" << event->nativeScanCode()
-		<< " nativeVirtualKey=" << event->nativeVirtualKey()
-		<< std::endl;
-	int keyCode = event->key();
-	if(keyCode==65) // Key A
-		_core.start_timer(Side::LEFT);
-	else if(keyCode==66) // Key B
-		_core.start_timer(Side::RIGHT);
-	else if(keyCode==67) // Key C
-		_core.stop_timer();
+	std::cout << "Key press, key=" << scanCode << std::endl;
 }
 
 
