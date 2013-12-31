@@ -21,7 +21,6 @@
 
 
 #include "keyboardhandler.h"
-#include <QWidget>
 #include <QAbstractEventDispatcher>
 #include <QX11Info>
 #include <xcb/xcb.h>

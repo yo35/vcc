@@ -26,9 +26,6 @@
 #include <QObject>
 #include <cstdint>
 #include <set>
-QT_BEGIN_NAMESPACE
-	class QWidget;
-QT_END_NAMESPACE
 
 #include <QAbstractNativeEventFilter>
 class xcb_connection_t;
@@ -36,7 +33,12 @@ class xcb_screen_t    ;
 
 
 /**
- * TODO
+ * Object to capture and to handle all the key-press/key-release events in a low-level manner.
+ *
+ * This low-level handling is particularly useful to deal with dead-keys
+ * (such as the circumflex key ^ in the French keyboard) or with keys that triggers an action
+ * at the OS level (for instance, pressing the window key on Windows popus the start menu
+ * and makes the application lost the focus).
  */
 class KeyboardHandler : public QObject
 {
@@ -56,7 +58,7 @@ public:
 
 	/**
 	 * Whether the keyboard handler is actually enabled or not. If not enabled,
-	 * no signal will be emitted by the keyboard handler, and no jkey is reported
+	 * no signal will be emitted by the keyboard handler, and no key is reported
 	 * as "down". By default, the keyboard handler is not enabled.
 	 */
 	bool isEnabled() const { return _enabled; }
