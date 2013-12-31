@@ -47,12 +47,24 @@ public:
 	/**
 	 * Constructor.
 	 */
-	KeyboardHandler(QWidget *parent);
+	KeyboardHandler(QObject *parent);
 
 	/**
 	 * Destructor.
 	 */
 	virtual ~KeyboardHandler();
+
+	/**
+	 * Whether the keyboard handler is actually enabled or not. If not enabled,
+	 * no signal will be emitted by the keyboard handler, and no jkey is reported
+	 * as "down". By default, the keyboard handler is not enabled.
+	 */
+	bool isEnabled() const { return _enabled; }
+
+	/**
+	 * Enable or disable the keyboard handler.
+	 */
+	void setEnabled(bool enabled);
 
 	/**
 	 * Return a set containing the scan-codes of all keys currently down.
@@ -104,8 +116,10 @@ private:
 	// Private functions
 	void notifyKeyPressed (std::uint32_t scanCode);
 	void notifyKeyReleased(std::uint32_t scanCode);
+	void clearKeysDown();
 
 	// Private members
+	bool                    _enabled ;
 	std::set<std::uint32_t> _keysDown;
 
 	// XCB implementation
