@@ -21,6 +21,7 @@
 
 
 #include "keyboardhandler.h"
+#include <QWidget>
 #include <QAbstractEventDispatcher>
 #include <QX11Info>
 #include <xcb/xcb.h>
@@ -61,14 +62,9 @@ void KeyboardHandler::clearKeysDown()
 
 
 // Constructor.
-KeyboardHandler::KeyboardHandler(QObject *parent) : QObject(parent), _enabled(false),
-	_eventFilter(this)
+KeyboardHandler::KeyboardHandler(QWidget *parent) : QObject(parent),
+	_enabled(false), _eventFilter(this), _parent(parent)
 {
-	// XCB implementation.
-	_connection = QX11Info::connection();
-	_screen     = xcb_setup_roots_iterator(xcb_get_setup(_connection)).data;
-
-	// Install the event filter that will intercept key events.
 	QAbstractEventDispatcher::instance()->installNativeEventFilter(&_eventFilter);
 }
 
@@ -95,12 +91,14 @@ void KeyboardHandler::setEnabled(bool enabled)
 	{
 		// Grab the keyboard to avoid unexpected key sequences being intercepted by the OS
 		// (for instance, it avoids the main menu begin rolled down in the Cinnamon desktop).
-		xcb_grab_keyboard(_connection, true, _screen->root, XCB_CURRENT_TIME, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC);
+		//xcb_grab_keyboard(_connection, false, _screen->root, XCB_CURRENT_TIME, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC);
+		_parent->grabKeyboard();
 	}
 
 	// Disable the keyboard handler.
 	else {
-		xcb_ungrab_keyboard(_connection, XCB_CURRENT_TIME);
+		//xcb_ungrab_keyboard(_connection, XCB_CURRENT_TIME);
+		_parent->releaseKeyboard();
 		clearKeysDown();
 	}
 }

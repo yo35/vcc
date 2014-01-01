@@ -24,12 +24,12 @@
 #define KEYBOARDHANDLER_H_
 
 #include <QObject>
+#include <QAbstractNativeEventFilter>
 #include <cstdint>
 #include <set>
-
-#include <QAbstractNativeEventFilter>
-class xcb_connection_t;
-class xcb_screen_t    ;
+QT_BEGIN_NAMESPACE
+	class QWidget;
+QT_END_NAMESPACE
 
 
 /**
@@ -37,7 +37,7 @@ class xcb_screen_t    ;
  *
  * This low-level handling is particularly useful to deal with dead-keys
  * (such as the circumflex key ^ in the French keyboard) or with keys that triggers an action
- * at the OS level (for instance, pressing the window key on Windows popus the start menu
+ * at the OS level (for instance, pressing the window key on Windows popups the start menu
  * and makes the application lost the focus).
  */
 class KeyboardHandler : public QObject
@@ -49,7 +49,7 @@ public:
 	/**
 	 * Constructor.
 	 */
-	KeyboardHandler(QObject *parent);
+	KeyboardHandler(QWidget *parent);
 
 	/**
 	 * Destructor.
@@ -121,13 +121,10 @@ private:
 	void clearKeysDown();
 
 	// Private members
-	bool                    _enabled ;
-	std::set<std::uint32_t> _keysDown;
-
-	// XCB implementation
-	EventFilter       _eventFilter;
-	xcb_connection_t *_connection ;
-	xcb_screen_t     *_screen     ;
+	bool                    _enabled    ;
+	std::set<std::uint32_t> _keysDown   ;
+	EventFilter             _eventFilter;
+	QWidget                *_parent     ;
 };
 
 #endif /* KEYBOARDHANDLER_H_ */
