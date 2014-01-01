@@ -169,21 +169,16 @@ KeyboardHandler::EventFilter::EventFilter(KeyboardHandler *owner) : _owner(owner
 
 
 // Implementation of the event filter method.
-bool KeyboardHandler::EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, long *)
+bool KeyboardHandler::EventFilter::nativeEventFilter(const QByteArray &, void *message, long *)
 {
 	// Do not intercept anything if the keyboard handler is disabled.
 	if(!_owner->_enabled) {
 		return false;
 	}
 
-	// Intercept only XCB events (although no other type of event is expected).
-	if(eventType!="xcb_generic_event_t") {
-		return false;
-	}
-	xcb_generic_event_t *event = static_cast<xcb_generic_event_t *>(message);
-
 	// Redirect key-press and key-release events to the notification methods of the owner,
 	// and forward everything else to the regular event dispatcher.
+	xcb_generic_event_t *event = static_cast<xcb_generic_event_t *>(message);
 	switch(event->response_type)
 	{
 		case XCB_KEY_PRESS:
