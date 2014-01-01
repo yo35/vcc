@@ -15,6 +15,7 @@
 # Binaries
 /locale
 /vcc
+/vcc.exe
 
 # Auto-generated source files
 /include/config.h
