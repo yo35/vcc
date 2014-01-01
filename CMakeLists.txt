@@ -66,11 +66,9 @@ include(libraries.cmake)
 
 # Divers
 set(EXECUTABLE_NAME "vcc")
-set(HOOKDLL_NAME "winkeyhook")
 
 # Noms complets
 set(EXECUTABLE_FULL_NAME "${EXECUTABLE_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
-set(HOOKDLL_FULL_NAME "${CMAKE_SHARED_LIBRARY_PREFIX}${HOOKDLL_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}")
 
 # Icône de l'application
 file(GLOB RAW_ICON_SIZES data/icons/unix/*x*)
@@ -101,13 +99,6 @@ file(
 # Fichier de configuration
 set(config_in_file include/config.h.in)
 set(config_h_file include/config.h)
-
-# Fichiers source de la DLL annexe
-file(
-	GLOB
-	dll_c_files
-	src/winkeyhook/*.c
-)
 
 # Fichiers de données
 file(
@@ -172,18 +163,6 @@ configure_file(
 	${config_h_file}
 )
 
-# Bibliothèque pour la désactivation de la touche windows
-if(${WIN32})
-	add_library(
-		${HOOKDLL_NAME}
-		SHARED
-		${dll_c_files}
-	)
-	set(HOOKDLL_LIBRARY ${HOOKDLL_NAME})
-else()
-	set(HOOKDLL_LIBRARY "")
-endif()
-
 # Exécutable
 add_executable(
 	${EXECUTABLE_NAME}
@@ -194,10 +173,10 @@ add_executable(
 target_link_libraries(
 	${EXECUTABLE_NAME}
 	${all_LIBRARIES}
-	${HOOKDLL_LIBRARY}
 )
 
-qt5_use_modules(${EXECUTABLE_NAME} Widgets X11Extras)
+qt5_use_modules(${EXECUTABLE_NAME} ${Qt5Modules})
+
 
 
 ################################################################################
@@ -254,7 +233,7 @@ add_custom_target(
 	translations
 	DEPENDS ${TRANSLATIONS_DEPENDS}
 )
-add_dependencies(${EXECUTABLE_NAME} translations)
+#add_dependencies(${EXECUTABLE_NAME} translations)
 
 # Informations
 message(STATUS "VCC will be build in ${CMAKE_BUILD_TYPE} mode")

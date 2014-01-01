@@ -27,15 +27,21 @@ find_package(Boost COMPONENTS system filesystem regex)
 # Qt
 set(CMAKE_AUTOMOC ON)
 find_package(Qt5Widgets)
-find_package(Qt5X11Extras)
+set(Qt5Modules Widgets)
+if(${UNIX})
+	find_package(Qt5X11Extras)
+	set(Qt5Modules ${Qt5Modules} X11Extras)
+endif()
 
 
 # XCB
-find_package(PkgConfig)
-pkg_check_modules(Xcb REQUIRED xcb)
+if(${UNIX})
+	find_package(PkgConfig)
+	pkg_check_modules(Xcb REQUIRED xcb)
+endif()
 
 
-# All librairies together
+# All libraries together
 set(all_INCLUDE_DIRS
 	${Boost_INCLUDE_DIRS} ${Xcb_INCLUDE_DIRS}
 )
