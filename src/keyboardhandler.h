@@ -24,12 +24,17 @@
 #define KEYBOARDHANDLER_H_
 
 #include <QObject>
-#include <QAbstractNativeEventFilter>
 #include <cstdint>
 #include <set>
 QT_BEGIN_NAMESPACE
 	class QWidget;
 QT_END_NAMESPACE
+
+#ifdef Q_OS_WIN
+	#include <windows.h>
+#else
+	#include <QAbstractNativeEventFilter>
+#endif
 
 
 /**
@@ -92,28 +97,44 @@ signals:
 
 private:
 
-	/**
-	 * Event filter used to alter the behavior ot the regular Qt event dispatcher.
-	 */
-	class EventFilter : public QAbstractNativeEventFilter
-	{
-	public:
+	#ifdef Q_OS_WIN
 
 		/**
-		 * Constructor.
+		 * Pointer to the lastly activated keyboard handler.
 		 */
-		EventFilter(KeyboardHandler *owner);
+		static KeyboardHandler *_activeHandler;
 
 		/**
-		 * Implementation of the event filter method.
+		 * Low-level callback method to handle keyboard events.
 		 */
-		bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
+		static LRESULT CALLBACK lowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 
-	private:
+	#else
 
-		// Private members
-		KeyboardHandler *_owner;
-	};
+		/**
+		 * Event filter used to alter the behavior of the regular Qt event dispatcher.
+		 */
+		class EventFilter : public QAbstractNativeEventFilter
+		{
+		public:
+
+			/**
+			 * Constructor.
+			 */
+			EventFilter(KeyboardHandler *owner);
+
+			/**
+			 * Implementation of the event filter method.
+			 */
+			bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
+
+		private:
+
+			// Private members
+			KeyboardHandler *_owner;
+		};
+
+	#endif
 
 	// Private functions
 	void notifyKeyPressed (std::uint32_t scanCode);
@@ -121,10 +142,17 @@ private:
 	void clearKeysDown();
 
 	// Private members
-	bool                    _enabled    ;
-	std::set<std::uint32_t> _keysDown   ;
-	EventFilter             _eventFilter;
-	QWidget                *_parent     ;
+	bool                    _enabled ;
+	std::set<std::uint32_t> _keysDown;
+
+	// OS-dependent implementation
+	#ifdef Q_OS_WIN
+		HMODULE _hModule;
+		HHOOK   _hHook  ;
+	#else
+		EventFilter _eventFilter;
+		QWidget    *_parent     ;
+	#endif
 };
 
 #endif /* KEYBOARDHANDLER_H_ */

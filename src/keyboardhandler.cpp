@@ -22,9 +22,11 @@
 
 #include "keyboardhandler.h"
 #include <QWidget>
-#include <QAbstractEventDispatcher>
-#include <QX11Info>
-#include <xcb/xcb.h>
+#ifndef Q_OS_WIN
+	#include <QAbstractEventDispatcher>
+	#include <QX11Info>
+	#include <xcb/xcb.h>
+#endif
 
 
 // Emit a key-press event corresponding the given scan code if the corresponding
@@ -62,10 +64,16 @@ void KeyboardHandler::clearKeysDown()
 
 
 // Constructor.
-KeyboardHandler::KeyboardHandler(QWidget *parent) : QObject(parent),
-	_enabled(false), _eventFilter(this), _parent(parent)
+KeyboardHandler::KeyboardHandler(QWidget *parent) : QObject(parent), _enabled(false),
+	#ifdef Q_OS_WIN
+		_hModule(GetModuleHandle(NULL)), _hHook(NULL)
+	#else
+		_eventFilter(this), _parent(parent)
+	#endif
 {
-	QAbstractEventDispatcher::instance()->installNativeEventFilter(&_eventFilter);
+	#ifndef Q_OS_WIN
+		QAbstractEventDispatcher::instance()->installNativeEventFilter(&_eventFilter);
+	#endif
 }
 
 
@@ -73,7 +81,9 @@ KeyboardHandler::KeyboardHandler(QWidget *parent) : QObject(parent),
 KeyboardHandler::~KeyboardHandler()
 {
 	setEnabled(false);
-	QAbstractEventDispatcher::instance()->removeNativeEventFilter(&_eventFilter);
+	#ifndef Q_OS_WIN
+		QAbstractEventDispatcher::instance()->removeNativeEventFilter(&_eventFilter);
+	#endif
 }
 
 
@@ -91,17 +101,67 @@ void KeyboardHandler::setEnabled(bool enabled)
 	{
 		// Grab the keyboard to avoid unexpected key sequences being intercepted by the OS
 		// (for instance, it avoids the main menu begin rolled down in the Cinnamon desktop).
-		//xcb_grab_keyboard(_connection, false, _screen->root, XCB_CURRENT_TIME, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC);
-		_parent->grabKeyboard();
+		#ifdef Q_OS_WIN
+			_activeHandler = this;
+			_hHook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardHandler::lowLevelKeyboardProc, _hModule, 0);
+		#else
+			_parent->grabKeyboard();
+		#endif
 	}
 
 	// Disable the keyboard handler.
 	else {
-		//xcb_ungrab_keyboard(_connection, XCB_CURRENT_TIME);
-		_parent->releaseKeyboard();
+		#ifdef Q_OS_WIN
+			UnhookWindowsHookEx(_hHook);
+			_hHook = NULL;
+		#else
+			_parent->releaseKeyboard();
+		#endif
 		clearKeysDown();
 	}
 }
+
+
+#ifdef Q_OS_WIN
+
+// Pointer to the lastly activated keyboard handler.
+KeyboardHandler *KeyboardHandler::_activeHandler = nullptr;
+
+
+// Low-level callback method to handle keyboard events.
+LRESULT CALLBACK KeyboardHandler::lowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
+{
+	// nCode<0 has a special meaning, as specified by the MSDN.
+	// However, this case seems to never (or rarely) happens.
+	if(nCode<0) {
+		return CallNextHookEx(0, nCode, wParam, lParam);
+	}
+
+	// Extract the scan-code.
+	KBDLLHOOKSTRUCT *info = reinterpret_cast<KBDLLHOOKSTRUCT *>(lParam);
+	std::uint32_t scanCode = info->scanCode;
+	if(info->flags & 0x01) {
+		scanCode += 256;
+	}
+
+	// Notify the keyboard handler.
+	switch(wParam)
+	{
+		case WM_KEYDOWN:
+		case WM_SYSKEYDOWN:
+			_activeHandler->notifyKeyPressed(scanCode);
+			break;
+
+		case WM_KEYUP:
+		case WM_SYSKEYUP:
+			_activeHandler->notifyKeyReleased(scanCode);
+			break;
+	}
+	return 1;
+}
+
+
+#else
 
 
 // Event filter constructor.
@@ -138,3 +198,5 @@ bool KeyboardHandler::EventFilter::nativeEventFilter(const QByteArray &eventType
 			return false;
 	}
 }
+
+#endif /* Q_OS_WIN */
