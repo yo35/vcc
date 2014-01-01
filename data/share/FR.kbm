@@ -165,7 +165,7 @@
 			<id>main-25</id>
 			<label>^,¨</label>
 			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>1130</x><width>100</width></geometry>
-			<scan-code><unix>0</unix><windows>26</windows></scan-code>
+			<scan-code><unix>34</unix><windows>26</windows></scan-code>
 		</key>
 		<key>
 			<id>main-26</id>
@@ -396,7 +396,7 @@
 			<id>super-left</id>
 			<label>{super}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>130</x><width>130</width></geometry>
-			<scan-code><unix>0</unix><windows>0</windows></scan-code>
+			<scan-code><unix>133</unix><windows>0</windows></scan-code>
 		</key>
 		<key>
 			<id>super-right</id>
@@ -663,7 +663,7 @@
 			<id>print-screen</id>
 			<label>{print-screen}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>1530</x><width>100</width></geometry>
-			<scan-code><unix>0</unix><windows>0</windows></scan-code>
+			<scan-code><unix>107</unix><windows>0</windows></scan-code>
 		</key>
 		<key>
 			<id>scroll-lock</id>
