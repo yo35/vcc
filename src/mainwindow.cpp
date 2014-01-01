@@ -28,13 +28,13 @@
 #include "preferencedialog.h"
 #include "debugdialog.h"
 #include <translation.h>
-#include <QKeyEvent>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QToolBar>
 #include <QStatusBar>
 #include <QAction>
 #include <QMessageBox>
+#include <QEvent>
 
 #include <iostream>
 
@@ -44,6 +44,10 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 {
 	setWindowTitle(QString::fromStdString(Params::get().app_full_name()));
 	setWindowIcon(fetchIcon("logo", false));
+
+	// Low-level keyboard handler
+	_keyboardHandler = new KeyboardHandler(this);
+	connect(_keyboardHandler, &KeyboardHandler::keyPressed, this, &MainWindow::onKeyPressed);
 
 	// Central widget
 	QWidget     *mainWidget = new QWidget(this);
@@ -94,10 +98,7 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	// Status bar
 	_statusBar = statusBar();
 
-	// Low-level keyboard handler
-	_keyboardHandler = new KeyboardHandler(this);
-	connect(_keyboardHandler, &KeyboardHandler::keyPressed, this, &MainWindow::onKeyPressed);
-
+	// Load the persistent parameters
 	_core.set_time_control(Params::get().time_control());
 	_statusBar->showMessage(QString::fromStdString(_core.time_control().description()));
 	loadPersistentParameters();
@@ -108,6 +109,20 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 void MainWindow::closeEvent(QCloseEvent *)
 {
 	Params::force_save();
+}
+
+
+// Window state-change handler.
+void MainWindow::changeEvent(QEvent *event)
+{
+	if(event->type()==QEvent::ActivationChange) {
+		std::cout << "Activation change (spontaneous=" << event->spontaneous() << ") (isActive=" << isActiveWindow() << ")" << std::endl;
+		_keyboardHandler->setEnabled(isActiveWindow());
+	}
+	else {
+		std::cout << "Other change event (code=" << event->type() << ")" << std::endl;
+	}
+	QMainWindow::changeEvent(event);
 }
 
 

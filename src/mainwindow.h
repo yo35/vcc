@@ -52,6 +52,11 @@ protected:
 	 */
 	void closeEvent(QCloseEvent *event) override;
 
+	/**
+	 * Window state-change handler.
+	 */
+	void changeEvent(QEvent *event) override;
+
 private:
 
 	// Private functions
@@ -66,15 +71,15 @@ private:
 	void loadPersistentParameters();
 	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
 
+	// Private members
+	KeyboardHandler  *_keyboardHandler  ;
+	BiTimer           _core             ;
+	ResetConfirmation _resetConfirmation;
+
 	// Widgets
 	Enum::array<Side, DialWidget *> _dial;
 	QStatusBar *_statusBar;
 	DebugDialog *_debugDialog;
-	KeyboardHandler *_keyboardHandler;
-
-	// Private members
-	BiTimer           _core             ;
-	ResetConfirmation _resetConfirmation;
 };
 
 #endif /* MAINWINDOW_H_ */

@@ -43,7 +43,7 @@ public:
 	/**
 	 * Constructor.
 	 */
-	PreferenceDialog(const KeyboardHandler *keyboardHandler, QWidget *parent=0);
+	PreferenceDialog(QWidget *parent=0);
 
 	/**
 	 * Load the dialog with the parameters saved in the Params singleton object.
@@ -55,6 +55,13 @@ public:
 	 */
 	void saveParameters();
 
+protected:
+
+	/**
+	 * Window state-change handler.
+	 */
+	void changeEvent(QEvent *event) override;
+
 private:
 
 	// Private functions
@@ -63,9 +70,9 @@ private:
 	void onDisplayNumericKeypadToggled();
 
 	// Keyboard page
-	const KeyboardHandler *_keyboardHandler     ;
-	QCheckBox             *_displayNumericKeypad;
-	KeyboardMapWidget     *_keyboardMapWidget   ;
+	QCheckBox         *_displayNumericKeypad;
+	KeyboardHandler   *_keyboardHandler     ;
+	KeyboardMapWidget *_keyboardMapWidget   ;
 
 	// Display page
 	QCheckBox *_displayStatusBar         ;

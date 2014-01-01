@@ -22,17 +22,18 @@
 
 #include "preferencedialog.h"
 #include "params.h"
+#include "keyboardhandler.h"
 #include "keyboardmapwidget.h"
 #include <translation.h>
 #include <QTabWidget>
 #include <QDialogButtonBox>
 #include <QCheckBox>
 #include <QVBoxLayout>
+#include <QEvent>
 
 
 // Constructor.
-PreferenceDialog::PreferenceDialog(const KeyboardHandler *keyboardHandler, QWidget *parent) :
-	QDialog(parent), _keyboardHandler(keyboardHandler)
+PreferenceDialog::PreferenceDialog(QWidget *parent) : QDialog(parent)
 {
 	// Top-level layout
 	setWindowTitle(_("Preferences"));
@@ -66,7 +67,8 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	connect(_displayNumericKeypad, &QCheckBox::toggled, this, &PreferenceDialog::onDisplayNumericKeypadToggled);
 	layout->addWidget(_displayNumericKeypad);
 
-	// Keyboard map widget
+	// Keyboard handler and keyboard widget
+	_keyboardHandler = new KeyboardHandler(this);
 	_keyboardMapWidget = new KeyboardMapWidget(_keyboardHandler, this);
 	_keyboardMapWidget->setDisplayNumericKeypad(_displayNumericKeypad->isChecked());
 	_keyboardMapWidget->bindKeyboardMap(Params::get().keyboard_map("FR"));
@@ -98,6 +100,16 @@ QWidget *PreferenceDialog::createDisplayPage()
 	// Return the page widget
 	layout->addStretch(1);
 	return page;
+}
+
+
+// Window state-change handler.
+void PreferenceDialog::changeEvent(QEvent *event)
+{
+	if(event->type()==QEvent::ActivationChange) {
+		_keyboardHandler->setEnabled(isActiveWindow());
+	}
+	QDialog::changeEvent(event);
 }
 
 
