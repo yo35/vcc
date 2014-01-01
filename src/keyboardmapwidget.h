@@ -26,10 +26,11 @@
 #include <QWidget>
 #include <vector>
 #include <set>
-#include "keyboardmap.h"
 QT_BEGIN_NAMESPACE
 	class QPainter;
 QT_END_NAMESPACE
+class KeyboardHandler;
+class KeyboardMap;
 
 
 /**
@@ -44,7 +45,7 @@ public:
 	/**
 	 * Constructor
 	 */
-	KeyboardMapWidget(QWidget *parent=0);
+	KeyboardMapWidget(const KeyboardHandler *keyboardHandler, QWidget *parent=0);
 
 	/**
 	 * Whether the numeric keypad should be displayed or not.
@@ -88,14 +89,6 @@ public:
 protected:
 
 	/**
-	 * @name Key event handlers.
-	 * @{
-	 */
-	void keyPressEvent(QKeyEvent *event) override;
-	void keyReleaseEvent(QKeyEvent *event) override;
-	/**@} */
-
-	/**
 	 * Widget rendering method.
 	 */
 	void paintEvent(QPaintEvent *event) override;
@@ -104,6 +97,7 @@ private:
 
 	// Private functions
 	void ensureKeyboardMapBinded() const;
+	void onKeyStateChanged(std::uint32_t scanCode);
 	void drawKeyLabel(std::size_t idx);
 	void drawKeyShape(std::size_t idx);
 	void drawRectangularKeyShape(int x, int y, int w, int h);
@@ -115,9 +109,9 @@ private:
 	double computeFontFactor(double w, double h, const std::vector<QString> &texts) const;
 
 	// Private members
-	bool                    _displayNumericKeypad;
-	const KeyboardMap      *_keyboardMap         ;
-	std::set<std::uint32_t> _keyDown             ;
+	const KeyboardHandler *_keyboardHandler     ;
+	const KeyboardMap     *_keyboardMap         ;
+	bool                   _displayNumericKeypad;
 
 	// Colors
 	QColor _colorBackground;

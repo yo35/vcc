@@ -21,6 +21,8 @@
 
 
 #include "keyboardmapwidget.h"
+#include "keyboardhandler.h"
+#include "keyboardmap.h"
 #include <stdexcept>
 #include <cassert>
 #include <algorithm>
@@ -30,16 +32,17 @@
 #include <cmath>
 #include <translation.h>
 #include <QPainter>
-#include <QKeyEvent>
 
 
 // Constructor.
-KeyboardMapWidget::KeyboardMapWidget(QWidget *parent) :
-	QWidget(parent), _displayNumericKeypad(true), _keyboardMap(nullptr),
+KeyboardMapWidget::KeyboardMapWidget(const KeyboardHandler *keyboardHandler, QWidget *parent) :
+	QWidget(parent),
+	_keyboardHandler(keyboardHandler), _keyboardMap(nullptr), _displayNumericKeypad(true),
 	_colorBackground(208,255,208), _colorText(Qt::black), _colorKeyDefault(Qt::white), _colorKeyDown(255,128,0),
 	_painter(nullptr), _keyMargin(0), _keyRadius(0)
 {
-	setFocusPolicy(Qt::StrongFocus);
+	connect(_keyboardHandler, &KeyboardHandler::keyPressed , this, &KeyboardMapWidget::onKeyStateChanged);
+	connect(_keyboardHandler, &KeyboardHandler::keyReleased, this, &KeyboardMapWidget::onKeyStateChanged);
 }
 
 
@@ -99,24 +102,9 @@ QSize KeyboardMapWidget::minimumSizeHint() const { return QSize(500, 200); }
 QSize KeyboardMapWidget::sizeHint       () const { return QSize(800, 300); }
 
 
-// Key-press event handler.
-void KeyboardMapWidget::keyPressEvent(QKeyEvent *event)
+// Called when a key is pressed or released.
+void KeyboardMapWidget::onKeyStateChanged(std::uint32_t)
 {
-	if(event->isAutoRepeat()) {
-		return;
-	}
-	_keyDown.insert(event->nativeScanCode());
-	update();
-}
-
-
-// Key-release event handler.
-void KeyboardMapWidget::keyReleaseEvent(QKeyEvent *event)
-{
-	if(event->isAutoRepeat()) {
-		return;
-	}
-	_keyDown.erase(event->nativeScanCode());
 	update();
 }
 
@@ -162,7 +150,7 @@ void KeyboardMapWidget::paintEvent(QPaintEvent *)
 	for(std::size_t k=0; k<_keyboardMap->key_count(); ++k)
 	{
 		painter.save();
-		if(_keyDown.count(_keyboardMap->key(k).scan_code())>0) {
+		if(_keyboardHandler->isDown(_keyboardMap->key(k).scan_code())) {
 			painter.setBrush(_colorKeyDown);
 		}
 		drawKeyShape(k);
