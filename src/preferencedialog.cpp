@@ -31,7 +31,8 @@
 
 
 // Constructor.
-PreferenceDialog::PreferenceDialog(QWidget *parent) : QDialog(parent)
+PreferenceDialog::PreferenceDialog(const KeyboardHandler *keyboardHandler, QWidget *parent) :
+	QDialog(parent), _keyboardHandler(keyboardHandler)
 {
 	// Top-level layout
 	setWindowTitle(_("Preferences"));
@@ -66,7 +67,7 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	layout->addWidget(_displayNumericKeypad);
 
 	// Keyboard map widget
-	_keyboardMapWidget = new KeyboardMapWidget(this);
+	_keyboardMapWidget = new KeyboardMapWidget(_keyboardHandler, this);
 	_keyboardMapWidget->setDisplayNumericKeypad(_displayNumericKeypad->isChecked());
 	_keyboardMapWidget->bindKeyboardMap(Params::get().keyboard_map("FR"));
 	layout->addWidget(_keyboardMapWidget, 1);

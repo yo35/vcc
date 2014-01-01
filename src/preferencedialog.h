@@ -27,6 +27,7 @@
 QT_BEGIN_NAMESPACE
 	class QCheckBox;
 QT_END_NAMESPACE
+class KeyboardHandler;
 class KeyboardMapWidget;
 
 
@@ -42,7 +43,7 @@ public:
 	/**
 	 * Constructor.
 	 */
-	PreferenceDialog(QWidget *parent=0);
+	PreferenceDialog(const KeyboardHandler *keyboardHandler, QWidget *parent=0);
 
 	/**
 	 * Load the dialog with the parameters saved in the Params singleton object.
@@ -62,8 +63,9 @@ private:
 	void onDisplayNumericKeypadToggled();
 
 	// Keyboard page
-	QCheckBox         *_displayNumericKeypad;
-	KeyboardMapWidget *_keyboardMapWidget   ;
+	const KeyboardHandler *_keyboardHandler     ;
+	QCheckBox             *_displayNumericKeypad;
+	KeyboardMapWidget     *_keyboardMapWidget   ;
 
 	// Display page
 	QCheckBox *_displayStatusBar         ;
