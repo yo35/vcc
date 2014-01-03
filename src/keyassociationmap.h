@@ -33,7 +33,8 @@
  * shortcut or function (identified by an integer).
  *
  * Two shortcuts may be associated to each key: one is said to be the "low-shortcut",
- * one is said to be the "high-shortcut".
+ * one is said to be the "high-shortcut". The shortcut or the action that is triggered
+ * when the key is pressed depend on the state of modifier keys.
  */
 class KeyAssociationMap
 {
