@@ -350,3 +350,18 @@ const KeyboardMap &Params::keyboard_map(const std::string &id)
 		return it->second;
 	}
 }
+
+
+// Return the key association map corresponding to the given ID.
+const KeyAssociationMap &Params::key_association_map(const std::string &id)
+{
+	auto it = _key_association_default.find(id);
+	if(it==_key_association_default.end())
+	{
+		try {
+			return _key_association_default[id].load(share_path() + "/" + id + ".kam");
+		}
+		catch(boost::property_tree::ptree_error &) {}
+	}
+	return it->second;
+}

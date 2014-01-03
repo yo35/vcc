@@ -32,6 +32,7 @@
 #include "timecontrol.h"
 #include "options.h"
 #include "keyboardmap.h"
+#include "keyassociationmap.h"
 
 
 /**
@@ -130,6 +131,11 @@ public:
 	 */
 	const KeyboardMap &keyboard_map(const std::string &id);
 
+	/**
+	 * Return the key association map corresponding to the given ID.
+	 */
+	const KeyAssociationMap &key_association_map(const std::string &id);
+
 private:
 
 	// Useful alias
@@ -168,9 +174,10 @@ private:
 	bool   _ptree_saved ;
 
 	// Keyboard maps
-	bool                               _keyboard_map_loaded;
-	std::map<std::string, KeyboardMap> _keyboard_map_data  ;
-	std::set<std::string>              _keyboard_maps      ;
+	bool                                     _keyboard_map_loaded    ;
+	std::map<std::string, KeyboardMap>       _keyboard_map_data      ;
+	std::set<std::string>                    _keyboard_maps          ;
+	std::map<std::string, KeyAssociationMap> _key_association_default;
 
 	// Singleton object
 	static std::unique_ptr<Params> _instance;
