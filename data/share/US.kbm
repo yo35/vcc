@@ -173,7 +173,7 @@
 		<key>
 			<id>enter</id>
 			<label>{enter}</label>
-			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>4</line-bottom><x>1330,1360</x><width>150,120</width></geometry>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>1260</x><width>220</width></geometry>
 			<scan-code><unix>36</unix><windows>28</windows></scan-code>
 		</key>
 		<!-- End main pad, key line 2 -->
@@ -255,7 +255,7 @@
 		</key>
 		<key>
 			<id>main-40</id>
-			<label>??</label>
+			<label>`,~</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>0</x><width>100</width></geometry>
 			<scan-code><unix>49</unix><windows>41</windows></scan-code>
 		</key>
@@ -267,13 +267,13 @@
 		<key>
 			<id>shift-left</id>
 			<label>{shift}</label>
-			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>0</x><width>120</width></geometry>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>0</x><width>220</width></geometry>
 			<scan-code><unix>50</unix><windows>42</windows></scan-code>
 		</key>
 		<key>
 			<id>main-42</id>
 			<label>|,\\</label>
-			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>1260</x><width>100</width></geometry>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>1330</x><width>150</width></geometry>
 			<scan-code><unix>51</unix><windows>43</windows></scan-code>
 		</key>
 		<key>
@@ -340,7 +340,7 @@
 			<id>shift-right</id>
 			<label>{shift}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>1220</x><width>260</width></geometry>
-			<scan-code><unix>62</unix><windows>54</windows></scan-code>
+			<scan-code><unix>62</unix><windows>310</windows></scan-code>
 		</key>
 		<!-- End main pad, key line 4 -->
 		
@@ -366,20 +366,14 @@
 			<scan-code><unix>66</unix><windows>58</windows></scan-code>
 		</key>
 		<key>
-			<id>main-90</id>
-			<label>&lt;,&gt;</label>
-			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>120</x><width>100</width></geometry>
-			<scan-code><unix>94</unix><windows>86</windows></scan-code>
-		</key>
-		<key>
 			<id>ctrl-right</id>
 			<label>{ctrl}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1350</x><width>130</width></geometry>
-			<scan-code><unix>105</unix><windows>0</windows></scan-code>
+			<scan-code><unix>105</unix><windows>285</windows></scan-code>
 		</key>
 		<key>
-			<id>alt-gr</id>
-			<label>{alt-gr}</label>
+			<id>alt-right</id>
+			<label>{alt}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>960</x><width>130</width></geometry>
 			<scan-code><unix>108</unix><windows>312</windows></scan-code> <!-- <windows>29</windows> ? -->
 		</key>
