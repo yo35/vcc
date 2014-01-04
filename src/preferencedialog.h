@@ -24,12 +24,11 @@
 #define PREFERENCEDIALOG_H_
 
 #include <QDialog>
-QT_BEGIN_NAMESPACE
-	class QCheckBox;
-	class QComboBox;
-QT_END_NAMESPACE
-class KeyboardHandler;
-class KeyboardWidget;
+#include <QCheckBox>
+#include <QComboBox>
+#include <QPushButton>
+#include "keyboardhandler.h"
+#include "keyboardwidget.h"
 
 
 /**
@@ -72,12 +71,14 @@ private:
 	std::string retrieveSelectedKeyboard() const;
 	void onSelectedKeyboardChanged();
 	void onDisplayNumericKeypadToggled();
+	void onModifierKeysToggled();
 
 	// Keyboard page
 	QComboBox       *_keyboardSelector    ;
 	QCheckBox       *_displayNumericKeypad;
 	KeyboardHandler *_keyboardHandler     ;
 	KeyboardWidget  *_keyboardWidget      ;
+	QPushButton     *_modifierKeysToggle  ;
 
 	// Display page
 	QCheckBox *_displayStatusBar         ;
