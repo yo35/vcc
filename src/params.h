@@ -65,13 +65,15 @@ public:
 	/**@} */
 
 	/**
-	 * @name Application directories and files.
+	 * @name Application directories, files, and environment.
 	 * @{
 	 */
-	const std::string &prefix_path   (); //!< Root path indicating where the application is installed (read-only directory).
-	const std::string &config_path   (); //!< Configuration folder in the user's home (read-write directory).
-	const std::string &share_path    (); //!< Directory holding data of the application (read-only directory).
-	const std::string &ptree_filename(); //!< Name of the file that holds the preferences of the current user.
+	const std::string &prefix_path        (); //!< Root path indicating where the application is installed (read-only directory).
+	const std::string &config_path        (); //!< Configuration folder in the user's home (read-write directory).
+	const std::string &share_path         (); //!< Directory holding data of the application (read-only directory).
+	const std::string &locale             (); //!< Current locale.
+	const std::string &config_file        (); //!< File that holds the preferences of the current user.
+	const std::string &keyboard_index_file(); //!< File that contains the index of all available keyboard maps.
 	/**@} */
 
 	/**
@@ -126,7 +128,32 @@ public:
 	/**
 	 * Return the IDs of the available keyboard maps.
 	 */
-	const std::set<std::string> &keyboard_maps();
+	const std::set<std::string> &keyboards() { ensure_keyboard_index_loaded(); return _keyboard_list; }
+
+	/**
+	 * Return the name of the keyboard map corresponding to the given ID.
+	 */
+	const std::string &keyboard_name(const std::string &id) { ensure_keyboard_id_exists(id); return _keyboard_names.find(id)->second; }
+
+	/**
+	 * Return the icon of the keyboard map corresponding to the given ID.
+	 */
+	QIcon keyboard_icon(const std::string &id) { ensure_keyboard_id_exists(id); return _keyboard_icons.find(id)->second; }
+
+	/**
+	 * Return the ID of the keyboard that is associated to the given locale.
+	 */
+	const std::string &default_keyboard(const std::string &locale);
+
+	/**
+	 * Return the ID of the current selected keyboard.
+	 */
+	std::string current_keyboard();
+
+	/**
+	 * Change the current selected keyboard.
+	 */
+	void set_current_keyboard(const std::string &id);
 
 	/**
 	 * Return the keyboard map corresponding to the given ID.
@@ -139,9 +166,9 @@ public:
 	const KeyAssociationMap &key_association_map(const std::string &id);
 
 	/**
-	 * Return the icon of the keyboard map corresponding to the given ID.
+	 * Default keyboard map.
 	 */
-	QIcon keyboard_icon(const std::string &id);
+	const std::string &default_keyboard_map();
 
 private:
 
@@ -155,6 +182,9 @@ private:
 	void load();
 	void save();
 	void ensure_config_path_exists();
+	void ensure_keyboard_index_loaded();
+	void load_keyboard(const ptree &keyboard);
+	void ensure_keyboard_id_exists(const std::string &id);
 
 	// Utility functions to manage the property tree holding the user-related data.
 	ptree &fetch(const std::string &key);
@@ -162,11 +192,13 @@ private:
 	template<class T> void put_atomic_value(const std::string &key, T value);
 	static std::string side_key(Side side, const std::string &key);
 
-	// Application directories and files
-	boost::optional<std::string> _prefix_path   ;
-	boost::optional<std::string> _config_path   ;
-	boost::optional<std::string> _share_path    ;
-	boost::optional<std::string> _ptree_filename;
+	// Application directories, files, and environment.
+	boost::optional<std::string> _prefix_path        ;
+	boost::optional<std::string> _config_path        ;
+	boost::optional<std::string> _share_path         ;
+	boost::optional<std::string> _locale             ;
+	boost::optional<std::string> _config_file        ;
+	boost::optional<std::string> _keyboard_index_file;
 
 	// General application properties
 	std::string _app_short_name;
@@ -180,10 +212,14 @@ private:
 	bool   _ptree_saved ;
 
 	// Keyboard maps
-	boost::optional<std::set<std::string>>   _keyboard_map_list      ;
-	std::map<std::string, KeyboardMap>       _keyboard_maps          ;
-	std::map<std::string, KeyAssociationMap> _key_association_default;
-	std::map<std::string, QIcon>             _keyboard_icons         ;
+	bool                                     _keyboard_index_loaded;
+	std::set<std::string>                    _keyboard_list        ;
+	std::map<std::string, std::string>       _keyboard_names       ;
+	std::map<std::string, QIcon>             _keyboard_icons       ;
+	std::map<std::string, std::string>       _locale_to_keyboard   ;
+	std::string                              _default_keyboard     ;
+	std::map<std::string, KeyboardMap>       _keyboard_maps        ;
+	std::map<std::string, KeyAssociationMap> _key_association_maps ;
 
 	// Singleton object
 	static std::unique_ptr<Params> _instance;

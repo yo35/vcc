@@ -27,6 +27,8 @@
 #include <translation.h>
 #include <QTabWidget>
 #include <QDialogButtonBox>
+#include <QLabel>
+#include <QComboBox>
 #include <QCheckBox>
 #include <QVBoxLayout>
 #include <QEvent>
@@ -62,6 +64,16 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	QVBoxLayout *layout = new QVBoxLayout;
 	page->setLayout(layout);
 
+	// Keyboard selector (combo-box)
+	_keyboardSelector = new QComboBox(this);
+	feedKeyboardSelector();
+	connect(_keyboardSelector, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+		this, &PreferenceDialog::onSelectedKeyboardChanged);
+	QHBoxLayout *keyboardSelectorLayout = new QHBoxLayout;
+	keyboardSelectorLayout->addWidget(new QLabel(_("Select the keyboard layout you are using")));
+	keyboardSelectorLayout->addWidget(_keyboardSelector, 1);
+	layout->addLayout(keyboardSelectorLayout);
+
 	// Display numeric-keypad check-box
 	_displayNumericKeypad = new QCheckBox(_("Display the numeric keypad"), this);
 	connect(_displayNumericKeypad, &QCheckBox::toggled, this, &PreferenceDialog::onDisplayNumericKeypadToggled);
@@ -70,8 +82,6 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	// Keyboard handler and keyboard widget
 	_keyboardHandler = new KeyboardHandler(this);
 	_keyboardWidget = new KeyboardWidget(_keyboardHandler, this);
-	_keyboardWidget->setDisplayNumericKeypad(_displayNumericKeypad->isChecked());
-	_keyboardWidget->bindKeyboardMap(Params::get().keyboard_map("FR"));
 	layout->addWidget(_keyboardWidget, 1);
 
 	// Return the page widget
@@ -113,6 +123,34 @@ void PreferenceDialog::changeEvent(QEvent *event)
 }
 
 
+// Feed the keyboard selector combo-box.
+void PreferenceDialog::feedKeyboardSelector()
+{
+	for(const auto &it : Params::get().keyboards()) {
+		_keyboardSelector->addItem(
+			Params::get().keyboard_icon(it),
+			QString::fromStdString(Params::get().keyboard_name(it)),
+			QVariant(it.c_str())
+		);
+	}
+	_keyboardSelector->setCurrentIndex(-1);
+}
+
+
+// Read the index of the currently selected keyboard.
+std::string PreferenceDialog::retrieveSelectedKeyboard() const
+{
+	return _keyboardSelector->itemData(_keyboardSelector->currentIndex()).toString().toStdString();
+}
+
+
+// Action performed when the selected item in the keyboard selector combo-box changes.
+void PreferenceDialog::onSelectedKeyboardChanged()
+{
+	_keyboardWidget->bindKeyboardMap(Params::get().keyboard_map(retrieveSelectedKeyboard()));
+}
+
+
 // Action performed when the state of the display-numeric-keypad checkbox changes.
 void PreferenceDialog::onDisplayNumericKeypadToggled()
 {
@@ -124,6 +162,7 @@ void PreferenceDialog::onDisplayNumericKeypadToggled()
 void PreferenceDialog::loadParameters()
 {
 	// Keyboard page
+	_keyboardSelector->setCurrentIndex(_keyboardSelector->findData(QVariant(Params::get().current_keyboard().c_str())));
 	_displayNumericKeypad->setChecked(Params::get().show_numeric_keypad());
 
 	// Display page
@@ -136,6 +175,7 @@ void PreferenceDialog::loadParameters()
 void PreferenceDialog::saveParameters()
 {
 	// Keyboard page
+	Params::get().set_current_keyboard(retrieveSelectedKeyboard());
 	Params::get().set_show_numeric_keypad(_displayNumericKeypad->isChecked());
 
 	// Display page

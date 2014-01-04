@@ -26,6 +26,7 @@
 #include <QDialog>
 QT_BEGIN_NAMESPACE
 	class QCheckBox;
+	class QComboBox;
 QT_END_NAMESPACE
 class KeyboardHandler;
 class KeyboardWidget;
@@ -67,9 +68,13 @@ private:
 	// Private functions
 	QWidget *createKeyboardPage();
 	QWidget *createDisplayPage ();
+	void feedKeyboardSelector();
+	std::string retrieveSelectedKeyboard() const;
+	void onSelectedKeyboardChanged();
 	void onDisplayNumericKeypadToggled();
 
 	// Keyboard page
+	QComboBox       *_keyboardSelector    ;
 	QCheckBox       *_displayNumericKeypad;
 	KeyboardHandler *_keyboardHandler     ;
 	KeyboardWidget  *_keyboardWidget      ;

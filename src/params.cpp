@@ -27,6 +27,7 @@
 #include <sstream>
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/xml_parser.hpp>
+#include <QApplication>
 #ifdef OS_IS_WINDOWS
 	#include <windows.h>
 #endif
@@ -85,20 +86,41 @@ const std::string &Params::share_path()
 }
 
 
-// Name of the file that holds the preferences of the current user.
-const std::string &Params::ptree_filename()
+// Current locale.
+const std::string &Params::locale()
 {
-	if(!_ptree_filename) {
-		_ptree_filename = config_path() + "/" + _app_short_name + ".xml";
+	if(!_locale) {
+		_locale = QApplication::inputMethod()->locale().name().toStdString();
 	}
-	return *_ptree_filename;
+	return *_locale;
+}
+
+
+// File that holds the preferences of the current user.
+const std::string &Params::config_file()
+{
+	if(!_config_file) {
+		_config_file = config_path() + "/" + _app_short_name + ".xml";
+	}
+	return *_config_file;
+}
+
+
+// File that contains the index of all available keyboard maps.
+const std::string &Params::keyboard_index_file()
+{
+	if(!_keyboard_index_file) {
+		_keyboard_index_file = share_path() + "/keyboards.xml";
+	}
+	return *_keyboard_index_file;
 }
 
 
 // Private constructor.
 Params::Params() :
 	_app_short_name(APP_SHORT_NAME), _app_name(APP_NAME), _app_full_name(APP_FULL_NAME),
-	_root(nullptr), _ptree_loaded(false), _ptree_saved(true)
+	_root(nullptr), _ptree_loaded(false), _ptree_saved(true),
+	_keyboard_index_loaded(false)
 {}
 
 
@@ -112,9 +134,9 @@ void Params::load()
 	}
 
 	// Load the file if it exists.
-	if(boost::filesystem::exists(ptree_filename())) {
+	if(boost::filesystem::exists(config_file())) {
 		try {
-			boost::property_tree::read_xml(ptree_filename(), _ptree, boost::property_tree::xml_parser::trim_whitespace);
+			boost::property_tree::read_xml(config_file(), _ptree, boost::property_tree::xml_parser::trim_whitespace);
 		}
 		catch(boost::property_tree::xml_parser_error &) {
 			throw std::runtime_error(_("An error has occurred while reading the preference file."));
@@ -144,7 +166,7 @@ void Params::save()
 	ensure_config_path_exists();
 	try {
 		boost::property_tree::xml_writer_settings<ptree::key_type::value_type> settings('\t', 1);
-		boost::property_tree::write_xml(ptree_filename(), _ptree, std::locale(), settings);
+		boost::property_tree::write_xml(config_file(), _ptree, std::locale(), settings);
 	}
 	catch(boost::property_tree::xml_parser_error &) {
 		throw std::runtime_error(_("An error has occurred while writing the preference file."));
@@ -305,33 +327,112 @@ void Params::set_show_numeric_keypad(bool value)
 }
 
 
-// Return the IDs of the available keyboard maps.
-const std::set<std::string> &Params::keyboard_maps()
+// Load the keyboard index file if not done yet.
+void Params::ensure_keyboard_index_loaded()
 {
-	if(!_keyboard_map_list) {
-		_keyboard_map_list = std::set<std::string>();
-		boost::filesystem::directory_iterator end;
-		for(boost::filesystem::directory_iterator it(share_path()); it!=end; ++it) {
-			if(it->path().extension()!=".kbm") {
+	if(_keyboard_index_loaded) {
+		return;
+	}
+
+	try
+	{
+		// Read the keyboard index file
+		ptree keyboard_index;
+		boost::property_tree::read_xml(keyboard_index_file(), keyboard_index, boost::property_tree::xml_parser::trim_whitespace);
+
+		// Iterates over the list of keyboards
+		const ptree &keyboards(keyboard_index.get_child("keyboards"));
+		for(const auto &it : keyboards) {
+			if(it.first!="keyboard") {
 				continue;
 			}
-			_keyboard_map_list->insert(it->path().stem().string());
+			load_keyboard(it.second);
 		}
 	}
-	return *_keyboard_map_list;
+
+	// The keyboard index file must be readable.
+	catch(boost::property_tree::xml_parser_error &) {
+		throw std::runtime_error(_("An error has occurred while reading the keyboard index file."));
+	}
+
+	// Mark the keyboard index file as read.
+	_keyboard_index_loaded = true;
+}
+
+
+// Load the keyboard information contained in the given node.
+void Params::load_keyboard(const ptree &keyboard)
+{
+	// Read the ID/name/icon data associated to the given keyboard.
+	std::string id = keyboard.get<std::string>("id");
+	_keyboard_names[id] = keyboard.get<std::string>("name");
+	_keyboard_icons[id] = QIcon(QString::fromStdString(share_path() + "/" + keyboard.get<std::string>("icon")));
+
+	// List the locales for which the keyboard will be considered as the default one.
+	for(const auto &it : keyboard.get_child("locales")) {
+		if(it.first!="locale") {
+			continue;
+		}
+		std::string locale = it.second.get_value<std::string>();
+		if(locale=="*") {
+			_default_keyboard = id;
+		}
+		else {
+			_locale_to_keyboard[locale] = id;
+		}
+	}
+
+	// Register the keyboard in the list of available keyboards.
+	_keyboard_list.insert(std::move(id));
+}
+
+
+// Ensure that the keyboard corresponding to the given ID exists and is actually
+// registered in the keyboard index file.
+void Params::ensure_keyboard_id_exists(const std::string &id)
+{
+	ensure_keyboard_index_loaded();
+	if(_keyboard_list.count(id)==0) {
+		throw std::invalid_argument(_("Invalid keyboard ID."));
+	}
+}
+
+
+// Return the ID of the keyboard that is associated to the given locale.
+const std::string &Params::default_keyboard(const std::string &locale)
+{
+	ensure_keyboard_index_loaded();
+	auto it = _locale_to_keyboard.find(locale);
+	return it==_locale_to_keyboard.end() ? _default_keyboard : it->second;
+}
+
+
+// Return the ID of the current selected keyboard.
+std::string Params::current_keyboard()
+{
+	return get_atomic_value("keyboard.id", default_keyboard(locale()));
+}
+
+
+// Change the current selected keyboard.
+void Params::set_current_keyboard(const std::string &id)
+{
+	put_atomic_value("keyboard.id", id);
 }
 
 
 // Return the keyboard map corresponding to the given ID.
 const KeyboardMap &Params::keyboard_map(const std::string &id)
 {
+	ensure_keyboard_id_exists(id);
 	auto it = _keyboard_maps.find(id);
 	if(it==_keyboard_maps.end()) {
 		try {
-			_keyboard_maps[id].load(share_path() + "/" + id + ".kbm");
+			return _keyboard_maps[id].load(share_path() + "/" + id + ".kbm");
 		}
-		catch(boost::property_tree::ptree_error &) {}
-		it = _keyboard_maps.find(id);
+		catch(boost::property_tree::ptree_error &) {
+			throw std::runtime_error(_("An error has occurred while reading a keyboard map file."));
+		}
 	}
 	return it->second;
 }
@@ -340,26 +441,15 @@ const KeyboardMap &Params::keyboard_map(const std::string &id)
 // Return the key association map corresponding to the given ID.
 const KeyAssociationMap &Params::key_association_map(const std::string &id)
 {
-	auto it = _key_association_default.find(id);
-	if(it==_key_association_default.end())
-	{
+	ensure_keyboard_id_exists(id);
+	auto it = _key_association_maps.find(id);
+	if(it==_key_association_maps.end()) {
 		try {
-			_key_association_default[id].load(share_path() + "/" + id + ".kam");
+			return _key_association_maps[id].load(share_path() + "/" + id + ".kam");
 		}
-		catch(boost::property_tree::ptree_error &) {}
-		it = _key_association_default.find(id);
-	}
-	return it->second;
-}
-
-
-// Return the icon of the keyboard map corresponding to the given ID.
-QIcon Params::keyboard_icon(const std::string &id)
-{
-	auto it = _keyboard_icons.find(id);
-	if(it==_keyboard_icons.end()) {
-		_keyboard_icons[id] = QIcon(QString::fromStdString(share_path() + "/" + id + ".png"));
-		it = _keyboard_icons.find(id);
+		catch(boost::property_tree::ptree_error &) {
+			throw std::runtime_error(_("An error has occurred while reading a key association map file."));
+		}
 	}
 	return it->second;
 }
