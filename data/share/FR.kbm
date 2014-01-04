@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard-map>
 
-	<id>FR</id>
-	<name>Clavier français</name>
-	
 	<key-line>
 		<count>7</count>
 		<height>100,50,100,100,100,100,100</height>

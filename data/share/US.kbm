@@ -1,151 +1,681 @@
-################################################################################
-#                                                                              #
-#    This file is part of Virtual Chess Clock, a chess clock software          #
-#                                                                              #
-#    Copyright (C) 2010-2012 Yoann Le Montagner <yo35(at)melix(dot)net>        #
-#                                                                              #
-#    This program is free software: you can redistribute it and/or modify      #
-#    it under the terms of the GNU General Public License as published by      #
-#    the Free Software Foundation, either version 3 of the License, or         #
-#    (at your option) any later version.                                       #
-#                                                                              #
-#    This program is distributed in the hope that it will be useful,           #
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of            #
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             #
-#    GNU General Public License for more details.                              #
-#                                                                              #
-#    You should have received a copy of the GNU General Public License         #
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     #
-#                                                                              #
-################################################################################
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard-map>
 
-
-# En-tête
-1;7;100;2280;1830;104;
-
-
-# Pavé principal, touches de fonction
-3;0;1;2;    0;130; 65289;0;0;1; 65056;0;1;0;   # Tabs
-2;0;1;1;    0;160; 65509;0;0;1;                # Caps lock
-1;0;1;1;    0;220; 65505;0;0;1;                # MAJ gauche
-0;0;1;1;    0;130; 65507;0;0;1;                # Ctrl gauche
-0;0;1;1;  130;130; 65515;0;0;1;                # Super gauche
-0;0;1;1;  260;130; 65513;0;0;1;                # Alt gauche
-0;0;1;1;  390;570;    32;0;0;1;                # Espace
-0;0;1;2;  960;130; 65027;0;0;1; 65514;0;1;0;   # ISO level3 shift (i.e. Alt Gr) et Alt droite
-0;0;1;1; 1090;130; 65516;0;0;1;                # Super droite
-0;0;1;1; 1220;130; 65383;0;0;1;                # Menu
-0;0;1;1; 1350;130; 65508;0;0;1;                # Ctrl droite
-1;0;1;1; 1220;260; 65506;0;0;1;                # MAJ droite
-4;0;1;1; 1300;180; 65288;0;0;1;                # Backspace
-
-2;0;1;1; 1260;220; 65293;0;0;1;                # Touche entrée (sur 1 ligne)
-
-
-# Pavé principal, ligne 1
-1;0;1;2;  220;100;   122;0;0;0;    90;0;1;1;   # Z
-1;0;1;2;  320;100;   120;0;0;0;    88;0;1;1;   # X
-1;0;1;2;  420;100;    99;0;0;0;    67;0;1;1;   # C
-1;0;1;2;  520;100;   118;0;0;0;    86;0;1;1;   # V
-1;0;1;2;  620;100;    98;0;0;0;    66;0;1;1;   # B
-1;0;1;2;  720;100;   110;0;0;0;    78;0;1;1;   # N
-1;0;1;2;  820;100;   109;0;0;0;    77;0;1;1;   # M
-1;0;1;2;  920;100;    44;0;0;1;    60;0;1;1;   # Ponctuation
-1;0;1;2; 1020;100;    46;0;0;1;    62;0;1;1;   # Ponctuation
-1;0;1;2; 1120;100;    47;0;0;1;    63;0;1;1;   # Ponctuation
-
-# Pavé principal, ligne 2
-2;0;1;2;  160;100;    97;0;0;0;    65;0;1;1;   # A
-2;0;1;2;  260;100;   115;0;0;0;    83;0;1;1;   # S
-2;0;1;2;  360;100;   100;0;0;0;    68;0;1;1;   # D
-2;0;1;2;  460;100;   102;0;0;0;    70;0;1;1;   # F
-2;0;1;2;  560;100;   103;0;0;0;    71;0;1;1;   # G
-2;0;1;2;  660;100;   104;0;0;0;    72;0;1;1;   # H
-2;0;1;2;  760;100;   106;0;0;0;    74;0;1;1;   # J
-2;0;1;2;  860;100;   107;0;0;0;    75;0;1;1;   # K
-2;0;1;2;  960;100;   108;0;0;0;    76;0;1;1;   # L
-2;0;1;2; 1060;100;    59;0;0;1;    58;0;1;1;   # Ponctuation
-2;0;1;2; 1160;100;    39;0;0;1;    34;0;1;1;   # Ponctuation
-3;0;1;2; 1330;150;    92;0;0;1;   124;0;1;1;   # Ponctuation (sur la ligne 3)
-
-# Pavé principal, ligne 3
-3;0;1;2;  130;100;   113;0;0;0;    81;0;1;1;   # Q
-3;0;1;2;  230;100;   119;0;0;0;    87;0;1;1;   # W
-3;0;1;2;  330;100;   101;0;0;0;    69;0;1;1;   # E
-3;0;1;2;  430;100;   114;0;0;0;    82;0;1;1;   # R
-3;0;1;2;  530;100;   116;0;0;0;    84;0;1;1;   # T
-3;0;1;2;  630;100;   121;0;0;0;    89;0;1;1;   # Y
-3;0;1;2;  730;100;   117;0;0;0;    85;0;1;1;   # U
-3;0;1;2;  830;100;   105;0;0;0;    73;0;1;1;   # I
-3;0;1;2;  930;100;   111;0;0;0;    79;0;1;1;   # O
-3;0;1;2; 1030;100;   112;0;0;0;    80;0;1;1;   # P
-3;0;1;2; 1130;100;    91;0;0;1;   123;0;1;1;   # Ponctuation
-3;0;1;2; 1230;100;    93;0;0;1;   125;0;1;1;   # Ponctuation
-
-# Pavé principal, chiffres
-4;0;1;2;    0;100;    96;0;0;1;   126;0;1;1;   # Ponctuation
-4;0;1;2;  100;100;    49;0;0;1;    33;0;1;1;   # 1
-4;0;1;2;  200;100;    50;0;0;1;    64;0;1;1;   # 2
-4;0;1;2;  300;100;    51;0;0;1;    35;0;1;1;   # 3
-4;0;1;2;  400;100;    52;0;0;1;    36;0;1;1;   # 4
-4;0;1;2;  500;100;    53;0;0;1;    37;0;1;1;   # 5
-4;0;1;2;  600;100;    54;0;0;1;    94;0;1;1;   # 6
-4;0;1;2;  700;100;    55;0;0;1;    38;0;1;1;   # 7
-4;0;1;2;  800;100;    56;0;0;1;    42;0;1;1;   # 8
-4;0;1;2;  900;100;    57;0;0;1;    40;0;1;1;   # 9
-4;0;1;2; 1000;100;    48;0;0;1;    41;0;1;1;   # 0
-4;0;1;2; 1100;100;    45;0;0;1;    95;0;1;1;   # Ponctuation
-4;0;1;2; 1200;100;    61;0;0;1;    43;0;1;1;   # Ponctuation
-
-
-# Navigation
-0;0;1;1; 1530;100; 65361;0;0;1;   # Flèche gauche
-0;0;1;1; 1630;100; 65364;0;0;1;   # Flèche bas
-0;0;1;1; 1730;100; 65363;0;0;1;   # Flèche droite
-1;0;1;1; 1630;100; 65362;0;0;1;   # Flèche haut
-3;0;1;1; 1530;100; 65535;0;0;1;   # Delete
-3;0;1;1; 1630;100; 65367;0;0;1;   # End
-3;0;1;1; 1730;100; 65366;0;0;1;   # Page down
-4;0;1;1; 1530;100; 65379;0;0;1;   # Insert
-4;0;1;1; 1630;100; 65360;0;0;1;   # Home
-4;0;1;1; 1730;100; 65365;0;0;1;   # Page up
-
-
-# Pavé numérique
-0;1;1;2; 1880;200; 65438;0;0;0; 65456;0;1;1;   # Zéro KP
-0;1;1;2; 2080;100; 65439;0;0;0; 65454;0;1;1;   # Séparateur KP
-1;1;1;2; 1880;100; 65436;0;0;0; 65457;0;1;1;   # 1 KP
-1;1;1;2; 1980;100; 65433;0;0;0; 65458;0;1;1;   # 2 KP
-1;1;1;2; 2080;100; 65435;0;0;0; 65459;0;1;1;   # 3 KP
-2;1;1;2; 1880;100; 65430;0;0;0; 65460;0;1;1;   # 4 KP
-2;1;1;2; 1980;100; 65437;0;0;0; 65461;0;1;1;   # 5 KP
-2;1;1;2; 2080;100; 65432;0;0;0; 65462;0;1;1;   # 6 KP
-3;1;1;2; 1880;100; 65429;0;0;0; 65463;0;1;1;   # 7 KP
-3;1;1;2; 1980;100; 65431;0;0;0; 65464;0;1;1;   # 8 KP
-3;1;1;2; 2080;100; 65434;0;0;0; 65465;0;1;1;   # 9 KP
-4;1;1;1; 1880;100; 65407;0;0;1;                # Verr. Num.
-4;1;1;1; 1980;100; 65455;0;0;1;                # Div. KP
-4;1;1;1; 2080;100; 65450;0;0;1;                # Mult. KP
-4;1;1;1; 2180;100; 65453;0;0;1;                # Moins KP
-
-2;1;2;1; 2180;100;2180;100; 65451;0;0;1;       # Plus KP
-0;1;2;1; 2180;100;2180;100; 65421;0;0;1;       # Entrée KP
-
-
-# Touches de fonction
-6;0;1;1;    0;100; 65307;0;0;1;   # Echap.
-6;0;1;1;  180;100; 65470;0;0;1;   # F1
-6;0;1;1;  280;100; 65471;0;0;1;   # F2
-6;0;1;1;  380;100; 65472;0;0;1;   # F3
-6;0;1;1;  480;100; 65473;0;0;1;   # F4
-6;0;1;1;  630;100; 65474;0;0;1;   # F5
-6;0;1;1;  730;100; 65475;0;0;1;   # F6
-6;0;1;1;  830;100; 65476;0;0;1;   # F7
-6;0;1;1;  930;100; 65477;0;0;1;   # F8
-6;0;1;1; 1080;100; 65478;0;0;1;   # F9
-6;0;1;1; 1180;100; 65479;0;0;1;   # F10
-6;0;1;1; 1280;100; 65480;0;0;1;   # F11
-6;0;1;1; 1380;100; 65481;0;0;1;   # F12
-6;0;1;1; 1530;100; 64797;0;0;1;   # Impr. écran
-6;0;1;1; 1630;100; 65300;0;0;1;   # Arrêt defil.
-6;0;1;1; 1730;100; 65299;0;0;1;   # Pause
+	<key-line>
+		<count>7</count>
+		<height>100,50,100,100,100,100,100</height>
+	</key-line>
+	
+	<keys>
+	
+		<!-- Main pad, key line 1 (mostly digits) -->
+		<key>
+			<id>main-01</id>
+			<label>1,!</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>100</x><width>100</width></geometry>
+			<scan-code><unix>10</unix><windows>2</windows></scan-code>
+		</key>
+		<key>
+			<id>main-02</id>
+			<label>2,@</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>200</x><width>100</width></geometry>
+			<scan-code><unix>11</unix><windows>3</windows></scan-code>
+		</key>
+		<key>
+			<id>main-03</id>
+			<label>3,#</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>300</x><width>100</width></geometry>
+			<scan-code><unix>12</unix><windows>4</windows></scan-code>
+		</key>
+		<key>
+			<id>main-04</id>
+			<label>4,$</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>400</x><width>100</width></geometry>
+			<scan-code><unix>13</unix><windows>5</windows></scan-code>
+		</key>
+		<key>
+			<id>main-05</id>
+			<label>5,%</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>500</x><width>100</width></geometry>
+			<scan-code><unix>14</unix><windows>6</windows></scan-code>
+		</key>
+		<key>
+			<id>main-06</id>
+			<label>6,^</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>600</x><width>100</width></geometry>
+			<scan-code><unix>15</unix><windows>7</windows></scan-code>
+		</key>
+		<key>
+			<id>main-07</id>
+			<label>7,&amp;</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>700</x><width>100</width></geometry>
+			<scan-code><unix>16</unix><windows>8</windows></scan-code>
+		</key>
+		<key>
+			<id>main-08</id>
+			<label>8,*</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>800</x><width>100</width></geometry>
+			<scan-code><unix>17</unix><windows>9</windows></scan-code>
+		</key>
+		<key>
+			<id>main-09</id>
+			<label>9,(</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>900</x><width>100</width></geometry>
+			<scan-code><unix>18</unix><windows>10</windows></scan-code>
+		</key>
+		<key>
+			<id>main-10</id>
+			<label>0,)</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>1000</x><width>100</width></geometry>
+			<scan-code><unix>19</unix><windows>11</windows></scan-code>
+		</key>
+		<key>
+			<id>main-11</id>
+			<label>-,_</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>1100</x><width>100</width></geometry>
+			<scan-code><unix>20</unix><windows>12</windows></scan-code>
+		</key>
+		<key>
+			<id>main-12</id>
+			<label>=,+</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>1200</x><width>100</width></geometry>
+			<scan-code><unix>21</unix><windows>13</windows></scan-code>
+		</key>
+		<key>
+			<id>back-space</id>
+			<label>{back-space}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>1300</x><width>180</width></geometry>
+			<scan-code><unix>22</unix><windows>14</windows></scan-code>
+		</key>
+		<!-- End Main pad, key line 1 -->
+		
+		
+		
+		<!-- Main pad, key line 2 (mostly letters QWERTY...) -->
+		<key>
+			<id>tab</id>
+			<label>{tab}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>0</x><width>130</width></geometry>
+			<scan-code><unix>23</unix><windows>15</windows></scan-code>
+		</key>
+		<key>
+			<id>main-15</id>
+			<label>Q</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>130</x><width>100</width></geometry>
+			<scan-code><unix>24</unix><windows>16</windows></scan-code>
+		</key>
+		<key>
+			<id>main-16</id>
+			<label>W</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>230</x><width>100</width></geometry>
+			<scan-code><unix>25</unix><windows>17</windows></scan-code>
+		</key>
+		<key>
+			<id>main-17</id>
+			<label>E</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>330</x><width>100</width></geometry>
+			<scan-code><unix>26</unix><windows>18</windows></scan-code>
+		</key>
+		<key>
+			<id>main-18</id>
+			<label>R</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>430</x><width>100</width></geometry>
+			<scan-code><unix>27</unix><windows>19</windows></scan-code>
+		</key>
+		<key>
+			<id>main-19</id>
+			<label>T</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>530</x><width>100</width></geometry>
+			<scan-code><unix>28</unix><windows>20</windows></scan-code>
+		</key>
+		<key>
+			<id>main-20</id>
+			<label>Y</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>630</x><width>100</width></geometry>
+			<scan-code><unix>29</unix><windows>21</windows></scan-code>
+		</key>
+		<key>
+			<id>main-21</id>
+			<label>U</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>730</x><width>100</width></geometry>
+			<scan-code><unix>30</unix><windows>22</windows></scan-code>
+		</key>
+		<key>
+			<id>main-22</id>
+			<label>I</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>830</x><width>100</width></geometry>
+			<scan-code><unix>31</unix><windows>23</windows></scan-code>
+		</key>
+		<key>
+			<id>main-23</id>
+			<label>O</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>930</x><width>100</width></geometry>
+			<scan-code><unix>32</unix><windows>24</windows></scan-code>
+		</key>
+		<key>
+			<id>main-24</id>
+			<label>P</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>1030</x><width>100</width></geometry>
+			<scan-code><unix>33</unix><windows>25</windows></scan-code>
+		</key>
+		<key>
+			<id>main-25</id>
+			<label>[,\{</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>1130</x><width>100</width></geometry>
+			<scan-code><unix>34</unix><windows>26</windows></scan-code>
+		</key>
+		<key>
+			<id>main-26</id>
+			<label>],\}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>1230</x><width>100</width></geometry>
+			<scan-code><unix>35</unix><windows>27</windows></scan-code>
+		</key>
+		<key>
+			<id>enter</id>
+			<label>{enter}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>4</line-bottom><x>1330,1360</x><width>150,120</width></geometry>
+			<scan-code><unix>36</unix><windows>28</windows></scan-code>
+		</key>
+		<!-- End main pad, key line 2 -->
+		
+		
+		
+		<!-- Main pad, key line 3 (mostly letters ASDFGH...) -->
+		<key>
+			<id>ctrl-left</id>
+			<label>{ctrl}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>0</x><width>130</width></geometry>
+			<scan-code><unix>37</unix><windows>29</windows></scan-code>
+		</key>
+		<key>
+			<id>main-29</id>
+			<label>A</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>160</x><width>100</width></geometry>
+			<scan-code><unix>38</unix><windows>30</windows></scan-code>
+		</key>
+		<key>
+			<id>main-30</id>
+			<label>S</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>260</x><width>100</width></geometry>
+			<scan-code><unix>39</unix><windows>31</windows></scan-code>
+		</key>
+		<key>
+			<id>main-31</id>
+			<label>D</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>360</x><width>100</width></geometry>
+			<scan-code><unix>40</unix><windows>32</windows></scan-code>
+		</key>
+		<key>
+			<id>main-32</id>
+			<label>F</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>460</x><width>100</width></geometry>
+			<scan-code><unix>41</unix><windows>33</windows></scan-code>
+		</key>
+		<key>
+			<id>main-33</id>
+			<label>G</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>560</x><width>100</width></geometry>
+			<scan-code><unix>42</unix><windows>34</windows></scan-code>
+		</key>
+		<key>
+			<id>main-34</id>
+			<label>H</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>660</x><width>100</width></geometry>
+			<scan-code><unix>43</unix><windows>35</windows></scan-code>
+		</key>
+		<key>
+			<id>main-35</id>
+			<label>J</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>760</x><width>100</width></geometry>
+			<scan-code><unix>44</unix><windows>36</windows></scan-code>
+		</key>
+		<key>
+			<id>main-36</id>
+			<label>K</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>860</x><width>100</width></geometry>
+			<scan-code><unix>45</unix><windows>37</windows></scan-code>
+		</key>
+		<key>
+			<id>main-37</id>
+			<label>L</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>960</x><width>100</width></geometry>
+			<scan-code><unix>46</unix><windows>38</windows></scan-code>
+		</key>
+		<key>
+			<id>main-38</id>
+			<label>;,:</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>1060</x><width>100</width></geometry>
+			<scan-code><unix>47</unix><windows>39</windows></scan-code>
+		</key>
+		<key>
+			<id>main-39</id>
+			<label>',"</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>1160</x><width>100</width></geometry>
+			<scan-code><unix>48</unix><windows>40</windows></scan-code>
+		</key>
+		<key>
+			<id>main-40</id>
+			<label>??</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>0</x><width>100</width></geometry>
+			<scan-code><unix>49</unix><windows>41</windows></scan-code>
+		</key>
+		<!-- End main pad, key line 3 -->
+		
+		
+		
+		<!-- Main pad, key line 4 (mostly letters ZXCVBN...) -->
+		<key>
+			<id>shift-left</id>
+			<label>{shift}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>0</x><width>120</width></geometry>
+			<scan-code><unix>50</unix><windows>42</windows></scan-code>
+		</key>
+		<key>
+			<id>main-42</id>
+			<label>|,\\</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>1260</x><width>100</width></geometry>
+			<scan-code><unix>51</unix><windows>43</windows></scan-code>
+		</key>
+		<key>
+			<id>main-43</id>
+			<label>Z</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>220</x><width>100</width></geometry>
+			<scan-code><unix>52</unix><windows>44</windows></scan-code>
+		</key>
+		<key>
+			<id>main-44</id>
+			<label>X</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>320</x><width>100</width></geometry>
+			<scan-code><unix>53</unix><windows>45</windows></scan-code>
+		</key>
+		<key>
+			<id>main-45</id>
+			<label>C</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>420</x><width>100</width></geometry>
+			<scan-code><unix>54</unix><windows>46</windows></scan-code>
+		</key>
+		<key>
+			<id>main-46</id>
+			<label>V</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>520</x><width>100</width></geometry>
+			<scan-code><unix>55</unix><windows>47</windows></scan-code>
+		</key>
+		<key>
+			<id>main-47</id>
+			<label>B</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>620</x><width>100</width></geometry>
+			<scan-code><unix>56</unix><windows>48</windows></scan-code>
+		</key>
+		<key>
+			<id>main-48</id>
+			<label>N</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>720</x><width>100</width></geometry>
+			<scan-code><unix>57</unix><windows>49</windows></scan-code>
+		</key>
+		<key>
+			<id>main-49</id>
+			<label>M</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>820</x><width>100</width></geometry>
+			<scan-code><unix>58</unix><windows>50</windows></scan-code>
+		</key>
+		<key>
+			<id>main-50</id>
+			<label>\,,&lt;</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>920</x><width>100</width></geometry>
+			<scan-code><unix>59</unix><windows>51</windows></scan-code>
+		</key>
+		<key>
+			<id>main-51</id>
+			<label>.,&gt;</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>1020</x><width>100</width></geometry>
+			<scan-code><unix>60</unix><windows>52</windows></scan-code>
+		</key>
+		<key>
+			<id>main-52</id>
+			<label>/,?</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>1120</x><width>100</width></geometry>
+			<scan-code><unix>61</unix><windows>53</windows></scan-code>
+		</key>
+		<key>
+			<id>shift-right</id>
+			<label>{shift}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>1220</x><width>260</width></geometry>
+			<scan-code><unix>62</unix><windows>54</windows></scan-code>
+		</key>
+		<!-- End main pad, key line 4 -->
+		
+		
+		
+		<!-- Main pad, key line 5 and orphan keys -->
+		<key>
+			<id>alt-left</id>
+			<label>{alt}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>260</x><width>130</width></geometry>
+			<scan-code><unix>64</unix><windows>56</windows></scan-code>
+		</key>
+		<key>
+			<id>space</id>
+			<label>{space}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>390</x><width>570</width></geometry>
+			<scan-code><unix>65</unix><windows>57</windows></scan-code>
+		</key>
+		<key>
+			<id>caps-lock</id>
+			<label>{caps-lock}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>0</x><width>160</width></geometry>
+			<scan-code><unix>66</unix><windows>58</windows></scan-code>
+		</key>
+		<key>
+			<id>main-90</id>
+			<label>&lt;,&gt;</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>120</x><width>100</width></geometry>
+			<scan-code><unix>94</unix><windows>86</windows></scan-code>
+		</key>
+		<key>
+			<id>ctrl-right</id>
+			<label>{ctrl}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1350</x><width>130</width></geometry>
+			<scan-code><unix>105</unix><windows>0</windows></scan-code>
+		</key>
+		<key>
+			<id>alt-gr</id>
+			<label>{alt-gr}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>960</x><width>130</width></geometry>
+			<scan-code><unix>108</unix><windows>312</windows></scan-code> <!-- <windows>29</windows> ? -->
+		</key>
+		<key>
+			<id>menu</id>
+			<label>{menu}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1220</x><width>130</width></geometry>
+			<scan-code><unix>135</unix><windows>349</windows></scan-code>
+		</key>
+		<key>
+			<id>super-left</id>
+			<label>{super}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>130</x><width>130</width></geometry>
+			<scan-code><unix>133</unix><windows>347</windows></scan-code>
+		</key>
+		<key>
+			<id>super-right</id>
+			<label>{super}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1090</x><width>130</width></geometry>
+			<scan-code><unix>0</unix><windows>0</windows></scan-code>
+		</key>
+		<!-- End main pad, key line 5 and orphan keys -->
+		
+		
+		
+		<!-- Navigation pads -->
+		<key>
+			<id>home</id>
+			<label>{home}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>1630</x><width>100</width></geometry>
+			<scan-code><unix>110</unix><windows>327</windows></scan-code>
+		</key>
+		<key>
+			<id>arrow-up</id>
+			<label>{arrow-up}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>1630</x><width>100</width></geometry>
+			<scan-code><unix>111</unix><windows>328</windows></scan-code>
+		</key>
+		<key>
+			<id>page-up</id>
+			<label>{page-up}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>1730</x><width>100</width></geometry>
+			<scan-code><unix>112</unix><windows>329</windows></scan-code>
+		</key>
+		<key>
+			<id>arrow-left</id>
+			<label>{arrow-left}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1530</x><width>100</width></geometry>
+			<scan-code><unix>113</unix><windows>331</windows></scan-code>
+		</key>
+		<key>
+			<id>arrow-right</id>
+			<label>{arrow-right}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1730</x><width>100</width></geometry>
+			<scan-code><unix>114</unix><windows>333</windows></scan-code>
+		</key>
+		<key>
+			<id>end</id>
+			<label>{end}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>1630</x><width>100</width></geometry>
+			<scan-code><unix>115</unix><windows>335</windows></scan-code>
+		</key>
+		<key>
+			<id>arrow-down</id>
+			<label>{arrow-down}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1630</x><width>100</width></geometry>
+			<scan-code><unix>116</unix><windows>336</windows></scan-code>
+		</key>
+		<key>
+			<id>page-down</id>
+			<label>{page-down}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>1730</x><width>100</width></geometry>
+			<scan-code><unix>117</unix><windows>337</windows></scan-code>
+		</key>
+		<key>
+			<id>insert</id>
+			<label>{insert}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>1530</x><width>100</width></geometry>
+			<scan-code><unix>118</unix><windows>338</windows></scan-code>
+		</key>
+		<key>
+			<id>delete</id>
+			<label>{delete}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>1530</x><width>100</width></geometry>
+			<scan-code><unix>119</unix><windows>339</windows></scan-code>
+		</key>
+		<!-- End navigation pads -->
+		
+		
+		
+		<!-- Numeric pad -->
+		<key>
+			<id>num-01</id>
+			<label>7</label>
+			<geometry><in-nkp>true</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>1880</x><width>100</width></geometry>
+			<scan-code><unix>79</unix><windows>71</windows></scan-code>
+		</key>
+		<key>
+			<id>num-02</id>
+			<label>8</label>
+			<geometry><in-nkp>true</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>1980</x><width>100</width></geometry>
+			<scan-code><unix>80</unix><windows>72</windows></scan-code>
+		</key>
+		<key>
+			<id>num-03</id>
+			<label>9</label>
+			<geometry><in-nkp>true</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>2080</x><width>100</width></geometry>
+			<scan-code><unix>81</unix><windows>73</windows></scan-code>
+		</key>
+		<key>
+			<id>num-04</id>
+			<label>-</label>
+			<geometry><in-nkp>true</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>2180</x><width>100</width></geometry>
+			<scan-code><unix>82</unix><windows>74</windows></scan-code>
+		</key>
+		<key>
+			<id>num-05</id>
+			<label>4</label>
+			<geometry><in-nkp>true</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>1880</x><width>100</width></geometry>
+			<scan-code><unix>83</unix><windows>75</windows></scan-code>
+		</key>
+		<key>
+			<id>num-06</id>
+			<label>5</label>
+			<geometry><in-nkp>true</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>1980</x><width>100</width></geometry>
+			<scan-code><unix>84</unix><windows>76</windows></scan-code>
+		</key>
+		<key>
+			<id>num-07</id>
+			<label>6</label>
+			<geometry><in-nkp>true</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>2080</x><width>100</width></geometry>
+			<scan-code><unix>85</unix><windows>77</windows></scan-code>
+		</key>
+		<key>
+			<id>num-08</id>
+			<label>+</label>
+			<geometry><in-nkp>true</in-nkp><line-top>3</line-top><line-bottom>4</line-bottom><x>2180,2180</x><width>100,100</width></geometry>
+			<scan-code><unix>86</unix><windows>78</windows></scan-code>
+		</key>
+		<key>
+			<id>num-09</id>
+			<label>1</label>
+			<geometry><in-nkp>true</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>1880</x><width>100</width></geometry>
+			<scan-code><unix>87</unix><windows>79</windows></scan-code>
+		</key>
+		<key>
+			<id>num-10</id>
+			<label>2</label>
+			<geometry><in-nkp>true</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>1980</x><width>100</width></geometry>
+			<scan-code><unix>88</unix><windows>80</windows></scan-code>
+		</key>
+		<key>
+			<id>num-11</id>
+			<label>3</label>
+			<geometry><in-nkp>true</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>2080</x><width>100</width></geometry>
+			<scan-code><unix>89</unix><windows>81</windows></scan-code>
+		</key>
+		<key>
+			<id>num-12</id>
+			<label>0</label>
+			<geometry><in-nkp>true</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1880</x><width>200</width></geometry>
+			<scan-code><unix>90</unix><windows>82</windows></scan-code>
+		</key>
+		<key>
+			<id>num-13</id>
+			<label>.</label>
+			<geometry><in-nkp>true</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>2080</x><width>100</width></geometry>
+			<scan-code><unix>91</unix><windows>83</windows></scan-code>
+		</key>
+		<key>
+			<id>num-90</id>
+			<label>{num-lock}</label>
+			<geometry><in-nkp>true</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>1880</x><width>100</width></geometry>
+			<scan-code><unix>77</unix><windows>325</windows></scan-code>
+		</key>
+		<key>
+			<id>num-91</id>
+			<label>/</label>
+			<geometry><in-nkp>true</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>1980</x><width>100</width></geometry>
+			<scan-code><unix>106</unix><windows>309</windows></scan-code>
+		</key>
+		<key>
+			<id>num-92</id>
+			<label>*</label>
+			<geometry><in-nkp>true</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>2080</x><width>100</width></geometry>
+			<scan-code><unix>63</unix><windows>55</windows></scan-code>
+		</key>
+		<key>
+			<id>num-93</id>
+			<label>{enter-nkp}</label>
+			<geometry><in-nkp>true</in-nkp><line-top>5</line-top><line-bottom>6</line-bottom><x>2180,2180</x><width>100,100</width></geometry>
+			<scan-code><unix>104</unix><windows>284</windows></scan-code>
+		</key>
+		<!-- End numeric pad -->
+		
+		
+		
+		<!-- Function keys -->
+		<key>
+			<id>esc</id>
+			<label>{esc}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>0</x><width>100</width></geometry>
+			<scan-code><unix>9</unix><windows>1</windows></scan-code>
+		</key>
+		<key>
+			<id>f1</id>
+			<label>{f1}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>180</x><width>100</width></geometry>
+			<scan-code><unix>67</unix><windows>59</windows></scan-code>
+		</key>
+		<key>
+			<id>f2</id>
+			<label>{f2}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>280</x><width>100</width></geometry>
+			<scan-code><unix>68</unix><windows>60</windows></scan-code>
+		</key>
+		<key>
+			<id>f3</id>
+			<label>{f3}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>380</x><width>100</width></geometry>
+			<scan-code><unix>69</unix><windows>61</windows></scan-code>
+		</key>
+		<key>
+			<id>f4</id>
+			<label>{f4}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>480</x><width>100</width></geometry>
+			<scan-code><unix>70</unix><windows>62</windows></scan-code>
+		</key>
+		<key>
+			<id>f5</id>
+			<label>{f5}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>630</x><width>100</width></geometry>
+			<scan-code><unix>71</unix><windows>63</windows></scan-code>
+		</key>
+		<key>
+			<id>f6</id>
+			<label>{f6}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>730</x><width>100</width></geometry>
+			<scan-code><unix>72</unix><windows>64</windows></scan-code>
+		</key>
+		<key>
+			<id>f7</id>
+			<label>{f7}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>830</x><width>100</width></geometry>
+			<scan-code><unix>73</unix><windows>65</windows></scan-code>
+		</key>
+		<key>
+			<id>f8</id>
+			<label>{f8}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>930</x><width>100</width></geometry>
+			<scan-code><unix>74</unix><windows>66</windows></scan-code>
+		</key>
+		<key>
+			<id>f9</id>
+			<label>{f9}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>1080</x><width>100</width></geometry>
+			<scan-code><unix>75</unix><windows>67</windows></scan-code>
+		</key>
+		<key>
+			<id>f10</id>
+			<label>{f10}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>1180</x><width>100</width></geometry>
+			<scan-code><unix>76</unix><windows>68</windows></scan-code>
+		</key>
+		<key>
+			<id>f11</id>
+			<label>{f11}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>1280</x><width>100</width></geometry>
+			<scan-code><unix>95</unix><windows>87</windows></scan-code>
+		</key>
+		<key>
+			<id>f12</id>
+			<label>{f12}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>1380</x><width>100</width></geometry>
+			<scan-code><unix>96</unix><windows>88</windows></scan-code>
+		</key>
+		<key>
+			<id>print-screen</id>
+			<label>{print-screen}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>1530</x><width>100</width></geometry>
+			<scan-code><unix>107</unix><windows>311</windows></scan-code>
+		</key>
+		<key>
+			<id>scroll-lock</id>
+			<label>{scroll-lock}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>1630</x><width>100</width></geometry>
+			<scan-code><unix>78</unix><windows>70</windows></scan-code>
+		</key>
+		<key>
+			<id>pause</id>
+			<label>{pause}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>0</line-top><line-bottom>0</line-bottom><x>1730</x><width>100</width></geometry>
+			<scan-code><unix>127</unix><windows>69</windows></scan-code>
+		</key>
+		<!-- End function keys -->
+		
+	</keys>
+	
+</key-board-map>

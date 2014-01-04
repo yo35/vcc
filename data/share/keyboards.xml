@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboards>
+	
+	<keyboard>
+		<id>US</id>
+		<icon>US.png</icon>
+		<name>American keyboard</name>
+		<locales>
+			<locale>*</locale>
+			<locale>en_US</locale>
+		</locales>
+	</keyboard>
+	
+	<keyboard>
+		<id>FR</id>
+		<icon>FR.png</icon>
+		<name>Clavier français</name>
+		<locales>
+			<locale>fr_FR</locale>
+			<locale>fr_GF</locale>
+		</locales>
+	</keyboard>
+
+</keyboards>

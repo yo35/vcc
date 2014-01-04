@@ -178,10 +178,6 @@ KeyboardMap &KeyboardMap::load(const std::string &path)
 // Load the keyboard map from a property tree.
 KeyboardMap &KeyboardMap::load(const boost::property_tree::ptree &data)
 {
-	// Headers
-	_id   = data.get<std::string>("id"  );
-	_name = data.get<std::string>("name");
-
 	// Key-lines
 	std::size_t key_line_count = data.get<std::size_t>("key-line.count");
 	_line_height = parse_int_list(data.get<std::string>("key-line.height"), key_line_count, 100, MINIMUM_KEY_SIZE);

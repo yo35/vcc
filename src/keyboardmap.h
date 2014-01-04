@@ -168,16 +168,6 @@ public:
 	KeyboardMap &load(const boost::property_tree::ptree &data);
 
 	/**
-	 * ID of the keyboard map.
-	 */
-	const std::string &id() const { return _id; }
-
-	/**
-	 * Human-readable name of the keyboard map (localized if possible, otherwise in English).
-	 */
-	const std::string &name() const { return _name; }
-
-	/**
 	 * Number of key-lines of the keyboard.
 	 */
 	std::size_t line_count() const { return _line_height.size(); }
@@ -218,8 +208,6 @@ private:
 	static std::vector<int> parse_int_list(const std::string &data, std::size_t expected_count, int default_value, int min_value);
 
 	// Private members
-	std::string                _id         ;
-	std::string                _name       ;
 	std::vector<int>           _line_y     ;
 	std::vector<int>           _line_height;
 	std::vector<KeyDescriptor> _keys       ;
