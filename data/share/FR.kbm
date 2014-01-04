@@ -384,12 +384,6 @@
 			<scan-code><unix>108</unix><windows>312</windows></scan-code> <!-- <windows>29</windows> ? -->
 		</key>
 		<key>
-			<id>menu</id>
-			<label>{menu}</label>
-			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1220</x><width>130</width></geometry>
-			<scan-code><unix>135</unix><windows>349</windows></scan-code>
-		</key>
-		<key>
 			<id>super-left</id>
 			<label>{super}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>130</x><width>130</width></geometry>
@@ -399,7 +393,13 @@
 			<id>super-right</id>
 			<label>{super}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1090</x><width>130</width></geometry>
-			<scan-code><unix>0</unix><windows>0</windows></scan-code>
+			<scan-code><unix>134</unix><windows>348</windows></scan-code>
+		</key>
+		<key>
+			<id>menu</id>
+			<label>{menu}</label>
+			<geometry><in-nkp>false</in-nkp><line-top>6</line-top><line-bottom>6</line-bottom><x>1220</x><width>130</width></geometry>
+			<scan-code><unix>135</unix><windows>349</windows></scan-code>
 		</key>
 		<!-- End main pad, key line 5 and orphan keys -->
 		
