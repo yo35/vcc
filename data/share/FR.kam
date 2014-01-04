@@ -48,7 +48,7 @@
 	<key><id>caps-lock</id><low>1</low></key>
 	<key><id>main-90</id><low>1</low></key>
 	<key><id>ctrl-right</id><low>2</low></key>
-	<key><id>alt-gr</id><low>2</low></key>
+	<key><id>alt-right</id><low>2</low></key>
 	<key><id>menu</id><low>2</low></key>
 	<key><id>super-left</id><low>1</low></key>
 	<key><id>super-right</id><low>2</low></key>
