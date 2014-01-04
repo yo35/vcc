@@ -21,15 +21,16 @@
 
 
 #include "params.h"
-#include <stdexcept>
-#include <sstream>
 #include <config.h>
 #include <translation.h>
+#include <stdexcept>
+#include <sstream>
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #ifdef OS_IS_WINDOWS
 	#include <windows.h>
 #endif
+
 
 
 // Singleton object.
@@ -97,8 +98,7 @@ const std::string &Params::ptree_filename()
 // Private constructor.
 Params::Params() :
 	_app_short_name(APP_SHORT_NAME), _app_name(APP_NAME), _app_full_name(APP_FULL_NAME),
-	_root(nullptr), _ptree_loaded(false), _ptree_saved(true),
-	_keyboard_map_loaded(false)
+	_root(nullptr), _ptree_loaded(false), _ptree_saved(true)
 {}
 
 
@@ -305,50 +305,35 @@ void Params::set_show_numeric_keypad(bool value)
 }
 
 
-// Load the keyboard map files if not done yet.
-void Params::ensure_keyboard_maps_loaded()
-{
-	if(_keyboard_map_loaded) {
-		return;
-	}
-	boost::filesystem::directory_iterator end;
-	for(boost::filesystem::directory_iterator it(share_path()); it!=end; ++it) {
-		if(it->path().extension()!=".kbm") {
-			continue;
-		}
-
-		// Try to load the current file
-		try {
-			KeyboardMap kbm;
-			kbm.load(it->path().string());
-			_keyboard_maps.insert(kbm.id());
-			_keyboard_map_data[kbm.id()] = std::move(kbm);
-		}
-		catch(boost::property_tree::ptree_error &) {}
-	}
-	_keyboard_map_loaded = true;
-}
-
-
 // Return the IDs of the available keyboard maps.
 const std::set<std::string> &Params::keyboard_maps()
 {
-	ensure_keyboard_maps_loaded();
-	return _keyboard_maps;
+	if(!_keyboard_map_list) {
+		_keyboard_map_list = std::set<std::string>();
+		boost::filesystem::directory_iterator end;
+		for(boost::filesystem::directory_iterator it(share_path()); it!=end; ++it) {
+			if(it->path().extension()!=".kbm") {
+				continue;
+			}
+			_keyboard_map_list->insert(it->path().stem().string());
+		}
+	}
+	return *_keyboard_map_list;
 }
 
 
 // Return the keyboard map corresponding to the given ID.
 const KeyboardMap &Params::keyboard_map(const std::string &id)
 {
-	ensure_keyboard_maps_loaded();
-	auto it = _keyboard_map_data.find(id);
-	if(it==_keyboard_map_data.end()) {
-		throw std::invalid_argument(_("Invalid keyboard map ID."));
+	auto it = _keyboard_maps.find(id);
+	if(it==_keyboard_maps.end()) {
+		try {
+			_keyboard_maps[id].load(share_path() + "/" + id + ".kbm");
+		}
+		catch(boost::property_tree::ptree_error &) {}
+		it = _keyboard_maps.find(id);
 	}
-	else {
-		return it->second;
-	}
+	return it->second;
 }
 
 
@@ -359,9 +344,22 @@ const KeyAssociationMap &Params::key_association_map(const std::string &id)
 	if(it==_key_association_default.end())
 	{
 		try {
-			return _key_association_default[id].load(share_path() + "/" + id + ".kam");
+			_key_association_default[id].load(share_path() + "/" + id + ".kam");
 		}
 		catch(boost::property_tree::ptree_error &) {}
+		it = _key_association_default.find(id);
+	}
+	return it->second;
+}
+
+
+// Return the icon of the keyboard map corresponding to the given ID.
+QIcon Params::keyboard_icon(const std::string &id)
+{
+	auto it = _keyboard_icons.find(id);
+	if(it==_keyboard_icons.end()) {
+		_keyboard_icons[id] = QIcon(QString::fromStdString(share_path() + "/" + id + ".png"));
+		it = _keyboard_icons.find(id);
 	}
 	return it->second;
 }

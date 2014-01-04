@@ -29,8 +29,10 @@
 #include <set>
 #include <boost/optional.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include "timecontrol.h"
+#include <QIcon>
 #include "options.h"
+#include "side.h"
+#include "timecontrol.h"
 #include "keyboardmap.h"
 #include "keyassociationmap.h"
 
@@ -136,6 +138,11 @@ public:
 	 */
 	const KeyAssociationMap &key_association_map(const std::string &id);
 
+	/**
+	 * Return the icon of the keyboard map corresponding to the given ID.
+	 */
+	QIcon keyboard_icon(const std::string &id);
+
 private:
 
 	// Useful alias
@@ -148,7 +155,6 @@ private:
 	void load();
 	void save();
 	void ensure_config_path_exists();
-	void ensure_keyboard_maps_loaded();
 
 	// Utility functions to manage the property tree holding the user-related data.
 	ptree &fetch(const std::string &key);
@@ -174,10 +180,10 @@ private:
 	bool   _ptree_saved ;
 
 	// Keyboard maps
-	bool                                     _keyboard_map_loaded    ;
-	std::map<std::string, KeyboardMap>       _keyboard_map_data      ;
-	std::set<std::string>                    _keyboard_maps          ;
+	boost::optional<std::set<std::string>>   _keyboard_map_list      ;
+	std::map<std::string, KeyboardMap>       _keyboard_maps          ;
 	std::map<std::string, KeyAssociationMap> _key_association_default;
+	std::map<std::string, QIcon>             _keyboard_icons         ;
 
 	// Singleton object
 	static std::unique_ptr<Params> _instance;
