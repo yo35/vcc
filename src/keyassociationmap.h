@@ -50,7 +50,7 @@ public:
 	 * If this ID does not refer to a key, or if no shortcut is associated to it,
 	 * 0 is returned.
 	 */
-	int shortcurt_low(const std::string &id) const
+	int shortcut_low(const std::string &id) const
 	{
 		auto it = _shortcut_low.find(id);
 		return it==_shortcut_low.end() ? 0 : it->second;
@@ -61,10 +61,19 @@ public:
 	 * If this ID does not refer to a key, or if no shortcut is associated to it,
 	 * 0 is returned.
 	 */
-	int shortcurt_high(const std::string &id) const
+	int shortcut_high(const std::string &id) const
 	{
 		auto it = _shortcut_high.find(id);
 		return it==_shortcut_high.end() ? 0 : it->second;
+	}
+
+	/**
+	 * Return the index of the (either low- or high-position depending on the flag `high_position`)
+	 * shortcut associated to the key having the ID `id`.
+	 */
+	int shortcut(const std::string &id, bool high_position) const
+	{
+		return high_position ? shortcut_high(id) : shortcut_low(id);
 	}
 
 	/**
