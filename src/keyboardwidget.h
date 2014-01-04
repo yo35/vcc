@@ -20,8 +20,8 @@
  ******************************************************************************/
 
 
-#ifndef KEYBOARDMAPWIDGET_H_
-#define KEYBOARDMAPWIDGET_H_
+#ifndef KEYBOARDWIDGET_H_
+#define KEYBOARDWIDGET_H_
 
 #include <QWidget>
 #include <vector>
@@ -36,7 +36,7 @@ class KeyboardMap;
 /**
  * Display a keyboard map and edit the associated key association map.
  */
-class KeyboardMapWidget : public QWidget
+class KeyboardWidget : public QWidget
 {
 	Q_OBJECT
 
@@ -45,7 +45,7 @@ public:
 	/**
 	 * Constructor
 	 */
-	KeyboardMapWidget(const KeyboardHandler *keyboardHandler, QWidget *parent=0);
+	KeyboardWidget(const KeyboardHandler *keyboardHandler, QWidget *parent=0);
 
 	/**
 	 * Whether the numeric keypad should be displayed or not.
@@ -126,4 +126,4 @@ private:
 	int       _keyRadius;
 };
 
-#endif /* KEYBOARDMAPWIDGET_H_ */
+#endif /* KEYBOARDWIDGET_H_ */

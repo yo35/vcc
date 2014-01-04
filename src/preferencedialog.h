@@ -28,7 +28,7 @@ QT_BEGIN_NAMESPACE
 	class QCheckBox;
 QT_END_NAMESPACE
 class KeyboardHandler;
-class KeyboardMapWidget;
+class KeyboardWidget;
 
 
 /**
@@ -70,9 +70,9 @@ private:
 	void onDisplayNumericKeypadToggled();
 
 	// Keyboard page
-	QCheckBox         *_displayNumericKeypad;
-	KeyboardHandler   *_keyboardHandler     ;
-	KeyboardMapWidget *_keyboardMapWidget   ;
+	QCheckBox       *_displayNumericKeypad;
+	KeyboardHandler *_keyboardHandler     ;
+	KeyboardWidget  *_keyboardWidget      ;
 
 	// Display page
 	QCheckBox *_displayStatusBar         ;

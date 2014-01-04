@@ -23,7 +23,7 @@
 #include "preferencedialog.h"
 #include "params.h"
 #include "keyboardhandler.h"
-#include "keyboardmapwidget.h"
+#include "keyboardwidget.h"
 #include <translation.h>
 #include <QTabWidget>
 #include <QDialogButtonBox>
@@ -69,10 +69,10 @@ QWidget *PreferenceDialog::createKeyboardPage()
 
 	// Keyboard handler and keyboard widget
 	_keyboardHandler = new KeyboardHandler(this);
-	_keyboardMapWidget = new KeyboardMapWidget(_keyboardHandler, this);
-	_keyboardMapWidget->setDisplayNumericKeypad(_displayNumericKeypad->isChecked());
-	_keyboardMapWidget->bindKeyboardMap(Params::get().keyboard_map("FR"));
-	layout->addWidget(_keyboardMapWidget, 1);
+	_keyboardWidget = new KeyboardWidget(_keyboardHandler, this);
+	_keyboardWidget->setDisplayNumericKeypad(_displayNumericKeypad->isChecked());
+	_keyboardWidget->bindKeyboardMap(Params::get().keyboard_map("FR"));
+	layout->addWidget(_keyboardWidget, 1);
 
 	// Return the page widget
 	return page;
@@ -116,7 +116,7 @@ void PreferenceDialog::changeEvent(QEvent *event)
 // Action performed when the state of the display-numeric-keypad checkbox changes.
 void PreferenceDialog::onDisplayNumericKeypadToggled()
 {
-	_keyboardMapWidget->setDisplayNumericKeypad(_displayNumericKeypad->isChecked());
+	_keyboardWidget->setDisplayNumericKeypad(_displayNumericKeypad->isChecked());
 }
 
 

@@ -20,7 +20,7 @@
  ******************************************************************************/
 
 
-#include "keyboardmapwidget.h"
+#include "keyboardwidget.h"
 #include "keyboardhandler.h"
 #include "keyboardmap.h"
 #include <stdexcept>
@@ -35,19 +35,19 @@
 
 
 // Constructor.
-KeyboardMapWidget::KeyboardMapWidget(const KeyboardHandler *keyboardHandler, QWidget *parent) :
+KeyboardWidget::KeyboardWidget(const KeyboardHandler *keyboardHandler, QWidget *parent) :
 	QWidget(parent),
 	_keyboardHandler(keyboardHandler), _keyboardMap(nullptr), _displayNumericKeypad(true),
 	_colorBackground(208,255,208), _colorText(Qt::black), _colorKeyDefault(Qt::white), _colorKeyDown(255,128,0),
 	_painter(nullptr), _keyMargin(0), _keyRadius(0)
 {
-	connect(_keyboardHandler, &KeyboardHandler::keyPressed , this, &KeyboardMapWidget::onKeyStateChanged);
-	connect(_keyboardHandler, &KeyboardHandler::keyReleased, this, &KeyboardMapWidget::onKeyStateChanged);
+	connect(_keyboardHandler, &KeyboardHandler::keyPressed , this, &KeyboardWidget::onKeyStateChanged);
+	connect(_keyboardHandler, &KeyboardHandler::keyReleased, this, &KeyboardWidget::onKeyStateChanged);
 }
 
 
 // Throw an exception if no keyboard map is binded to the widget.
-void KeyboardMapWidget::ensureKeyboardMapBinded() const
+void KeyboardWidget::ensureKeyboardMapBinded() const
 {
 	if(_keyboardMap==nullptr) {
 		throw std::invalid_argument(_("No keyboard map is currently binded to the widget."));
@@ -56,7 +56,7 @@ void KeyboardMapWidget::ensureKeyboardMapBinded() const
 
 
 // Set whether the numeric keypad should be displayed or not.
-void KeyboardMapWidget::setDisplayNumericKeypad(bool value)
+void KeyboardWidget::setDisplayNumericKeypad(bool value)
 {
 	// Nothing to do if the new value is equal to the old one.
 	if(value==_displayNumericKeypad) {
@@ -70,7 +70,7 @@ void KeyboardMapWidget::setDisplayNumericKeypad(bool value)
 
 
 // Bind a keyboard map to the widget.
-void KeyboardMapWidget::bindKeyboardMap(const KeyboardMap &keyboardMap)
+void KeyboardWidget::bindKeyboardMap(const KeyboardMap &keyboardMap)
 {
 	// Nothing to do if the new keyboard map is identical to the old one.
 	if(_keyboardMap==&keyboardMap) {
@@ -84,7 +84,7 @@ void KeyboardMapWidget::bindKeyboardMap(const KeyboardMap &keyboardMap)
 
 
 // Un-bind the keyboard map currently binded, if any.
-void KeyboardMapWidget::unbindKeyboardMap()
+void KeyboardWidget::unbindKeyboardMap()
 {
 	// Nothing to do if no keyboard map is currently binded.
 	if(_keyboardMap==nullptr) {
@@ -98,19 +98,19 @@ void KeyboardMapWidget::unbindKeyboardMap()
 
 
 // Size hints.
-QSize KeyboardMapWidget::minimumSizeHint() const { return QSize(500, 200); }
-QSize KeyboardMapWidget::sizeHint       () const { return QSize(800, 300); }
+QSize KeyboardWidget::minimumSizeHint() const { return QSize(500, 200); }
+QSize KeyboardWidget::sizeHint       () const { return QSize(800, 300); }
 
 
 // Called when a key is pressed or released.
-void KeyboardMapWidget::onKeyStateChanged(std::uint32_t)
+void KeyboardWidget::onKeyStateChanged(std::uint32_t)
 {
 	update();
 }
 
 
 // Widget rendering method.
-void KeyboardMapWidget::paintEvent(QPaintEvent *)
+void KeyboardWidget::paintEvent(QPaintEvent *)
 {
 	// Create the painter object.
 	QPainter painter(this);
@@ -162,7 +162,7 @@ void KeyboardMapWidget::paintEvent(QPaintEvent *)
 
 
 // Draw the label of the key corresponding to the given index.
-void KeyboardMapWidget::drawKeyLabel(std::size_t idx)
+void KeyboardWidget::drawKeyLabel(std::size_t idx)
 {
 	const KeyboardMap::KeyDescriptor &key(_keyboardMap->key(idx));
 	std::size_t line = key.line_top();
@@ -218,7 +218,7 @@ void KeyboardMapWidget::drawKeyLabel(std::size_t idx)
 
 
 // Draw the shape of the key corresponding to the given index.
-void KeyboardMapWidget::drawKeyShape(std::size_t idx)
+void KeyboardWidget::drawKeyShape(std::size_t idx)
 {
 	const KeyboardMap::KeyDescriptor &key(_keyboardMap->key(idx));
 	std::size_t line = key.line_top();
@@ -313,7 +313,7 @@ void KeyboardMapWidget::drawKeyShape(std::size_t idx)
 
 
 // Draw the shape of a rectangular key (i.e. a key that lies on a single key-line).
-void KeyboardMapWidget::drawRectangularKeyShape(int x, int y, int w, int h)
+void KeyboardWidget::drawRectangularKeyShape(int x, int y, int w, int h)
 {
 	int radius = std::min(_keyRadius, std::min(w,h)/2);
 	_painter->drawRoundedRect(x, y, w, h, radius, radius);
@@ -321,7 +321,7 @@ void KeyboardMapWidget::drawRectangularKeyShape(int x, int y, int w, int h)
 
 
 // Draw the shape of a polygonal key (i.e. a key that lies on several key-lines).
-void KeyboardMapWidget::drawPolygonalKeyShape(int x0, int y0, int dxTop, int dxBottom,
+void KeyboardWidget::drawPolygonalKeyShape(int x0, int y0, int dxTop, int dxBottom,
 	const std::vector<int> &dxLeft , const std::vector<int> &dyLeft ,
 	const std::vector<int> &dxRight, const std::vector<int> &dyRight)
 {
@@ -385,7 +385,7 @@ void KeyboardMapWidget::drawPolygonalKeyShape(int x0, int y0, int dxTop, int dxB
 
 // Determine the radius of the arcs to apply to the corners when drawing
 // a polygonal key shape.
-std::vector<int> KeyboardMapWidget::computeCornerRadius(int dxTop, int dxBottom,
+std::vector<int> KeyboardWidget::computeCornerRadius(int dxTop, int dxBottom,
 	const std::vector<int> &dx, const std::vector<int> &dy) const
 {
 	std::size_t n = dy.size();
@@ -401,7 +401,7 @@ std::vector<int> KeyboardMapWidget::computeCornerRadius(int dxTop, int dxBottom,
 
 // Determine the factor to apply to the current to make each string in `texts`
 // fit into a rectangle of size (w,h).
-double KeyboardMapWidget::computeFontFactor(double w, double h, const std::vector<QString> &texts) const
+double KeyboardWidget::computeFontFactor(double w, double h, const std::vector<QString> &texts) const
 {
 	double retval = DBL_MAX;
 	for(const auto &text : texts) {
