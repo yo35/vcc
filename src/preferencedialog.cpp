@@ -151,7 +151,7 @@ void PreferenceDialog::onSelectedKeyboardChanged()
 }
 
 
-// Action performed when the state of the display-numeric-keypad checkbox changes.
+// Action performed when the state of the display-numeric-keypad check-box changes.
 void PreferenceDialog::onDisplayNumericKeypadToggled()
 {
 	_keyboardWidget->setDisplayNumericKeypad(_displayNumericKeypad->isChecked());
