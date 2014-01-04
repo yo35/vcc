@@ -38,7 +38,7 @@
 KeyboardWidget::KeyboardWidget(const KeyboardHandler *keyboardHandler, QWidget *parent) :
 	QWidget(parent),
 	_keyboardHandler(keyboardHandler), _keyboardMap(nullptr), _keyAssociationMap(nullptr),
-	_displayNumericKeypad(true), _modifierKeysPressed(false),
+	_hasNumericKeypad(true), _modifierKeysPressed(false),
 	_colorBackground(208,255,208), _colorText(Qt::black), _colorKeyDefault(Qt::white), _colorKeyDown(0,0,128),
 	_painter(nullptr), _keyMargin(0), _keyRadius(0)
 {
@@ -66,15 +66,15 @@ void KeyboardWidget::ensureKeyAssociationMapBinded() const
 
 
 // Set whether the numeric keypad should be displayed or not.
-void KeyboardWidget::setDisplayNumericKeypad(bool value)
+void KeyboardWidget::setHasNumericKeypad(bool value)
 {
 	// Nothing to do if the new value is equal to the old one.
-	if(value==_displayNumericKeypad) {
+	if(value==_hasNumericKeypad) {
 		return;
 	}
 
 	// Otherwise, change the value and update the widget.
-	_displayNumericKeypad = value;
+	_hasNumericKeypad = value;
 	update();
 }
 
@@ -182,7 +182,7 @@ void KeyboardWidget::paintEvent(QPaintEvent *)
 	// and whose top-left corner corresponds to the point (0,0) in the new coordinate system.
 	// It is centered with respect to the full widget area.
 	int margin = 5; // minimal distance between the widget borders (l,r,t,b) and the keyboard bounding box.
-	int keyboardWidth  = _keyboardMap->total_width(_displayNumericKeypad);
+	int keyboardWidth  = _keyboardMap->total_width(_hasNumericKeypad);
 	int keyboardHeight = _keyboardMap->total_height();
 	double xScale = static_cast<double>(width () - 2*margin) / static_cast<double>(keyboardWidth );
 	double yScale = static_cast<double>(height() - 2*margin) / static_cast<double>(keyboardHeight);

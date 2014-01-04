@@ -73,14 +73,14 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	layout->addLayout(keyboardSelectorLayout);
 
 	// Display numeric-keypad check-box
-	_displayNumericKeypad = new QCheckBox(_("The keyboard has a numeric keypad"), this);
-	connect(_displayNumericKeypad, &QCheckBox::toggled, this, &PreferenceDialog::onDisplayNumericKeypadToggled);
-	layout->addWidget(_displayNumericKeypad);
+	_hasNumericKeypad = new QCheckBox(_("The keyboard has a numeric keypad"), this);
+	connect(_hasNumericKeypad, &QCheckBox::toggled, this, &PreferenceDialog::onHasNumericKeypadToggled);
+	layout->addWidget(_hasNumericKeypad);
 
 	// Keyboard handler and keyboard widget
 	_keyboardHandler = new KeyboardHandler(this);
 	_keyboardWidget = new KeyboardWidget(_keyboardHandler, this);
-	onDisplayNumericKeypadToggled();
+	onHasNumericKeypadToggled();
 	_keyboardWidget->bindKeyAssociationMap(Params::get().key_association_map("FR"));
 	layout->addWidget(_keyboardWidget, 1);
 
@@ -177,10 +177,10 @@ void PreferenceDialog::onSelectedKeyboardChanged()
 }
 
 
-// Action performed when the state of the display-numeric-keypad check-box changes.
-void PreferenceDialog::onDisplayNumericKeypadToggled()
+// Action performed when the state of the has-numeric-keypad check-box changes.
+void PreferenceDialog::onHasNumericKeypadToggled()
 {
-	_keyboardWidget->setDisplayNumericKeypad(_displayNumericKeypad->isChecked());
+	_keyboardWidget->setHasNumericKeypad(_hasNumericKeypad->isChecked());
 }
 
 
@@ -198,7 +198,7 @@ void PreferenceDialog::loadParameters()
 {
 	// Keyboard page
 	_keyboardSelector->setCurrentIndex(_keyboardSelector->findData(QVariant(Params::get().current_keyboard().c_str())));
-	_displayNumericKeypad->setChecked(Params::get().show_numeric_keypad());
+	_hasNumericKeypad->setChecked(Params::get().has_numeric_keypad());
 
 	// Display page
 	_displayStatusBar->setChecked(Params::get().show_status_bar());
@@ -211,7 +211,7 @@ void PreferenceDialog::saveParameters()
 {
 	// Keyboard page
 	Params::get().set_current_keyboard(retrieveSelectedKeyboard());
-	Params::get().set_show_numeric_keypad(_displayNumericKeypad->isChecked());
+	Params::get().set_has_numeric_keypad(_hasNumericKeypad->isChecked());
 
 	// Display page
 	Params::get().set_show_status_bar(_displayStatusBar->isChecked());

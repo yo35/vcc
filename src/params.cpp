@@ -313,20 +313,6 @@ void Params::set_show_status_bar(bool value)
 }
 
 
-// Wether the numeric keypad should be displayed with the keyboard map or not.
-bool Params::show_numeric_keypad()
-{
-	return get_atomic_value("display.numeric-keypad", true);
-}
-
-
-// Wether the numeric keypad should be displayed with the keyboard map or not.
-void Params::set_show_numeric_keypad(bool value)
-{
-	put_atomic_value("display.numeric-keypad", value);
-}
-
-
 // Load the keyboard index file if not done yet.
 void Params::ensure_keyboard_index_loaded()
 {
@@ -418,6 +404,20 @@ std::string Params::current_keyboard()
 void Params::set_current_keyboard(const std::string &id)
 {
 	put_atomic_value("keyboard.id", id);
+}
+
+
+// Wether the numeric keypad should be displayed with the keyboard map or not.
+bool Params::has_numeric_keypad()
+{
+	return get_atomic_value("keyboard.numeric-keypad", true);
+}
+
+
+// Wether the numeric keypad should be displayed with the keyboard map or not.
+void Params::set_has_numeric_keypad(bool value)
+{
+	put_atomic_value("keyboard.numeric-keypad", value);
 }
 
 

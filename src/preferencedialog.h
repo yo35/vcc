@@ -70,15 +70,15 @@ private:
 	void feedKeyboardSelector();
 	std::string retrieveSelectedKeyboard() const;
 	void onSelectedKeyboardChanged();
-	void onDisplayNumericKeypadToggled();
-	void onModifierKeysToggled();
+	void onHasNumericKeypadToggled();
+	void onModifierKeysToggled    ();
 
 	// Keyboard page
-	QComboBox       *_keyboardSelector    ;
-	QCheckBox       *_displayNumericKeypad;
-	KeyboardHandler *_keyboardHandler     ;
-	KeyboardWidget  *_keyboardWidget      ;
-	QPushButton     *_modifierKeysToggle  ;
+	QComboBox       *_keyboardSelector  ;
+	QCheckBox       *_hasNumericKeypad  ;
+	KeyboardHandler *_keyboardHandler   ;
+	KeyboardWidget  *_keyboardWidget    ;
+	QPushButton     *_modifierKeysToggle;
 
 	// Display page
 	QCheckBox *_displayStatusBar         ;

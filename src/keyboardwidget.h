@@ -61,12 +61,12 @@ public:
 	/**
 	 * Whether the numeric keypad should be displayed or not.
 	 */
-	bool displayNumericKeypad() const { return _displayNumericKeypad; }
+	bool hasNumericKeypad() const { return _hasNumericKeypad; }
 
 	/**
 	 * Set whether the numeric keypad should be displayed or not.
 	 */
-	void setDisplayNumericKeypad(bool value);
+	void setHasNumericKeypad(bool value);
 
 	/**
 	 * Whether the modifier keys are assumed to be pressed.
@@ -152,11 +152,11 @@ private:
 	double computeFontFactor(double w, double h, const std::vector<QString> &texts) const;
 
 	// Private members
-	const KeyboardHandler   *_keyboardHandler     ;
-	const KeyboardMap       *_keyboardMap         ;
-	const KeyAssociationMap *_keyAssociationMap   ;
-	bool                     _displayNumericKeypad;
-	bool                     _modifierKeysPressed ;
+	const KeyboardHandler   *_keyboardHandler    ;
+	const KeyboardMap       *_keyboardMap        ;
+	const KeyAssociationMap *_keyAssociationMap  ;
+	bool                     _hasNumericKeypad   ;
+	bool                     _modifierKeysPressed;
 
 	// Colors
 	QColor _colorBackground;
