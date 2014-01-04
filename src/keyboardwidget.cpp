@@ -37,7 +37,7 @@
 // Constructor.
 KeyboardWidget::KeyboardWidget(const KeyboardHandler *keyboardHandler, QWidget *parent) :
 	QWidget(parent),
-	_keyboardHandler(keyboardHandler), _keyboardMap(nullptr), _displayNumericKeypad(true),
+	_keyboardHandler(keyboardHandler), _keyboardMap(nullptr), _keyAssociationMap(nullptr), _displayNumericKeypad(true),
 	_colorBackground(208,255,208), _colorText(Qt::black), _colorKeyDefault(Qt::white), _colorKeyDown(255,128,0),
 	_painter(nullptr), _keyMargin(0), _keyRadius(0)
 {
@@ -51,6 +51,15 @@ void KeyboardWidget::ensureKeyboardMapBinded() const
 {
 	if(_keyboardMap==nullptr) {
 		throw std::invalid_argument(_("No keyboard map is currently binded to the widget."));
+	}
+}
+
+
+// Throw an exception if no key association map is binded to the widget.
+void KeyboardWidget::ensureKeyAssociationMapBinded() const
+{
+	if(_keyAssociationMap==nullptr) {
+		throw std::invalid_argument(_("No key association map is currently binded to the widget."));
 	}
 }
 
@@ -93,6 +102,34 @@ void KeyboardWidget::unbindKeyboardMap()
 
 	// Otherwise, un-bind the old keyboard map, and update the widget.
 	_keyboardMap = nullptr;
+	update();
+}
+
+
+// Bind a key association map to the widget.
+void KeyboardWidget::bindKeyAssociationMap(const KeyAssociationMap &keyAssociationMap)
+{
+	// Nothing to do if the new key association map is identical to the old one.
+	if(_keyAssociationMap==&keyAssociationMap) {
+		return;
+	}
+
+	// Otherwise, bind the new key association map, and update the widget.
+	_keyAssociationMap = &keyAssociationMap;
+	update();
+}
+
+
+// Un-bind the key association map currently binded, if any.
+void KeyboardWidget::unbindKeyAssociationMap()
+{
+	// Nothing to do if no key association map is currently binded.
+	if(_keyAssociationMap==nullptr) {
+		return;
+	}
+
+	// Otherwise, un-bind the old key association map, and update the widget.
+	_keyAssociationMap = nullptr;
 	update();
 }
 
@@ -149,22 +186,35 @@ void KeyboardWidget::paintEvent(QPaintEvent *)
 	// Draw the keys
 	for(std::size_t k=0; k<_keyboardMap->key_count(); ++k)
 	{
+		const KeyboardMap::KeyDescriptor &key(_keyboardMap->key(k));
+
+		// Determine the color to use to draw the key
 		painter.save();
-		if(_keyboardHandler->isDown(_keyboardMap->key(k).scan_code())) {
+		if(_keyboardHandler->isDown(key.scan_code())) {
 			painter.setBrush(_colorKeyDown);
 		}
-		drawKeyShape(k);
+		else if(_keyAssociationMap!=nullptr) {
+			int shortcut = _keyAssociationMap->shortcurt_low(key.id());
+			if(shortcut>0) {
+				auto it = _shortcutColors.find(shortcut);
+				if(it!=_shortcutColors.end()) {
+					painter.setBrush(it->second);
+				}
+			}
+		}
+
+		// Draw the key
+		drawKeyShape(key);
 		painter.setPen(_colorText);
-		drawKeyLabel(k);
+		drawKeyLabel(key);
 		painter.restore();
 	}
 }
 
 
 // Draw the label of the key corresponding to the given index.
-void KeyboardWidget::drawKeyLabel(std::size_t idx)
+void KeyboardWidget::drawKeyLabel(const KeyboardMap::KeyDescriptor &key)
 {
-	const KeyboardMap::KeyDescriptor &key(_keyboardMap->key(idx));
 	std::size_t line = key.line_top();
 
 	// The label is drawn on the key-line corresponding to the larger area of the key.
@@ -218,9 +268,8 @@ void KeyboardWidget::drawKeyLabel(std::size_t idx)
 
 
 // Draw the shape of the key corresponding to the given index.
-void KeyboardWidget::drawKeyShape(std::size_t idx)
+void KeyboardWidget::drawKeyShape(const KeyboardMap::KeyDescriptor &key)
 {
-	const KeyboardMap::KeyDescriptor &key(_keyboardMap->key(idx));
 	std::size_t line = key.line_top();
 
 	// Easy case: the key lies on a single key-line.
