@@ -37,8 +37,9 @@
 // Constructor.
 KeyboardWidget::KeyboardWidget(const KeyboardHandler *keyboardHandler, QWidget *parent) :
 	QWidget(parent),
-	_keyboardHandler(keyboardHandler), _keyboardMap(nullptr), _keyAssociationMap(nullptr), _displayNumericKeypad(true),
-	_colorBackground(208,255,208), _colorText(Qt::black), _colorKeyDefault(Qt::white), _colorKeyDown(255,128,0),
+	_keyboardHandler(keyboardHandler), _keyboardMap(nullptr), _keyAssociationMap(nullptr),
+	_displayNumericKeypad(true), _modifierKeysPressed(false),
+	_colorBackground(208,255,208), _colorText(Qt::black), _colorKeyDefault(Qt::white), _colorKeyDown(0,0,128),
 	_painter(nullptr), _keyMargin(0), _keyRadius(0)
 {
 	connect(_keyboardHandler, &KeyboardHandler::keyPressed , this, &KeyboardWidget::onKeyStateChanged);
@@ -74,6 +75,20 @@ void KeyboardWidget::setDisplayNumericKeypad(bool value)
 
 	// Otherwise, change the value and update the widget.
 	_displayNumericKeypad = value;
+	update();
+}
+
+
+// Set whether the modifier keys are assumed to be pressed.
+void KeyboardWidget::setModifierKeysPressed(bool value)
+{
+	// Nothing to do if the new value is equal to the old one.
+	if(value==_modifierKeysPressed) {
+		return;
+	}
+
+	// Otherwise, change the value and update the widget.
+	_modifierKeysPressed = value;
 	update();
 }
 
@@ -187,14 +202,15 @@ void KeyboardWidget::paintEvent(QPaintEvent *)
 	for(std::size_t k=0; k<_keyboardMap->key_count(); ++k)
 	{
 		const KeyboardMap::KeyDescriptor &key(_keyboardMap->key(k));
+		bool isKeyDown = _keyboardHandler->isDown(key.scan_code());
 
 		// Determine the color to use to draw the key
 		painter.save();
-		if(_keyboardHandler->isDown(key.scan_code())) {
+		if(isKeyDown) {
 			painter.setBrush(_colorKeyDown);
 		}
 		else if(_keyAssociationMap!=nullptr) {
-			int shortcut = _keyAssociationMap->shortcurt_low(key.id());
+			int shortcut = _keyAssociationMap->shortcut(key.id(), _modifierKeysPressed);
 			if(shortcut>0) {
 				auto it = _shortcutColors.find(shortcut);
 				if(it!=_shortcutColors.end()) {
@@ -205,7 +221,7 @@ void KeyboardWidget::paintEvent(QPaintEvent *)
 
 		// Draw the key
 		drawKeyShape(key);
-		painter.setPen(_colorText);
+		painter.setPen(isKeyDown ? _colorKeyDefault : _colorText);
 		drawKeyLabel(key);
 		painter.restore();
 	}
@@ -428,7 +444,8 @@ void KeyboardWidget::drawPolygonalKeyShape(int x0, int y0, int dxTop, int dxBott
 	path.closeSubpath();
 
 	// Fill the path
-	_painter->fillPath(path, _painter->brush());
+	_painter->fillPath  (path, _painter->brush());
+	_painter->strokePath(path, _painter->pen  ());
 }
 
 

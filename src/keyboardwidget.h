@@ -69,6 +69,16 @@ public:
 	void setDisplayNumericKeypad(bool value);
 
 	/**
+	 * Whether the modifier keys are assumed to be pressed.
+	 */
+	bool modifierKeysPressed() const { return _modifierKeysPressed; }
+
+	/**
+	 * Set whether the modifier keys are assumed to be pressed.
+	 */
+	void setModifierKeysPressed(bool value);
+
+	/**
 	 * Check whether a keyboard map is binded to the widget or not.
 	 */
 	bool hasKeyboardMapBinded() const { return _keyboardMap!=nullptr; }
@@ -146,6 +156,7 @@ private:
 	const KeyboardMap       *_keyboardMap         ;
 	const KeyAssociationMap *_keyAssociationMap   ;
 	bool                     _displayNumericKeypad;
+	bool                     _modifierKeysPressed ;
 
 	// Colors
 	QColor _colorBackground;
