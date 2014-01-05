@@ -21,7 +21,6 @@
 
 
 #include "preferencedialog.h"
-#include "captionwidget.h"
 #include "params.h"
 #include <translation.h>
 #include <QTabWidget>
@@ -72,7 +71,7 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	keyboardSelectorLayout->addWidget(_keyboardSelector, 1);
 	layout->addLayout(keyboardSelectorLayout);
 
-	// Display numeric-keypad check-box
+	// Has numeric-keypad check-box
 	_hasNumericKeypad = new QCheckBox(_("The keyboard has a numeric keypad"), this);
 	connect(_hasNumericKeypad, &QCheckBox::toggled, this, &PreferenceDialog::onHasNumericKeypadToggled);
 	layout->addWidget(_hasNumericKeypad);
@@ -84,31 +83,40 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	_keyboardWidget->bindKeyAssociationMap(Params::get().key_association_map("FR"));
 	layout->addWidget(_keyboardWidget, 1);
 
-	// Captions
+	// Captions (exception modifier keys)
+	_captionLeft   = new CaptionWidget(QColor(  0,176,  0), _("Left player's button" ), this);
+	_captionRight  = new CaptionWidget(QColor(  0,128,255), _("Right player's button"), this);
+	_captionPause  = new CaptionWidget(QColor(255,128,  0), _("Pause"                ), this);
+	_captionReset  = new CaptionWidget(QColor(240, 48,255), _("Reset"                ), this);
+	_captionSwitch = new CaptionWidget(QColor(255, 16, 16), _("Switch"               ), this);
 	QGridLayout *captionLayout = new QGridLayout;
-	layout->addLayout(captionLayout);
-	CaptionWidget *captionLeft   = new CaptionWidget(QColor(  0,176,  0), _("Left player's button" ), this);
-	CaptionWidget *captionRight  = new CaptionWidget(QColor(  0,128,255), _("Right player's button"), this);
-	CaptionWidget *captionPause  = new CaptionWidget(QColor(255,128,  0), _("Pause"                ), this);
-	CaptionWidget *captionReset  = new CaptionWidget(QColor(240, 48,255), _("Reset"                ), this);
-	CaptionWidget *captionSwitch = new CaptionWidget(QColor(255, 16, 16), _("Switch"               ), this);
-	captionLayout->addWidget(captionLeft  , 0, 0);
-	captionLayout->addWidget(captionRight , 1, 0);
-	captionLayout->addWidget(captionPause , 0, 1);
-	captionLayout->addWidget(captionReset , 1, 1);
-	captionLayout->addWidget(captionSwitch, 0, 2);
-	_keyboardWidget->shortcutColors()[1] = captionLeft  ->color();
-	_keyboardWidget->shortcutColors()[2] = captionRight ->color();
-	_keyboardWidget->shortcutColors()[3] = captionPause ->color();
-	_keyboardWidget->shortcutColors()[4] = captionReset ->color();
-	_keyboardWidget->shortcutColors()[5] = captionSwitch->color();
+	captionLayout->addWidget(_captionLeft  , 0, 0);
+	captionLayout->addWidget(_captionRight , 1, 0);
+	captionLayout->addWidget(_captionPause , 0, 1);
+	captionLayout->addWidget(_captionReset , 1, 1);
+	captionLayout->addWidget(_captionSwitch, 0, 2);
+	_keyboardWidget->shortcutColors()[1] = _captionLeft  ->color();
+	_keyboardWidget->shortcutColors()[2] = _captionRight ->color();
+	_keyboardWidget->shortcutColors()[3] = _captionPause ->color();
+	_keyboardWidget->shortcutColors()[4] = _captionReset ->color();
+	_keyboardWidget->shortcutColors()[5] = _captionSwitch->color();
+
+	// Modifier keys selector
+	_modifierKeysSelector = new ModifierKeysWidget(this);
+	captionLayout->addWidget(_modifierKeysSelector, 1, 2);
 
 	// Modifier keys toggle switch
 	_modifierKeysToggle = new QPushButton(this);
 	_modifierKeysToggle->setCheckable(true);
+	_modifierKeysToggle->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	onModifierKeysToggled();
 	connect(_modifierKeysToggle, &QPushButton::toggled, this, &PreferenceDialog::onModifierKeysToggled);
-	captionLayout->addWidget(_modifierKeysToggle, 1, 2);
+
+	// Layout for the caption and the modifier keys toggle
+	QHBoxLayout *bottomLayout = new QHBoxLayout;
+	bottomLayout->addLayout(captionLayout, 5);
+	bottomLayout->addWidget(_modifierKeysToggle, 2);
+	layout->addLayout(bottomLayout);
 
 	// Return the page widget
 	return page;
@@ -188,7 +196,10 @@ void PreferenceDialog::onHasNumericKeypadToggled()
 void PreferenceDialog::onModifierKeysToggled()
 {
 	bool modiferKeysPressed = _modifierKeysToggle->isChecked();
-	_modifierKeysToggle->setText(modiferKeysPressed ? _("Actions when the MAJ keys are pressed") : _("Default actions"));
+	_modifierKeysToggle->setText(modiferKeysPressed ?
+		_("Key functions\nwhen the modifier keys\nare pressed") :
+		_("Default\nkey functions")
+	);
 	_keyboardWidget->setModifierKeysPressed(modiferKeysPressed);
 }
 
@@ -198,6 +209,7 @@ void PreferenceDialog::loadParameters()
 {
 	// Keyboard page
 	_keyboardSelector->setCurrentIndex(_keyboardSelector->findData(QVariant(Params::get().current_keyboard().c_str())));
+	_modifierKeysSelector->setModifierKeys(Params::get().modifier_keys());
 	_hasNumericKeypad->setChecked(Params::get().has_numeric_keypad());
 
 	// Display page
@@ -211,6 +223,7 @@ void PreferenceDialog::saveParameters()
 {
 	// Keyboard page
 	Params::get().set_current_keyboard(retrieveSelectedKeyboard());
+	Params::get().set_modifier_keys(_modifierKeysSelector->modifierKeys());
 	Params::get().set_has_numeric_keypad(_hasNumericKeypad->isChecked());
 
 	// Display page

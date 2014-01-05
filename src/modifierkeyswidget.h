@@ -20,23 +20,18 @@
  ******************************************************************************/
 
 
-#ifndef PREFERENCEDIALOG_H_
-#define PREFERENCEDIALOG_H_
+#ifndef MODIFIERKEYSWIDGET_H_
+#define MODIFIERKEYSWIDGET_H_
 
-#include <QDialog>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QPushButton>
 #include "captionwidget.h"
-#include "modifierkeyswidget.h"
-#include "keyboardhandler.h"
-#include "keyboardwidget.h"
+#include "options.h"
+#include <QAction>
 
 
 /**
- * Dialog to edit user's preferences.
+ * Caption widget with a popup menu to select a pair of modifier keys.
  */
-class PreferenceDialog : public QDialog
+class ModifierKeysWidget : public CaptionWidget
 {
 	Q_OBJECT
 
@@ -45,54 +40,33 @@ public:
 	/**
 	 * Constructor.
 	 */
-	PreferenceDialog(QWidget *parent=0);
+	ModifierKeysWidget(QWidget *parent=0);
 
 	/**
-	 * Load the dialog with the parameters saved in the Params singleton object.
+	 * Return the selected modifier keys.
 	 */
-	void loadParameters();
+	ModifierKeys modifierKeys() const { return _modifierKeys; }
 
 	/**
-	 * Save the new parameters defined from the dialog in the Params singleton object.
+	 * Change the selected modifier keys.
 	 */
-	void saveParameters();
+	void setModifierKeys(ModifierKeys value);
 
-protected:
+signals:
 
 	/**
-	 * Window state-change handler.
+	 * Signal emitted when the selected modifier keys changes.
 	 */
-	void changeEvent(QEvent *event) override;
+	void valueChanged();
 
 private:
 
-	// Private functions
-	QWidget *createKeyboardPage();
-	QWidget *createDisplayPage ();
-	void feedKeyboardSelector();
-	std::string retrieveSelectedKeyboard() const;
-	void onSelectedKeyboardChanged();
-	void onHasNumericKeypadToggled();
-	void onModifierKeysToggled    ();
+	// Private function
+	void onActionTriggered(ModifierKeys value);
 
-	// Keyboard page
-	QComboBox          *_keyboardSelector    ;
-	QCheckBox          *_hasNumericKeypad    ;
-	KeyboardHandler    *_keyboardHandler     ;
-	KeyboardWidget     *_keyboardWidget      ;
-	CaptionWidget      *_captionLeft         ;
-	CaptionWidget      *_captionRight        ;
-	CaptionWidget      *_captionPause        ;
-	CaptionWidget      *_captionReset        ;
-	CaptionWidget      *_captionSwitch       ;
-	ModifierKeysWidget *_modifierKeysSelector;
-	QPushButton        *_modifierKeysToggle  ;
-
-	// Display page
-	QCheckBox *_displayStatusBar         ;
-	QCheckBox *_displayTimeAfterFlagDown ;
-	QCheckBox *_displayBronsteinExtraTime;
-	QCheckBox *_displayByoYomiExtraTime  ;
+	// Private members
+	ModifierKeys _modifierKeys;
+	Enum::array<ModifierKeys, QAction *> _action;
 };
 
-#endif /* PREFERENCEDIALOG_H_ */
+#endif /* MODIFIERKEYSWIDGET_H_ */
