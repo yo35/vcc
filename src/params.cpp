@@ -401,23 +401,37 @@ std::string Params::current_keyboard()
 
 
 // Change the current selected keyboard.
-void Params::set_current_keyboard(const std::string &id)
+void Params::set_current_keyboard(const std::string &value)
 {
-	put_atomic_value("keyboard.id", id);
+	put_atomic_value("keyboard.id", value);
 }
 
 
-// Wether the numeric keypad should be displayed with the keyboard map or not.
+// Whether the numeric keypad should be displayed with the keyboard map or not.
 bool Params::has_numeric_keypad()
 {
 	return get_atomic_value("keyboard.numeric-keypad", true);
 }
 
 
-// Wether the numeric keypad should be displayed with the keyboard map or not.
+// Whether the numeric keypad should be displayed with the keyboard map or not.
 void Params::set_has_numeric_keypad(bool value)
 {
 	put_atomic_value("keyboard.numeric-keypad", value);
+}
+
+
+// Modifier keys.
+ModifierKeys Params::modifier_keys()
+{
+	return get_atomic_value("keyboard.modifier-keys", ModifierKeys::DOUBLE_SHIFT);
+}
+
+
+// Set the modifier keys.
+void Params::set_modifier_keys(ModifierKeys value)
+{
+	put_atomic_value("keyboard.modifier-keys", value);
 }
 
 

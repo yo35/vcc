@@ -143,17 +143,27 @@ public:
 	/**
 	 * Change the current selected keyboard.
 	 */
-	void set_current_keyboard(const std::string &id);
+	void set_current_keyboard(const std::string &value);
 
 	/**
-	 * Wether the numeric keypad should be displayed with the keyboard map or not.
+	 * Whether the numeric keypad should be displayed with the keyboard map or not.
 	 */
 	bool has_numeric_keypad();
 
 	/**
-	 * Wether the numeric keypad should be displayed with the keyboard map or not.
+	 * Whether the numeric keypad should be displayed with the keyboard map or not.
 	 */
 	void set_has_numeric_keypad(bool value);
+
+	/**
+	 * Modifier keys.
+	 */
+	ModifierKeys modifier_keys();
+
+	/**
+	 * Set the modifier keys.
+	 */
+	void set_modifier_keys(ModifierKeys value);
 
 	/**
 	 * Return the keyboard map corresponding to the given ID.
