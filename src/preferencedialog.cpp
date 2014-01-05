@@ -89,20 +89,23 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	_captionPause  = new CaptionWidget(QColor(255,128,  0), _("Pause"                ), this);
 	_captionReset  = new CaptionWidget(QColor(240, 48,255), _("Reset"                ), this);
 	_captionSwitch = new CaptionWidget(QColor(255, 16, 16), _("Switch"               ), this);
+	_keyboardWidget->shortcutColors()[1] = _captionLeft  ->color();
+	_keyboardWidget->shortcutColors()[2] = _captionRight ->color();
+	_keyboardWidget->shortcutColors()[3] = _captionPause ->color();
+	_keyboardWidget->shortcutColors()[4] = _captionReset ->color();
+	_keyboardWidget->shortcutColors()[5] = _captionSwitch->color();
 	QGridLayout *captionLayout = new QGridLayout;
 	captionLayout->addWidget(_captionLeft  , 0, 0);
 	captionLayout->addWidget(_captionRight , 1, 0);
 	captionLayout->addWidget(_captionPause , 0, 1);
 	captionLayout->addWidget(_captionReset , 1, 1);
 	captionLayout->addWidget(_captionSwitch, 0, 2);
-	_keyboardWidget->shortcutColors()[1] = _captionLeft  ->color();
-	_keyboardWidget->shortcutColors()[2] = _captionRight ->color();
-	_keyboardWidget->shortcutColors()[3] = _captionPause ->color();
-	_keyboardWidget->shortcutColors()[4] = _captionReset ->color();
-	_keyboardWidget->shortcutColors()[5] = _captionSwitch->color();
 
 	// Modifier keys selector
 	_modifierKeysSelector = new ModifierKeysWidget(this);
+	_keyboardWidget->setModifierKeyColor(_modifierKeysSelector->color());
+	onModifierKeysChanged();
+	connect(_modifierKeysSelector, &ModifierKeysWidget::valueChanged, this, &PreferenceDialog::onModifierKeysChanged);
 	captionLayout->addWidget(_modifierKeysSelector, 1, 2);
 
 	// Modifier keys toggle switch
@@ -192,6 +195,13 @@ void PreferenceDialog::onHasNumericKeypadToggled()
 }
 
 
+// Action performed when the modifier keys changes.
+void PreferenceDialog::onModifierKeysChanged()
+{
+	_keyboardWidget->setModifierKeys(_modifierKeysSelector->modifierKeys());
+}
+
+
 // Action performed when the state of the modifier keys button is toggled.
 void PreferenceDialog::onModifierKeysToggled()
 {
@@ -200,7 +210,7 @@ void PreferenceDialog::onModifierKeysToggled()
 		_("Key functions\nwhen the modifier keys\nare pressed") :
 		_("Default\nkey functions")
 	);
-	_keyboardWidget->setModifierKeysPressed(modiferKeysPressed);
+	_keyboardWidget->setShowShortcutHigh(modiferKeysPressed);
 }
 
 

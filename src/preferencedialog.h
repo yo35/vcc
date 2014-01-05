@@ -73,6 +73,7 @@ private:
 	std::string retrieveSelectedKeyboard() const;
 	void onSelectedKeyboardChanged();
 	void onHasNumericKeypadToggled();
+	void onModifierKeysChanged    ();
 	void onModifierKeysToggled    ();
 
 	// Keyboard page

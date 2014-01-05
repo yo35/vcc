@@ -38,8 +38,11 @@
 KeyboardWidget::KeyboardWidget(const KeyboardHandler *keyboardHandler, QWidget *parent) :
 	QWidget(parent),
 	_keyboardHandler(keyboardHandler), _keyboardMap(nullptr), _keyAssociationMap(nullptr),
-	_hasNumericKeypad(true), _modifierKeysPressed(false),
-	_colorBackground(208,255,208), _colorText(Qt::black), _colorKeyDefault(Qt::white), _colorKeyDown(0,0,128),
+	_hasNumericKeypad(true), _showShortcutHigh(false), _modifierKeys(ModifierKeys::DOUBLE_CTRL),
+	_colorBackground (208, 255, 208),
+	_colorKeyDefault (Qt::white),
+	_colorKeyDown    (0, 0, 128),
+	_colorModifierKey(Qt::white),
 	_painter(nullptr), _keyMargin(0), _keyRadius(0)
 {
 	connect(_keyboardHandler, &KeyboardHandler::keyPressed , this, &KeyboardWidget::onKeyStateChanged);
@@ -68,27 +71,32 @@ void KeyboardWidget::ensureKeyAssociationMapBinded() const
 // Set whether the numeric keypad should be displayed or not.
 void KeyboardWidget::setHasNumericKeypad(bool value)
 {
-	// Nothing to do if the new value is equal to the old one.
 	if(value==_hasNumericKeypad) {
 		return;
 	}
-
-	// Otherwise, change the value and update the widget.
 	_hasNumericKeypad = value;
 	update();
 }
 
 
-// Set whether the modifier keys are assumed to be pressed.
-void KeyboardWidget::setModifierKeysPressed(bool value)
+// Set whether the high-position shortcuts are represented.
+void KeyboardWidget::setShowShortcutHigh(bool value)
 {
-	// Nothing to do if the new value is equal to the old one.
-	if(value==_modifierKeysPressed) {
+	if(value==_showShortcutHigh) {
 		return;
 	}
+	_showShortcutHigh = value;
+	update();
+}
 
-	// Otherwise, change the value and update the widget.
-	_modifierKeysPressed = value;
+
+// Change the modifier keys.
+void KeyboardWidget::setModifierKeys(ModifierKeys value)
+{
+	if(value==_modifierKeys) {
+		return;
+	}
+	_modifierKeys = value;
 	update();
 }
 
@@ -96,12 +104,9 @@ void KeyboardWidget::setModifierKeysPressed(bool value)
 // Bind a keyboard map to the widget.
 void KeyboardWidget::bindKeyboardMap(const KeyboardMap &keyboardMap)
 {
-	// Nothing to do if the new keyboard map is identical to the old one.
 	if(_keyboardMap==&keyboardMap) {
 		return;
 	}
-
-	// Otherwise, bind the new keyboard map, and update the widget.
 	_keyboardMap = &keyboardMap;
 	update();
 }
@@ -110,12 +115,9 @@ void KeyboardWidget::bindKeyboardMap(const KeyboardMap &keyboardMap)
 // Un-bind the keyboard map currently binded, if any.
 void KeyboardWidget::unbindKeyboardMap()
 {
-	// Nothing to do if no keyboard map is currently binded.
 	if(_keyboardMap==nullptr) {
 		return;
 	}
-
-	// Otherwise, un-bind the old keyboard map, and update the widget.
 	_keyboardMap = nullptr;
 	update();
 }
@@ -124,12 +126,9 @@ void KeyboardWidget::unbindKeyboardMap()
 // Bind a key association map to the widget.
 void KeyboardWidget::bindKeyAssociationMap(const KeyAssociationMap &keyAssociationMap)
 {
-	// Nothing to do if the new key association map is identical to the old one.
 	if(_keyAssociationMap==&keyAssociationMap) {
 		return;
 	}
-
-	// Otherwise, bind the new key association map, and update the widget.
 	_keyAssociationMap = &keyAssociationMap;
 	update();
 }
@@ -138,12 +137,9 @@ void KeyboardWidget::bindKeyAssociationMap(const KeyAssociationMap &keyAssociati
 // Un-bind the key association map currently binded, if any.
 void KeyboardWidget::unbindKeyAssociationMap()
 {
-	// Nothing to do if no key association map is currently binded.
 	if(_keyAssociationMap==nullptr) {
 		return;
 	}
-
-	// Otherwise, un-bind the old key association map, and update the widget.
 	_keyAssociationMap = nullptr;
 	update();
 }
@@ -209,8 +205,11 @@ void KeyboardWidget::paintEvent(QPaintEvent *)
 		if(isKeyDown) {
 			painter.setBrush(_colorKeyDown);
 		}
+		else if(isModifierKey(key)) {
+			painter.setBrush(_colorModifierKey);
+		}
 		else if(_keyAssociationMap!=nullptr) {
-			int shortcut = _keyAssociationMap->shortcut(key.id(), _modifierKeysPressed);
+			int shortcut = _keyAssociationMap->shortcut(key.id(), _showShortcutHigh);
 			if(shortcut>0) {
 				auto it = _shortcutColors.find(shortcut);
 				if(it!=_shortcutColors.end()) {
@@ -221,9 +220,21 @@ void KeyboardWidget::paintEvent(QPaintEvent *)
 
 		// Draw the key
 		drawKeyShape(key);
-		painter.setPen(isKeyDown ? _colorKeyDefault : _colorText);
+		painter.setPen(isKeyDown ? Qt::white : Qt::black);
 		drawKeyLabel(key);
 		painter.restore();
+	}
+}
+
+
+// Whether the given key is a modifier key.
+bool KeyboardWidget::isModifierKey(const KeyboardMap::KeyDescriptor &key) const
+{
+	switch(_modifierKeys) {
+		case ModifierKeys::DOUBLE_CTRL : return key.id()=="ctrl-left"  || key.id()=="ctrl-right" ;
+		case ModifierKeys::DOUBLE_SHIFT: return key.id()=="shift-left" || key.id()=="shift-right";
+		case ModifierKeys::DOUBLE_ALT  : return key.id()=="alt-left"   || key.id()=="alt-right"  ;
+		default: return false;
 	}
 }
 

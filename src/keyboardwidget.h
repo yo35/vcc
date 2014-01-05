@@ -29,6 +29,7 @@
 QT_BEGIN_NAMESPACE
 	class QPainter;
 QT_END_NAMESPACE
+#include "options.h"
 #include "keyboardhandler.h"
 #include "keyboardmap.h"
 #include "keyassociationmap.h"
@@ -59,6 +60,16 @@ public:
 	const std::map<int, QBrush> &shortcutColors() const { return _shortcutColors; }
 
 	/**
+	 * Modifier key color.
+	 */
+	QBrush modifierKeyColor() const { return _colorModifierKey; }
+
+	/**
+	 * Change the modifier key color.
+	 */
+	void setModifierKeyColor(QBrush color) { _colorModifierKey = color; }
+
+	/**
 	 * Whether the numeric keypad should be displayed or not.
 	 */
 	bool hasNumericKeypad() const { return _hasNumericKeypad; }
@@ -69,14 +80,24 @@ public:
 	void setHasNumericKeypad(bool value);
 
 	/**
-	 * Whether the modifier keys are assumed to be pressed.
+	 * Whether the high-position shortcuts are represented.
 	 */
-	bool modifierKeysPressed() const { return _modifierKeysPressed; }
+	bool showShortcutHigh() const { return _showShortcutHigh; }
 
 	/**
-	 * Set whether the modifier keys are assumed to be pressed.
+	 * Set whether the high-position shortcuts are represented.
 	 */
-	void setModifierKeysPressed(bool value);
+	void setShowShortcutHigh(bool value);
+
+	/**
+	 * Modifier keys.
+	 */
+	ModifierKeys modifierKeys() const { return _modifierKeys; }
+
+	/**
+	 * Change the modifier keys.
+	 */
+	void setModifierKeys(ModifierKeys value);
 
 	/**
 	 * Check whether a keyboard map is binded to the widget or not.
@@ -141,6 +162,7 @@ private:
 	void ensureKeyboardMapBinded      () const;
 	void ensureKeyAssociationMapBinded() const;
 	void onKeyStateChanged(std::uint32_t scanCode);
+	bool isModifierKey(const KeyboardMap::KeyDescriptor &key) const;
 	void drawKeyLabel(const KeyboardMap::KeyDescriptor &key);
 	void drawKeyShape(const KeyboardMap::KeyDescriptor &key);
 	void drawRectangularKeyShape(int x, int y, int w, int h);
@@ -152,17 +174,18 @@ private:
 	double computeFontFactor(double w, double h, const std::vector<QString> &texts) const;
 
 	// Private members
-	const KeyboardHandler   *_keyboardHandler    ;
-	const KeyboardMap       *_keyboardMap        ;
-	const KeyAssociationMap *_keyAssociationMap  ;
-	bool                     _hasNumericKeypad   ;
-	bool                     _modifierKeysPressed;
+	const KeyboardHandler   *_keyboardHandler  ;
+	const KeyboardMap       *_keyboardMap      ;
+	const KeyAssociationMap *_keyAssociationMap;
+	bool                     _hasNumericKeypad ;
+	bool                     _showShortcutHigh ;
+	ModifierKeys             _modifierKeys     ;
 
 	// Colors
-	QColor _colorBackground;
-	QColor _colorText      ;
-	QColor _colorKeyDefault;
-	QColor _colorKeyDown   ;
+	QColor _colorBackground ;
+	QColor _colorKeyDefault ;
+	QColor _colorKeyDown    ;
+	QBrush _colorModifierKey;
 	std::map<int, QBrush> _shortcutColors;
 
 	// Temporary members used at rendering time
