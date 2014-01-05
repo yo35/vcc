@@ -24,7 +24,7 @@
 #define CAPTIONWIDGET_H_
 
 #include <QWidget>
-#include <QLabel>
+#include <QToolButton>
 #include "colorwidget.h"
 
 
@@ -55,7 +55,7 @@ public:
 	/**
 	 * Change the selected color.
 	 */
-	void set_color(QBrush color) { _caption->set_color(color); }
+	void setColor(QBrush color) { _caption->setColor(color); }
 
 	/**
 	 * Return the text of the label.
@@ -65,7 +65,17 @@ public:
 	/**
 	 * Set the text of the label.
 	 */
-	void set_text(const QString &text) { _label->setText(text); }
+	void setText(const QString &text) { _label->setText(text); }
+
+	/**
+	 * Return the underlying button (constant version).
+	 */
+	const QToolButton *button() const { return _label; }
+
+	/**
+	 * Return the underlying button.
+	 */
+	QToolButton *button() { return _label; }
 
 private:
 
@@ -74,7 +84,7 @@ private:
 
 	// Private members
 	ColorWidget *_caption;
-	QLabel      *_label  ;
+	QToolButton *_label  ;
 };
 
 #endif /* CAPTIONWIDGET_H_ */

@@ -26,7 +26,7 @@
 
 // Default constructor.
 CaptionWidget::CaptionWidget(QWidget *parent) : QWidget(parent),
-	_caption(new ColorWidget(this)), _label(new QLabel(this))
+	_caption(new ColorWidget(this)), _label(new QToolButton(this))
 {
 	buildLayout();
 }
@@ -35,8 +35,9 @@ CaptionWidget::CaptionWidget(QWidget *parent) : QWidget(parent),
 // Constructor.
 CaptionWidget::CaptionWidget(QBrush color, const QString &text, QWidget *parent) :
 	QWidget(parent),
-	_caption(new ColorWidget(color, this)), _label(new QLabel(text, this))
+	_caption(new ColorWidget(color, this)), _label(new QToolButton(this))
 {
+	_label->setText(text);
 	buildLayout();
 }
 
@@ -44,9 +45,15 @@ CaptionWidget::CaptionWidget(QBrush color, const QString &text, QWidget *parent)
 // Set-up the widget layout.
 void CaptionWidget::buildLayout()
 {
+	// Button appearance
+	_label->setAutoRaise(true);
+	_label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+
+	// Geometry
 	QHBoxLayout *layout = new QHBoxLayout;
 	setLayout(layout);
 	layout->setMargin(0);
 	layout->addWidget(_caption);
-	layout->addWidget(_label, 1);
+	layout->addWidget(_label);
+	layout->addStretch(1);
 }

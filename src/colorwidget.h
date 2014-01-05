@@ -53,7 +53,7 @@ public:
 	/**
 	 * Change the selected color.
 	 */
-	void set_color(QBrush color) { _color=color; update(); }
+	void setColor(QBrush color) { _color=color; update(); }
 
 	/**
 	 * @name Size hint methods.
