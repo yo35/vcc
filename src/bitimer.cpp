@@ -21,7 +21,6 @@
 
 
 #include "bitimer.h"
-#include <translation.h>
 
 
 // Change the current time control, and resets the timers.
@@ -39,7 +38,7 @@ void BiTimer::set_time_control(TimeControl time_control)
 TimeDuration BiTimer::time_bronstein(Side side, TimeDuration &bronstein_extra_delay) const
 {
 	if(m_time_control.mode()!=TimeControl::BRONSTEIN) {
-		throw RuntimeException(_("No Bronstein delay information with the current time control mode"));
+		throw RuntimeException("No Bronstein delay information with the current time control mode");
 	}
 	TimeDuration retval = m_timer[side].time();
 	bronstein_extra_delay = retval - m_bronstein_limit[side] + m_time_control.increment(side);

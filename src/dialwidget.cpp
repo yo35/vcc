@@ -21,7 +21,6 @@
 
 
 #include "dialwidget.h"
-#include <translation.h>
 #include <QPainter>
 #include <QTimer>
 
@@ -41,7 +40,7 @@ DialWidget::DialWidget(QWidget *parent) :
 void DialWidget::ensureTimerBinded() const
 {
 	if(_biTimer==nullptr) {
-		throw std::invalid_argument(_("No timer is currently binded to the widget."));
+		throw std::invalid_argument("No timer is currently binded to the widget.");
 	}
 }
 

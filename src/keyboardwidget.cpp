@@ -30,7 +30,6 @@
 #include <cstdlib>
 #include <cfloat>
 #include <cmath>
-#include <translation.h>
 #include <QPainter>
 
 
@@ -54,7 +53,7 @@ KeyboardWidget::KeyboardWidget(const KeyboardHandler *keyboardHandler, QWidget *
 void KeyboardWidget::ensureKeyboardMapBinded() const
 {
 	if(_keyboardMap==nullptr) {
-		throw std::invalid_argument(_("No keyboard map is currently binded to the widget."));
+		throw std::invalid_argument("No keyboard map is currently binded to the widget.");
 	}
 }
 
@@ -63,7 +62,7 @@ void KeyboardWidget::ensureKeyboardMapBinded() const
 void KeyboardWidget::ensureShortcutMapBinded() const
 {
 	if(_shortcutMap==nullptr) {
-		throw std::invalid_argument(_("No shortcut map is currently binded to the widget."));
+		throw std::invalid_argument("No shortcut map is currently binded to the widget.");
 	}
 }
 

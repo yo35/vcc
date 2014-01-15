@@ -46,7 +46,7 @@ const std::string &TimeControl::mode_name(Mode mode)
 void TimeControl::set_main_time(Side side, TimeDuration value)
 {
 	if(value < TimeDuration::zero()) {
-		throw std::invalid_argument(_("Cannot set a negative value as a main time."));
+		throw std::invalid_argument("Cannot set a negative value as a main time.");
 	}
 	_main_time[side] = std::move(value);
 }
@@ -56,7 +56,7 @@ void TimeControl::set_main_time(Side side, TimeDuration value)
 void TimeControl::set_increment(Side side, TimeDuration value)
 {
 	if(value < TimeDuration::zero()) {
-		throw std::invalid_argument(_("Cannot set a negative value as an increment."));
+		throw std::invalid_argument("Cannot set a negative value as an increment.");
 	}
 	_increment[side] = std::move(value);
 }
@@ -66,7 +66,7 @@ void TimeControl::set_increment(Side side, TimeDuration value)
 void TimeControl::set_byo_periods(Side side, int value)
 {
 	if(value<0) {
-		throw std::invalid_argument(_("Cannot set a negative value as a number of byo-yomi periods."));
+		throw std::invalid_argument("Cannot set a negative value as a number of byo-yomi periods.");
 	}
 	_byo_periods[side] = value;
 }

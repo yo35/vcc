@@ -22,7 +22,6 @@
 
 #include "params.h"
 #include <config.h>
-#include <translation.h>
 #include <stdexcept>
 #include <sstream>
 #include <boost/filesystem.hpp>
@@ -45,7 +44,7 @@ const std::string &Params::prefix_path()
 		#ifdef OS_IS_WINDOWS
 			char buff[2048];
 			if(GetModuleFileName(NULL, buff, 2048)==0) {
-				throw std::runtime_error(_("Unable to retrieve the filename of the executable."));
+				throw std::runtime_error("Unable to retrieve the filename of the executable.");
 			}
 			boost::filesystem::path exe_path(buff);
 			_prefix_path = exe_path.parent_path().string() + "/" RPATH_BIN_BACKWARD;
@@ -139,7 +138,7 @@ void Params::load()
 			boost::property_tree::read_xml(config_file(), _ptree, boost::property_tree::xml_parser::trim_whitespace);
 		}
 		catch(boost::property_tree::xml_parser_error &) {
-			throw std::runtime_error(_("An error has occurred while reading the preference file."));
+			throw std::runtime_error("An error has occurred while reading the preference file.");
 		}
 	}
 
@@ -169,7 +168,7 @@ void Params::save()
 		boost::property_tree::write_xml(config_file(), _ptree, std::locale(), settings);
 	}
 	catch(boost::property_tree::xml_parser_error &) {
-		throw std::runtime_error(_("An error has occurred while writing the preference file."));
+		throw std::runtime_error("An error has occurred while writing the preference file.");
 	}
 
 	// Set the saved flag to true
@@ -394,7 +393,7 @@ void Params::ensure_keyboard_index_loaded()
 
 	// The keyboard index file must be readable.
 	catch(boost::property_tree::xml_parser_error &) {
-		throw std::runtime_error(_("An error has occurred while reading the keyboard index file."));
+		throw std::runtime_error("An error has occurred while reading the keyboard index file.");
 	}
 
 	// Mark the keyboard index file as read.
@@ -435,7 +434,7 @@ void Params::ensure_keyboard_id_exists(const std::string &id)
 {
 	ensure_keyboard_index_loaded();
 	if(_keyboard_list.count(id)==0) {
-		throw std::invalid_argument(_("Invalid keyboard ID."));
+		throw std::invalid_argument("Invalid keyboard ID.");
 	}
 }
 
@@ -501,7 +500,7 @@ const KeyboardMap &Params::keyboard_map(const std::string &id)
 			return _keyboard_maps[id].load(share_path() + "/" + id + ".kbm");
 		}
 		catch(boost::property_tree::ptree_error &) {
-			throw std::runtime_error(_("An error has occurred while reading a keyboard map file."));
+			throw std::runtime_error("An error has occurred while reading a keyboard map file.");
 		}
 	}
 	return it->second;
@@ -518,7 +517,7 @@ const ShortcutMap &Params::shortcut_map(const std::string &id)
 			return _shortcut_maps[id].load(share_path() + "/" + id + ".kam");
 		}
 		catch(boost::property_tree::ptree_error &) {
-			throw std::runtime_error(_("An error has occurred while reading a shortcut map file."));
+			throw std::runtime_error("An error has occurred while reading a shortcut map file.");
 		}
 	}
 	return it->second;
