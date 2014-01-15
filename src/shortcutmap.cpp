@@ -20,21 +20,21 @@
  ******************************************************************************/
 
 
-#include "keyassociationmap.h"
+#include "shortcutmap.h"
 #include <boost/property_tree/xml_parser.hpp>
 
 
-// Load the key association map from a file.
-KeyAssociationMap &KeyAssociationMap::load(const std::string &path)
+// Load the shortcut map from a file.
+ShortcutMap &ShortcutMap::load(const std::string &path)
 {
 	boost::property_tree::ptree data;
 	boost::property_tree::read_xml(path, data, boost::property_tree::xml_parser::trim_whitespace);
-	return load(data.get_child("key-association-map"));
+	return load(data.get_child("shortcut-map"));
 }
 
 
-// Load the key association map from a property tree.
-KeyAssociationMap &KeyAssociationMap::load(const boost::property_tree::ptree &data)
+// Load the shortcut map from a property tree.
+ShortcutMap &ShortcutMap::load(const boost::property_tree::ptree &data)
 {
 	_shortcut_low .clear();
 	_shortcut_high.clear();

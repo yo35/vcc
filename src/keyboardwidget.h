@@ -32,11 +32,11 @@ QT_END_NAMESPACE
 #include "options.h"
 #include "keyboardhandler.h"
 #include "keyboardmap.h"
-#include "keyassociationmap.h"
+#include "shortcutmap.h"
 
 
 /**
- * Display a keyboard map and edit the associated key association map.
+ * Display a keyboard map and edit the associated shortcut map.
  */
 class KeyboardWidget : public QWidget
 {
@@ -121,25 +121,25 @@ public:
 	void unbindKeyboardMap();
 
 	/**
-	 * Check whether a key association map is binded to the widget or not.
+	 * Check whether a shortcut map is binded to the widget or not.
 	 */
-	bool hasKeyAssociationMapBinded() const { return _keyAssociationMap!=nullptr; }
+	bool hasShortcutMapBinded() const { return _shortcutMap!=nullptr; }
 
 	/**
-	 * Return a reference to the binded key association map object.
-	 * @throw std::invalid_argument If no key association map is binded to the widget.
+	 * Return a reference to the binded shortcut map object.
+	 * @throw std::invalid_argument If no shortcut map is binded to the widget.
 	 */
-	const KeyAssociationMap &keyAssociationMap() const { ensureKeyAssociationMapBinded(); return *_keyAssociationMap; }
+	const ShortcutMap &shortcutMap() const { ensureShortcutMapBinded(); return *_shortcutMap; }
 
 	/**
-	 * Bind a key association map to the widget.
+	 * Bind a shortcut map to the widget.
 	 */
-	void bindKeyAssociationMap(const KeyAssociationMap &keyAssociationMap);
+	void bindShortcutMap(const ShortcutMap &shortcutMap);
 
 	/**
-	 * Un-bind the key association map currently binded, if any.
+	 * Un-bind the shortcut map currently binded, if any.
 	 */
-	void unbindKeyAssociationMap();
+	void unbindShortcutMap();
 
 	/**
 	 * @name Size hint methods.
@@ -159,8 +159,8 @@ protected:
 private:
 
 	// Private functions
-	void ensureKeyboardMapBinded      () const;
-	void ensureKeyAssociationMapBinded() const;
+	void ensureKeyboardMapBinded() const;
+	void ensureShortcutMapBinded() const;
 	void onKeyStateChanged(std::uint32_t scanCode);
 	bool isModifierKey(const KeyboardMap::KeyDescriptor &key) const;
 	void drawKeyLabel(const KeyboardMap::KeyDescriptor &key);
@@ -174,12 +174,12 @@ private:
 	double computeFontFactor(double w, double h, const std::vector<QString> &texts) const;
 
 	// Private members
-	const KeyboardHandler   *_keyboardHandler  ;
-	const KeyboardMap       *_keyboardMap      ;
-	const KeyAssociationMap *_keyAssociationMap;
-	bool                     _hasNumericKeypad ;
-	bool                     _showShortcutHigh ;
-	ModifierKeys             _modifierKeys     ;
+	const KeyboardHandler *_keyboardHandler ;
+	const KeyboardMap     *_keyboardMap     ;
+	const ShortcutMap     *_shortcutMap     ;
+	bool                   _hasNumericKeypad;
+	bool                   _showShortcutHigh;
+	ModifierKeys           _modifierKeys    ;
 
 	// Colors
 	QColor _colorBackground ;

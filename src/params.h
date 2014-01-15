@@ -34,7 +34,7 @@
 #include "side.h"
 #include "timecontrol.h"
 #include "keyboardmap.h"
-#include "keyassociationmap.h"
+#include "shortcutmap.h"
 
 
 /**
@@ -171,9 +171,9 @@ public:
 	const KeyboardMap &keyboard_map(const std::string &id);
 
 	/**
-	 * Return the key association map corresponding to the given ID.
+	 * Return the shortcut map corresponding to the given ID.
 	 */
-	const KeyAssociationMap &key_association_map(const std::string &id);
+	const ShortcutMap &shortcut_map(const std::string &id);
 
 	/**
 	 * Default keyboard map.
@@ -222,14 +222,14 @@ private:
 	bool   _ptree_saved ;
 
 	// Keyboard maps
-	bool                                     _keyboard_index_loaded;
-	std::set<std::string>                    _keyboard_list        ;
-	std::map<std::string, std::string>       _keyboard_names       ;
-	std::map<std::string, QIcon>             _keyboard_icons       ;
-	std::map<std::string, std::string>       _locale_to_keyboard   ;
-	std::string                              _default_keyboard     ;
-	std::map<std::string, KeyboardMap>       _keyboard_maps        ;
-	std::map<std::string, KeyAssociationMap> _key_association_maps ;
+	bool                               _keyboard_index_loaded;
+	std::set<std::string>              _keyboard_list        ;
+	std::map<std::string, std::string> _keyboard_names       ;
+	std::map<std::string, QIcon>       _keyboard_icons       ;
+	std::map<std::string, std::string> _locale_to_keyboard   ;
+	std::string                        _default_keyboard     ;
+	std::map<std::string, KeyboardMap> _keyboard_maps        ;
+	std::map<std::string, ShortcutMap> _shortcut_maps        ;
 
 	// Singleton object
 	static std::unique_ptr<Params> _instance;

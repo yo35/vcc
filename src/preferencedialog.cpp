@@ -80,7 +80,7 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	_keyboardHandler = new KeyboardHandler(this);
 	_keyboardWidget = new KeyboardWidget(_keyboardHandler, this);
 	onHasNumericKeypadToggled();
-	_keyboardWidget->bindKeyAssociationMap(Params::get().key_association_map("FR"));
+	_keyboardWidget->bindShortcutMap(Params::get().shortcut_map("FR")); //TODO
 	layout->addWidget(_keyboardWidget, 1);
 
 	// Captions (exception modifier keys)

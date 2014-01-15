@@ -20,8 +20,8 @@
  ******************************************************************************/
 
 
-#ifndef KEYASSOCIATIONMAP_H_
-#define KEYASSOCIATIONMAP_H_
+#ifndef SHORTCUTMAP_H_
+#define SHORTCUTMAP_H_
 
 #include <map>
 #include <string>
@@ -36,14 +36,14 @@
  * one is said to be the "high-shortcut". The shortcut or the action that is triggered
  * when the key is pressed depend on the state of modifier keys.
  */
-class KeyAssociationMap
+class ShortcutMap
 {
 public:
 
 	/**
 	 * Constructor.
 	 */
-	KeyAssociationMap() {}
+	ShortcutMap() {}
 
 	/**
 	 * Return the index of the low-position shortcut associated to the key having the ID `id`.
@@ -77,16 +77,16 @@ public:
 	}
 
 	/**
-	 * Load the key association map from a file.
+	 * Load the shortcut map from a file.
 	 * @returns `*this`
 	 */
-	KeyAssociationMap &load(const std::string &path);
+	ShortcutMap &load(const std::string &path);
 
 	/**
-	 * Load the key association map from a property tree.
+	 * Load the shortcut map from a property tree.
 	 * @returns `*this`
 	 */
-	KeyAssociationMap &load(const boost::property_tree::ptree &data);
+	ShortcutMap &load(const boost::property_tree::ptree &data);
 
 private:
 
@@ -95,4 +95,4 @@ private:
 	std::map<std::string, int> _shortcut_high;
 };
 
-#endif /* KEYASSOCIATIONMAP_H_ */
+#endif /* SHORTCUTMAP_H_ */

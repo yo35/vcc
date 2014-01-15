@@ -452,17 +452,17 @@ const KeyboardMap &Params::keyboard_map(const std::string &id)
 }
 
 
-// Return the key association map corresponding to the given ID.
-const KeyAssociationMap &Params::key_association_map(const std::string &id)
+// Return the shortcut map corresponding to the given ID.
+const ShortcutMap &Params::shortcut_map(const std::string &id)
 {
 	ensure_keyboard_id_exists(id);
-	auto it = _key_association_maps.find(id);
-	if(it==_key_association_maps.end()) {
+	auto it = _shortcut_maps.find(id);
+	if(it==_shortcut_maps.end()) {
 		try {
-			return _key_association_maps[id].load(share_path() + "/" + id + ".kam");
+			return _shortcut_maps[id].load(share_path() + "/" + id + ".kam");
 		}
 		catch(boost::property_tree::ptree_error &) {
-			throw std::runtime_error(_("An error has occurred while reading a key association map file."));
+			throw std::runtime_error(_("An error has occurred while reading a shortcut map file."));
 		}
 	}
 	return it->second;

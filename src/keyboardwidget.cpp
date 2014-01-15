@@ -37,7 +37,7 @@
 // Constructor.
 KeyboardWidget::KeyboardWidget(const KeyboardHandler *keyboardHandler, QWidget *parent) :
 	QWidget(parent),
-	_keyboardHandler(keyboardHandler), _keyboardMap(nullptr), _keyAssociationMap(nullptr),
+	_keyboardHandler(keyboardHandler), _keyboardMap(nullptr), _shortcutMap(nullptr),
 	_hasNumericKeypad(true), _showShortcutHigh(false), _modifierKeys(ModifierKeys::DOUBLE_CTRL),
 	_colorBackground (208, 255, 208),
 	_colorKeyDefault (Qt::white),
@@ -59,11 +59,11 @@ void KeyboardWidget::ensureKeyboardMapBinded() const
 }
 
 
-// Throw an exception if no key association map is binded to the widget.
-void KeyboardWidget::ensureKeyAssociationMapBinded() const
+// Throw an exception if no shortcut map is binded to the widget.
+void KeyboardWidget::ensureShortcutMapBinded() const
 {
-	if(_keyAssociationMap==nullptr) {
-		throw std::invalid_argument(_("No key association map is currently binded to the widget."));
+	if(_shortcutMap==nullptr) {
+		throw std::invalid_argument(_("No shortcut map is currently binded to the widget."));
 	}
 }
 
@@ -123,24 +123,24 @@ void KeyboardWidget::unbindKeyboardMap()
 }
 
 
-// Bind a key association map to the widget.
-void KeyboardWidget::bindKeyAssociationMap(const KeyAssociationMap &keyAssociationMap)
+// Bind a shortcut map to the widget.
+void KeyboardWidget::bindShortcutMap(const ShortcutMap &shortcutMap)
 {
-	if(_keyAssociationMap==&keyAssociationMap) {
+	if(_shortcutMap==&shortcutMap) {
 		return;
 	}
-	_keyAssociationMap = &keyAssociationMap;
+	_shortcutMap = &shortcutMap;
 	update();
 }
 
 
-// Un-bind the key association map currently binded, if any.
-void KeyboardWidget::unbindKeyAssociationMap()
+// Un-bind the shortcut map currently binded, if any.
+void KeyboardWidget::unbindShortcutMap()
 {
-	if(_keyAssociationMap==nullptr) {
+	if(_shortcutMap==nullptr) {
 		return;
 	}
-	_keyAssociationMap = nullptr;
+	_shortcutMap = nullptr;
 	update();
 }
 
@@ -208,8 +208,8 @@ void KeyboardWidget::paintEvent(QPaintEvent *)
 		else if(isModifierKey(key)) {
 			painter.setBrush(_colorModifierKey);
 		}
-		else if(_keyAssociationMap!=nullptr) {
-			int shortcut = _keyAssociationMap->shortcut(key.id(), _showShortcutHigh);
+		else if(_shortcutMap!=nullptr) {
+			int shortcut = _shortcutMap->shortcut(key.id(), _showShortcutHigh);
 			if(shortcut>0) {
 				auto it = _shortcutColors.find(shortcut);
 				if(it!=_shortcutColors.end()) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<key-association-map>
+<shortcut-map>
 	<key><id>main-01</id><low>1</low></key>
 	<key><id>main-02</id><low>1</low></key>
 	<key><id>main-03</id><low>1</low></key>
@@ -74,4 +74,4 @@
 	<key><id>print-screen</id><low>2</low></key>
 	<key><id>scroll-lock</id><low>2</low></key>
 	<key><id>pause</id><low>2</low></key>
-</key-association-map>
+</shortcut-map>
