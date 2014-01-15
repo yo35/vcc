@@ -23,7 +23,6 @@
 #include "preferencedialog.h"
 #include "params.h"
 #include <translation.h>
-#include <QTabWidget>
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QGroupBox>
@@ -41,10 +40,12 @@ PreferenceDialog::PreferenceDialog(QWidget *parent) : QDialog(parent)
 	setLayout(mainLayout);
 
 	// Tabs
-	QTabWidget *tabs = new QTabWidget(this);
-	mainLayout->addWidget(tabs, 1);
-	tabs->addTab(createKeyboardPage     (), _("Keyboard set-up"));
-	tabs->addTab(createMiscellaneousPage(), _("Miscellaneous"  ));
+	_tabWidget = new QTabWidget(this);
+	mainLayout->addWidget(_tabWidget, 1);
+	_tabWidget->addTab(createKeyboardPage     (), _("Keyboard set-up"));
+	_tabWidget->addTab(createMiscellaneousPage(), _("Miscellaneous"  ));
+	connect(_tabWidget, &QTabWidget::currentChanged, this, &PreferenceDialog::refreshKeyboardHandlerActivationState);
+	refreshKeyboardHandlerActivationState();
 
 	// Validation buttons
 	QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, this);
@@ -168,7 +169,7 @@ QWidget *PreferenceDialog::createMiscellaneousPage()
 	rcLabel[ResetConfirmation::NEVER    ] = _("Never");
 
 	// Reset confirmation option
-	QGroupBox   *rcGroup  = new QGroupBox(_("Ask for confirmation when clicking on the 'reset-clock' button?"), this);
+	QGroupBox   *rcGroup  = new QGroupBox(_("Ask for confirmation when clicking on the \"Reset the clock\" button?"), this);
 	QVBoxLayout *rcLayout = new QVBoxLayout;
 	layout->addWidget(rcGroup);
 	rcGroup->setLayout(rcLayout);
@@ -187,9 +188,17 @@ QWidget *PreferenceDialog::createMiscellaneousPage()
 void PreferenceDialog::changeEvent(QEvent *event)
 {
 	if(event->type()==QEvent::ActivationChange) {
-		_keyboardHandler->setEnabled(isActiveWindow());
+		refreshKeyboardHandlerActivationState();
 	}
 	QDialog::changeEvent(event);
+}
+
+
+// Activate or in-activate the keyboard handler depending on the state of the dialog and the active tab.
+void PreferenceDialog::refreshKeyboardHandlerActivationState()
+{
+	bool shouldBeEnabled = isActiveWindow() && _tabWidget->currentIndex()==0;
+	_keyboardHandler->setEnabled(shouldBeEnabled);
 }
 
 

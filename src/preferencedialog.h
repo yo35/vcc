@@ -24,6 +24,7 @@
 #define PREFERENCEDIALOG_H_
 
 #include <QDialog>
+#include <QTabWidget>
 #include <QCheckBox>
 #include <QRadioButton>
 #include <QComboBox>
@@ -72,12 +73,16 @@ private:
 	QWidget *createKeyboardPage     ();
 	QWidget *createTimeDisplayPage  ();
 	QWidget *createMiscellaneousPage();
+	void refreshKeyboardHandlerActivationState();
 	void feedKeyboardSelector();
 	std::string retrieveSelectedKeyboard() const;
 	void onSelectedKeyboardChanged();
 	void onHasNumericKeypadToggled();
 	void onModifierKeysChanged    ();
 	void onModifierKeysToggled    ();
+
+	// Tab widget
+	QTabWidget *_tabWidget;
 
 	// Keyboard page
 	QComboBox          *_keyboardSelector    ;
