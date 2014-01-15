@@ -33,6 +33,7 @@
 #include "modifierkeyswidget.h"
 #include "keyboardhandler.h"
 #include "keyboardwidget.h"
+#include "timedurationwidget.h"
 #include "options.h"
 
 
@@ -98,9 +99,10 @@ private:
 	QPushButton        *_modifierKeysToggle  ;
 
 	// Time display page
-	QCheckBox *_displayTimeAfterFlagDown ;
-	QCheckBox *_displayBronsteinExtraTime;
-	QCheckBox *_displayByoYomiExtraTime  ;
+	TimeDurationWidget *_delayBeforeDisplaySeconds;
+	QCheckBox          *_displayTimeAfterTimeout  ;
+	QCheckBox          *_displayBronsteinExtraInfo;
+	QCheckBox          *_displayByoYomiExtraInfo  ;
 
 	// Miscellaneous page
 	QCheckBox *_showStatusBar;

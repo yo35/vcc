@@ -96,6 +96,16 @@ public:
 	void set_time_control(const TimeControl &value);
 
 	/**
+	 * Whether the status bar should be shown or not.
+	 */
+	bool show_status_bar();
+
+	/**
+	 * Set whether the status bar should be shown or not.
+	 */
+	void set_show_status_bar(bool value);
+
+	/**
 	 * Reset confirmation option.
 	 */
 	ResetConfirmation reset_confirmation();
@@ -106,14 +116,44 @@ public:
 	void set_reset_confirmation(ResetConfirmation value);
 
 	/**
-	 * Whether the status bar should be shown or not.
+	 * Minimal remaining time before seconds is displayed.
 	 */
-	bool show_status_bar();
+	TimeDuration delay_before_display_seconds();
 
 	/**
-	 * Set whether the status bar should be shown or not.
+	 * Set the minimal remaining time before seconds are displayed.
 	 */
-	void set_show_status_bar(bool value);
+	void set_delay_before_display_seconds(const TimeDuration &value);
+
+	/**
+	 * Whether the time should be displayed after timeout.
+	 */
+	bool display_time_after_timeout();
+
+	/**
+	 * Set whether the time should be displayed after timeout.
+	 */
+	void set_display_time_after_timeout(bool value);
+
+	/**
+	 * Whether extra-information is displayed in Bronstein-mode.
+	 */
+	bool display_bronstein_extra_info();
+
+	/**
+	 * Set whether extra-information is displayed in Bronstein-mode.
+	 */
+	void set_display_bronstein_extra_info(bool value);
+
+	/**
+	 * Whether extra-information is displayed in byo-yomi-mode.
+	 */
+	bool display_byo_yomi_extra_info();
+
+	/**
+	 * Set whether extra-information is displayed in byo-yomi-mode.
+	 */
+	void set_display_byo_yomi_extra_info(bool value);
 
 	/**
 	 * Return the IDs of the available keyboard maps.

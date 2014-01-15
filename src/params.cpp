@@ -262,8 +262,8 @@ TimeControl Params::time_control()
 	TimeControl retval;
 	retval.set_mode(tc_node.get("mode", TimeControl::Mode::SUDDEN_DEATH));
 	for(auto s = Enum::cursor<Side>::first(); s.valid(); ++s) {
-		retval.set_main_time  (*s, tc_node.get(side_key(*s, "main-time"  ), TimeDuration(3*60*1000)));
-		retval.set_increment  (*s, tc_node.get(side_key(*s, "increment"  ), TimeDuration(   2*1000)));
+		retval.set_main_time  (*s, tc_node.get(side_key(*s, "main-time"  ), from_seconds(3*60)));
+		retval.set_increment  (*s, tc_node.get(side_key(*s, "increment"  ), from_seconds(   2)));
 		retval.set_byo_periods(*s, tc_node.get(side_key(*s, "byo-periods"), 1));
 	}
 	return std::move(retval);
@@ -285,31 +285,87 @@ void Params::set_time_control(const TimeControl &value)
 }
 
 
-// Reset confirmation option.
-ResetConfirmation Params::reset_confirmation()
-{
-	return get_atomic_value("reset-confirmation", ResetConfirmation::IF_ACTIVE);
-}
-
-
-// Set the reset confirmation option.
-void Params::set_reset_confirmation(ResetConfirmation value)
-{
-	put_atomic_value("reset-confirmation", value);
-}
-
-
 // Whether the status bar should be shown or not.
 bool Params::show_status_bar()
 {
-	return get_atomic_value("display.status-bar", true);
+	return get_atomic_value("misc-options.show-status-bar", true);
 }
 
 
 // Set whether the status bar should be shown or not.
 void Params::set_show_status_bar(bool value)
 {
-	put_atomic_value("display.status-bar", value);
+	put_atomic_value("misc-options.show-status-bar", value);
+}
+
+
+// Reset confirmation option.
+ResetConfirmation Params::reset_confirmation()
+{
+	return get_atomic_value("misc-options.reset-confirmation", ResetConfirmation::IF_ACTIVE);
+}
+
+
+// Set the reset confirmation option.
+void Params::set_reset_confirmation(ResetConfirmation value)
+{
+	put_atomic_value("misc-options.reset-confirmation", value);
+}
+
+
+// Minimal remaining time before seconds is displayed.
+TimeDuration Params::delay_before_display_seconds()
+{
+	return get_atomic_value("time-options.delay-for-seconds", from_seconds(20*60));
+}
+
+
+// Set the minimal remaining time before seconds are displayed.
+void Params::set_delay_before_display_seconds(const TimeDuration &value)
+{
+	put_atomic_value("time-options.delay-for-seconds", value);
+}
+
+
+// Whether the time should be displayed after timeout.
+bool Params::display_time_after_timeout()
+{
+	return get_atomic_value("time-options.time-after-timeout", true);
+}
+
+
+// Set whether the time should be displayed after timeout.
+void Params::set_display_time_after_timeout(bool value)
+{
+	put_atomic_value("time-options.time-after-timeout", value);
+}
+
+
+// Whether extra-information is displayed in Bronstein-mode.
+bool Params::display_bronstein_extra_info()
+{
+	return get_atomic_value("time-options.bronstein-extra-info", true);
+}
+
+
+// Set whether extra-information is displayed in Bronstein-mode.
+void Params::set_display_bronstein_extra_info(bool value)
+{
+	put_atomic_value("time-options.bronstein-extra-info", value);
+}
+
+
+// Whether extra-information is displayed in byo-yomi-mode.
+bool Params::display_byo_yomi_extra_info()
+{
+	return get_atomic_value("time-options.byo-yomi-extra-info", true);
+}
+
+
+// Set whether extra-information is displayed in byo-yomi-mode.
+void Params::set_display_byo_yomi_extra_info(bool value)
+{
+	put_atomic_value("time-options.byo-yomi-extra-info", value);
 }
 
 

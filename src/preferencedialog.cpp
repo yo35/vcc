@@ -43,6 +43,7 @@ PreferenceDialog::PreferenceDialog(QWidget *parent) : QDialog(parent)
 	_tabWidget = new QTabWidget(this);
 	mainLayout->addWidget(_tabWidget, 1);
 	_tabWidget->addTab(createKeyboardPage     (), _("Keyboard set-up"));
+	_tabWidget->addTab(createTimeDisplayPage  (), _("Time display"   ));
 	_tabWidget->addTab(createMiscellaneousPage(), _("Miscellaneous"  ));
 	connect(_tabWidget, &QTabWidget::currentChanged, this, &PreferenceDialog::refreshKeyboardHandlerActivationState);
 	refreshKeyboardHandlerActivationState();
@@ -136,13 +137,21 @@ QWidget *PreferenceDialog::createTimeDisplayPage()
 	QVBoxLayout *layout = new QVBoxLayout;
 	page->setLayout(layout);
 
+	// Delay before display seconds
+	_delayBeforeDisplaySeconds = new TimeDurationWidget(this);
+	QHBoxLayout *dbdsLayout = new QHBoxLayout;
+	dbdsLayout->addWidget(new QLabel(_("Show seconds if the time is less than"), this));
+	dbdsLayout->addWidget(_delayBeforeDisplaySeconds);
+	dbdsLayout->addStretch(1);
+	layout->addLayout(dbdsLayout);
+
 	// Check-boxes
-	_displayTimeAfterFlagDown  = new QCheckBox(_("Display an increasing time counter when the flag is down"     ), this);
-	_displayBronsteinExtraTime = new QCheckBox(_("Display extra time information when playing in Bronstein mode"), this);
-	_displayByoYomiExtraTime   = new QCheckBox(_("Display extra time information when playing in byo-yomi mode" ), this);
-	layout->addWidget(_displayTimeAfterFlagDown );
-	layout->addWidget(_displayBronsteinExtraTime);
-	layout->addWidget(_displayByoYomiExtraTime  );
+	_displayTimeAfterTimeout   = new QCheckBox(_("Display an increasing time counter when the flag is down"     ), this);
+	_displayBronsteinExtraInfo = new QCheckBox(_("Display extra time information when playing in Bronstein mode"), this);
+	_displayByoYomiExtraInfo   = new QCheckBox(_("Display extra time information when playing in byo-yomi mode" ), this);
+	layout->addWidget(_displayTimeAfterTimeout  );
+	layout->addWidget(_displayBronsteinExtraInfo);
+	layout->addWidget(_displayByoYomiExtraInfo  );
 
 	// Return the page widget
 	layout->addStretch(1);
@@ -264,6 +273,12 @@ void PreferenceDialog::loadParameters()
 	_modifierKeysSelector->setModifierKeys(Params::get().modifier_keys());
 	_hasNumericKeypad->setChecked(Params::get().has_numeric_keypad());
 
+	// Time display page
+	_delayBeforeDisplaySeconds->setValue(Params::get().delay_before_display_seconds());
+	_displayTimeAfterTimeout  ->setChecked(Params::get().display_time_after_timeout  ());
+	_displayBronsteinExtraInfo->setChecked(Params::get().display_bronstein_extra_info());
+	_displayByoYomiExtraInfo  ->setChecked(Params::get().display_byo_yomi_extra_info ());
+
 	// Miscellaneous page
 	_showStatusBar->setChecked(Params::get().show_status_bar());
 	_resetConfirmation[Params::get().reset_confirmation()]->setChecked(true);
@@ -277,6 +292,12 @@ void PreferenceDialog::saveParameters()
 	Params::get().set_current_keyboard(retrieveSelectedKeyboard());
 	Params::get().set_modifier_keys(_modifierKeysSelector->modifierKeys());
 	Params::get().set_has_numeric_keypad(_hasNumericKeypad->isChecked());
+
+	// Time display page
+	Params::get().set_delay_before_display_seconds(_delayBeforeDisplaySeconds->value());
+	Params::get().set_display_time_after_timeout  (_displayTimeAfterTimeout  ->isChecked());
+	Params::get().set_display_bronstein_extra_info(_displayBronsteinExtraInfo->isChecked());
+	Params::get().set_display_byo_yomi_extra_info (_displayByoYomiExtraInfo  ->isChecked());
 
 	// Miscellaneous page
 	Params::get().set_show_status_bar(_showStatusBar->isChecked());
