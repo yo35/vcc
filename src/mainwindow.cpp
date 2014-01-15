@@ -90,7 +90,7 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	dialLayout->setSpacing(0);
 	for(auto it=Enum::cursor<Side>::first(); it.valid(); ++it) {
 		_dial[*it] = new DialWidget(this);
-		_dial[*it]->bindTimer(_core, *it);
+		_dial[*it]->bindTimer(_biTimer, *it);
 		dialLayout->addWidget(_dial[*it], 1);
 	}
 	mainLayout->addLayout(dialLayout, 1);
@@ -99,8 +99,8 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	_statusBar = statusBar();
 
 	// Load the persistent parameters
-	_core.set_time_control(Params::get().time_control());
-	_statusBar->showMessage(QString::fromStdString(_core.time_control().description()));
+	_biTimer.set_time_control(Params::get().time_control());
+	_statusBar->showMessage(QString::fromStdString(_biTimer.time_control().description()));
 	loadPersistentParameters();
 }
 
@@ -116,11 +116,7 @@ void MainWindow::closeEvent(QCloseEvent *)
 void MainWindow::changeEvent(QEvent *event)
 {
 	if(event->type()==QEvent::ActivationChange) {
-		std::cout << "Activation change (spontaneous=" << event->spontaneous() << ") (isActive=" << isActiveWindow() << ")" << std::endl;
 		_keyboardHandler->setEnabled(isActiveWindow());
-	}
-	else {
-		std::cout << "Other change event (code=" << event->type() << ")" << std::endl;
 	}
 	QMainWindow::changeEvent(event);
 }
@@ -129,7 +125,24 @@ void MainWindow::changeEvent(QEvent *event)
 // Key-press event handler.
 void MainWindow::onKeyPressed(ScanCode scanCode)
 {
-	std::cout << "Key press, key=" << scanCode << std::endl;
+	// Retrieve the shortcut that is triggered by the given scan-code, if any.
+	bool modifierKeysActivated =
+		_keyboardHandler->isDown(_shortcutManager.modifier_key(Side::LEFT )) &&
+		_keyboardHandler->isDown(_shortcutManager.modifier_key(Side::RIGHT));
+	int shortcut = _shortcutManager.shortcut(scanCode, modifierKeysActivated);
+
+	std::cout << "Key press, key=" << scanCode << " shortcut=" << shortcut << std::endl; ///TODO: remove
+
+	// Execute the requested actions.
+	switch(shortcut)
+	{
+		case 1: _biTimer.start_timer(Side::RIGHT); break;
+		case 2: _biTimer.start_timer(Side::LEFT ); break;
+		case 3: _biTimer.stop_timer  (); break;
+		case 4: _biTimer.reset_timers(); break;
+		case 5: break; ///TODO: implement switch
+		default: break;
+	}
 }
 
 
@@ -137,21 +150,21 @@ void MainWindow::onKeyPressed(ScanCode scanCode)
 void MainWindow::onResetClicked()
 {
 	if(_resetConfirmation==ResetConfirmation::ALWAYS ||
-		(_resetConfirmation==ResetConfirmation::IF_ACTIVE && _core.is_active()))
+		(_resetConfirmation==ResetConfirmation::IF_ACTIVE && _biTimer.is_active()))
 	{
 		auto response = QMessageBox::question(this, _("Stop this game?"), _("Do you really want to start a new game?"));
 		if(response!=QMessageBox::Yes) {
 			return;
 		}
 	}
-	_core.reset_timers();
+	_biTimer.reset_timers();
 }
 
 
 // Pause button handler.
 void MainWindow::onPauseClicked()
 {
-	_core.stop_timer();
+	_biTimer.stop_timer();
 }
 
 
@@ -159,13 +172,13 @@ void MainWindow::onPauseClicked()
 void MainWindow::onTCtrlClicked()
 {
 	TimeControlDialog dialog(this);
-	dialog.setTimeControl(_core.time_control());
+	dialog.setTimeControl(_biTimer.time_control());
 	if(dialog.exec()!=QDialog::Accepted) {
 		return;
 	}
-	_core.set_time_control(dialog.timeControl());
-	_statusBar->showMessage(QString::fromStdString(_core.time_control().description()));
-	Params::get().set_time_control(_core.time_control());
+	_biTimer.set_time_control(dialog.timeControl());
+	_statusBar->showMessage(QString::fromStdString(_biTimer.time_control().description()));
+	Params::get().set_time_control(_biTimer.time_control());
 }
 
 
@@ -221,6 +234,12 @@ void MainWindow::onAboutClicked()
 // Load the persistent parameters saved in the singleton Param object.
 void MainWindow::loadPersistentParameters()
 {
+	// Keyboard shortcuts
+	_shortcutManager.reset(Params::get().modifier_keys(),
+		Params::get().keyboard_map(Params::get().current_keyboard()),
+		Params::get().shortcut_map("FR") // TODO
+	);
+
 	// Reset confirmation option
 	_resetConfirmation = Params::get().reset_confirmation();
 

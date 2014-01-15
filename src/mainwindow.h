@@ -27,6 +27,7 @@
 #include "options.h"
 #include "keys.h"
 #include "bitimer.h"
+#include "shortcutmanager.h"
 class KeyboardHandler;
 class DialWidget;
 class DebugDialog;
@@ -74,7 +75,8 @@ private:
 
 	// Private members
 	KeyboardHandler  *_keyboardHandler  ;
-	BiTimer           _core             ;
+	ShortcutManager   _shortcutManager  ;
+	BiTimer           _biTimer          ;
 	ResetConfirmation _resetConfirmation;
 
 	// Widgets
