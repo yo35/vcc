@@ -139,8 +139,9 @@ QWidget *PreferenceDialog::createTimeDisplayPage()
 
 	// Delay before display seconds
 	_delayBeforeDisplaySeconds = new TimeDurationWidget(this);
+	QLabel      *dbdsLabel  = new QLabel(_("Show seconds only if the time is less than"), this);
 	QHBoxLayout *dbdsLayout = new QHBoxLayout;
-	dbdsLayout->addWidget(new QLabel(_("Show seconds if the time is less than"), this));
+	dbdsLayout->addWidget(dbdsLabel);
 	dbdsLayout->addWidget(_delayBeforeDisplaySeconds);
 	dbdsLayout->addStretch(1);
 	layout->addLayout(dbdsLayout);
@@ -152,6 +153,29 @@ QWidget *PreferenceDialog::createTimeDisplayPage()
 	layout->addWidget(_displayTimeAfterTimeout  );
 	layout->addWidget(_displayBronsteinExtraInfo);
 	layout->addWidget(_displayByoYomiExtraInfo  );
+
+	// Tool-tips
+	_delayBeforeDisplaySeconds->setToolTip("<p>" + _(
+		"If the remaining time is greater than (or equal to) this threshold, "
+		"it is rounded to the nearest minute before being displayed. For instance, "
+		"if the threshold is set to 0, the seconds are never displayed."
+	) + "</p><p>" + _(
+		"This parameter affects only the display, not the accuracy of the time measurement."
+	) + "</p>");
+	_displayTimeAfterTimeout->setToolTip("<p>" + _(
+		"If checked, an increasing time counter is displayed when the players run out of time. "
+		"Otherwise, in this situation, the clock only displays \"Flag down\"."
+	) + "</p>");
+	_displayBronsteinExtraInfo->setToolTip("<p>" + _(
+		"This option only affects the display with the Bronstein time control mode. "
+		"If checked, the main time and the additional time are displayed separately."
+	) + "</p>");
+	_displayByoYomiExtraInfo->setToolTip("<p>" + _(
+		"This option only affects the display with the byo-yomi time control mode. "
+		"If checked, the clock displays when the players are currently spending "
+		"their additional byo-yomi periods."
+	) + "</p>");
+	dbdsLabel->setToolTip(_delayBeforeDisplaySeconds->toolTip());
 
 	// Return the page widget
 	layout->addStretch(1);
