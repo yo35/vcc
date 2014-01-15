@@ -29,7 +29,7 @@
 QT_BEGIN_NAMESPACE
 	class QPainter;
 QT_END_NAMESPACE
-#include "options.h"
+#include "keys.h"
 #include "keyboardhandler.h"
 #include "keyboardmap.h"
 #include "shortcutmap.h"
@@ -161,7 +161,7 @@ private:
 	// Private functions
 	void ensureKeyboardMapBinded() const;
 	void ensureShortcutMapBinded() const;
-	void onKeyStateChanged(std::uint32_t scanCode);
+	void onKeyStateChanged(ScanCode scanCode);
 	bool isModifierKey(const KeyboardMap::KeyDescriptor &key) const;
 	void drawKeyLabel(const KeyboardMap::KeyDescriptor &key);
 	void drawKeyShape(const KeyboardMap::KeyDescriptor &key);

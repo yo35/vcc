@@ -127,7 +127,7 @@ void MainWindow::changeEvent(QEvent *event)
 
 
 // Key-press event handler.
-void MainWindow::onKeyPressed(std::uint32_t scanCode)
+void MainWindow::onKeyPressed(ScanCode scanCode)
 {
 	std::cout << "Key press, key=" << scanCode << std::endl;
 }

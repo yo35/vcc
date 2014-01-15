@@ -21,7 +21,6 @@
 
 
 #include "keyboardhandler.h"
-#include <QWidget>
 #ifndef Q_OS_WIN
 	#include <QAbstractEventDispatcher>
 	#include <QX11Info>
@@ -31,7 +30,7 @@
 
 // Emit a key-press event corresponding the given scan code if the corresponding
 // key is not already down (to avoid auto-repeat events).
-void KeyboardHandler::notifyKeyPressed(std::uint32_t scanCode)
+void KeyboardHandler::notifyKeyPressed(ScanCode scanCode)
 {
 	if(_keysDown.count(scanCode)>0) {
 		return;
@@ -43,7 +42,7 @@ void KeyboardHandler::notifyKeyPressed(std::uint32_t scanCode)
 
 // Emit a key-release event corresponding the given scan code
 // if the corresponding key is actually down.
-void KeyboardHandler::notifyKeyReleased(std::uint32_t scanCode)
+void KeyboardHandler::notifyKeyReleased(ScanCode scanCode)
 {
 	if(_keysDown.count(scanCode)==0) {
 		return;
@@ -56,8 +55,8 @@ void KeyboardHandler::notifyKeyReleased(std::uint32_t scanCode)
 // Make the "keys-down" set empty and generate the corresponding key-release events.
 void KeyboardHandler::clearKeysDown()
 {
-	std::set<std::uint32_t> currentlyDown(_keysDown);
-	for(std::uint32_t key : currentlyDown) {
+	std::set<ScanCode> currentlyDown(_keysDown);
+	for(ScanCode key : currentlyDown) {
 		notifyKeyReleased(key);
 	}
 }
@@ -139,7 +138,7 @@ LRESULT CALLBACK KeyboardHandler::lowLevelKeyboardProc(int nCode, WPARAM wParam,
 
 	// Extract the scan-code.
 	KBDLLHOOKSTRUCT *info = reinterpret_cast<KBDLLHOOKSTRUCT *>(lParam);
-	std::uint32_t scanCode = info->scanCode;
+	ScanCode scanCode = info->scanCode;
 	if(info->flags & 0x01) {
 		scanCode += 256;
 	}

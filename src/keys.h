@@ -20,67 +20,32 @@
  ******************************************************************************/
 
 
-#ifndef MAINWINDOW_H_
-#define MAINWINDOW_H_
+#ifndef KEYS_H_
+#define KEYS_H_
 
-#include <QMainWindow>
-#include "options.h"
-#include "keys.h"
-#include "bitimer.h"
-class KeyboardHandler;
-class DialWidget;
-class DebugDialog;
+#include "enumutil.h"
+#include <cstdint>
 
 
 /**
- * Main window of the application.
+ * The physical keys of the keyboard are identified by a scan-code. This is a low-level
+ * identification, that is likely to depends on the Operating System.
  */
-class MainWindow : public QMainWindow
+typedef std::uint32_t ScanCode;
+
+
+/**
+ * Pair of modifier keys that can be pressed to change the function associated to
+ * some keys on the keyboard.
+ */
+enum class ModifierKeys : std::uint8_t
 {
-	Q_OBJECT
-
-public:
-
-	/**
-	 * Constructor.
-	 */
-	MainWindow();
-
-protected:
-
-	/**
-	 * Close event handler.
-	 */
-	void closeEvent(QCloseEvent *event) override;
-
-	/**
-	 * Window state-change handler.
-	 */
-	void changeEvent(QEvent *event) override;
-
-private:
-
-	// Private functions
-	void onKeyPressed(ScanCode scanCode);
-	void onResetClicked();
-	void onPauseClicked();
-	void onTCtrlClicked();
-	void onPrefsClicked();
-	void onHelpClicked ();
-	void onDebugClicked();
-	void onAboutClicked();
-	void loadPersistentParameters();
-	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
-
-	// Private members
-	KeyboardHandler  *_keyboardHandler  ;
-	BiTimer           _core             ;
-	ResetConfirmation _resetConfirmation;
-
-	// Widgets
-	Enum::array<Side, DialWidget *> _dial;
-	QStatusBar *_statusBar;
-	DebugDialog *_debugDialog;
+	DOUBLE_CTRL ,
+	DOUBLE_SHIFT,
+	DOUBLE_ALT
 };
 
-#endif /* MAINWINDOW_H_ */
+namespace Enum { template<> struct traits<ModifierKeys> : trait_indexing<3> {}; }
+
+
+#endif /* KEYS_H_ */

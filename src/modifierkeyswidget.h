@@ -24,7 +24,7 @@
 #define MODIFIERKEYSWIDGET_H_
 
 #include "captionwidget.h"
-#include "options.h"
+#include "keys.h"
 #include <QAction>
 
 

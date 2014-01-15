@@ -151,7 +151,7 @@ QSize KeyboardWidget::sizeHint       () const { return QSize(800, 300); }
 
 
 // Called when a key is pressed or released.
-void KeyboardWidget::onKeyStateChanged(std::uint32_t)
+void KeyboardWidget::onKeyStateChanged(ScanCode)
 {
 	update();
 }

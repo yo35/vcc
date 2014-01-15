@@ -24,11 +24,11 @@
 #define KEYBOARDMAP_H_
 
 #include <cstddef>
-#include <cstdint>
 #include <cstring>
 #include <vector>
 #include <boost/regex.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include "keys.h"
 
 
 /**
@@ -80,7 +80,7 @@ public:
 		/**
 		 * Scan-code on the current platform.
 		 */
-		std::uint32_t scan_code() const
+		ScanCode scan_code() const
 		{
 #ifdef OS_IS_UNIX
 			return _scan_code_unix;
@@ -93,12 +93,12 @@ public:
 		/**
 		 * Scan-code on a Unix platform.
 		 */
-		std::uint32_t scan_code_unix() const { return _scan_code_unix; }
+		ScanCode scan_code_unix() const { return _scan_code_unix; }
 
 		/**
 		 * Scan-code on a Windows platform.
 		 */
-		std::uint32_t scan_code_windows() const { return _scan_code_windows; }
+		ScanCode scan_code_windows() const { return _scan_code_windows; }
 
 		/**
 		 * Whether the given key lies in the numeric key-pad.
@@ -140,8 +140,8 @@ public:
 		// Private members
 		std::string              _id               ;
 		std::vector<std::string> _label            ;
-		std::uint32_t            _scan_code_unix   ;
-		std::uint32_t            _scan_code_windows;
+		ScanCode                 _scan_code_unix   ;
+		ScanCode                 _scan_code_windows;
 		bool                     _in_numeric_keypad;
 		std::size_t              _line_bottom      ;
 		std::size_t              _line_top         ;

@@ -40,17 +40,4 @@ enum class ResetConfirmation : std::uint8_t
 namespace Enum { template<> struct traits<ResetConfirmation> : trait_indexing<3> {}; }
 
 
-/**
- * Option describing whether confirmation should be requested from the user when he/she resets the clock.
- */
-enum class ModifierKeys : std::uint8_t
-{
-	DOUBLE_CTRL ,
-	DOUBLE_SHIFT,
-	DOUBLE_ALT
-};
-
-namespace Enum { template<> struct traits<ModifierKeys> : trait_indexing<3> {}; }
-
-
 #endif /* OPTIONS_H_ */

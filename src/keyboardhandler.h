@@ -24,11 +24,9 @@
 #define KEYBOARDHANDLER_H_
 
 #include <QObject>
-#include <cstdint>
+#include <QWidget>
 #include <set>
-QT_BEGIN_NAMESPACE
-	class QWidget;
-QT_END_NAMESPACE
+#include "keys.h"
 
 #ifdef Q_OS_WIN
 	#include <windows.h>
@@ -76,24 +74,24 @@ public:
 	/**
 	 * Return a set containing the scan-codes of all keys currently down.
 	 */
-	const std::set<std::uint32_t> &keysDown() const { return _keysDown; }
+	const std::set<ScanCode> &keysDown() const { return _keysDown; }
 
 	/**
 	 * Check whether a given key is or not currently down.
 	 */
-	bool isDown(std::uint32_t scanCode) const { return _keysDown.count(scanCode)>0; }
+	bool isDown(ScanCode scanCode) const { return _keysDown.count(scanCode)>0; }
 
 signals:
 
 	/**
 	 * Signal emitted when a key is pressed.
 	 */
-	void keyPressed(std::uint32_t scanCode);
+	void keyPressed(ScanCode scanCode);
 
 	/**
 	 * Signal emitted when a key is released.
 	 */
-	void keyReleased(std::uint32_t scanCode);
+	void keyReleased(ScanCode scanCode);
 
 private:
 
@@ -137,13 +135,13 @@ private:
 	#endif
 
 	// Private functions
-	void notifyKeyPressed (std::uint32_t scanCode);
-	void notifyKeyReleased(std::uint32_t scanCode);
+	void notifyKeyPressed (ScanCode scanCode);
+	void notifyKeyReleased(ScanCode scanCode);
 	void clearKeysDown();
 
 	// Private members
-	bool                    _enabled ;
-	std::set<std::uint32_t> _keysDown;
+	bool               _enabled ;
+	std::set<ScanCode> _keysDown;
 
 	// OS-dependent implementation
 	#ifdef Q_OS_WIN

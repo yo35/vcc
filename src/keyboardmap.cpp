@@ -49,8 +49,8 @@ KeyboardMap::KeyDescriptor &KeyboardMap::KeyDescriptor::load(const boost::proper
 	parseLabel(rawLabel);
 
 	// Scan codes
-	_scan_code_unix    = data.get<std::uint32_t>("scan-code.unix"   );
-	_scan_code_windows = data.get<std::uint32_t>("scan-code.windows");
+	_scan_code_unix    = data.get<ScanCode>("scan-code.unix"   );
+	_scan_code_windows = data.get<ScanCode>("scan-code.windows");
 
 	// Geometry
 	_in_numeric_keypad = data.get<bool>("geometry.in-nkp");
