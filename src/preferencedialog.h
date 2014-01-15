@@ -25,12 +25,14 @@
 
 #include <QDialog>
 #include <QCheckBox>
+#include <QRadioButton>
 #include <QComboBox>
 #include <QPushButton>
 #include "captionwidget.h"
 #include "modifierkeyswidget.h"
 #include "keyboardhandler.h"
 #include "keyboardwidget.h"
+#include "options.h"
 
 
 /**
@@ -67,8 +69,9 @@ protected:
 private:
 
 	// Private functions
-	QWidget *createKeyboardPage();
-	QWidget *createDisplayPage ();
+	QWidget *createKeyboardPage     ();
+	QWidget *createTimeDisplayPage  ();
+	QWidget *createMiscellaneousPage();
 	void feedKeyboardSelector();
 	std::string retrieveSelectedKeyboard() const;
 	void onSelectedKeyboardChanged();
@@ -89,11 +92,14 @@ private:
 	ModifierKeysWidget *_modifierKeysSelector;
 	QPushButton        *_modifierKeysToggle  ;
 
-	// Display page
-	QCheckBox *_displayStatusBar         ;
+	// Time display page
 	QCheckBox *_displayTimeAfterFlagDown ;
 	QCheckBox *_displayBronsteinExtraTime;
 	QCheckBox *_displayByoYomiExtraTime  ;
+
+	// Miscellaneous page
+	QCheckBox *_showStatusBar;
+	Enum::array<ResetConfirmation, QRadioButton *> _resetConfirmation;
 };
 
 #endif /* PREFERENCEDIALOG_H_ */

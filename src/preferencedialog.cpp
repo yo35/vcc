@@ -26,6 +26,7 @@
 #include <QTabWidget>
 #include <QDialogButtonBox>
 #include <QLabel>
+#include <QGroupBox>
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QEvent>
@@ -42,8 +43,8 @@ PreferenceDialog::PreferenceDialog(QWidget *parent) : QDialog(parent)
 	// Tabs
 	QTabWidget *tabs = new QTabWidget(this);
 	mainLayout->addWidget(tabs, 1);
-	tabs->addTab(createKeyboardPage(), _("Keyboard set-up"));
-	tabs->addTab(createDisplayPage (), _("Display options"));
+	tabs->addTab(createKeyboardPage     (), _("Keyboard set-up"));
+	tabs->addTab(createMiscellaneousPage(), _("Miscellaneous"  ));
 
 	// Validation buttons
 	QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, this);
@@ -126,8 +127,8 @@ QWidget *PreferenceDialog::createKeyboardPage()
 }
 
 
-// Create the display page.
-QWidget *PreferenceDialog::createDisplayPage()
+// Create the time-display page.
+QWidget *PreferenceDialog::createTimeDisplayPage()
 {
 	// Page widget
 	QWidget *page = new QWidget(this);
@@ -135,14 +136,46 @@ QWidget *PreferenceDialog::createDisplayPage()
 	page->setLayout(layout);
 
 	// Check-boxes
-	_displayStatusBar          = new QCheckBox(_("Display the status bar at the bottom of the main window"      ), this);
 	_displayTimeAfterFlagDown  = new QCheckBox(_("Display an increasing time counter when the flag is down"     ), this);
 	_displayBronsteinExtraTime = new QCheckBox(_("Display extra time information when playing in Bronstein mode"), this);
 	_displayByoYomiExtraTime   = new QCheckBox(_("Display extra time information when playing in byo-yomi mode" ), this);
-	layout->addWidget(_displayStatusBar         );
 	layout->addWidget(_displayTimeAfterFlagDown );
 	layout->addWidget(_displayBronsteinExtraTime);
 	layout->addWidget(_displayByoYomiExtraTime  );
+
+	// Return the page widget
+	layout->addStretch(1);
+	return page;
+}
+
+
+// Create the miscellaneous page.
+QWidget *PreferenceDialog::createMiscellaneousPage()
+{
+	// Page widget
+	QWidget *page = new QWidget(this);
+	QVBoxLayout *layout = new QVBoxLayout;
+	page->setLayout(layout);
+
+	// Status bar
+	_showStatusBar = new QCheckBox(_("Show the status bar at the bottom of the main window"), this);
+	layout->addWidget(_showStatusBar);
+
+	// Reset confirmation labels
+	Enum::array<ResetConfirmation, QString> rcLabel;
+	rcLabel[ResetConfirmation::ALWAYS   ] = _("Always");
+	rcLabel[ResetConfirmation::IF_ACTIVE] = _("Only if the clock is still running");
+	rcLabel[ResetConfirmation::NEVER    ] = _("Never");
+
+	// Reset confirmation option
+	QGroupBox   *rcGroup  = new QGroupBox(_("Ask for confirmation when clicking on the 'reset-clock' button?"), this);
+	QVBoxLayout *rcLayout = new QVBoxLayout;
+	layout->addWidget(rcGroup);
+	rcGroup->setLayout(rcLayout);
+	for(auto it=Enum::cursor<ResetConfirmation>::first(); it.valid(); ++it) {
+		_resetConfirmation[*it] = new QRadioButton(rcLabel[*it], this);
+		rcLayout->addWidget(_resetConfirmation[*it]);
+	}
 
 	// Return the page widget
 	layout->addStretch(1);
@@ -222,9 +255,9 @@ void PreferenceDialog::loadParameters()
 	_modifierKeysSelector->setModifierKeys(Params::get().modifier_keys());
 	_hasNumericKeypad->setChecked(Params::get().has_numeric_keypad());
 
-	// Display page
-	_displayStatusBar->setChecked(Params::get().show_status_bar());
-	///TODO
+	// Miscellaneous page
+	_showStatusBar->setChecked(Params::get().show_status_bar());
+	_resetConfirmation[Params::get().reset_confirmation()]->setChecked(true);
 }
 
 
@@ -236,7 +269,11 @@ void PreferenceDialog::saveParameters()
 	Params::get().set_modifier_keys(_modifierKeysSelector->modifierKeys());
 	Params::get().set_has_numeric_keypad(_hasNumericKeypad->isChecked());
 
-	// Display page
-	Params::get().set_show_status_bar(_displayStatusBar->isChecked());
-	///TODO
+	// Miscellaneous page
+	Params::get().set_show_status_bar(_showStatusBar->isChecked());
+	for(auto it=Enum::cursor<ResetConfirmation>::first(); it.valid(); ++it) {
+		if(_resetConfirmation[*it]->isChecked()) {
+			Params::get().set_reset_confirmation(*it);
+		}
+	}
 }
