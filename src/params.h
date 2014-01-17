@@ -96,6 +96,26 @@ public:
 	void set_time_control(const TimeControl &value);
 
 	/**
+	 * Players' names.
+	 */
+	std::string player_name(Side side);
+
+	/**
+	 * Set the players' names.
+	 */
+	void set_player_name(Side side, const std::string &value);
+
+	/**
+	 * Whether the players' names should be shown or not.
+	 */
+	bool show_names();
+
+	/**
+	 * Set whether the players' names should be shown or not.
+	 */
+	void set_show_names(bool value);
+
+	/**
 	 * Whether the status bar should be shown or not.
 	 */
 	bool show_status_bar();
