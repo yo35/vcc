@@ -20,23 +20,20 @@
  ******************************************************************************/
 
 
-#ifndef MAINWINDOW_H_
-#define MAINWINDOW_H_
+#ifndef NAMEDIALOG_H_
+#define NAMEDIALOG_H_
 
-#include <QMainWindow>
-#include "options.h"
-#include "keys.h"
-#include "bitimer.h"
-#include "shortcutmanager.h"
-class KeyboardHandler;
-class DialWidget;
-class DebugDialog;
+#include <QDialog>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QCheckBox>
+#include "side.h"
 
 
 /**
- * Main window of the application.
+ * Dialog to edit the name of the players.
  */
-class MainWindow : public QMainWindow
+class NameDialog : public QDialog
 {
 	Q_OBJECT
 
@@ -45,45 +42,37 @@ public:
 	/**
 	 * Constructor.
 	 */
-	MainWindow();
-
-protected:
+	NameDialog(QWidget *parent=0);
 
 	/**
-	 * Close event handler.
+	 * Name selected for the player on the given side.
 	 */
-	void closeEvent(QCloseEvent *event) override;
+	QString name(Side side) const;
 
 	/**
-	 * Window state-change handler.
+	 * Set the name of the player on the given side.
 	 */
-	void changeEvent(QEvent *event) override;
+	void setName(Side side, const QString &value);
+
+	/**
+	 * Whether the names should be visible or not.
+	 */
+	bool displayNames() const;
+
+	/**
+	 * Set the default choice for name visibility.
+	 */
+	void setDisplayNames(bool value);
 
 private:
 
 	// Private functions
-	void onKeyPressed(ScanCode scanCode);
-	void onResetClicked();
-	void onPauseClicked();
-	void onTCtrlClicked();
-	void onNamesClicked();
-	void onPrefsClicked();
-	void onHelpClicked ();
-	void onDebugClicked();
-	void onAboutClicked();
-	void loadPersistentParameters();
-	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
+	void refreshActivationState();
 
 	// Private members
-	KeyboardHandler  *_keyboardHandler  ;
-	ShortcutManager   _shortcutManager  ;
-	BiTimer           _biTimer          ;
-	ResetConfirmation _resetConfirmation;
-
-	// Widgets
-	Enum::array<Side, DialWidget *> _dial;
-	QStatusBar *_statusBar;
-	DebugDialog *_debugDialog;
+	Enum::array<Side, QLineEdit *> _name     ;
+	QPushButton                   *_switch   ;
+	QCheckBox                     *_showNames;
 };
 
-#endif /* MAINWINDOW_H_ */
+#endif /* NAMEDIALOG_H_ */

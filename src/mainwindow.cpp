@@ -25,6 +25,7 @@
 #include "dialwidget.h"
 #include "keyboardhandler.h"
 #include "timecontroldialog.h"
+#include "namedialog.h"
 #include "preferencedialog.h"
 #include "debugdialog.h"
 #include <translation.h>
@@ -80,6 +81,7 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	connect(actReset, &QAction::triggered, this, &MainWindow::onResetClicked);
 	connect(actPause, &QAction::triggered, this, &MainWindow::onPauseClicked);
 	connect(actTCtrl, &QAction::triggered, this, &MainWindow::onTCtrlClicked);
+	connect(actNames, &QAction::triggered, this, &MainWindow::onNamesClicked);
 	connect(actPrefs, &QAction::triggered, this, &MainWindow::onPrefsClicked);
 	connect(actHelp , &QAction::triggered, this, &MainWindow::onHelpClicked );
 	connect(actDebug, &QAction::triggered, this, &MainWindow::onDebugClicked);
@@ -179,6 +181,17 @@ void MainWindow::onTCtrlClicked()
 	_biTimer.set_time_control(dialog.timeControl());
 	_statusBar->showMessage(QString::fromStdString(_biTimer.time_control().description()));
 	Params::get().set_time_control(_biTimer.time_control());
+}
+
+
+// Players' names button handler.
+void MainWindow::onNamesClicked()
+{
+	NameDialog dialog(this);
+	if(dialog.exec()!=QDialog::Accepted) {
+		return;
+	}
+	///TODO
 }
 
 
