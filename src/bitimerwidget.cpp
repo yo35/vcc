@@ -21,14 +21,19 @@
 
 
 #include "bitimerwidget.h"
+#include <translation.h>
 #include <QPainter>
 #include <QTimer>
+#include <cstdlib>
+#include <algorithm>
+#include <cmath>
 
 
 // Constructor.
 BiTimerWidget::BiTimerWidget(QWidget *parent) : QWidget(parent), _biTimer(nullptr),
-	_showLabels(false),
-	_displayTimeAfterTimeout(true), _displayBronsteinExtraInfo(true), _displayByoYomiExtraInfo(true)
+	_showLabels(false), _delayBeforeDisplaySeconds(from_seconds(3600)),
+	_displayTimeAfterTimeout(true), _displayBronsteinExtraInfo(true), _displayByoYomiExtraInfo(true),
+	_painter(nullptr)
 {
 	_timer = new QTimer(this);
 	_timer->setInterval(100);
@@ -132,6 +137,23 @@ QSize BiTimerWidget::minimumSizeHint() const { return QSize(500, 200); }
 QSize BiTimerWidget::sizeHint       () const { return QSize(800, 300); }
 
 
+// Handler for the timer state-change event.
+void BiTimerWidget::onTimerStateChanged()
+{
+	update();
+}
+
+
+// Handler periodically called by the internal QTimer object.
+void BiTimerWidget::onTimeoutEvent()
+{
+	if(_biTimer==nullptr || !_biTimer->is_active()) {
+		return;
+	}
+	update();
+}
+
+
 // Widget rendering method.
 void BiTimerWidget::paintEvent(QPaintEvent *)
 {
@@ -152,44 +174,115 @@ void BiTimerWidget::paintEvent(QPaintEvent *)
 		return;
 	}
 
-	// Define the left and right areas.
-	Enum::array<Side, int> x, w;
-	w[Side::LEFT ] = width()/2;
-	w[Side::RIGHT] = width() - w[Side::LEFT];
-	x[Side::LEFT ] = 0;
-	x[Side::RIGHT] = w[Side::LEFT];
+	// Prepare the rendering of left and right areas.
+	Enum::array<Side, double> x, w;
+	x[Side::LEFT ] = 0            ; w[Side::LEFT ] = std::round(width()/2);
+	x[Side::RIGHT] = w[Side::LEFT]; w[Side::RIGHT] = width() - w[Side::LEFT];
+	double y = 0;
+	double h = height();
+	_painter = &painter;
 
 	// Background.
 	for(auto it=Enum::cursor<Side>::first(); it.valid(); ++it) {
-		painter.setBrush(_biTimer->active_side()==*it ? QColor(255,255,128) : Qt::white);
-		painter.drawRect(x[*it], 0, w[*it], height());
+		_painter->setBrush(_biTimer->active_side()==*it ? QColor(255,255,128) : Qt::white);
+		_painter->drawRect(x[*it], y, w[*it], h);
 	}
 
-	// Current time
-	TimeDuration currentTime = _biTimer->time(/* TODO _side */ Side::LEFT);
-	long seconds = to_seconds(currentTime);
+	// Color to use for the text.
+	Enum::array<Side, QColor> textColor;
 
-	// Draw the current time
-	QFont font = painter.font();
-	font.setPointSize(40);
-	painter.setFont(font);
-	painter.setPen(Qt::black);
-	painter.drawText(0, 0, width(), height(), Qt::AlignCenter, QString::number(seconds));
+	// Time rendering.
+	for(auto it=Enum::cursor<Side>::first(); it.valid(); ++it) {
+		BiTimer::TimeInfo info = _biTimer->detailed_time(*it);
+		bool isNegative = info.total_time<TimeDuration::zero();
+
+		// Color to use for the text.
+		textColor[*it] = isNegative ? QColor(208,0,0) : Qt::black;
+
+		// Text to show in the main field and the bottom field.
+		QString mainText ;
+		QString extraText;
+		if(isNegative) {
+			mainText  = _("Flag down");
+			extraText = _displayTimeAfterTimeout ? QString(_("Since: %1")).arg(timeDurationAsString(info.total_time)) : "";
+		}
+		else if(_biTimer->time_control().mode()==TimeControl::Mode::BRONSTEIN && _displayBronsteinExtraInfo) {
+			mainText  = timeDurationAsString(info.main_time);
+			extraText = info.bronstein_time<=TimeDuration::zero() ? _("Main time") : timeDurationAsString(info.bronstein_time);
+		}
+		else if(_biTimer->time_control().mode()==TimeControl::Mode::BYO_YOMI && _displayByoYomiExtraInfo) {
+			mainText  = timeDurationAsString(info.main_time);
+			extraText = info.current_byo_period<=0 ? _("Main time") : (info.total_byo_periods==1 ? _("Byo-yomi period") :
+				QString(_("Byo-yomi period %1/%2")).arg(info.current_byo_period).arg(info.total_byo_periods));
+		}
+		else {
+			mainText  = timeDurationAsString(info.total_time);
+			extraText = "";
+		}
+
+		// Text rendering.
+		_painter->setPen(textColor[*it]);
+		if(extraText.isEmpty()) {
+			drawText(x[*it]+w[*it]*0.1, y+h*0.1, w[*it]*0.8, h*0.8, Qt::AlignCenter, mainText);
+		}
+		else {
+			double        xExtraText    = x[*it] + (*it==Side::LEFT ? 15 : w[*it]*0.4-15);
+			Qt::Alignment flagExtraText = Qt::AlignVCenter | (*it==Side::LEFT ? Qt::AlignLeft : Qt::AlignRight);
+			drawText(x[*it]+w[*it]*0.1, y+h*0.2    , w[*it]*0.8, h*0.6 , Qt::AlignCenter, mainText );
+			drawText(xExtraText       , y+h*0.93-15, w[*it]*0.6, h*0.07, flagExtraText  , extraText);
+		}
+	}
 }
 
 
-// Handler for the timer state-change event.
-void BiTimerWidget::onTimerStateChanged()
+// Draw the string `text` in the rectangle defined by the given coordinates, with the largest possible font.
+void BiTimerWidget::drawText(double x, double y, double w, double h, Qt::Alignment flags, const QString &text)
 {
-	update();
+	// Compute and apply the font factor to use.
+	double factor = computeFontFactor(w, h, text);
+	_painter->save();
+	applyFontFactor(factor);
+
+	// Draw the text.
+	_painter->drawText(QRectF(x, y, w, h), flags, text);
+
+	// Let the painter in its initial state.
+	_painter->restore();
 }
 
 
-// Handler periodically called by the internal QTimer object.
-void BiTimerWidget::onTimeoutEvent()
+// Apply the given factor to the current font.
+void BiTimerWidget::applyFontFactor(double factor)
 {
-	if(_biTimer==nullptr || !_biTimer->is_active()) {
-		return;
+	QFont font = _painter->font();
+	font.setPointSizeF(font.pointSizeF() * factor);
+	_painter->setFont(font);
+}
+
+
+// Compute the font factor to apply to fit the string `text` in a rectangle of size `w x h`.
+double BiTimerWidget::computeFontFactor(double w, double h, const QString &text) const
+{
+	QRectF br = _painter->boundingRect(QRectF(0, 0, w, h), Qt::AlignCenter, text);
+	double retVal = std::min(w/br.width(), h/br.height());
+	return std::floor(retVal*64)/64;
+}
+
+
+// Build the string representation corresponding to a given time duration.
+// No minus sign is returned for negative time durations.
+QString BiTimerWidget::timeDurationAsString(const TimeDuration &value) const
+{
+	int total_seconds = std::abs(to_seconds(value));
+	int seconds = total_seconds;
+	int minutes = seconds/60; seconds = seconds%60;
+	int hours   = minutes/60; minutes = minutes%60;
+	if(total_seconds<to_seconds(_delayBeforeDisplaySeconds)) {
+		return hours>0 ?
+			QString("%1:%2.%3").arg(hours).arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0')) :
+			QString("%1.%2").arg(minutes).arg(seconds, 2, 10, QChar('0'));
 	}
-	update();
+	else {
+		return QString("%1:%2").arg(hours).arg(minutes, 2, 10, QChar('0'));
+	}
 }

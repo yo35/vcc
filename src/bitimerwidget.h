@@ -28,6 +28,7 @@
 #include "bitimer.h"
 QT_BEGIN_NAMESPACE
 	class QTimer;
+	class QPainter;
 QT_END_NAMESPACE
 
 
@@ -147,6 +148,10 @@ private:
 	void ensureTimerBinded() const;
 	void onTimerStateChanged();
 	void onTimeoutEvent();
+	void drawText(double x, double y, double w, double h, Qt::Alignment flags, const QString &text);
+	void applyFontFactor(double factor);
+	double computeFontFactor(double w, double h, const QString &text) const;
+	QString timeDurationAsString(const TimeDuration &value) const;
 
 	// Private members
 	std::unique_ptr<sig::scoped_connection> _connection;
@@ -158,6 +163,10 @@ private:
 	bool         _displayTimeAfterTimeout  ;
 	bool         _displayBronsteinExtraInfo;
 	bool         _displayByoYomiExtraInfo  ;
+
+	// Temporary members used at rendering time
+	// (should not be used outside the `paintEvent` method).
+	QPainter *_painter;
 };
 
 #endif /* BITIMERWIDGET_H_ */
