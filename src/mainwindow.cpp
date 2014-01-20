@@ -22,14 +22,13 @@
 
 #include "mainwindow.h"
 #include "params.h"
-#include "dialwidget.h"
+#include "bitimerwidget.h"
 #include "keyboardhandler.h"
 #include "timecontroldialog.h"
 #include "namedialog.h"
 #include "preferencedialog.h"
 #include "debugdialog.h"
 #include <translation.h>
-#include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QToolBar>
 #include <QStatusBar>
@@ -87,15 +86,10 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	connect(actDebug, &QAction::triggered, this, &MainWindow::onDebugClicked);
 	connect(actAbout, &QAction::triggered, this, &MainWindow::onAboutClicked);
 
-	// Create the widgets
-	QHBoxLayout *dialLayout = new QHBoxLayout;
-	dialLayout->setSpacing(0);
-	for(auto it=Enum::cursor<Side>::first(); it.valid(); ++it) {
-		_dial[*it] = new DialWidget(this);
-		_dial[*it]->bindTimer(_biTimer, *it);
-		dialLayout->addWidget(_dial[*it], 1);
-	}
-	mainLayout->addLayout(dialLayout, 1);
+	// Bi-timer widget
+	_biTimerWidget = new BiTimerWidget(this);
+	_biTimerWidget->bindTimer(_biTimer);
+	mainLayout->addWidget(_biTimerWidget, 1);
 
 	// Status bar
 	_statusBar = statusBar();

@@ -91,11 +91,6 @@ public:
 	//TimeDuration time_bronstein(Side side, TimeDuration &bronstein_extra_delay) const; //TODO
 
 	/**
-	 * Check whether the timer corresponding to the given side is running or not.
-	 */
-	bool is_running(Side side) const { return _timer[side].mode()!=Timer::Mode::PAUSED; }
-
-	/**
 	 * Start the timer corresponding to side `side`.
 	 *
 	 * If `side` is already active, nothing happens. If the opposite timer is active,

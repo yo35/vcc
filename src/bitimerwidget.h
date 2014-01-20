@@ -20,8 +20,8 @@
  ******************************************************************************/
 
 
-#ifndef DIALWIDGET_H_
-#define DIALWIDGET_H_
+#ifndef BITIMERWIDGET_H_
+#define BITIMERWIDGET_H_
 
 #include <QWidget>
 #include <memory>
@@ -32,9 +32,9 @@ QT_END_NAMESPACE
 
 
 /**
- * Display one of the timers of a BiTimer object.
+ * Display a BiTimer object.
  */
-class DialWidget : public QWidget
+class BiTimerWidget : public QWidget
 {
 	Q_OBJECT
 
@@ -43,7 +43,7 @@ public:
 	/**
 	 * Constructor.
 	 */
-	DialWidget(QWidget *parent=0);
+	BiTimerWidget(QWidget *parent=0);
 
 	/**
 	 * Check whether a timer is binded to the widget or not.
@@ -57,15 +57,9 @@ public:
 	const BiTimer &biTimer() const { ensureTimerBinded(); return *_biTimer; }
 
 	/**
-	 * Return a side corresponding to the binded timer.
-	 * @throw std::invalid_argument If no timer is binded to the widget.
-	 */
-	Side side() const { ensureTimerBinded(); return _side; }
-
-	/**
 	 * Bind a timer to the widget.
 	 */
-	void bindTimer(const BiTimer &biTimer, Side side);
+	void bindTimer(const BiTimer &biTimer);
 
 	/**
 	 * Unbind the timer currently binded, if any.
@@ -97,8 +91,7 @@ private:
 	// Private members
 	std::unique_ptr<sig::scoped_connection> _connection;
 	const BiTimer                          *_biTimer   ;
-	Side                                    _side      ;
 	QTimer                                 *_timer     ;
 };
 
-#endif /* DIALWIDGET_H_ */
+#endif /* BITIMERWIDGET_H_ */

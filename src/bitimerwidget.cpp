@@ -20,24 +20,23 @@
  ******************************************************************************/
 
 
-#include "dialwidget.h"
+#include "bitimerwidget.h"
 #include <QPainter>
 #include <QTimer>
 
 
 // Constructor.
-DialWidget::DialWidget(QWidget *parent) :
-	QWidget(parent), _biTimer(nullptr), _side(Side::LEFT)
+BiTimerWidget::BiTimerWidget(QWidget *parent) : QWidget(parent), _biTimer(nullptr)
 {
 	_timer = new QTimer(this);
 	_timer->setInterval(100);
-	connect(_timer, &QTimer::timeout, this, &DialWidget::onTimeoutEvent);
+	connect(_timer, &QTimer::timeout, this, &BiTimerWidget::onTimeoutEvent);
 	_timer->start();
 }
 
 
 // Throw an exception if no timer is binded to the widget.
-void DialWidget::ensureTimerBinded() const
+void BiTimerWidget::ensureTimerBinded() const
 {
 	if(_biTimer==nullptr) {
 		throw std::invalid_argument("No timer is currently binded to the widget.");
@@ -46,30 +45,25 @@ void DialWidget::ensureTimerBinded() const
 
 
 // Bind a timer to the widget.
-void DialWidget::bindTimer(const BiTimer &biTimer, Side side)
+void BiTimerWidget::bindTimer(const BiTimer &biTimer)
 {
-	// If both the BiTimer object and the targeted side are unchanged, nothing to do.
+	// If both the BiTimer object is unchanged, nothing to do.
 	if(_biTimer==&biTimer) {
-		if(_side==side) {
-			return;
-		}
+		return;
 	}
 
-	// Otherwise, if the BiTimer object is different, perform the suitable connection/disconnection operations.
-	else {
-		auto rawConnection = biTimer.connect_state_changed(boost::bind(&DialWidget::onTimerStateChanged, this));
-		_connection.reset(new sig::scoped_connection(rawConnection));
-		_biTimer = &biTimer;
-	}
+	// Perform the suitable connection/disconnection operations.
+	auto rawConnection = biTimer.connect_state_changed(boost::bind(&BiTimerWidget::onTimerStateChanged, this));
+	_connection.reset(new sig::scoped_connection(rawConnection));
+	_biTimer = &biTimer;
 
-	// Copy the new side and refresh the widget.
-	_side = side;
+	// Refresh the widget.
 	update();
 }
 
 
 // Un-bind the timer currently binded, if any.
-void DialWidget::unbindTimer()
+void BiTimerWidget::unbindTimer()
 {
 	// Nothing to do if no timer is currently binded.
 	if(_biTimer==nullptr) {
@@ -84,12 +78,12 @@ void DialWidget::unbindTimer()
 
 
 // Size hints.
-QSize DialWidget::minimumSizeHint() const { return QSize(250, 200); }
-QSize DialWidget::sizeHint       () const { return QSize(400, 300); }
+QSize BiTimerWidget::minimumSizeHint() const { return QSize(250, 200); }
+QSize BiTimerWidget::sizeHint       () const { return QSize(400, 300); }
 
 
 // Widget rendering method.
-void DialWidget::paintEvent(QPaintEvent *)
+void BiTimerWidget::paintEvent(QPaintEvent *)
 {
 	// Create the painter object.
 	QPainter painter(this);
@@ -109,11 +103,11 @@ void DialWidget::paintEvent(QPaintEvent *)
 	}
 
 	// Background
-	painter.setBrush(_biTimer->active_side()==_side ? QColor(255,255,128) : Qt::white);
+	//painter.setBrush(_biTimer->active_side()==_side ? QColor(255,255,128) : Qt::white); //TODO
 	painter.drawRect(0, 0, width(), height());
 
 	// Current time
-	TimeDuration currentTime = _biTimer->time(_side);
+	TimeDuration currentTime = _biTimer->time(/* TODO _side */ Side::LEFT);
 	long seconds = to_seconds(currentTime);
 
 	// Draw the current time
@@ -126,16 +120,16 @@ void DialWidget::paintEvent(QPaintEvent *)
 
 
 // Handler for the timer state-change event.
-void DialWidget::onTimerStateChanged()
+void BiTimerWidget::onTimerStateChanged()
 {
 	update();
 }
 
 
 // Handler periodically called by the internal QTimer object.
-void DialWidget::onTimeoutEvent()
+void BiTimerWidget::onTimeoutEvent()
 {
-	if(_biTimer==nullptr || !_biTimer->is_running(_side)) {
+	if(_biTimer==nullptr || !_biTimer->is_active()) {
 		return;
 	}
 	update();

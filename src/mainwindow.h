@@ -29,7 +29,7 @@
 #include "bitimer.h"
 #include "shortcutmanager.h"
 class KeyboardHandler;
-class DialWidget;
+class BiTimerWidget;
 class DebugDialog;
 
 
@@ -81,9 +81,9 @@ private:
 	ResetConfirmation _resetConfirmation;
 
 	// Widgets
-	Enum::array<Side, DialWidget *> _dial;
-	QStatusBar *_statusBar;
-	DebugDialog *_debugDialog;
+	BiTimerWidget *_biTimerWidget;
+	QStatusBar    *_statusBar    ;
+	DebugDialog   *_debugDialog  ;
 };
 
 #endif /* MAINWINDOW_H_ */
