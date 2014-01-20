@@ -78,8 +78,8 @@ void BiTimerWidget::unbindTimer()
 
 
 // Size hints.
-QSize BiTimerWidget::minimumSizeHint() const { return QSize(250, 200); }
-QSize BiTimerWidget::sizeHint       () const { return QSize(400, 300); }
+QSize BiTimerWidget::minimumSizeHint() const { return QSize(500, 200); }
+QSize BiTimerWidget::sizeHint       () const { return QSize(800, 300); }
 
 
 // Widget rendering method.
@@ -102,9 +102,18 @@ void BiTimerWidget::paintEvent(QPaintEvent *)
 		return;
 	}
 
-	// Background
-	//painter.setBrush(_biTimer->active_side()==_side ? QColor(255,255,128) : Qt::white); //TODO
-	painter.drawRect(0, 0, width(), height());
+	// Define the left and right areas.
+	Enum::array<Side, int> x, w;
+	w[Side::LEFT ] = width()/2;
+	w[Side::RIGHT] = width() - w[Side::LEFT];
+	x[Side::LEFT ] = 0;
+	x[Side::RIGHT] = w[Side::LEFT];
+
+	// Background.
+	for(auto it=Enum::cursor<Side>::first(); it.valid(); ++it) {
+		painter.setBrush(_biTimer->active_side()==*it ? QColor(255,255,128) : Qt::white);
+		painter.drawRect(x[*it], 0, w[*it], height());
+	}
 
 	// Current time
 	TimeDuration currentTime = _biTimer->time(/* TODO _side */ Side::LEFT);
