@@ -31,7 +31,8 @@
 
 
 /**
- * TODO
+ * For each key (identified by its low-level scan-code), this object associate
+ * the index of the shortcuts that are triggered when it is pressed.
  */
 class ShortcutManager
 {
