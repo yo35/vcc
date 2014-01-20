@@ -94,9 +94,16 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	// Status bar
 	_statusBar = statusBar();
 
-	// Load the persistent parameters
+	// Load the time control
 	_biTimer.set_time_control(Params::get().time_control());
 	_statusBar->showMessage(QString::fromStdString(_biTimer.time_control().description()));
+
+	// Load the players' names
+	_biTimerWidget->setLabel(Side::LEFT , QString::fromStdString(Params::get().player_name(Side::LEFT )));
+	_biTimerWidget->setLabel(Side::RIGHT, QString::fromStdString(Params::get().player_name(Side::RIGHT)));
+	_biTimerWidget->setShowLabels(Params::get().show_names());
+
+	// Load the other persistent parameters
 	loadPersistentParameters();
 }
 
@@ -182,10 +189,18 @@ void MainWindow::onTCtrlClicked()
 void MainWindow::onNamesClicked()
 {
 	NameDialog dialog(this);
+	dialog.setName(Side::LEFT , _biTimerWidget->label(Side::LEFT ));
+	dialog.setName(Side::RIGHT, _biTimerWidget->label(Side::RIGHT));
+	dialog.setDisplayNames(_biTimerWidget->showLabels());
 	if(dialog.exec()!=QDialog::Accepted) {
 		return;
 	}
-	///TODO
+	_biTimerWidget->setLabel(Side::LEFT , dialog.name(Side::LEFT ));
+	_biTimerWidget->setLabel(Side::RIGHT, dialog.name(Side::RIGHT));
+	_biTimerWidget->setShowLabels(dialog.displayNames());
+	Params::get().set_player_name(Side::LEFT , _biTimerWidget->label(Side::LEFT ).toStdString());
+	Params::get().set_player_name(Side::RIGHT, _biTimerWidget->label(Side::RIGHT).toStdString());
+	Params::get().set_show_names(_biTimerWidget->showLabels());
 }
 
 
@@ -252,6 +267,12 @@ void MainWindow::loadPersistentParameters()
 
 	// Status bar
 	_statusBar->setVisible(Params::get().show_status_bar());
+
+	// Display options
+	_biTimerWidget->setDelayBeforeDisplaySeconds(Params::get().delay_before_display_seconds());
+	_biTimerWidget->setDisplayTimeAfterTimeout  (Params::get().display_time_after_timeout  ());
+	_biTimerWidget->setDisplayBronsteinExtraInfo(Params::get().display_bronstein_extra_info());
+	_biTimerWidget->setDisplayByoYomiExtraInfo  (Params::get().display_byo_yomi_extra_info ());
 }
 
 
