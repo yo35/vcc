@@ -68,6 +68,7 @@ private:
 
 	// Private functions
 	void refreshActivationState();
+	void switchNames();
 
 	// Private members
 	Enum::array<Side, QLineEdit *> _name     ;

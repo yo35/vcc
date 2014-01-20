@@ -54,7 +54,8 @@ NameDialog::NameDialog(QWidget *parent) : QDialog(parent)
 	layout->addLayout(ctrlLayout);
 	ctrlLayout->addWidget(_switch);
 	ctrlLayout->addWidget(_showNames, 1);
-	connect(_showNames, &QCheckBox::toggled, this, &NameDialog::refreshActivationState);
+	connect(_switch   , &QPushButton::clicked, this, &NameDialog::switchNames);
+	connect(_showNames, &QCheckBox::toggled  , this, &NameDialog::refreshActivationState);
 	refreshActivationState();
 
 	// Validation buttons
@@ -94,12 +95,20 @@ void NameDialog::setDisplayNames(bool value)
 }
 
 
-// Activate/dis-activate the name fields and the switch button when names are
-// respectively shown/hidden.
+// Activate/dis-activate the name fields and the switch button when names are respectively shown/hidden.
 void NameDialog::refreshActivationState()
 {
 	bool enabled = _showNames->isChecked();
 	_name[Side::LEFT ]->setEnabled(enabled);
 	_name[Side::RIGHT]->setEnabled(enabled);
 	_switch->setEnabled(enabled);
+}
+
+
+// Switch the names.
+void NameDialog::switchNames()
+{
+	QString buffer = _name[Side::LEFT]->text();
+	_name[Side::LEFT ]->setText(_name[Side::RIGHT]->text());
+	_name[Side::RIGHT]->setText(buffer);
 }
