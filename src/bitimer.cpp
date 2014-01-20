@@ -53,7 +53,7 @@ BiTimer::TimeInfo BiTimer::detailed_time(Side side) const
 		TimeDuration increment = _time_control.increment(side);
 		int          tbp       = _time_control.byo_periods(side);
 		if(increment>TimeDuration::zero()) {
-			int rbp = std::max(tbp, static_cast<int>(tt/increment));
+			int rbp = std::min(tbp, static_cast<int>(tt/increment));
 			return TimeInfo::makeByoYomi(tt, tt-rbp*increment, rbp, tbp);
 		}
 		else {
