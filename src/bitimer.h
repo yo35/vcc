@@ -37,6 +37,48 @@ class BiTimer
 {
 public:
 
+
+	/**
+	 * Structure used to return detailed information about the time of a given side.
+	 */
+	struct TimeInfo
+	{
+		TimeDuration total_time           ; //!< Total remaining time.
+		TimeDuration main_time            ; //!< Equal to the total time, except in Bronstein and byo-yomi modes.
+		TimeDuration bronstein_time       ; //!< In Bronstein mode, remaining time before the main time starts to decrease.
+		int          remaining_byo_periods; //!< In byo-yomi mode, number of remaining byo-periods (apart from the current one).
+		int          total_byo_periods    ; //!< In byo-yomi mode, total number of byo-periods.
+
+		/**
+		 * Factory method for "standard" time control modes.
+		 */
+		static TimeInfo make(const TimeDuration &tt) { return TimeInfo(tt, TimeDuration::zero(), TimeDuration::zero(), 0, 0); }
+
+		/**
+		 * Factory method for Bronstein mode.
+		 */
+		static TimeInfo makeBronstein(const TimeDuration &tt, const TimeDuration &mt, const TimeDuration &bt)
+		{
+			return TimeInfo(tt, mt, bt, 0, 0);
+		}
+
+		/**
+		 * Factory method for byo-yomi mode.
+		 */
+		static TimeInfo makeByoYomi(const TimeDuration &tt, const TimeDuration &mt, int rbp, int tbp)
+		{
+			return TimeInfo(tt, mt, TimeDuration::zero(), rbp, tbp);
+		}
+
+	private:
+
+		// Constructor.
+		explicit TimeInfo(const TimeDuration &tt, const TimeDuration &mt, const TimeDuration &bt, int rbp, int tbp) :
+			total_time(tt), main_time(mt), bronstein_time(bt), remaining_byo_periods(rbp), total_byo_periods(tbp)
+		{}
+	};
+
+
 	/**
 	 * Constructor.
 	 */
@@ -85,10 +127,9 @@ public:
 	TimeDuration time(Side side) const { return _timer[side].time(); }
 
 	/**
-	 * Current time, with additional information about the bronstein delay
-	 * \throw RuntimeException If time_control().mode()!=BRONSTEIN
+	 * Current time of the timer on side `side`, with additional information.
 	 */
-	//TimeDuration time_bronstein(Side side, TimeDuration &bronstein_extra_delay) const; //TODO
+	TimeInfo detailed_time(Side side) const;
 
 	/**
 	 * Start the timer corresponding to side `side`.

@@ -30,22 +30,42 @@ void BiTimer::set_time_control(TimeControl time_control)
 	reset_timers();
 }
 
-#if 0
 
-/**
- * Current time, with additional information about the bronstein delay
- */
-TimeDuration BiTimer::time_bronstein(Side side, TimeDuration &bronstein_extra_delay) const
+// Current time of the timer on side `side`, with additional information.
+BiTimer::TimeInfo BiTimer::detailed_time(Side side) const
 {
-	if(m_time_control.mode()!=TimeControl::BRONSTEIN) {
-		throw RuntimeException("No Bronstein delay information with the current time control mode");
-	}
-	TimeDuration retval = m_timer[side].time();
-	bronstein_extra_delay = retval - m_bronstein_limit[side] + m_time_control.increment(side);
-	return retval;
-}
+	TimeDuration      tt   = _timer[side].time();
+	TimeControl::Mode mode = _time_control.mode();
 
-#endif
+	// Negative remaining time -> never add any additional information
+	if(tt<TimeDuration::zero()) {
+		return TimeInfo::make(tt);
+	}
+
+	// Bronstein mode
+	else if(mode==TimeControl::Mode::BRONSTEIN) {
+		TimeDuration mt = _bronstein_limit[side] - _time_control.increment(side);
+		return mt<=tt ? TimeInfo::makeBronstein(tt, mt, tt-mt) : TimeInfo::makeBronstein(tt, tt, TimeDuration::zero());
+	}
+
+	// Byo-yomi mode
+	else if(mode==TimeControl::Mode::BYO_YOMI) {
+		TimeDuration increment = _time_control.increment(side);
+		int          tbp       = _time_control.byo_periods(side);
+		if(increment>TimeDuration::zero()) {
+			int rbp = std::max(tbp, static_cast<int>(tt/increment));
+			return TimeInfo::makeByoYomi(tt, tt-rbp*increment, rbp, tbp);
+		}
+		else {
+			return TimeInfo::makeByoYomi(tt, tt, tbp, tbp);
+		}
+	}
+
+	// Default case
+	else {
+		return TimeInfo::make(tt);
+	}
+}
 
 
 // Start a timer.
