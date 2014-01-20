@@ -52,12 +52,13 @@ BiTimer::TimeInfo BiTimer::detailed_time(Side side) const
 	else if(mode==TimeControl::Mode::BYO_YOMI) {
 		TimeDuration increment = _time_control.increment(side);
 		int          tbp       = _time_control.byo_periods(side);
-		if(increment>TimeDuration::zero()) {
-			int rbp = std::min(tbp, static_cast<int>(tt/increment));
-			return TimeInfo::makeByoYomi(tt, tt-rbp*increment, rbp, tbp);
+		if(increment>TimeDuration::zero() && tbp>0 && increment*tbp>=tt) {
+			TimeDuration delta = increment*tbp - tt;
+			int          cbp   = static_cast<int>(delta/increment) + 1;
+			return TimeInfo::makeByoYomi(tt, tt-increment*(tbp - cbp), cbp, tbp);
 		}
 		else {
-			return TimeInfo::makeByoYomi(tt, tt, tbp, tbp);
+			return TimeInfo::makeByoYomi(tt, tt-increment*tbp, 0, tbp);
 		}
 	}
 
@@ -135,12 +136,11 @@ void BiTimer::change_timer()
 			// Byo-yomi => detect if the player is currently in one of the final byo-periods,
 			// and adjust the remaining time if necessary
 			else if(current_mode==TimeControl::Mode::BYO_YOMI) {
-				TimeDuration increment = _time_control.increment(active_side);
-				if(increment>TimeDuration::zero()) {
-					int current_byo_period = current_time/increment;
-					if(current_byo_period < _time_control.byo_periods(active_side)) {
-						new_time = increment * (current_byo_period+1);
-					}
+				TimeDuration increment   = _time_control.increment(active_side);
+				int          byo_periods = _time_control.byo_periods(active_side);
+				if(increment>TimeDuration::zero() && byo_periods>0 && increment*byo_periods>=current_time) {
+					int current_byo_period = (increment*byo_periods - current_time) / increment;
+					new_time = increment * (byo_periods - current_byo_period);
 				}
 			}
 

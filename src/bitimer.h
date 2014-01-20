@@ -43,11 +43,11 @@ public:
 	 */
 	struct TimeInfo
 	{
-		TimeDuration total_time           ; //!< Total remaining time.
-		TimeDuration main_time            ; //!< Equal to the total time, except in Bronstein and byo-yomi modes.
-		TimeDuration bronstein_time       ; //!< In Bronstein mode, remaining time before the main time starts to decrease.
-		int          remaining_byo_periods; //!< In byo-yomi mode, number of remaining byo-periods (apart from the current one).
-		int          total_byo_periods    ; //!< In byo-yomi mode, total number of byo-periods.
+		TimeDuration total_time        ; //!< Total remaining time.
+		TimeDuration main_time         ; //!< Equal to the total time, except in Bronstein and byo-yomi modes.
+		TimeDuration bronstein_time    ; //!< In Bronstein mode, remaining time before the main time starts to decrease.
+		int          current_byo_period; //!< In byo-yomi mode, number of the current byo-period (0 for the main-time period).
+		int          total_byo_periods ; //!< In byo-yomi mode, total number of byo-periods.
 
 		/**
 		 * Factory method for "standard" time control modes.
@@ -65,16 +65,16 @@ public:
 		/**
 		 * Factory method for byo-yomi mode.
 		 */
-		static TimeInfo makeByoYomi(const TimeDuration &tt, const TimeDuration &mt, int rbp, int tbp)
+		static TimeInfo makeByoYomi(const TimeDuration &tt, const TimeDuration &mt, int cbp, int tbp)
 		{
-			return TimeInfo(tt, mt, TimeDuration::zero(), rbp, tbp);
+			return TimeInfo(tt, mt, TimeDuration::zero(), cbp, tbp);
 		}
 
 	private:
 
 		// Constructor.
-		explicit TimeInfo(const TimeDuration &tt, const TimeDuration &mt, const TimeDuration &bt, int rbp, int tbp) :
-			total_time(tt), main_time(mt), bronstein_time(bt), remaining_byo_periods(rbp), total_byo_periods(tbp)
+		explicit TimeInfo(const TimeDuration &tt, const TimeDuration &mt, const TimeDuration &bt, int cbp, int tbp) :
+			total_time(tt), main_time(mt), bronstein_time(bt), current_byo_period(cbp), total_byo_periods(tbp)
 		{}
 	};
 
