@@ -67,6 +67,66 @@ public:
 	void unbindTimer();
 
 	/**
+	 * Left or right label (typically the name of the corresponding player).
+	 */
+	const QString &label(Side side) const { return _label[side]; }
+
+	/**
+	 * Set the left or right label.
+	 */
+	void setLabel(Side side, const QString &value);
+
+	/**
+	 * Whether the labels are displayed or not.
+	 */
+	bool showLabels() const { return _showLabels; }
+
+	/**
+	 * Set whether the labels are displayed or not.
+	 */
+	void setShowLabels(bool value);
+
+	/**
+	 * Minimal remaining time before seconds is displayed.
+	 */
+	const TimeDuration &delayBeforeDisplaySeconds() const { return _delayBeforeDisplaySeconds; }
+
+	/**
+	 * Set the minimal remaining time before seconds is displayed.
+	 */
+	void setDelayBeforeDisplaySeconds(const TimeDuration &value);
+
+	/**
+	 * Whether the time should be displayed after timeout.
+	 */
+	bool displayTimeAfterTimeout() const { return _displayTimeAfterTimeout; }
+
+	/**
+	 * Set whether the time should be displayed after timeout.
+	 */
+	void setDisplayTimeAfterTimeout(bool value);
+
+	/**
+	 * Whether extra-information is displayed in Bronstein-mode.
+	 */
+	bool displayBronsteinExtraInfo() const { return _displayBronsteinExtraInfo; }
+
+	/**
+	 * Set whether extra-information is displayed in Bronstein-mode.
+	 */
+	void setDisplayBronsteinExtraInfo(bool value);
+
+	/**
+	 * Whether extra-information is displayed in byo-yomi-mode.
+	 */
+	bool displayByoYomiExtraInfo() const { return _displayByoYomiExtraInfo; }
+
+	/**
+	 * Set whether extra-information is displayed in byo-yomi-mode.
+	 */
+	void setDisplayByoYomiExtraInfo(bool value);
+
+	/**
 	 * @name Size hint methods.
 	 * @{
 	 */
@@ -90,8 +150,14 @@ private:
 
 	// Private members
 	std::unique_ptr<sig::scoped_connection> _connection;
-	const BiTimer                          *_biTimer   ;
 	QTimer                                 *_timer     ;
+	const BiTimer                          *_biTimer   ;
+	Enum::array<Side, QString>              _label     ;
+	bool         _showLabels               ;
+	TimeDuration _delayBeforeDisplaySeconds;
+	bool         _displayTimeAfterTimeout  ;
+	bool         _displayBronsteinExtraInfo;
+	bool         _displayByoYomiExtraInfo  ;
 };
 
 #endif /* BITIMERWIDGET_H_ */

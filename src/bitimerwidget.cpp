@@ -26,7 +26,9 @@
 
 
 // Constructor.
-BiTimerWidget::BiTimerWidget(QWidget *parent) : QWidget(parent), _biTimer(nullptr)
+BiTimerWidget::BiTimerWidget(QWidget *parent) : QWidget(parent), _biTimer(nullptr),
+	_showLabels(false),
+	_displayTimeAfterTimeout(true), _displayBronsteinExtraInfo(true), _displayByoYomiExtraInfo(true)
 {
 	_timer = new QTimer(this);
 	_timer->setInterval(100);
@@ -73,6 +75,54 @@ void BiTimerWidget::unbindTimer()
 	// Otherwise, disconnect the timer and refresh the widget.
 	_connection.reset();
 	_biTimer = nullptr;
+	update();
+}
+
+
+// Set the left or right label.
+void BiTimerWidget::setLabel(Side side, const QString &value)
+{
+	_label[side] = value;
+	update();
+}
+
+
+// Set whether the labels are displayed or not.
+void BiTimerWidget::setShowLabels(bool value)
+{
+	_showLabels = value;
+	update();
+}
+
+
+// Set the minimal remaining time before seconds is displayed.
+void BiTimerWidget::setDelayBeforeDisplaySeconds(const TimeDuration &value)
+{
+	_delayBeforeDisplaySeconds = value;
+	update();
+}
+
+
+// Set whether the time should be displayed after timeout.
+void BiTimerWidget::setDisplayTimeAfterTimeout(bool value)
+{
+	_displayTimeAfterTimeout = value;
+	update();
+}
+
+
+// Set whether extra-information is displayed in Bronstein-mode.
+void BiTimerWidget::setDisplayBronsteinExtraInfo(bool value)
+{
+	_displayBronsteinExtraInfo = value;
+	update();
+}
+
+
+// Set whether extra-information is displayed in byo-yomi-mode.
+void BiTimerWidget::setDisplayByoYomiExtraInfo(bool value)
+{
+	_displayByoYomiExtraInfo = value;
 	update();
 }
 
