@@ -64,6 +64,8 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	QAction *actPause = toolBar->addAction(fetchIcon("pause", false), _("Pause"         ));
 	QAction *actFlip  = toolBar->addAction(fetchIcon("flip" , false), _("Switch"        ));
 	toolBar->addSeparator();
+	QAction *actFlScr = toolBar->addAction(fetchIcon("view-fullscreen"       ), _("Full screen"));
+	toolBar->addSeparator();
 	QAction *actTCtrl = toolBar->addAction(fetchIcon("tctrl", false), _("Time control"  ));
 	QAction *actNames = toolBar->addAction(fetchIcon("names", false), _("Players' names"));
 	toolBar->addSeparator();
@@ -83,11 +85,13 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	connect(actReset, &QAction::triggered, this, &MainWindow::onResetClicked);
 	connect(actPause, &QAction::triggered, this, &MainWindow::onPauseClicked);
 	connect(actTCtrl, &QAction::triggered, this, &MainWindow::onTCtrlClicked);
+	connect(actFlScr, &QAction::triggered, this, &MainWindow::onFlScrClicked);
 	connect(actNames, &QAction::triggered, this, &MainWindow::onNamesClicked);
 	connect(actPrefs, &QAction::triggered, this, &MainWindow::onPrefsClicked);
 	connect(actHelp , &QAction::triggered, this, &MainWindow::onHelpClicked );
 	connect(actDebug, &QAction::triggered, this, &MainWindow::onDebugClicked);
 	connect(actAbout, &QAction::triggered, this, &MainWindow::onAboutClicked);
+	actFlScr->setCheckable(true);
 
 	// Bi-timer widget
 	_biTimerWidget = new BiTimerWidget(this);
@@ -171,6 +175,23 @@ void MainWindow::onResetClicked()
 void MainWindow::onPauseClicked()
 {
 	_biTimer.stop_timer();
+}
+
+
+// Full-screen button handler.
+void MainWindow::onFlScrClicked()
+{
+	// If a previous "normal" state exist, leave the full-screen mode.
+	if(_previousState) {
+		setWindowState(*_previousState);
+		_previousState.reset();
+	}
+
+	// Otherwise, save the current "normal" state, and enter the full-screen mode.
+	else {
+		_previousState = windowState();
+		setWindowState(Qt::WindowFullScreen);
+	}
 }
 
 

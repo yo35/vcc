@@ -24,6 +24,7 @@
 #define MAINWINDOW_H_
 
 #include <QMainWindow>
+#include <boost/optional.hpp>
 #include "options.h"
 #include "keys.h"
 #include "bitimer.h"
@@ -65,6 +66,7 @@ private:
 	void onKeyPressed(ScanCode scanCode);
 	void onResetClicked();
 	void onPauseClicked();
+	void onFlScrClicked();
 	void onTCtrlClicked();
 	void onNamesClicked();
 	void onPrefsClicked();
@@ -75,10 +77,11 @@ private:
 	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
 
 	// Private members
-	KeyboardHandler  *_keyboardHandler  ;
-	ShortcutManager   _shortcutManager  ;
-	BiTimer           _biTimer          ;
-	ResetConfirmation _resetConfirmation;
+	KeyboardHandler                  *_keyboardHandler  ;
+	ShortcutManager                   _shortcutManager  ;
+	BiTimer                           _biTimer          ;
+	ResetConfirmation                 _resetConfirmation;
+	boost::optional<Qt::WindowStates> _previousState    ;
 
 	// Widgets
 	BiTimerWidget *_biTimerWidget;
