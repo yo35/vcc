@@ -77,11 +77,10 @@ private:
 	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
 
 	// Private members
-	KeyboardHandler                  *_keyboardHandler  ;
-	ShortcutManager                   _shortcutManager  ;
-	BiTimer                           _biTimer          ;
-	ResetConfirmation                 _resetConfirmation;
-	boost::optional<Qt::WindowStates> _previousState    ;
+	KeyboardHandler  *_keyboardHandler  ;
+	ShortcutManager   _shortcutManager  ;
+	BiTimer           _biTimer          ;
+	ResetConfirmation _resetConfirmation;
 
 	// Widgets
 	BiTimerWidget *_biTimerWidget;

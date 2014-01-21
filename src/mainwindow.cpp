@@ -64,7 +64,7 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	QAction *actPause = toolBar->addAction(fetchIcon("pause", false), _("Pause"         ));
 	QAction *actFlip  = toolBar->addAction(fetchIcon("flip" , false), _("Switch"        ));
 	toolBar->addSeparator();
-	QAction *actFlScr = toolBar->addAction(fetchIcon("view-fullscreen"       ), _("Full screen"));
+	QAction *actFlScr = toolBar->addAction(fetchIcon("flscr", false), _("Full screen"   ));
 	toolBar->addSeparator();
 	QAction *actTCtrl = toolBar->addAction(fetchIcon("tctrl", false), _("Time control"  ));
 	QAction *actNames = toolBar->addAction(fetchIcon("names", false), _("Players' names"));
@@ -76,6 +76,7 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	actReset->setToolTip(_("Reset the clock"                                ));
 	actPause->setToolTip(_("Pause the clock"                                ));
 	actFlip ->setToolTip(_("Switch the players and the time control options"));
+	actFlScr->setToolTip(_("Full screen on/off"                             ));
 	actTCtrl->setToolTip(_("Change the current time control"                ));
 	actNames->setToolTip(_("Edit the names of the players"                  ));
 	actPrefs->setToolTip(_("Set the configuration and the preferences"      ));
@@ -181,7 +182,7 @@ void MainWindow::onPauseClicked()
 // Full-screen button handler.
 void MainWindow::onFlScrClicked()
 {
-	// If a previous "normal" state exist, leave the full-screen mode.
+	/*// If a previous "normal" state exist, leave the full-screen mode.
 	if(_previousState) {
 		setWindowState(*_previousState);
 		_previousState.reset();
@@ -191,7 +192,8 @@ void MainWindow::onFlScrClicked()
 	else {
 		_previousState = windowState();
 		setWindowState(Qt::WindowFullScreen);
-	}
+	}*/
+	///TODO: implement full-screen mode
 }
 
 
