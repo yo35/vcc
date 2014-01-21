@@ -50,14 +50,6 @@ public:
 	Timer() : _mode(Mode::PAUSED) {}
 
 	/**
-	 * @name Copy is not allowed.
-	 * @{
-	 */
-	Timer(const Timer &op) = delete;
-	Timer &operator=(const Timer &op) = delete;
-	/**@} */
-
-	/**
 	 * Timer behavior.
 	 */
 	Mode mode() const { return _mode; }
