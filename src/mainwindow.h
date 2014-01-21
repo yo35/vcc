@@ -82,9 +82,11 @@ private:
 	ShortcutManager   _shortcutManager  ;
 	BiTimer           _biTimer          ;
 	ResetConfirmation _resetConfirmation;
+	Qt::WindowStates  _previousState    ;
 
 	// Widgets
 	BiTimerWidget *_biTimerWidget;
+	QToolBar      *_toolBar      ;
 	QStatusBar    *_statusBar    ;
 	DebugDialog   *_debugDialog  ;
 };

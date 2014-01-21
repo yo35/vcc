@@ -50,27 +50,27 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	_keyboardHandler = new KeyboardHandler(this);
 	connect(_keyboardHandler, &KeyboardHandler::keyPressed, this, &MainWindow::onKeyPressed);
 
-	// Build the toolbar.
-	QToolBar *toolBar = addToolBar(_("Main tool-bar"));
-	toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
-	toolBar->setFloatable(false);
-	toolBar->setMovable(false);
-	QAction *actReset = toolBar->addAction(fetchIcon("reset", false), _("Reset"         ));
-	QAction *actPause = toolBar->addAction(fetchIcon("pause", false), _("Pause"         ));
-	QAction *actSwap  = toolBar->addAction(fetchIcon("swap" , false), _("Swap sides"    ));
-	toolBar->addSeparator();
-	QAction *actFlScr = toolBar->addAction(fetchIcon("flscr", false), _("Full screen"   ));
+	// Build the tool-bar.
+	_toolBar = addToolBar(_("Main tool-bar"));
+	_toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
+	_toolBar->setFloatable(false);
+	_toolBar->setMovable(false);
+	QAction *actReset = _toolBar->addAction(fetchIcon("reset", false), _("Reset"         ));
+	QAction *actPause = _toolBar->addAction(fetchIcon("pause", false), _("Pause"         ));
+	QAction *actSwap  = _toolBar->addAction(fetchIcon("swap" , false), _("Swap sides"    ));
+	_toolBar->addSeparator();
+	QAction *actFlScr = _toolBar->addAction(fetchIcon("flscr", false), _("Full screen"   ));
 	actFlScr->setCheckable(true);
-	toolBar->addSeparator();
-	QAction *actTCtrl = toolBar->addAction(fetchIcon("tctrl", false), _("Time control"  ));
-	QAction *actNames = toolBar->addAction(fetchIcon("names", false), _("Players' names"));
-	toolBar->addSeparator();
+	_toolBar->addSeparator();
+	QAction *actTCtrl = _toolBar->addAction(fetchIcon("tctrl", false), _("Time control"  ));
+	QAction *actNames = _toolBar->addAction(fetchIcon("names", false), _("Players' names"));
+	_toolBar->addSeparator();
 	QToolButton *btnMenu = new QToolButton(this);
 	btnMenu->setText(_("Menu") + " ");
 	btnMenu->setAutoRaise(true);
 	btnMenu->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
 	btnMenu->setFocusPolicy(Qt::NoFocus);
-	toolBar->addWidget(btnMenu);
+	_toolBar->addWidget(btnMenu);
 	actReset->setToolTip(_("Reset the clock"                              ));
 	actPause->setToolTip(_("Pause the clock"                              ));
 	actSwap ->setToolTip(_("Swap the players and the time control options"));
@@ -205,17 +205,17 @@ void MainWindow::onSwapClicked()
 // Full-screen button handler.
 void MainWindow::onFlScrClicked()
 {
-	/*// If a previous "normal" state exist, leave the full-screen mode.
-	if(_previousState) {
-		setWindowState(*_previousState);
-		_previousState.reset();
+	// If the window is in full-screen mode, leave it.
+	if(isFullScreen()) {
+		setWindowState(_previousState);
 	}
 
-	// Otherwise, save the current "normal" state, and enter the full-screen mode.
+	// Otherwise, save the current state, and enter the full-screen mode.
 	else {
 		_previousState = windowState();
 		setWindowState(Qt::WindowFullScreen);
-	}*/
+	}
+
 	///TODO: implement full-screen mode
 }
 
