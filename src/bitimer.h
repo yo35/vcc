@@ -154,6 +154,11 @@ public:
 	 */
 	void reset_timers();
 
+	/**
+	 * Swap the sides. The active side may change if any.
+	 */
+	void swap_sides();
+
 private:
 
 	// Private functions

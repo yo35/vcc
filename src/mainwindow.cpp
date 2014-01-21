@@ -161,8 +161,11 @@ void MainWindow::onKeyPressed(ScanCode scanCode)
 // Reset button handler.
 void MainWindow::onResetClicked()
 {
-	if(!confirmStopGame(_("Stop this game?"), _("Do you really want to start a new game?"))) {
-		return;
+	if(_resetConfirmation==ResetConfirmation::ALWAYS || (_resetConfirmation==ResetConfirmation::IF_ACTIVE && _biTimer.is_active())) {
+		auto response = QMessageBox::question(this, _("Stop this game?"), _("Do you really want to start a new game?"));
+		if(response!=QMessageBox::Yes) {
+			return;
+		}
 	}
 	_biTimer.reset_timers();
 }
@@ -178,11 +181,17 @@ void MainWindow::onPauseClicked()
 // Swap-sides button handler.
 void MainWindow::onSwapClicked()
 {
-	if(!confirmStopGame(_("Stop this game?"), _("Do you really want to start a new game and swap the sides?"))) {
-		return;
-	}
-	_biTimer.reset_timers();
-	///TODO: implement swap
+	// Swap the time control options.
+	_biTimer.swap_sides();
+	_statusBar->showMessage(QString::fromStdString(_biTimer.time_control().description()));
+	Params::get().set_time_control(_biTimer.time_control());
+
+	// Swap the players' names.
+	QString name_buffer = _biTimerWidget->label(Side::LEFT);
+	_biTimerWidget->setLabel(Side::LEFT , _biTimerWidget->label(Side::RIGHT));
+	_biTimerWidget->setLabel(Side::RIGHT, name_buffer);
+	Params::get().set_player_name(Side::LEFT , _biTimerWidget->label(Side::LEFT ).toStdString());
+	Params::get().set_player_name(Side::RIGHT, _biTimerWidget->label(Side::RIGHT).toStdString());
 }
 
 
@@ -283,22 +292,6 @@ void MainWindow::onAboutClicked()
 {
 	///TODO: customize the about dialog.
 	QMessageBox::about(this, "About VCC", "A simple and free chess clock software");
-}
-
-
-// Ask the user to confirm that he/she wants to reset the clock. Depending on the
-// options, the confirmation may be automatic (no dialog is shown).
-bool MainWindow::confirmStopGame(const QString &title, const QString &message)
-{
-	if(_resetConfirmation==ResetConfirmation::ALWAYS ||
-		(_resetConfirmation==ResetConfirmation::IF_ACTIVE && _biTimer.is_active()))
-	{
-		auto response = QMessageBox::question(this, title, message);
-		return response==QMessageBox::Yes;
-	}
-	else {
-		return true;
-	}
 }
 
 

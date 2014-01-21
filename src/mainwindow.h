@@ -74,7 +74,6 @@ private:
 	void onHelpClicked ();
 	void onDebugClicked();
 	void onAboutClicked();
-	bool confirmStopGame(const QString &title, const QString &message);
 	void loadPersistentParameters();
 	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
 

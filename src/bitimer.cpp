@@ -21,6 +21,7 @@
 
 
 #include "bitimer.h"
+#include <algorithm>
 
 
 // Change the current time control, and resets the timers.
@@ -203,4 +204,22 @@ TimeDuration BiTimer::initial_time(Side side) const
 		retval += _time_control.increment(side) * _time_control.byo_periods(side);
 	}
 	return retval;
+}
+
+
+// Swap the sides. The active side may change if any.
+void BiTimer::swap_sides()
+{
+	// Swap the time-control parameters and the timers
+	_time_control.swap_sides();
+	std::swap(_timer          [Side::LEFT], _timer          [Side::RIGHT]);
+	std::swap(_bronstein_limit[Side::LEFT], _bronstein_limit[Side::RIGHT]);
+
+	// Invert the active side if necessary.
+	if(_active_side) {
+		_active_side = flip(*_active_side);
+	}
+
+	// Fire the state-changed signal.
+	_signal_state_changed();
 }
