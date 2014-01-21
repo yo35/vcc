@@ -57,8 +57,9 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 
 	// Toolbar
 	QToolBar *toolBar = addToolBar(_("Main tool-bar"));
+	toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
 	toolBar->setFloatable(false);
-	//toolBar->setMovable(false);
+	toolBar->setMovable(false);
 	QAction *actReset = toolBar->addAction(fetchIcon("reset", false), _("Reset"         ));
 	QAction *actPause = toolBar->addAction(fetchIcon("pause", false), _("Pause"         ));
 	QAction *actFlip  = toolBar->addAction(fetchIcon("flip" , false), _("Switch"        ));
