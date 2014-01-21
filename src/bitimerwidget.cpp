@@ -223,13 +223,33 @@ void BiTimerWidget::paintEvent(QPaintEvent *)
 		// Text rendering.
 		_painter->setPen(textColor[*it]);
 		if(extraText.isEmpty()) {
-			drawText(x[*it]+w[*it]*0.1, y+h*0.1, w[*it]*0.8, h*0.8, Qt::AlignCenter, mainText);
+			drawText(x[*it]+w[*it]*0.1, y+h*0.15, w[*it]*0.8, h*0.7, Qt::AlignCenter, mainText);
 		}
 		else {
 			double        xExtraText    = x[*it] + (*it==Side::LEFT ? 15 : w[*it]*0.4-15);
 			Qt::Alignment flagExtraText = Qt::AlignVCenter | (*it==Side::LEFT ? Qt::AlignLeft : Qt::AlignRight);
 			drawText(x[*it]+w[*it]*0.1, y+h*0.2    , w[*it]*0.8, h*0.6 , Qt::AlignCenter, mainText );
 			drawText(xExtraText       , y+h*0.93-15, w[*it]*0.6, h*0.07, flagExtraText  , extraText);
+		}
+	}
+
+	// Name rendering.
+	if(_showLabels)
+	{
+		// Compute and apply the font factor to use.
+		double fontFactor = std::min(
+			computeFontFactor(w[Side::LEFT ]*0.9, h*0.1, _label[Side::LEFT ]),
+			computeFontFactor(w[Side::RIGHT]*0.9, h*0.1, _label[Side::RIGHT])
+		);
+		applyFontFactor(fontFactor);
+
+		// Text rendering.
+		for(auto it=Enum::cursor<Side>::first(); it.valid(); ++it) {
+			if(_label[*it].isEmpty()) {
+				continue;
+			}
+			_painter->setPen(textColor[*it]);
+			_painter->drawText(QRectF(x[*it]+w[*it]*0.05, y+15, w[*it]*0.9, h*0.1), Qt::AlignCenter, _label[*it]);
 		}
 	}
 }
