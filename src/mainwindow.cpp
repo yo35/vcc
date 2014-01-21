@@ -279,18 +279,31 @@ void MainWindow::onDebugClicked()
 // Help button handler.
 void MainWindow::onHelpClicked()
 {
-	QMessageBox::information(this, _("Help"), _(
-		"To start playing and then change the running side of the clock, just push "
-		"some keys on the keyboard. The left player have to push some key on the left "
-		"side of the keyboard, the right player on the right side.\n"
-		"\n"
-		"If it does not work, it might be due to a misdetection of your keyboard "
-		"layout; you can check it and correct it through the \"Preferences\" dialog. "
-		"If your actual keyboard layout is not available among those proposed by "
-		"VCC, you should select \"Default QWERTY\" or one of the default layouts that "
-		"suits good to your keyboard. Thus, only the A-Z keys will be used by VCC, "
-		"but the software will be usable anyway."
+	QString link = QString("<a href=\"%1\">%1</a>").arg(_(
+		"http://en.wikipedia.org/wiki/Time_control"
 	));
+
+	QString message;
+	message += "<p>" + QString(_(
+		"To start playing and then change the running side of the clock, "
+		"just press some keys on the keyboard. "
+		"The left player must press keys on the left side of the keyboard, "
+		"the right player on the right side. "
+		"The role of each key can be edited in the \"%1\" dialog, "
+		"available through the menu \"%2\" &gt; \"%1\"."
+	)).arg(_("Preferences")).arg(_("Menu")) + "</p>";
+	message += "<p>" + _(
+		"Most tool-bar buttons and dialog fields have tool-tips "
+		"to give a short description of their respective roles. "
+		"To show the tool-tip, just place the mouse cursor over the button or the field "
+		"you want to be explained, and wait a few seconds."
+	) + "</p>";
+	message += "<p>" + QString(_(
+		"General description of time control systems and rules can be found on the Internet, "
+		"for instance: %1."
+	)).arg(link) + "</p>";
+
+	QMessageBox::information(this, _("Help"), message);
 }
 
 
