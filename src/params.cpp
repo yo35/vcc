@@ -118,6 +118,7 @@ const std::string &Params::keyboard_index_file()
 // Private constructor.
 Params::Params() :
 	_app_short_name(APP_SHORT_NAME), _app_name(APP_NAME), _app_full_name(APP_FULL_NAME),
+	_app_version(APP_VERSION_MAJOR, APP_VERSION_MINOR, APP_VERSION_PATCH),
 	_root(nullptr), _ptree_loaded(false), _ptree_saved(true),
 	_keyboard_index_loaded(false)
 {}

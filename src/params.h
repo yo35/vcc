@@ -35,6 +35,7 @@
 #include "timecontrol.h"
 #include "keyboardmap.h"
 #include "shortcutmap.h"
+#include "versionnumber.h"
 
 
 /**
@@ -80,9 +81,10 @@ public:
 	 * @name Application-level read-only properties.
 	 * @{
 	 */
-	const std::string &app_short_name() { return _app_short_name; } //!< Application short name.
-	const std::string &app_name      () { return _app_name      ; } //!< Application name (without spaces).
-	const std::string &app_full_name () { return _app_full_name ; } //!< Application full name.
+	const std::string   &app_short_name() { return _app_short_name; } //!< Application short name.
+	const std::string   &app_name      () { return _app_name      ; } //!< Application name (without spaces).
+	const std::string   &app_full_name () { return _app_full_name ; } //!< Application full name.
+	const VersionNumber &app_version   () { return _app_version   ; } //!< Application version.
 	/**@} */
 
 	/**
@@ -271,9 +273,10 @@ private:
 	boost::optional<std::string> _keyboard_index_file;
 
 	// General application properties
-	std::string _app_short_name;
-	std::string _app_name      ;
-	std::string _app_full_name ;
+	std::string   _app_short_name;
+	std::string   _app_name      ;
+	std::string   _app_full_name ;
+	VersionNumber _app_version   ;
 
 	// Property tree for the user-related parameters
 	ptree  _ptree       ;
