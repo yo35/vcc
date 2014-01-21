@@ -68,7 +68,6 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	QToolButton *btnMenu = new QToolButton(this);
 	btnMenu->setText(_("Menu") + " ");
 	btnMenu->setAutoRaise(true);
-	btnMenu->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
 	btnMenu->setFocusPolicy(Qt::NoFocus);
 	_toolBar->addWidget(btnMenu);
 	actReset->setToolTip(_("Reset the clock"                              ));
