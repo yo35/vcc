@@ -152,7 +152,7 @@ void MainWindow::onKeyPressed(ScanCode scanCode)
 		case 2: _biTimer.start_timer(Side::LEFT ); break;
 		case 3: _biTimer.stop_timer  (); break;
 		case 4: _biTimer.reset_timers(); break;
-		case 5: break; ///TODO: implement switch
+		case 5: onSwapClicked(); break;
 		default: break;
 	}
 }
