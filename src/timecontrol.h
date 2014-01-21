@@ -120,6 +120,11 @@ public:
 	bool both_sides_have_same_time() const;
 
 	/**
+	 * Swap the side-related options.
+	 */
+	void swap_sides();
+
+	/**
 	 * Name of the current time control mode.
 	 */
 	const std::string &mode_name() const;

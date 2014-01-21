@@ -66,6 +66,7 @@ private:
 	void onKeyPressed(ScanCode scanCode);
 	void onResetClicked();
 	void onPauseClicked();
+	void onSwapClicked ();
 	void onFlScrClicked();
 	void onTCtrlClicked();
 	void onNamesClicked();
@@ -73,6 +74,7 @@ private:
 	void onHelpClicked ();
 	void onDebugClicked();
 	void onAboutClicked();
+	bool confirmStopGame(const QString &title, const QString &message);
 	void loadPersistentParameters();
 	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
 

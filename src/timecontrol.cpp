@@ -24,6 +24,7 @@
 #include <translation.h>
 #include <stdexcept>
 #include <sstream>
+#include <algorithm>
 #include <boost/format.hpp>
 
 
@@ -89,6 +90,15 @@ bool TimeControl::both_sides_have_same_time() const
 	else {
 		return true;
 	}
+}
+
+
+// Swap the side-related options.
+void TimeControl::swap_sides()
+{
+	std::swap(_main_time  [Side::LEFT], _main_time  [Side::RIGHT]);
+	std::swap(_increment  [Side::LEFT], _increment  [Side::RIGHT]);
+	std::swap(_byo_periods[Side::LEFT], _byo_periods[Side::RIGHT]);
 }
 
 

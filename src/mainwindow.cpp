@@ -62,9 +62,10 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	toolBar->setMovable(false);
 	QAction *actReset = toolBar->addAction(fetchIcon("reset", false), _("Reset"         ));
 	QAction *actPause = toolBar->addAction(fetchIcon("pause", false), _("Pause"         ));
-	QAction *actFlip  = toolBar->addAction(fetchIcon("flip" , false), _("Switch"        ));
+	QAction *actSwap  = toolBar->addAction(fetchIcon("swap" , false), _("Swap sides"    ));
 	toolBar->addSeparator();
 	QAction *actFlScr = toolBar->addAction(fetchIcon("flscr", false), _("Full screen"   ));
+	actFlScr->setCheckable(true);
 	toolBar->addSeparator();
 	QAction *actTCtrl = toolBar->addAction(fetchIcon("tctrl", false), _("Time control"  ));
 	QAction *actNames = toolBar->addAction(fetchIcon("names", false), _("Players' names"));
@@ -73,18 +74,19 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	QAction *actHelp  = toolBar->addAction(fetchIcon("help-contents"         ), _("Help"       ));
 	QAction *actDebug = toolBar->addAction(fetchIcon("applications-utilities"), _("Debug"      ));
 	QAction *actAbout = toolBar->addAction(fetchIcon("help-about"            ), _("About"      ));
-	actReset->setToolTip(_("Reset the clock"                                ));
-	actPause->setToolTip(_("Pause the clock"                                ));
-	actFlip ->setToolTip(_("Switch the players and the time control options"));
-	actFlScr->setToolTip(_("Full screen on/off"                             ));
-	actTCtrl->setToolTip(_("Change the current time control"                ));
-	actNames->setToolTip(_("Edit the names of the players"                  ));
-	actPrefs->setToolTip(_("Set the configuration and the preferences"      ));
-	actHelp ->setToolTip(_("Show a short help message"                      ));
-	actDebug->setToolTip(_("Debug information"                              ));
-	actAbout->setToolTip(_("Information about credits and license"          ));
+	actReset->setToolTip(_("Reset the clock"                              ));
+	actPause->setToolTip(_("Pause the clock"                              ));
+	actSwap ->setToolTip(_("Swap the players and the time control options"));
+	actFlScr->setToolTip(_("Full screen on/off"                           ));
+	actTCtrl->setToolTip(_("Change the current time control"              ));
+	actNames->setToolTip(_("Edit the names of the players"                ));
+	actPrefs->setToolTip(_("Set the configuration and the preferences"    ));
+	actHelp ->setToolTip(_("Show a short help message"                    ));
+	actDebug->setToolTip(_("Debug information"                            ));
+	actAbout->setToolTip(_("Information about credits and license"        ));
 	connect(actReset, &QAction::triggered, this, &MainWindow::onResetClicked);
 	connect(actPause, &QAction::triggered, this, &MainWindow::onPauseClicked);
+	connect(actSwap , &QAction::triggered, this, &MainWindow::onSwapClicked );
 	connect(actTCtrl, &QAction::triggered, this, &MainWindow::onTCtrlClicked);
 	connect(actFlScr, &QAction::triggered, this, &MainWindow::onFlScrClicked);
 	connect(actNames, &QAction::triggered, this, &MainWindow::onNamesClicked);
@@ -92,7 +94,6 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	connect(actHelp , &QAction::triggered, this, &MainWindow::onHelpClicked );
 	connect(actDebug, &QAction::triggered, this, &MainWindow::onDebugClicked);
 	connect(actAbout, &QAction::triggered, this, &MainWindow::onAboutClicked);
-	actFlScr->setCheckable(true);
 
 	// Bi-timer widget
 	_biTimerWidget = new BiTimerWidget(this);
@@ -160,13 +161,8 @@ void MainWindow::onKeyPressed(ScanCode scanCode)
 // Reset button handler.
 void MainWindow::onResetClicked()
 {
-	if(_resetConfirmation==ResetConfirmation::ALWAYS ||
-		(_resetConfirmation==ResetConfirmation::IF_ACTIVE && _biTimer.is_active()))
-	{
-		auto response = QMessageBox::question(this, _("Stop this game?"), _("Do you really want to start a new game?"));
-		if(response!=QMessageBox::Yes) {
-			return;
-		}
+	if(!confirmStopGame(_("Stop this game?"), _("Do you really want to start a new game?"))) {
+		return;
 	}
 	_biTimer.reset_timers();
 }
@@ -176,6 +172,17 @@ void MainWindow::onResetClicked()
 void MainWindow::onPauseClicked()
 {
 	_biTimer.stop_timer();
+}
+
+
+// Swap-sides button handler.
+void MainWindow::onSwapClicked()
+{
+	if(!confirmStopGame(_("Stop this game?"), _("Do you really want to start a new game and swap the sides?"))) {
+		return;
+	}
+	_biTimer.reset_timers();
+	///TODO: implement swap
 }
 
 
@@ -276,6 +283,22 @@ void MainWindow::onAboutClicked()
 {
 	///TODO: customize the about dialog.
 	QMessageBox::about(this, "About VCC", "A simple and free chess clock software");
+}
+
+
+// Ask the user to confirm that he/she wants to reset the clock. Depending on the
+// options, the confirmation may be automatic (no dialog is shown).
+bool MainWindow::confirmStopGame(const QString &title, const QString &message)
+{
+	if(_resetConfirmation==ResetConfirmation::ALWAYS ||
+		(_resetConfirmation==ResetConfirmation::IF_ACTIVE && _biTimer.is_active()))
+	{
+		auto response = QMessageBox::question(this, title, message);
+		return response==QMessageBox::Yes;
+	}
+	else {
+		return true;
+	}
 }
 
 
