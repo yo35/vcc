@@ -297,8 +297,54 @@ void MainWindow::onHelpClicked()
 // About button handler.
 void MainWindow::onAboutClicked()
 {
-	///TODO: customize the about dialog.
-	QMessageBox::about(this, "About VCC", "A simple and free chess clock software");
+	QString title = QString(_("About %1")).arg(QString::fromStdString(Params::get().app_full_name()));
+
+	QString message;
+	message += "<h1>" + QString::fromStdString(
+		Params::get().app_full_name() + " " + Params::get().app_version().full_number()
+	) + "</h1>";
+	message += "<p>" + _("A simple and free chess clock software.") + "</p>";
+	message += "<p>"
+		"<a href=\"http://vchessclock.sourceforge.net/\">http://vchessclock.sourceforge.net/</a><br/>"
+		"<a href=\"https://github.com/yo35/vcc\">https://github.com/yo35/vcc</a> (" + _("developer link") + ")" //TODO: register on GitHub
+	"</p>";
+	message += "<p><small><i>" + QString(_(
+		"If you encounter some bugs with this program, or if you wish to get new features in the future versions, "
+		"you can report/propose them in the bug tracker at %1."
+	)).arg("<a href=\"https://github.com/yo35/vcc/issues\">https://github.com/yo35/vcc/issues</a>") + "</i></small></p>"; //TODO: register on GitHub
+	message += "<h2>" + _("Author") + "</h2>";
+	message += "<p>Yoann Le Montagner <a href=\"mailto:yo35@melix.net\"><tt>&lt;yo35@melix.net&gt;</tt></a></p>";
+	message += "<h2>" + _("Translators") + "</h2>";
+	message += "<table><tbody>";
+	message += "<tr><td>English</td><td>Yoann Le Montagner</td></tr>";
+	message += "<tr><td>Español</td><td>Santiago Paz</td></tr>";
+	message += "<tr><td>Français</td><td>Yoann Le Montagner</td></tr>";
+	message += "</tbody></table>";
+	message += "<p><small><i>" + _(
+		"If you are interested in translating this plugin into your language, "
+		"please contact the author."
+	) + "</i></small></p>";
+	message += "<h2>" + _("License") + "</h2>";
+	message += "<p>" + _(
+		"This program is free software: you can redistribute it and/or modify "
+		"it under the terms of the GNU General Public License as published by "
+		"the Free Software Foundation, either version 3 of the License, or "
+		"(at your option) any later version."
+	) + "</p>";
+	message += "<p>" + _(
+		"This program is distributed in the hope that it will be useful, "
+		"but WITHOUT ANY WARRANTY; without even the implied warranty of "
+		"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the "
+		"GNU General Public License for more details."
+	) + "</p>";
+	message += "<p>" + _(
+		"You should have received a copy of the GNU General Public License "
+		"along with this program. If not, see "
+		"<a href=\"http://www.gnu.org/licenses/\">http://www.gnu.org/licenses/</a>."
+	) + "</p>";
+	message += "<p>Copyright (C) 2010-2014 Yoann Le Montagner.</p>";
+
+	QMessageBox::about(this, title, message);
 }
 
 
