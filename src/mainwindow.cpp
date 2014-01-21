@@ -36,6 +36,7 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QEvent>
+#include <QApplication>
 
 #include <iostream>
 
@@ -45,10 +46,17 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 {
 	setWindowTitle(QString::fromStdString(Params::get().app_full_name()));
 	setWindowIcon(fetchIcon("logo", false));
+	qApp->installEventFilter(this);
 
 	// Low-level keyboard handler
 	_keyboardHandler = new KeyboardHandler(this);
 	connect(_keyboardHandler, &KeyboardHandler::keyPressed, this, &MainWindow::onKeyPressed);
+
+	// Tool-bar timer.
+	_toolBarTimer = new QTimer(this);
+	_toolBarTimer->setInterval(500);
+	_toolBarTimer->setSingleShot(true);
+	connect(_toolBarTimer, &QTimer::timeout, this, &MainWindow::onTimeoutEvent);
 
 	// Build the tool-bar.
 	_toolBar = addToolBar(_("Main tool-bar"));
@@ -140,6 +148,37 @@ void MainWindow::changeEvent(QEvent *event)
 }
 
 
+// General event filter.
+bool MainWindow::eventFilter(QObject *object, QEvent *event)
+{
+	if(event->type()==QEvent::MouseMove && isActiveWindow()) {
+		onMouseMoveEvent();
+	}
+	return QMainWindow::eventFilter(object, event);
+}
+
+
+// Triggered when the mouse is moved.
+void MainWindow::onMouseMoveEvent()
+{
+	if(!isFullScreen()) {
+		return;
+	}
+	_toolBar->setVisible(true);
+	_toolBarTimer->start();
+}
+
+
+// Triggered when the tool-bar timer elapses
+void MainWindow::onTimeoutEvent()
+{
+	if(!isFullScreen()) {
+		return;
+	}
+	_toolBar->setVisible(false);
+}
+
+
 // Key-press event handler.
 void MainWindow::onKeyPressed(ScanCode scanCode)
 {
@@ -215,7 +254,9 @@ void MainWindow::onFlScrClicked()
 		setWindowState(Qt::WindowFullScreen);
 	}
 
-	///TODO: implement full-screen mode
+	// Tool-bar and status bar
+	_toolBar->setVisible(!isFullScreen());
+	_statusBar->setVisible(!isFullScreen() && Params::get().show_status_bar());
 }
 
 
@@ -373,7 +414,7 @@ void MainWindow::loadPersistentParameters()
 	_resetConfirmation = Params::get().reset_confirmation();
 
 	// Status bar
-	_statusBar->setVisible(Params::get().show_status_bar());
+	_statusBar->setVisible(!isFullScreen() && Params::get().show_status_bar());
 
 	// Display options
 	_biTimerWidget->setDelayBeforeDisplaySeconds(Params::get().delay_before_display_seconds());

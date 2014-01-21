@@ -24,6 +24,7 @@
 #define MAINWINDOW_H_
 
 #include <QMainWindow>
+#include <QTimer>
 #include <boost/optional.hpp>
 #include "options.h"
 #include "keys.h"
@@ -60,9 +61,16 @@ protected:
 	 */
 	void changeEvent(QEvent *event) override;
 
+	/**
+	 * General event filter.
+	 */
+	bool eventFilter(QObject *object, QEvent *event) override;
+
 private:
 
 	// Private functions
+	void onMouseMoveEvent();
+	void onTimeoutEvent();
 	void onKeyPressed(ScanCode scanCode);
 	void onResetClicked();
 	void onPauseClicked();
@@ -79,6 +87,7 @@ private:
 
 	// Private members
 	KeyboardHandler  *_keyboardHandler  ;
+	QTimer           *_toolBarTimer     ;
 	ShortcutManager   _shortcutManager  ;
 	BiTimer           _biTimer          ;
 	ResetConfirmation _resetConfirmation;
