@@ -56,7 +56,6 @@ ModifierKeysWidget::ModifierKeysWidget(QWidget *parent) :
 	// Set the menu
 	button()->setMenu(menu);
 	button()->setPopupMode(QToolButton::InstantPopup);
-	setText(text() + " ");
 }
 
 

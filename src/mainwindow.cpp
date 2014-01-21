@@ -66,7 +66,7 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	QAction *actNames = _toolBar->addAction(fetchIcon("names", false), _("Players' names"));
 	_toolBar->addSeparator();
 	QToolButton *btnMenu = new QToolButton(this);
-	btnMenu->setText(_("Menu") + " ");
+	btnMenu->setText(_("Menu"));
 	btnMenu->setAutoRaise(true);
 	btnMenu->setFocusPolicy(Qt::NoFocus);
 	_toolBar->addWidget(btnMenu);
