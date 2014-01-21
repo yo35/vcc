@@ -29,10 +29,11 @@
 #include "preferencedialog.h"
 #include "debugdialog.h"
 #include <translation.h>
-#include <QVBoxLayout>
 #include <QToolBar>
 #include <QStatusBar>
 #include <QAction>
+#include <QToolButton>
+#include <QMenu>
 #include <QMessageBox>
 #include <QEvent>
 
@@ -49,13 +50,7 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	_keyboardHandler = new KeyboardHandler(this);
 	connect(_keyboardHandler, &KeyboardHandler::keyPressed, this, &MainWindow::onKeyPressed);
 
-	// Central widget
-	QWidget     *mainWidget = new QWidget(this);
-	QVBoxLayout *mainLayout = new QVBoxLayout;
-	mainWidget->setLayout(mainLayout);
-	setCentralWidget(mainWidget);
-
-	// Toolbar
+	// Build the toolbar.
 	QToolBar *toolBar = addToolBar(_("Main tool-bar"));
 	toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
 	toolBar->setFloatable(false);
@@ -70,20 +65,32 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	QAction *actTCtrl = toolBar->addAction(fetchIcon("tctrl", false), _("Time control"  ));
 	QAction *actNames = toolBar->addAction(fetchIcon("names", false), _("Players' names"));
 	toolBar->addSeparator();
-	QAction *actPrefs = toolBar->addAction(fetchIcon("preferences-desktop"   ), _("Preferences"));
-	QAction *actHelp  = toolBar->addAction(fetchIcon("help-contents"         ), _("Help"       ));
-	QAction *actDebug = toolBar->addAction(fetchIcon("applications-utilities"), _("Debug"      ));
-	QAction *actAbout = toolBar->addAction(fetchIcon("help-about"            ), _("About"      ));
+	QToolButton *btnMenu = new QToolButton(this);
+	btnMenu->setText(_("Menu") + " ");
+	btnMenu->setAutoRaise(true);
+	btnMenu->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+	btnMenu->setFocusPolicy(Qt::NoFocus);
+	toolBar->addWidget(btnMenu);
 	actReset->setToolTip(_("Reset the clock"                              ));
 	actPause->setToolTip(_("Pause the clock"                              ));
 	actSwap ->setToolTip(_("Swap the players and the time control options"));
 	actFlScr->setToolTip(_("Full screen on/off"                           ));
 	actTCtrl->setToolTip(_("Change the current time control"              ));
 	actNames->setToolTip(_("Edit the names of the players"                ));
-	actPrefs->setToolTip(_("Set the configuration and the preferences"    ));
-	actHelp ->setToolTip(_("Show a short help message"                    ));
-	actDebug->setToolTip(_("Debug information"                            ));
-	actAbout->setToolTip(_("Information about credits and license"        ));
+	btnMenu ->setToolTip(_("General options, help, etc..."                ));
+
+	// Build the menu.
+	QMenu *menu = new QMenu(this);
+	btnMenu->setMenu(menu);
+	btnMenu->setPopupMode(QToolButton::InstantPopup);
+	QAction *actPrefs = menu->addAction(fetchIcon("preferences-desktop"), _("Preferences"));
+	menu->addSeparator();
+	QAction *actDebug = menu->addAction(                                  _("Debug"      ));
+	menu->addSeparator();
+	QAction *actHelp  = menu->addAction(fetchIcon("help-contents"      ), _("Help"       ));
+	QAction *actAbout = menu->addAction(fetchIcon("help-about"         ), _("About"      ));
+
+	// Connect the action handlers.
 	connect(actReset, &QAction::triggered, this, &MainWindow::onResetClicked);
 	connect(actPause, &QAction::triggered, this, &MainWindow::onPauseClicked);
 	connect(actSwap , &QAction::triggered, this, &MainWindow::onSwapClicked );
@@ -91,14 +98,14 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	connect(actFlScr, &QAction::triggered, this, &MainWindow::onFlScrClicked);
 	connect(actNames, &QAction::triggered, this, &MainWindow::onNamesClicked);
 	connect(actPrefs, &QAction::triggered, this, &MainWindow::onPrefsClicked);
-	connect(actHelp , &QAction::triggered, this, &MainWindow::onHelpClicked );
 	connect(actDebug, &QAction::triggered, this, &MainWindow::onDebugClicked);
+	connect(actHelp , &QAction::triggered, this, &MainWindow::onHelpClicked );
 	connect(actAbout, &QAction::triggered, this, &MainWindow::onAboutClicked);
 
 	// Bi-timer widget
 	_biTimerWidget = new BiTimerWidget(this);
 	_biTimerWidget->bindTimer(_biTimer);
-	mainLayout->addWidget(_biTimerWidget, 1);
+	setCentralWidget(_biTimerWidget);
 
 	// Status bar
 	_statusBar = statusBar();
@@ -259,6 +266,16 @@ void MainWindow::onPrefsClicked()
 }
 
 
+// Debug button handler.
+void MainWindow::onDebugClicked()
+{
+	if(_debugDialog==nullptr) {
+		_debugDialog = new DebugDialog(this);
+	}
+	_debugDialog->show();
+}
+
+
 // Help button handler.
 void MainWindow::onHelpClicked()
 {
@@ -274,16 +291,6 @@ void MainWindow::onHelpClicked()
 		"suits good to your keyboard. Thus, only the A-Z keys will be used by VCC, "
 		"but the software will be usable anyway."
 	));
-}
-
-
-// Debug button handler.
-void MainWindow::onDebugClicked()
-{
-	if(_debugDialog==nullptr) {
-		_debugDialog = new DebugDialog(this);
-	}
-	_debugDialog->show();
 }
 
 

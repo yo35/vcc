@@ -71,8 +71,8 @@ private:
 	void onTCtrlClicked();
 	void onNamesClicked();
 	void onPrefsClicked();
-	void onHelpClicked ();
 	void onDebugClicked();
+	void onHelpClicked ();
 	void onAboutClicked();
 	void loadPersistentParameters();
 	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
