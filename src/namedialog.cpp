@@ -24,7 +24,6 @@
 #include <translation.h>
 #include <QLabel>
 #include <QDialogButtonBox>
-#include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
 
@@ -47,15 +46,10 @@ NameDialog::NameDialog(QWidget *parent) : QDialog(parent)
 	nameLayout->addWidget(_name[Side::LEFT ], 1, 0);
 	nameLayout->addWidget(_name[Side::RIGHT], 1, 1);
 
-	// Button and check-box
-	_switch    = new QPushButton(_("Switch players"         ), this);
-	_showNames = new QCheckBox  (_("Show the players' names"), this);
-	QHBoxLayout *ctrlLayout = new QHBoxLayout;
-	layout->addLayout(ctrlLayout);
-	ctrlLayout->addWidget(_switch);
-	ctrlLayout->addWidget(_showNames, 1);
-	connect(_switch   , &QPushButton::clicked, this, &NameDialog::switchNames);
-	connect(_showNames, &QCheckBox::toggled  , this, &NameDialog::refreshActivationState);
+	// Check-box
+	_showNames = new QCheckBox(_("Show the players' names"), this);
+	layout->addWidget(_showNames);
+	connect(_showNames, &QCheckBox::toggled, this, &NameDialog::refreshActivationState);
 	refreshActivationState();
 
 	// Validation buttons
@@ -101,14 +95,4 @@ void NameDialog::refreshActivationState()
 	bool enabled = _showNames->isChecked();
 	_name[Side::LEFT ]->setEnabled(enabled);
 	_name[Side::RIGHT]->setEnabled(enabled);
-	_switch->setEnabled(enabled);
-}
-
-
-// Switch the names.
-void NameDialog::switchNames()
-{
-	QString buffer = _name[Side::LEFT]->text();
-	_name[Side::LEFT ]->setText(_name[Side::RIGHT]->text());
-	_name[Side::RIGHT]->setText(buffer);
 }

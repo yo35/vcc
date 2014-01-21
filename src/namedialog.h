@@ -25,7 +25,6 @@
 
 #include <QDialog>
 #include <QLineEdit>
-#include <QPushButton>
 #include <QCheckBox>
 #include "side.h"
 
@@ -68,11 +67,9 @@ private:
 
 	// Private functions
 	void refreshActivationState();
-	void switchNames();
 
 	// Private members
 	Enum::array<Side, QLineEdit *> _name     ;
-	QPushButton                   *_switch   ;
 	QCheckBox                     *_showNames;
 };
 
