@@ -24,9 +24,8 @@
 #define DEBUGDIALOG_H_
 
 #include <QDialog>
-QT_BEGIN_NAMESPACE
-	class QLineEdit;
-QT_END_NAMESPACE
+#include <QTextEdit>
+#include "keyboardhandler.h"
 
 
 /**
@@ -46,17 +45,19 @@ public:
 protected:
 
 	/**
-	 * Key-press event handler.
+	 * Window state-change handler.
 	 */
-	void keyPressEvent(QKeyEvent *event) override;
+	void changeEvent(QEvent *event) override;
 
 private:
 
+	// Private functions
+	void onKeyPressed (ScanCode scanCode);
+	void onKeyReleased(ScanCode scanCode);
+
 	// Private members
-	QLineEdit *_infoKeyID      ;
-	QLineEdit *_infoKeyText    ;
-	QLineEdit *_infoKeyNativeID;
-	QLineEdit *_infoKeyScanCode;
+	KeyboardHandler *_keyboardHandler;
+	QTextEdit       *_info;
 };
 
 #endif /* DEBUGDIALOG_H_ */

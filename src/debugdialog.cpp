@@ -23,59 +23,49 @@
 #include "debugdialog.h"
 #include <translation.h>
 #include <QLabel>
-#include <QLineEdit>
-#include <QGroupBox>
 #include <QVBoxLayout>
-#include <QGridLayout>
-#include <QKeyEvent>
+#include <QEvent>
 
 
 // Constructor.
 DebugDialog::DebugDialog(QWidget *parent) : QDialog(parent)
 {
 	setWindowTitle(_("Debug information"));
-	QVBoxLayout *mainLayout = new QVBoxLayout;
-	setLayout(mainLayout);
+	QVBoxLayout *layout = new QVBoxLayout;
+	setLayout(layout);
 
-	// Key information
-	QGroupBox *keyInfoGroup = new QGroupBox(_("Key pressed"), this);
-	mainLayout->addWidget(keyInfoGroup);
-	QGridLayout *keyInfoLayout = new QGridLayout;
-	keyInfoGroup->setLayout(keyInfoLayout);
+	// Keyboard handler.
+	_keyboardHandler = new KeyboardHandler(this);
+	connect(_keyboardHandler, &KeyboardHandler::keyPressed , this, &DebugDialog::onKeyPressed );
+	connect(_keyboardHandler, &KeyboardHandler::keyReleased, this, &DebugDialog::onKeyReleased);
 
-	// Key information fields
-	_infoKeyID       = new QLineEdit(this);
-	_infoKeyText     = new QLineEdit(this);
-	_infoKeyNativeID = new QLineEdit(this);
-	_infoKeyScanCode = new QLineEdit(this);
-	_infoKeyID      ->setReadOnly(true);
-	_infoKeyText    ->setReadOnly(true);
-	_infoKeyNativeID->setReadOnly(true);
-	_infoKeyScanCode->setReadOnly(true);
-	keyInfoLayout->addWidget(new QLabel(_("Key ID"       )), 0, 0, Qt::AlignCenter);
-	keyInfoLayout->addWidget(new QLabel(_("Key text"     )), 1, 0, Qt::AlignCenter);
-	keyInfoLayout->addWidget(new QLabel(_("Native key ID")), 0, 2, Qt::AlignCenter);
-	keyInfoLayout->addWidget(new QLabel(_("Scan code"    )), 1, 2, Qt::AlignCenter);
-	keyInfoLayout->addWidget(_infoKeyID      , 0, 1);
-	keyInfoLayout->addWidget(_infoKeyText    , 1, 1);
-	keyInfoLayout->addWidget(_infoKeyNativeID, 0, 3);
-	keyInfoLayout->addWidget(_infoKeyScanCode, 1, 3);
-	keyInfoLayout->setColumnStretch(1, 1);
-	keyInfoLayout->setColumnStretch(3, 1);
-
-	// Dialog geometry
-	mainLayout->addStretch(1);
+	// Text widget.
+	_info = new QTextEdit(this);
+	_info->setReadOnly(true);
+	layout->addWidget(new QLabel(_("Press some key..."), this));
+	layout->addWidget(_info, 1);
 }
 
 
-// Key-press event handler.
-void DebugDialog::keyPressEvent(QKeyEvent *event)
+// Window state-change handler.
+void DebugDialog::changeEvent(QEvent *event)
 {
-	if(event->isAutoRepeat()) {
-		return;
+	if(event->type()==QEvent::ActivationChange) {
+		_keyboardHandler->setEnabled(isActiveWindow());
 	}
-	_infoKeyID      ->setText(QString::number(event->key()));
-	_infoKeyText    ->setText(event->text());
-	_infoKeyNativeID->setText(QString::number(event->nativeVirtualKey()));
-	_infoKeyScanCode->setText(QString::number(event->nativeScanCode  ()));
+	QDialog::changeEvent(event);
+}
+
+
+// Key-pressed handler.
+void DebugDialog::onKeyPressed (ScanCode scanCode)
+{
+	_info->append(QString("Key pressed, code=%1").arg(scanCode));
+}
+
+
+// Key-released handler.
+void DebugDialog::onKeyReleased(ScanCode scanCode)
+{
+	_info->append(QString("Key released, code=%1").arg(scanCode));
 }
