@@ -51,9 +51,9 @@ TimeControlDialog::TimeControlDialog(QWidget *parent) : QDialog(parent), _shuntS
 		"player's main time."
 	);
 	modeDescription[TimeControl::Mode::FISCHER] = _(
-		"At each move, the player is granted an additional delay, so that his or "
-		"her global clock time is always greater than this bonus time at the "
-		"beginning of his or her playing turn. Additional delays can be "
+		"At each move, the player is granted an additional delay, so that his/her "
+		"global clock time is always greater than this bonus time at the "
+		"beginning of his/her playing turn. Additional delays can be "
 		"accumulated."
 	);
 	modeDescription[TimeControl::Mode::BRONSTEIN] = _(
@@ -63,12 +63,12 @@ TimeControlDialog::TimeControlDialog(QWidget *parent) : QDialog(parent), _shuntS
 		"to substract from the player's remaining time when engaged."
 	);
 	modeDescription[TimeControl::Mode::HOURGLASS] = _(
-		"While the current player is deciding on his or her move, the opponent's "
+		"While the current player is deciding on his/her move, the opponent's "
 		"time is increasing. Therefore, the sum of both clocks remains always the "
 		"same."
 	);
 	modeDescription[TimeControl::Mode::BYO_YOMI] = _(
-		"When the player's main time expires, he or she is granted one or more "
+		"When the player's main time expires, he/she is granted one or more "
 		"additional time periods, denoted as \"byo-yomi\" periods. If the move is "
 		"completed before the current byo-yomi expires, the clock is reset with "
 		"the whole byo-yomi time available for the next move; otherwise, the "
@@ -88,7 +88,7 @@ TimeControlDialog::TimeControlDialog(QWidget *parent) : QDialog(parent), _shuntS
 		modeLayout->addWidget(_mode[*it]);
 
 		// Tool-tips
-		static boost::format modeToolTipFormater("<p><b>%1%</b><br/>%2%</p>");
+		static boost::format modeToolTipFormater("<p><b>%1%</b></p><p>%2%</p>");
 		std::string toolTip = boost::str(modeToolTipFormater.clear() % TimeControl::mode_name(*it) % modeDescription[*it]);
 		_mode[*it]->setToolTip(QString::fromStdString(toolTip));
 	}
