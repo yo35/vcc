@@ -88,6 +88,18 @@ public:
 	 */
 	ShortcutMap &load(const boost::property_tree::ptree &data);
 
+	/**
+	 * Save the shortcut map to a file.
+	 * @returns `*this`
+	 */
+	ShortcutMap &save(const std::string &path);
+
+	/**
+	 * Save the shortcut map to a property tree.
+	 * @returns `*this`
+	 */
+	ShortcutMap &save(boost::property_tree::ptree &data);
+
 private:
 
 	// Private members
