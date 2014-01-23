@@ -38,8 +38,6 @@
 #include <QEvent>
 #include <QApplication>
 
-#include <iostream>
-
 
 // Constructor.
 MainWindow::MainWindow() : _debugDialog(nullptr)
@@ -187,8 +185,6 @@ void MainWindow::onKeyPressed(ScanCode scanCode)
 		_keyboardHandler->isDown(_shortcutManager.modifier_key(Side::LEFT )) &&
 		_keyboardHandler->isDown(_shortcutManager.modifier_key(Side::RIGHT));
 	int shortcut = _shortcutManager.shortcut(scanCode, modifierKeysActivated);
-
-	std::cout << "Key press, key=" << scanCode << " shortcut=" << shortcut << std::endl; ///TODO: remove
 
 	// Execute the requested actions.
 	switch(shortcut)

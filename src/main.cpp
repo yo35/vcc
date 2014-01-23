@@ -20,7 +20,6 @@
  ******************************************************************************/
 
 
-#include <iostream>
 #include <QApplication>
 #include <QTranslator>
 #include <QLibraryInfo>
@@ -28,7 +27,6 @@
 
 int main(int argc, char **argv)
 {
-	std::cout << "Hello world!" << std::endl;
 	QApplication app(argc, argv);
 
 	QTranslator qtTranslator;
