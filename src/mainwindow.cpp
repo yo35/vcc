@@ -403,7 +403,7 @@ void MainWindow::loadPersistentParameters()
 	// Keyboard shortcuts
 	_shortcutManager.reset(Params::get().modifier_keys(),
 		Params::get().keyboard_map(Params::get().current_keyboard()),
-		Params::get().shortcut_map("FR") // TODO
+		Params::get().shortcut_map()
 	);
 
 	// Reset confirmation option

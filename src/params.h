@@ -69,12 +69,15 @@ public:
 	 * @name Application directories, files, and environment.
 	 * @{
 	 */
-	const std::string &prefix_path        (); //!< Root path indicating where the application is installed (read-only directory).
-	const std::string &config_path        (); //!< Configuration folder in the user's home (read-write directory).
-	const std::string &share_path         (); //!< Directory holding data of the application (read-only directory).
-	const std::string &locale             (); //!< Current locale.
-	const std::string &config_file        (); //!< File that holds the preferences of the current user.
-	const std::string &keyboard_index_file(); //!< File that contains the index of all available keyboard maps.
+	const std::string &prefix_path              (); //!< Root path indicating where the application is installed (read-only directory).
+	const std::string &config_path              (); //!< Configuration folder in the user's home (read-write directory).
+	const std::string &share_path               (); //!< Directory holding data of the application (read-only directory).
+	const std::string &locale                   (); //!< Current locale.
+	const std::string &config_file              (); //!< File that holds the preferences of the current user.
+	const std::string &keyboard_index_file      (); //!< File that contains the index of all available keyboard maps.
+	const std::string &default_shortcut_map_file(); //!< File that contains the default shortcut map.
+	const std::string &custom_shortcut_map_file (); //!< File that contains the user-defined shortcut map.
+
 	/**@} */
 
 	/**
@@ -233,14 +236,14 @@ public:
 	const KeyboardMap &keyboard_map(const std::string &id);
 
 	/**
-	 * Return the shortcut map corresponding to the given ID.
-	 */
-	const ShortcutMap &shortcut_map(const std::string &id);
-
-	/**
 	 * Default keyboard map.
 	 */
 	const std::string &default_keyboard_map();
+
+	/**
+	 * Return the current shortcut map.
+	 */
+	ShortcutMap &shortcut_map();
 
 private:
 
@@ -255,6 +258,7 @@ private:
 	void save();
 	void ensure_config_path_exists();
 	void ensure_keyboard_index_loaded();
+	void ensure_shortcut_map_loaded();
 	void load_keyboard(const ptree &keyboard);
 	void ensure_keyboard_id_exists(const std::string &id);
 
@@ -265,12 +269,14 @@ private:
 	static std::string side_key(Side side, const std::string &key);
 
 	// Application directories, files, and environment.
-	boost::optional<std::string> _prefix_path        ;
-	boost::optional<std::string> _config_path        ;
-	boost::optional<std::string> _share_path         ;
-	boost::optional<std::string> _locale             ;
-	boost::optional<std::string> _config_file        ;
-	boost::optional<std::string> _keyboard_index_file;
+	boost::optional<std::string> _prefix_path              ;
+	boost::optional<std::string> _config_path              ;
+	boost::optional<std::string> _share_path               ;
+	boost::optional<std::string> _locale                   ;
+	boost::optional<std::string> _config_file              ;
+	boost::optional<std::string> _keyboard_index_file      ;
+	boost::optional<std::string> _default_shortcut_map_file;
+	boost::optional<std::string> _custom_shortcut_map_file ;
 
 	// General application properties
 	std::string   _app_short_name;
@@ -286,13 +292,14 @@ private:
 
 	// Keyboard maps
 	bool                               _keyboard_index_loaded;
+	bool                               _shortcut_map_loaded  ;
 	std::set<std::string>              _keyboard_list        ;
 	std::map<std::string, std::string> _keyboard_names       ;
 	std::map<std::string, QIcon>       _keyboard_icons       ;
 	std::map<std::string, std::string> _locale_to_keyboard   ;
 	std::string                        _default_keyboard     ;
 	std::map<std::string, KeyboardMap> _keyboard_maps        ;
-	std::map<std::string, ShortcutMap> _shortcut_maps        ;
+	ShortcutMap                        _shortcut_map         ;
 
 	// Singleton object
 	static std::unique_ptr<Params> _instance;

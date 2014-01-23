@@ -115,12 +115,32 @@ const std::string &Params::keyboard_index_file()
 }
 
 
+// File that contains the default shortcut map.
+const std::string &Params::default_shortcut_map_file()
+{
+	if(!_default_shortcut_map_file) {
+		_default_shortcut_map_file = share_path() + "/default-shortcut-map.xml";
+	}
+	return *_default_shortcut_map_file;
+}
+
+
+// File that contains the user-defined shortcut map.
+const std::string &Params::custom_shortcut_map_file()
+{
+	if(!_custom_shortcut_map_file) {
+		_custom_shortcut_map_file = config_path() + "/shortcut-map.xml";
+	}
+	return *_custom_shortcut_map_file;
+}
+
+
 // Private constructor.
 Params::Params() :
 	_app_short_name(APP_SHORT_NAME), _app_name(APP_NAME), _app_full_name(APP_FULL_NAME),
 	_app_version(APP_VERSION_MAJOR, APP_VERSION_MINOR, APP_VERSION_PATCH),
 	_root(nullptr), _ptree_loaded(false), _ptree_saved(true),
-	_keyboard_index_loaded(false)
+	_keyboard_index_loaded(false), _shortcut_map_loaded(false)
 {}
 
 
@@ -157,7 +177,17 @@ void Params::load()
 // Save the preferences defined by the current user.
 void Params::save()
 {
-	// Nothing to do if the file has already been saved.
+	// Save the shortcut map file if it is loaded.
+	if(_shortcut_map_loaded) {
+		try {
+			_shortcut_map.save(custom_shortcut_map_file());
+		}
+		catch(boost::property_tree::xml_parser_error &) {
+			throw std::runtime_error("An error has occurred while writing the shortcut map file.");
+		}
+	}
+
+	// Nothing else to do if the file has already been saved.
 	if(_ptree_saved) {
 		return;
 	}
@@ -457,6 +487,36 @@ void Params::load_keyboard(const ptree &keyboard)
 }
 
 
+// Load the shortcut map file if not done yet.
+void Params::ensure_shortcut_map_loaded()
+{
+	if(_shortcut_map_loaded) {
+		return;
+	}
+
+	try
+	{
+		// Try to load the user-defined shortcut map file if it exists.
+		if(boost::filesystem::exists(custom_shortcut_map_file())) {
+			_shortcut_map.load(custom_shortcut_map_file());
+		}
+
+		// Otherwise, try to load the default shortcut map file.
+		else {
+			_shortcut_map.load(default_shortcut_map_file());
+		}
+	}
+
+	// The keyboard index file must be readable.
+	catch(boost::property_tree::xml_parser_error &) {
+		throw std::runtime_error("An error has occurred while reading the shortcut map file.");
+	}
+
+	// Mark the shortcut map file as read.
+	_shortcut_map_loaded = true;
+}
+
+
 // Ensure that the keyboard corresponding to the given ID exists and is actually
 // registered in the keyboard index file.
 void Params::ensure_keyboard_id_exists(const std::string &id)
@@ -536,18 +596,9 @@ const KeyboardMap &Params::keyboard_map(const std::string &id)
 }
 
 
-// Return the shortcut map corresponding to the given ID.
-const ShortcutMap &Params::shortcut_map(const std::string &id)
+// Return the current shortcut map.
+ShortcutMap &Params::shortcut_map()
 {
-	ensure_keyboard_id_exists(id);
-	auto it = _shortcut_maps.find(id);
-	if(it==_shortcut_maps.end()) {
-		try {
-			return _shortcut_maps[id].load(share_path() + "/" + id + ".kam");
-		}
-		catch(boost::property_tree::ptree_error &) {
-			throw std::runtime_error("An error has occurred while reading a shortcut map file.");
-		}
-	}
-	return it->second;
+	ensure_shortcut_map_loaded();
+	return _shortcut_map;
 }
