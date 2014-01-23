@@ -47,6 +47,13 @@ DebugDialog::DebugDialog(QWidget *parent) : QDialog(parent)
 }
 
 
+// Default size.
+QSize DebugDialog::sizeHint() const
+{
+	return QSize(400, 400);
+}
+
+
 // Window state-change handler.
 void DebugDialog::changeEvent(QEvent *event)
 {
@@ -60,12 +67,12 @@ void DebugDialog::changeEvent(QEvent *event)
 // Key-pressed handler.
 void DebugDialog::onKeyPressed (ScanCode scanCode)
 {
-	_info->append(QString("Key pressed, code=%1").arg(scanCode));
+	_info->append(QString("<b style=\"color: #c00000;\">Key pressed</b>, code=%1").arg(scanCode));
 }
 
 
 // Key-released handler.
 void DebugDialog::onKeyReleased(ScanCode scanCode)
 {
-	_info->append(QString("Key released, code=%1").arg(scanCode));
+	_info->append(QString("<b style=\"color: #008000;\">Key released</b>, code=%1").arg(scanCode));
 }

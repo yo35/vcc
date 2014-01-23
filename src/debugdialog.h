@@ -42,6 +42,11 @@ public:
 	 */
 	DebugDialog(QWidget *parent=0);
 
+	/**
+	 * Default size.
+	 */
+	QSize sizeHint() const override;
+
 protected:
 
 	/**
