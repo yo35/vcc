@@ -23,7 +23,7 @@
 #ifndef TRANSLATION_H_
 #define TRANSLATION_H_
 
-#include <QObject>
+#include <QCoreApplication>
 #include <string>
 #include <utility>
 #include <ostream>
@@ -32,12 +32,12 @@
 /**
  * Mark a string `s` for translation.
  */
-#define _(s) QStringWrapper(QObject::tr(s))
+#define _(s) QStringWrapper(QCoreApplication::translate("", s))
 
 
 /**
  * This class is used in the macro `_()` to wrap the QString object returned by
- * the translation function `QObject::tr()`, to provide automatic cast into
+ * the translation function `QCoreApplication::translate()`, to provide automatic cast into
  * the common string classes while avoiding as much as possible useless conversions.
  *
  * `QStringWrapper` is not supposed to be used in a different context.
