@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: virtual-chess-clock 1.5.0\n"
+"Project-Id-Version: virtual-chess-clock ..\n"
 "Report-Msgid-Bugs-To: Yoann Le Montagner <yo35 ( at ) melix ( dot ) net>\n"
-"POT-Creation-Date: 2012-09-29 16:45+0200\n"
+"POT-Creation-Date: 2014-01-25 17:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,54 +17,166 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:39
-msgid "Unable to open the INI file %1 for reading"
+#: /home/yoann/VCC/trunk-qt/src/timedurationwidget.cpp:48
+msgid "hour"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:64
-#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:69
-#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:77
-#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:82
-#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:88
-#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:96
-msgid "Unconsistency in the INI file %1 at line #%2"
+#: /home/yoann/VCC/trunk-qt/src/timedurationwidget.cpp:49
+msgid "min"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/inistruct.cpp:112
-msgid "Unable to open the INI file %1 for writing"
+#: /home/yoann/VCC/trunk-qt/src/timedurationwidget.cpp:50
+msgid "sec"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/keyboardmap.cpp:104
-msgid "The version (%1) of the keyboard map file %2 is not supported"
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:116
+msgid "Invalid"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/keyboardmap.cpp:131
-msgid "The key %1 must be placed at least on one line on the keyboard"
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:122
+#: /home/yoann/VCC/trunk-qt/src/modifierkeyswidget.cpp:37
+msgid "Ctrl"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/keyboardmap.cpp:142
-msgid "The key %1 must have at least one keyval"
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:123
+#: /home/yoann/VCC/trunk-qt/src/modifierkeyswidget.cpp:38
+msgid "Shift"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:28
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:115
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:124
+#: /home/yoann/VCC/trunk-qt/src/modifierkeyswidget.cpp:39
+msgid "Alt"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:125
+msgid "Alt Gr"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:126
+msgid "Super"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:127
+msgid "Tab"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:128
+msgid ""
+"Caps\n"
+"Lock"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:129
+msgid "Space"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:130
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:75
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:330
+msgid "Menu"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:131
+msgid "Back Space"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:132
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:142
+msgid "Enter"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:135
+msgid "Esc"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:136
+msgid ""
+"Print\n"
+"Screen"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:137
+msgid ""
+"Scroll\n"
+"Lock"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:138
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:95
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:65
+msgid "Pause"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:141
+msgid ""
+"Num\n"
+"Lock"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:145
+msgid "Ins"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:146
+msgid "Del"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:147
+msgid "Home"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:148
+msgid "End"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:149
+msgid ""
+"Page\n"
+"Up"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/keyboardmap.cpp:150
+msgid ""
+"Page\n"
+"Down"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/namedialog.cpp:35
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:72
+msgid "Players' names"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/namedialog.cpp:44
+msgid "Left player"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/namedialog.cpp:45
+msgid "Right player"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/namedialog.cpp:50
+msgid "Show the players' names"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:43
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:71
 msgid "Time control"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:38
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:50
 msgid ""
 "Simplest time control mode. No additional delay is never added to the "
 "player's main time."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:42
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:54
 msgid ""
-"At each move, the player is granted an additional delay, so that his or her "
+"At each move, the player is granted an additional delay, so that his/her "
 "global clock time is always greater than this bonus time at the beginning of "
-"his or her playing turn. Additional delays can be accumulated."
+"his/her playing turn. Additional delays can be accumulated."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:48
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:60
 msgid ""
 "Same as Fischer time control mode, except that additional delays cannot be "
 "accumulated. Bronstein mode can also be thought as a kind of sudden death "
@@ -72,562 +184,466 @@ msgid ""
 "substract from the player's remaining time when engaged."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:54
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:66
 msgid ""
-"While the current player is deciding on his or her move, the opponent's time "
-"is increasing. Therefore, the sum of both clocks remains always the same."
+"While the current player is deciding on his/her move, the opponent's time is "
+"increasing. Therefore, the sum of both clocks remains always the same."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:59
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:71
 msgid ""
-"When the player's main time expires, he or she is granted one or more "
+"When the player's main time expires, he/she is granted one or more "
 "additional time periods, denoted as \"byo-yomi\" periods. If the move is "
 "completed before the current byo-yomi expires, the clock is reset with the "
 "whole byo-yomi time available for the next move; otherwise, the next byo-"
 "yomi starts. At the end of the last byo-yomi, the game is lost."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:67
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:79
 msgid "Mode"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:83
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:97
+msgid "Same time for both sides"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:107
 msgid "Left"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:84
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:107
 msgid "Right"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:88
-#: /home/yoann/Tmp/VCC/trunk/src/dialwidget.cpp:157
-#: /home/yoann/Tmp/VCC/trunk/src/dialwidget.cpp:168
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:113
+#: /home/yoann/VCC/trunk-qt/src/bitimerwidget.cpp:211
+#: /home/yoann/VCC/trunk-qt/src/bitimerwidget.cpp:215
 msgid "Main time"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:89
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:114
 msgid "Increment"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:90
+#: /home/yoann/VCC/trunk-qt/src/timecontroldialog.cpp:115
 msgid "Byo-yomi periods"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/timecontroldialog.cpp:110
-msgid "Time control values are the same for both sides"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/datafile.cpp:56
-msgid "Unable to open the data file %1 for reading"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/datafile.cpp:133
-msgid "Unconsistency in the data file %1 at line #%2"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/datafile.cpp:152
-msgid "Unable to open the data file %1 for writing"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timeentry.cpp:27
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:173
-msgid "hour"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timeentry.cpp:27
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:174
-msgid "min"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timeentry.cpp:27
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:163
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:175
-msgid "sec"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:113
-msgid "Sudden death"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:114
-msgid "Fischer"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:115
-msgid "Bronstein"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:116
-msgid "Hourglass"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:117
-msgid "Byo-yomi"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:183
-msgid "left"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:185
-msgid "right"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:193
-msgid "by move"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:199
-msgid "byo-yomi period"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/timecontrol.cpp:201
-msgid "byo-yomi periods"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/areamap.cpp:109
-msgid "The version (%1) of the area map file %2 is not supported"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/areamap.cpp:116
-msgid "The number of keys reported the file %1 is incorrect"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/areamap.cpp:132
-msgid "Incorrect affectation code for the key %1 in the file %2"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/params.cpp:59
-msgid "Unable to create the INI configuration file at %1"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/params.cpp:308
-msgid "Unable to retrieve the name of keyboard %1"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/params.cpp:334
-msgid "Unable to retrieve the name of the layout file for keyboard %1"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/params.cpp:347
-msgid "Unable to retrieve the name of the default area file for keyboard %1"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:121
-msgid ""
-"Null\n"
-"character"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:158
-msgid "Space"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:159
-msgid ""
-"Caps\n"
-"lock"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:160
-msgid ""
-"Shift\n"
-"lock"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:161
-msgid "Esc"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:162
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:210
-msgid "Return"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:163
-msgid "Backspace"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:164
-msgid "Tabs"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:165
-msgid "Alt Gr"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:168
-msgid "Del"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:169
-msgid "Ins"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:170
-msgid ""
-"Page\n"
-"up"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:171
-msgid ""
-"Page\n"
-"down"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:172
-msgid "Home"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:173
-msgid "End"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:180
-msgid ""
-"Print\n"
-"screen"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:181
-msgid ""
-"Scroll\n"
-"lock"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:182
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:114
-msgid "Pause"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:187
-msgid "Shift"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:188
-msgid "Ctrl"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:189
-msgid "Alt"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:190
-msgid "Meta"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:191
-msgid "Super"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:192
-msgid "Hyper"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:211
-msgid ""
-"Num\n"
-"lock"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:212
-msgid ""
-"Decimal\n"
-"mark"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:215
-msgid ""
-"No break\n"
-"space"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/keys.cpp:228
-msgid "Hyphen"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/vccaboutdialog.cpp:35
-msgid "A simple and free chess clock software"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/dialwidget.cpp:134
-msgid "Flag down"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/dialwidget.cpp:136
-msgid "Since:"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/dialwidget.cpp:174
-msgid "Byo-yomi period"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:47
-msgid "Debug information"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:54
-msgid "Current directory"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:55
-msgid "Top directory"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:56
-msgid "User directory"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:57
-msgid "Locale"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:71
-msgid "Keycode"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:80
-msgid "Keyval"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:81
-msgid "Keyval (hex)"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:82
-msgid "Name"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:83
-msgid "Symbol"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:84
-msgid "Group"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:85
-msgid "Level"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/debugdialog.cpp:95
-msgid "Keyboard information"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/namedialog.cpp:28
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:116
-msgid "Players' names"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/namedialog.cpp:29
-msgid "Switch players"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/namedialog.cpp:30
-msgid "Display players' names"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/namedialog.cpp:39
-msgid "Left player"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/namedialog.cpp:40
-msgid "Right player"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:113
-msgid "Reset"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:120
-msgid "Reset the clock"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:121
-msgid "Pause the clock"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:122
-msgid "Change the current time control"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:123
-msgid "Edit the names of the players"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:124
-msgid "Set the configuration and the preferences"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:125
-msgid "A short help text"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:126
-msgid "Information about credits and license"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:249
-msgid "Do you really want to start a new game?"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:251
-msgid "Stop this game?"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:303
-msgid "Help"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/clockwindow.cpp:305
-msgid ""
-"To start playing and then change the running side of the clock, just push "
-"some keys on the keyboard. The left player have to push some key on the left "
-"side of the keyboard, the right player on the right side.\n"
-"\n"
-"If it does not work, it might be due to a misdetection of your keyboard "
-"layout; you can check it and correct it through the \"Preferences\" dialog. "
-"If your actual keyboard layout is not available among those proposed by VCC, "
-"you should select \"Default QWERTY\" or one of the default layouts that "
-"suits good to your keyboard. Thus, only the A-Z keys will be used by VCC, "
-"but the software will be usable anyway."
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:40
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:41
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:91
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:330
 msgid "Preferences"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:52
-msgid "Reset through the toolbar"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:48
+msgid "Keyboard set-up"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:55
-msgid "Ask for confirmation before resetting"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:49
+msgid "Time display"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:58
-msgid "Always"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:50
+msgid "Miscellaneous"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:59
-msgid "Only if the clock is still running"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:60
-msgid "Never"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:68
-msgid "Reset through the keyboard"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:71
-msgid "Keys to press to reset"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:74
-msgid "CTRL keys (left and right)"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:75
-msgid "MAJ keys (left and right)"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:80
-msgid "Delay (milliseconds)"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:91
-msgid "Pause through the keyboard"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:94
-msgid "Allow the game to be paused through the keyboard"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:98
-msgid "Keys to press to pause"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:101
-msgid "Only the space key"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:102
-msgid "CTRL keys (left and right) + space"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:103
-msgid "MAJ keys (left and right) + space"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:117
-msgid "Display the status bar at the bottom of the main window"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:118
-msgid "Display an increasing time counter when the flag is down"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:119
-msgid "Display extra time information when playing in Bronstein mode"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:120
-msgid "Display extra time information when playing in byo-yomi mode"
-msgstr ""
-
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:128
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:76
 msgid "Select the keyboard layout you are using"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:129
-msgid "Use the mouse buttons to switch between players"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:81
+msgid "The keyboard has a numeric keypad"
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:131
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:93
+msgid "Left player's button"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:94
+msgid "Right player's button"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:96
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:64
+msgid "Reset"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:97
+msgid "Switch"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:130
+msgid "Key actions"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:132
 msgid ""
-"The left player must click on the left button, the right player on the right "
-"button"
+"This schematic representation of the keyboard shows the actions that are "
+"associated to each key."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:139
-msgid "Display the numeric keypad"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:135
+msgid ""
+"To associate an action to a key, click on the corresponding caption below "
+"the keyboard representation, and then click on the key whose behavior you "
+"want to change. Clicking twice on a key cancels the key/action association."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:141
-msgid "Modify the active areas by clicking on the keyboard"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:143
+msgid ""
+"Two actions may be associated to each key: one is triggered by default when "
+"the user presses the key, the other is triggered when the user presses the "
+"key while holding both &quot;modifier keys&quot; down. For instance, in the "
+"default configuration, the modifier keys are the shift keys, and pressing "
+"&lt;shift-left&gt; + &lt;shift-right&gt; + &lt;space&gt; stops the clock."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:147
-msgid "Modify the left player's area"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:152
+msgid ""
+"Toggle this button to show (and edit) either the default actions or the "
+"actions triggered when the modifier keys are pressed."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:148
-msgid "Modify the right player's area"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:157
+msgid ""
+"Edit the keys that the left player can press to start the right player's "
+"clock."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:153
-msgid "Active areas that players can use to engage the clock when playing"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:160
+msgid ""
+"Edit the keys that the right player can press to start the left player's "
+"clock."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:154
-msgid "left player's area"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:162
+msgid "Edit the keys that can be pressed to stop the clock."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:155
-msgid "right player's area"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:163
+msgid "Edit the keys that can be pressed to reset the clock."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:182
-msgid "Keyboard active areas"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:165
+msgid ""
+"Edit the keys that can be pressed to swap the players and the time control "
+"parameters."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:184
-msgid "Control options"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:167
+msgid "Click to change the modifier keys."
 msgstr ""
 
-#: /home/yoann/Tmp/VCC/trunk/src/preferencesdialog.cpp:186
-msgid "Display options"
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:195
+msgid "Show seconds only if the time is less than"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:203
+msgid "Display an increasing time counter when the flag is down"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:204
+msgid "Display extra time information when playing in Bronstein mode"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:205
+msgid "Display extra time information when playing in byo-yomi mode"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:212
+msgid ""
+"If the remaining time is greater than (or equal to) this threshold, it is "
+"rounded to the nearest minute before being displayed. For instance, if the "
+"threshold is set to 0, the seconds are never displayed."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:216
+msgid ""
+"This parameter affects only the display, not the accuracy of the time "
+"measurement."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:219
+msgid ""
+"If checked, an increasing time counter is displayed when the players run out "
+"of time. Otherwise, in this situation, the clock only displays \"Flag down\"."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:223
+msgid ""
+"This option only affects the display with the Bronstein time control mode. "
+"If checked, the main time and the additional time are displayed separately."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:227
+msgid ""
+"This option only affects the display with the byo-yomi time control mode. If "
+"checked, the clock displays when the players are currently spending their "
+"additional byo-yomi periods."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:248
+msgid "Show the status bar at the bottom of the main window"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:253
+msgid "Always"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:254
+msgid "Only if the clock is still running"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:255
+msgid "Never"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:258
+msgid "Ask for confirmation when clicking on the \"Reset the clock\" button?"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:338
+msgid ""
+"Key actions\n"
+"when the modifier keys\n"
+"are pressed"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/preferencedialog.cpp:339
+msgid ""
+"Default\n"
+"key actions"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/bitimerwidget.cpp:206
+msgid "Flag down"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/bitimerwidget.cpp:207
+msgid "Since: %1"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/bitimerwidget.cpp:215
+msgid "Byo-yomi period"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/bitimerwidget.cpp:216
+msgid "Byo-yomi period %1/%2"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:36
+msgid "Sudden death"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:37
+msgid "Fischer"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:38
+msgid "Bronstein"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:39
+msgid "Hourglass"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:40
+msgid "Byo-yomi"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:119
+msgid "left"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:121
+msgid "right"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:134
+msgid "by move"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:141
+msgid "byo-yomi period"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:141
+msgid "byo-yomi periods"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:155
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:168
+msgid "%1% sec"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:166
+msgid "%1% hour"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/timecontrol.cpp:167
+msgid "%1% min"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/debugdialog.cpp:33
+msgid "Debug information"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/debugdialog.cpp:45
+msgid "Press some key..."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/modifierkeyswidget.cpp:32
+msgid "Modifier keys"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/modifierkeyswidget.cpp:35
+msgid "%1% keys (left and right)"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:60
+msgid "Main tool-bar"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:66
+msgid "Swap sides"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:68
+msgid "Full screen"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:79
+msgid "Reset the clock"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:80
+msgid "Pause the clock"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:81
+msgid "Swap the players and the time control parameters"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:82
+msgid "Full screen on/off"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:83
+msgid "Change the current time control"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:84
+msgid "Edit the names of the players"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:85
+msgid "General options, help, etc..."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:93
+msgid "Debug"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:95
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:342
+msgid "Help"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:96
+msgid "About"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:206
+msgid "Stop this game?"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:206
+msgid "Do you really want to start a new game?"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:319
+msgid "http://en.wikipedia.org/wiki/Time_control"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:324
+msgid ""
+"To start playing and then change the running side of the clock, just press "
+"some keys on the keyboard. The left player must press keys on the left side "
+"of the keyboard, the right player on the right side. The role of each key "
+"can be edited in the \"%1\" dialog, available through the menu \"%2\" &gt; "
+"\"%1\"."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:332
+msgid ""
+"Most tool-bar buttons and dialog fields have tool-tips to give a short "
+"description of their respective roles. To show the tool-tip, just place the "
+"mouse cursor over the button or the field you want to be explained, and wait "
+"a few seconds."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:338
+msgid ""
+"General description of time control systems and rules can be found on the "
+"Internet, for instance: %1."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:349
+msgid "About %1"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:355
+msgid "A simple and free chess clock software."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:358
+msgid "developer link"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:361
+msgid ""
+"If you encounter some bugs with this program, or if you wish to get new "
+"features in the future versions, you can report/propose them in the bug "
+"tracker at %1."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:364
+msgid "Author"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:366
+msgid "Translators"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:373
+msgid ""
+"If you are interested in translating this plugin into your language, please "
+"contact the author."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:376
+msgid "License"
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:378
+msgid ""
+"This program is free software: you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation, either version 3 of the License, or (at your option) "
+"any later version."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:384
+msgid ""
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
+"more details."
+msgstr ""
+
+#: /home/yoann/VCC/trunk-qt/src/mainwindow.cpp:390
+msgid ""
+"You should have received a copy of the GNU General Public License along with "
+"this program. If not, see <a href=\"http://www.gnu.org/licenses/\">http://"
+"www.gnu.org/licenses/</a>."
 msgstr ""
