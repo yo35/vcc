@@ -26,6 +26,7 @@
 #include <map>
 #include <string>
 #include <boost/property_tree/ptree.hpp>
+#include <signals.h>
 
 
 /**
@@ -44,6 +45,24 @@ public:
 	 * Constructor.
 	 */
 	ShortcutMap() {}
+
+	/**
+	 * Copy constructor.
+	 */
+	ShortcutMap(const ShortcutMap &rhs);
+
+	/**
+	 * Copy operator.
+	 */
+	ShortcutMap &operator=(const ShortcutMap &rhs);
+
+	/**
+	 * Signal sent when the shortcut map changes.
+	 */
+	sig::connection connect_changed(const sig::signal<void()>::slot_type &slot) const
+	{
+		return _signal_changed.connect(slot);
+	}
 
 	/**
 	 * Return the index of the low-position shortcut associated to the key having the ID `id`.
@@ -77,6 +96,25 @@ public:
 	}
 
 	/**
+	 * Set the index of the low-position shortcut associated to the key having the ID `id`.
+	 */
+	void set_shortcut_low(const std::string &id, int value);
+
+	/**
+	 * Set the index of the high-position shortcut associated to the key having the ID `id`.
+	 */
+	void set_shortcut_high(const std::string &id, int value);
+
+	/**
+	 * Set the index of the (either low- or high-position depending on the flag `high_position`)
+	 * shortcut associated to the key having the ID `id`.
+	 */
+	void set_shortcut(const std::string &id, bool high_position, int value)
+	{
+		high_position ? set_shortcut_high(id, value) : set_shortcut_low(id, value);
+	}
+
+	/**
 	 * Load the shortcut map from a file.
 	 * @returns `*this`
 	 */
@@ -103,8 +141,9 @@ public:
 private:
 
 	// Private members
-	std::map<std::string, int> _shortcut_low ;
-	std::map<std::string, int> _shortcut_high;
+	mutable sig::signal<void()> _signal_changed;
+	std::map<std::string, int>  _shortcut_low  ;
+	std::map<std::string, int>  _shortcut_high ;
 };
 
 #endif /* SHORTCUTMAP_H_ */

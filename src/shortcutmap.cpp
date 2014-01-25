@@ -24,6 +24,47 @@
 #include <boost/property_tree/xml_parser.hpp>
 
 
+// Copy constructor.
+ShortcutMap::ShortcutMap(const ShortcutMap &rhs) :
+	_shortcut_low (rhs._shortcut_low ),
+	_shortcut_high(rhs._shortcut_high)
+{}
+
+
+// Copy operator.
+ShortcutMap &ShortcutMap::operator=(const ShortcutMap &rhs)
+{
+	if(this!=&rhs) {
+		_shortcut_low  = rhs._shortcut_low ;
+		_shortcut_high = rhs._shortcut_high;
+		_signal_changed();
+	}
+	return *this;
+}
+
+
+// Set the index of the low-position shortcut associated to the key having the ID `id`.
+void ShortcutMap::set_shortcut_low(const std::string &id, int value)
+{
+	int old_value = shortcut_low(id);
+	if(old_value!=value) {
+		_shortcut_low[id] = value;
+		_signal_changed();
+	}
+}
+
+
+// Set the index of the high-position shortcut associated to the key having the ID `id`.
+void ShortcutMap::set_shortcut_high(const std::string &id, int value)
+{
+	int old_value = shortcut_high(id);
+	if(old_value!=value) {
+		_shortcut_high[id] = value;
+		_signal_changed();
+	}
+}
+
+
 // Load the shortcut map from a file.
 ShortcutMap &ShortcutMap::load(const std::string &path)
 {
@@ -53,7 +94,8 @@ ShortcutMap &ShortcutMap::load(const boost::property_tree::ptree &data)
 		_shortcut_high[id] = it.second.get("high", 0);
 	}
 
-	// Return the object.
+	// Notify the modifications and return the object.
+	_signal_changed();
 	return *this;
 }
 
