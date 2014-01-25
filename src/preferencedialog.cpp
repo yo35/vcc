@@ -90,17 +90,17 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	layout->addWidget(_keyboardWidget, 1);
 
 	// Captions (exception modifier keys)
-	_captionLeft   = captionWidgetFactory(QColor(  0,176,  0), _("Left player's button" ), 1);
-	_captionRight  = captionWidgetFactory(QColor(  0,128,255), _("Right player's button"), 2);
-	_captionPause  = captionWidgetFactory(QColor(255,128,  0), _("Pause"                ), 3);
-	_captionReset  = captionWidgetFactory(QColor(240, 48,255), _("Reset"                ), 4);
-	_captionSwitch = captionWidgetFactory(QColor(255, 16, 16), _("Switch"               ), 5);
+	CaptionWidget *captionLeft  = captionWidgetFactory(QColor(  0,176,  0), _("Left player's button" ), 1);
+	CaptionWidget *captionRight = captionWidgetFactory(QColor(  0,128,255), _("Right player's button"), 2);
+	CaptionWidget *captionPause = captionWidgetFactory(QColor(255,128,  0), _("Pause"                ), 3);
+	CaptionWidget *captionReset = captionWidgetFactory(QColor(240, 48,255), _("Reset"                ), 4);
+	CaptionWidget *captionSwap  = captionWidgetFactory(QColor(255, 16, 16), _("Switch"               ), 5);
 	QGridLayout *captionLayout = new QGridLayout;
-	captionLayout->addWidget(_captionLeft  , 0, 0);
-	captionLayout->addWidget(_captionRight , 1, 0);
-	captionLayout->addWidget(_captionPause , 0, 1);
-	captionLayout->addWidget(_captionReset , 1, 1);
-	captionLayout->addWidget(_captionSwitch, 0, 2);
+	captionLayout->addWidget(captionLeft , 0, 0);
+	captionLayout->addWidget(captionRight, 1, 0);
+	captionLayout->addWidget(captionPause, 0, 1);
+	captionLayout->addWidget(captionReset, 1, 1);
+	captionLayout->addWidget(captionSwap , 0, 2);
 
 	// Modifier keys selector
 	_modifierKeysSelector = new ModifierKeysWidget(this);
@@ -124,6 +124,47 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	onHasNumericKeypadToggled();
 	onModifierKeysChanged    ();
 	onShortcutModeChanged    ();
+
+	// Tool-tips
+	_keyboardWidget->setToolTip(QString("<p><b>%1</b></p><p>%2</p><p>%3</p>")
+		.arg(_("Key actions"))
+		.arg(_(
+			"This schematic representation of the keyboard shows the actions that are associated to each key."
+		))
+		.arg(_(
+			"To associate an action to a key, click on the corresponding caption "
+			"below the keyboard representation, and then click on the key "
+			"whose behavior you want to change. "
+			"Clicking twice on a key cancels the key/action association."
+		))
+	);
+	_shortcutModeSelector->setToolTip(QString("<p>%1</p><p>%2</p>")
+		.arg(_(
+			"Two actions may be associated to each key: "
+			"one is triggered by default when the user presses the key, "
+			"the other is triggered when the user presses the key while holding "
+			"both &quot;modifier keys&quot; down. "
+			"For instance, in the default configuration, the modifier keys are the shift keys, "
+			"and pressing &lt;shift-left&gt; + &lt;shift-right&gt; + &lt;space&gt; "
+			"stops the clock."
+		))
+		.arg(_(
+			"Toggle this button to show (and edit) either the default actions "
+			"or the actions triggered when the modifier keys are pressed."
+		))
+	);
+	captionLeft->button()->setToolTip("<p>" + _(
+		"Edit the keys that the left player can press to start the right player's clock."
+	) + "</p>");
+	captionRight->button()->setToolTip("<p>" + _(
+		"Edit the keys that the right player can press to start the left player's clock."
+	) + "</p>");
+	captionPause->button()->setToolTip("<p>" + _("Edit the keys that can be pressed to stop the clock." ) + "</p>");
+	captionReset->button()->setToolTip("<p>" + _("Edit the keys that can be pressed to reset the clock.") + "</p>");
+	captionSwap ->button()->setToolTip("<p>" + _(
+		"Edit the keys that can be pressed to swap the players and the time control parameters."
+	) + "</p>");
+	_modifierKeysSelector->setToolTip(_("Click to change the modifier keys."));
 
 	// Return the page widget
 	return page;
@@ -294,8 +335,8 @@ void PreferenceDialog::onShortcutModeChanged()
 {
 	bool showShortcutHigh = _shortcutModeSelector->isChecked();
 	_shortcutModeSelector->setText(showShortcutHigh ?
-		_("Key functions\nwhen the modifier keys\nare pressed") :
-		_("Default\nkey functions")
+		_("Key actions\nwhen the modifier keys\nare pressed") :
+		_("Default\nkey actions")
 	);
 	_keyboardWidget->setShowShortcutHigh(showShortcutHigh);
 }

@@ -94,11 +94,6 @@ private:
 	KeyboardHandler    *_keyboardHandler     ;
 	KeyboardWidget     *_keyboardWidget      ;
 	ShortcutMap         _shortcutMap         ;
-	CaptionWidget      *_captionLeft         ;
-	CaptionWidget      *_captionRight        ;
-	CaptionWidget      *_captionPause        ;
-	CaptionWidget      *_captionReset        ;
-	CaptionWidget      *_captionSwitch       ;
 	bool                _captionToggledShunt ;
 	CaptionWidget      *_selectedCaption     ;
 	int                 _selectedShortcut    ;

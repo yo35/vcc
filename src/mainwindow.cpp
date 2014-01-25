@@ -76,13 +76,13 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	btnMenu->setAutoRaise(true);
 	btnMenu->setFocusPolicy(Qt::NoFocus);
 	_toolBar->addWidget(btnMenu);
-	actReset->setToolTip(_("Reset the clock"                              ));
-	actPause->setToolTip(_("Pause the clock"                              ));
-	actSwap ->setToolTip(_("Swap the players and the time control options"));
-	actFlScr->setToolTip(_("Full screen on/off"                           ));
-	actTCtrl->setToolTip(_("Change the current time control"              ));
-	actNames->setToolTip(_("Edit the names of the players"                ));
-	btnMenu ->setToolTip(_("General options, help, etc..."                ));
+	actReset->setToolTip(_("Reset the clock"                                 ));
+	actPause->setToolTip(_("Pause the clock"                                 ));
+	actSwap ->setToolTip(_("Swap the players and the time control parameters"));
+	actFlScr->setToolTip(_("Full screen on/off"                              ));
+	actTCtrl->setToolTip(_("Change the current time control"                 ));
+	actNames->setToolTip(_("Edit the names of the players"                   ));
+	btnMenu ->setToolTip(_("General options, help, etc..."                   ));
 
 	// Build the menu.
 	QMenu *menu = new QMenu(this);
