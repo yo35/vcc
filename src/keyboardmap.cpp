@@ -244,3 +244,35 @@ std::vector<int> KeyboardMap::parse_int_list(const std::string &data, std::size_
 	// Return the result
 	return std::move(retval);
 }
+
+
+// Return the index of the key-line corresponding to the given y coordinate, if any.
+boost::optional<std::size_t> KeyboardMap::line_at(double y) const
+{
+	for(std::size_t line=0; line<_line_y.size(); ++line) {
+		if(y>=_line_y[line] && y<_line_y[line]+_line_height[line]) {
+			return line;
+		}
+	}
+	return boost::none;
+}
+
+
+// Return the index of the key corresponding to the given (x,y) coordinates, if any.
+boost::optional<std::size_t> KeyboardMap::key_at(double x, double y) const
+{
+	// Determine the index of the key-line.
+	boost::optional<std::size_t> line = line_at(y);
+	if(!line) {
+		return boost::none;
+	}
+
+	// Determine the key.
+	for(std::size_t k=0; k<_keys.size(); ++k) {
+		const KeyDescriptor &key(_keys[k]);
+		if(*line>=key.line_top() && *line<=key.line_bottom() && x>=key.x(*line) && x<key.x(*line)+key.width(*line)) {
+			return k;
+		}
+	}
+	return boost::none;
+}

@@ -26,6 +26,7 @@
 #include <cstddef>
 #include <cstring>
 #include <vector>
+#include <boost/optional.hpp>
 #include <boost/regex.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include "keys.h"
@@ -201,6 +202,16 @@ public:
 	 * Total width of the keyboard, with of without the numeric keypad.
 	 */
 	int total_width(bool with_numeric_keypad) const { return with_numeric_keypad ? _total_width_with_nkp : _total_width_without_nkp; }
+
+	/**
+	 * Return the index of the key-line corresponding to the given y coordinate, if any.
+	 */
+	boost::optional<std::size_t> line_at(double y) const;
+
+	/**
+	 * Return the index of the key corresponding to the given (x,y) coordinates, if any.
+	 */
+	boost::optional<std::size_t> key_at(double x, double y) const;
 
 private:
 

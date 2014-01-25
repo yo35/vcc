@@ -31,6 +31,7 @@
 #include <cfloat>
 #include <cmath>
 #include <QPainter>
+#include <QMouseEvent>
 
 
 // Constructor.
@@ -42,7 +43,7 @@ KeyboardWidget::KeyboardWidget(const KeyboardHandler *keyboardHandler, QWidget *
 	_colorKeyDefault (Qt::white),
 	_colorKeyDown    (0, 0, 128),
 	_colorModifierKey(Qt::white),
-	_painter(nullptr), _keyMargin(0), _keyRadius(0)
+	_painter(nullptr), _scale(1), _xMargin(0), _yMargin(0), _keyMargin(0), _keyRadius(0)
 {
 	connect(_keyboardHandler, &KeyboardHandler::keyPressed , this, &KeyboardWidget::onKeyStateChanged);
 	connect(_keyboardHandler, &KeyboardHandler::keyReleased, this, &KeyboardWidget::onKeyStateChanged);
@@ -156,6 +157,29 @@ void KeyboardWidget::onKeyStateChanged(ScanCode)
 }
 
 
+// Mouse-press handler.
+void KeyboardWidget::mousePressEvent(QMouseEvent *event)
+{
+	// Nothing to do if no keyboard is binded to the widget.
+	if(_keyboardMap==nullptr) {
+		return;
+	}
+
+	// Transform the widget-relative coordinates into "keyboard-relative" coordinates.
+	double x = static_cast<double>(event->x()-_xMargin)/_scale;
+	double y = static_cast<double>(event->y()-_yMargin)/_scale;
+
+	// Determine the key located at (x,y), if any.
+	boost::optional<std::size_t> key = _keyboardMap->key_at(x, y);
+	if(!key) {
+		return;
+	}
+
+	// Emit the dedicated signal if a key is actually located at (x,y).
+	emit keyClicked(_keyboardMap->key(*key).id(), event->button());
+}
+
+
 // Widget rendering method.
 void KeyboardWidget::paintEvent(QPaintEvent *)
 {
@@ -181,11 +205,11 @@ void KeyboardWidget::paintEvent(QPaintEvent *)
 	int keyboardHeight = _keyboardMap->total_height();
 	double xScale = static_cast<double>(width () - 2*margin) / static_cast<double>(keyboardWidth );
 	double yScale = static_cast<double>(height() - 2*margin) / static_cast<double>(keyboardHeight);
-	double scale  = std::min(xScale, yScale);
-	int xMargin = (width () - static_cast<int>(scale*keyboardWidth )) / 2;
-	int yMargin = (height() - static_cast<int>(scale*keyboardHeight)) / 2;
-	painter.translate(QPoint(xMargin, yMargin));
-	painter.scale(scale, scale);
+	_scale  = std::min(xScale, yScale);
+	_xMargin = (width () - static_cast<int>(_scale*keyboardWidth )) / 2;
+	_yMargin = (height() - static_cast<int>(_scale*keyboardHeight)) / 2;
+	painter.translate(QPoint(_xMargin, _yMargin));
+	painter.scale(_scale, _scale);
 
 	// Prepare the rendering of the keys
 	_painter = &painter;

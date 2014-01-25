@@ -26,6 +26,7 @@
 #include <QWidget>
 #include <vector>
 #include <map>
+#include <boost/optional.hpp>
 QT_BEGIN_NAMESPACE
 	class QPainter;
 QT_END_NAMESPACE
@@ -149,7 +150,19 @@ public:
 	QSize sizeHint() const override;
 	/**@} */
 
+signals:
+
+	/**
+	 * Signal triggered when the user clicks on the graphic representation of a key.
+	 */
+	void keyClicked(const std::string &id, Qt::MouseButton button);
+
 protected:
+
+	/**
+	 * Mouse-press handler.
+	 */
+	void mousePressEvent(QMouseEvent *event) override;
 
 	/**
 	 * Widget rendering method.
@@ -189,8 +202,10 @@ private:
 	std::map<int, QBrush> _shortcutColors;
 
 	// Temporary members used at rendering time
-	// (should not be used outside the `paintEvent` method).
-	QPainter *_painter  ;
+	QPainter *_painter  ; // invalid used outside the `paintEvent` method
+	double    _scale    ;
+	int       _xMargin  ;
+	int       _yMargin  ;
 	int       _keyMargin;
 	int       _keyRadius;
 };
