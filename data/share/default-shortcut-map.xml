@@ -14,23 +14,23 @@
 	<key><id>tab</id><low>1</low><high>4</high></key>
 	<key><id>main-15</id><low>1</low><high>4</high></key>
 	<key><id>main-16</id><low>1</low><high>4</high></key>
-	<key><id>main-17</id><low>1</low></key>
+	<key><id>main-17</id><low>1</low><high>4</high></key>
 	<key><id>main-18</id><low>1</low></key>
 	<key><id>main-19</id><low>1</low></key>
 	<key><id>main-23</id><low>2</low></key>
-	<key><id>main-24</id><low>2</low></key>
+	<key><id>main-24</id><low>2</low><high>5</high></key>
 	<key><id>main-25</id><low>2</low><high>5</high></key>
 	<key><id>main-26</id><low>2</low><high>5</high></key>
 	<key><id>enter</id><low>2</low><high>5</high></key>
 	<key><id>ctrl-left</id><low>1</low></key>
 	<key><id>main-29</id><low>1</low><high>4</high></key>
 	<key><id>main-30</id><low>1</low><high>4</high></key>
-	<key><id>main-31</id><low>1</low></key>
+	<key><id>main-31</id><low>1</low><high>4</high></key>
 	<key><id>main-32</id><low>1</low></key>
 	<key><id>main-33</id><low>1</low></key>
 	<key><id>main-36</id><low>2</low></key>
 	<key><id>main-37</id><low>2</low></key>
-	<key><id>main-38</id><low>2</low></key>
+	<key><id>main-38</id><low>2</low><high>5</high></key>
 	<key><id>main-39</id><low>2</low><high>5</high></key>
 	<key><id>main-40</id><low>1</low></key>
 	<key><id>shift-left</id><low>1</low></key>
