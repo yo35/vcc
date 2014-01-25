@@ -511,5 +511,5 @@ double KeyboardWidget::computeFontFactor(double w, double h, const std::vector<Q
 		QRectF br = _painter->boundingRect(QRectF(0, 0, w, h), Qt::AlignCenter, text);
 		retval = std::min(retval, std::min(w/br.width(), h/br.height()));
 	}
-	return std::round(retval*4)/4;
+	return std::floor(retval*4)/4;
 }

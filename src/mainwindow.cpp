@@ -362,7 +362,7 @@ void MainWindow::onAboutClicked()
 		"you can report/propose them in the bug tracker at %1."
 	)).arg("<a href=\"https://github.com/yo35/vcc/issues\">https://github.com/yo35/vcc/issues</a>") + "</i></small></p>"; //TODO: register on GitHub
 	message += "<h2>" + _("Author") + "</h2>";
-	message += "<p>Yoann Le Montagner <a href=\"mailto:yo35@melix.net\"><tt>&lt;yo35@melix.net&gt;</tt></a></p>";
+	message += "<p>Yoann Le Montagner <a href=\"mailto:yo35@melix.net\">&lt;yo35@melix.net&gt;</a></p>";
 	message += "<h2>" + _("Translators") + "</h2>";
 	message += "<table><tbody>";
 	message += "<tr><td>English</td><td>Yoann Le Montagner</td></tr>";
