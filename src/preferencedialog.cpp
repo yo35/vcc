@@ -23,16 +23,19 @@
 #include "preferencedialog.h"
 #include "params.h"
 #include <translation.h>
+#include <boost/bind.hpp>
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QGridLayout>
+#include <QButtonGroup>
 #include <QEvent>
 
 
 // Constructor.
-PreferenceDialog::PreferenceDialog(QWidget *parent) : QDialog(parent)
+PreferenceDialog::PreferenceDialog(QWidget *parent) : QDialog(parent),
+	_captionToggledShunt(false), _selectedCaption(nullptr), _selectedShortcut(0)
 {
 	// Top-level layout
 	setWindowTitle(_("Preferences"));
@@ -82,21 +85,16 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	// Keyboard handler and keyboard widget
 	_keyboardHandler = new KeyboardHandler(this);
 	_keyboardWidget = new KeyboardWidget(_keyboardHandler, this);
-	onHasNumericKeypadToggled();
-	_keyboardWidget->bindShortcutMap(Params::get().shortcut_map()); //TODO
+	_keyboardWidget->bindShortcutMap(_shortcutMap);
+	connect(_keyboardWidget, &KeyboardWidget::keyClicked, this, &PreferenceDialog::onKeyClicked);
 	layout->addWidget(_keyboardWidget, 1);
 
 	// Captions (exception modifier keys)
-	_captionLeft   = new CaptionWidget(QColor(  0,176,  0), _("Left player's button" ), this);
-	_captionRight  = new CaptionWidget(QColor(  0,128,255), _("Right player's button"), this);
-	_captionPause  = new CaptionWidget(QColor(255,128,  0), _("Pause"                ), this);
-	_captionReset  = new CaptionWidget(QColor(240, 48,255), _("Reset"                ), this);
-	_captionSwitch = new CaptionWidget(QColor(255, 16, 16), _("Switch"               ), this);
-	_keyboardWidget->shortcutColors()[1] = _captionLeft  ->color();
-	_keyboardWidget->shortcutColors()[2] = _captionRight ->color();
-	_keyboardWidget->shortcutColors()[3] = _captionPause ->color();
-	_keyboardWidget->shortcutColors()[4] = _captionReset ->color();
-	_keyboardWidget->shortcutColors()[5] = _captionSwitch->color();
+	_captionLeft   = captionWidgetFactory(QColor(  0,176,  0), _("Left player's button" ), 1);
+	_captionRight  = captionWidgetFactory(QColor(  0,128,255), _("Right player's button"), 2);
+	_captionPause  = captionWidgetFactory(QColor(255,128,  0), _("Pause"                ), 3);
+	_captionReset  = captionWidgetFactory(QColor(240, 48,255), _("Reset"                ), 4);
+	_captionSwitch = captionWidgetFactory(QColor(255, 16, 16), _("Switch"               ), 5);
 	QGridLayout *captionLayout = new QGridLayout;
 	captionLayout->addWidget(_captionLeft  , 0, 0);
 	captionLayout->addWidget(_captionRight , 1, 0);
@@ -107,25 +105,39 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	// Modifier keys selector
 	_modifierKeysSelector = new ModifierKeysWidget(this);
 	_keyboardWidget->setModifierKeyColor(_modifierKeysSelector->color());
-	onModifierKeysChanged();
 	connect(_modifierKeysSelector, &ModifierKeysWidget::valueChanged, this, &PreferenceDialog::onModifierKeysChanged);
 	captionLayout->addWidget(_modifierKeysSelector, 1, 2);
 
-	// Modifier keys toggle switch
-	_modifierKeysToggle = new QPushButton(this);
-	_modifierKeysToggle->setCheckable(true);
-	_modifierKeysToggle->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	onModifierKeysToggled();
-	connect(_modifierKeysToggle, &QPushButton::toggled, this, &PreferenceDialog::onModifierKeysToggled);
+	// Shortcut mode selector
+	_shortcutModeSelector = new QPushButton(this);
+	_shortcutModeSelector->setCheckable(true);
+	_shortcutModeSelector->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	connect(_shortcutModeSelector, &QPushButton::toggled, this, &PreferenceDialog::onShortcutModeChanged);
 
-	// Layout for the caption and the modifier keys toggle
+	// Layout for the captions and the modifier keys toggle
 	QHBoxLayout *bottomLayout = new QHBoxLayout;
-	bottomLayout->addLayout(captionLayout, 5);
-	bottomLayout->addWidget(_modifierKeysToggle, 2);
+	bottomLayout->addLayout(captionLayout        , 5);
+	bottomLayout->addWidget(_shortcutModeSelector, 2);
 	layout->addLayout(bottomLayout);
+
+	// Ensure that the widget's states are coherent.
+	onHasNumericKeypadToggled();
+	onModifierKeysChanged    ();
+	onShortcutModeChanged    ();
 
 	// Return the page widget
 	return page;
+}
+
+
+// Caption widget factory method.
+CaptionWidget *PreferenceDialog::captionWidgetFactory(const QColor &color, const QString &label, int shortcut)
+{
+	CaptionWidget *widget = new CaptionWidget(color, label, this);
+	widget->button()->setCheckable(true);
+	connect(widget->button(), &QToolButton::toggled, boost::bind(&PreferenceDialog::onCaptionToggled, this, widget, shortcut));
+	_keyboardWidget->shortcutColors()[shortcut] = color;
+	return widget;
 }
 
 
@@ -277,15 +289,52 @@ void PreferenceDialog::onModifierKeysChanged()
 }
 
 
-// Action performed when the state of the modifier keys button is toggled.
-void PreferenceDialog::onModifierKeysToggled()
+// Action performed when the state of the shortcut mode selector is changed.
+void PreferenceDialog::onShortcutModeChanged()
 {
-	bool modiferKeysPressed = _modifierKeysToggle->isChecked();
-	_modifierKeysToggle->setText(modiferKeysPressed ?
+	bool showShortcutHigh = _shortcutModeSelector->isChecked();
+	_shortcutModeSelector->setText(showShortcutHigh ?
 		_("Key functions\nwhen the modifier keys\nare pressed") :
 		_("Default\nkey functions")
 	);
-	_keyboardWidget->setShowShortcutHigh(modiferKeysPressed);
+	_keyboardWidget->setShowShortcutHigh(showShortcutHigh);
+}
+
+
+// Action performed when a caption button is toggled.
+void PreferenceDialog::onCaptionToggled(CaptionWidget *widget, int shortcut)
+{
+	if(_captionToggledShunt) {
+		return;
+	}
+
+	// Un-toggle the current selected caption, if any.
+	if(_selectedCaption!=nullptr && _selectedCaption!=widget) {
+		_captionToggledShunt = true;
+		_selectedCaption->button()->setChecked(false);
+		_captionToggledShunt = false;
+	}
+
+	// Update the selected caption pointer.
+	_selectedCaption  = widget->button()->isChecked() ? widget   : nullptr;
+	_selectedShortcut = widget->button()->isChecked() ? shortcut : 0;
+}
+
+
+// Action performed when the user clicks on the graphic representation of a key in the keyboard widget.
+void PreferenceDialog::onKeyClicked(const std::string &id, Qt::MouseButton button)
+{
+	// Nothing to do if no caption is selected or if it was not the left button.
+	if(_selectedShortcut==0 || button!=Qt::LeftButton) {
+		return;
+	}
+
+	// Get the index of the shortcut currently associated to the key with the given ID.
+	bool useShortcutHigh = _shortcutModeSelector->isChecked();
+	int  currentShortcut = _shortcutMap.shortcut(id, useShortcutHigh);
+
+	// Update the shortcut associated to the key.
+	_shortcutMap.set_shortcut(id, useShortcutHigh, currentShortcut==_selectedShortcut ? 0 : _selectedShortcut);
 }
 
 
@@ -294,6 +343,7 @@ void PreferenceDialog::loadParameters()
 {
 	// Keyboard page
 	_keyboardSelector->setCurrentIndex(_keyboardSelector->findData(QVariant(Params::get().current_keyboard().c_str())));
+	_shortcutMap = Params::get().shortcut_map();
 	_modifierKeysSelector->setModifierKeys(Params::get().modifier_keys());
 	_hasNumericKeypad->setChecked(Params::get().has_numeric_keypad());
 
@@ -314,6 +364,7 @@ void PreferenceDialog::saveParameters()
 {
 	// Keyboard page
 	Params::get().set_current_keyboard(retrieveSelectedKeyboard());
+	Params::get().shortcut_map() = _shortcutMap;
 	Params::get().set_modifier_keys(_modifierKeysSelector->modifierKeys());
 	Params::get().set_has_numeric_keypad(_hasNumericKeypad->isChecked());
 

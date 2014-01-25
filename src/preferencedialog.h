@@ -74,13 +74,16 @@ private:
 	QWidget *createKeyboardPage     ();
 	QWidget *createTimeDisplayPage  ();
 	QWidget *createMiscellaneousPage();
+	CaptionWidget *captionWidgetFactory(const QColor &color, const QString &label, int shortcut);
 	void refreshKeyboardHandlerActivationState();
 	void feedKeyboardSelector();
 	std::string retrieveSelectedKeyboard() const;
 	void onSelectedKeyboardChanged();
 	void onHasNumericKeypadToggled();
 	void onModifierKeysChanged    ();
-	void onModifierKeysToggled    ();
+	void onShortcutModeChanged    ();
+	void onCaptionToggled(CaptionWidget *widget, int shortcut);
+	void onKeyClicked(const std::string &id, Qt::MouseButton button);
 
 	// Tab widget
 	QTabWidget *_tabWidget;
@@ -90,13 +93,17 @@ private:
 	QCheckBox          *_hasNumericKeypad    ;
 	KeyboardHandler    *_keyboardHandler     ;
 	KeyboardWidget     *_keyboardWidget      ;
+	ShortcutMap         _shortcutMap         ;
 	CaptionWidget      *_captionLeft         ;
 	CaptionWidget      *_captionRight        ;
 	CaptionWidget      *_captionPause        ;
 	CaptionWidget      *_captionReset        ;
 	CaptionWidget      *_captionSwitch       ;
+	bool                _captionToggledShunt ;
+	CaptionWidget      *_selectedCaption     ;
+	int                 _selectedShortcut    ;
 	ModifierKeysWidget *_modifierKeysSelector;
-	QPushButton        *_modifierKeysToggle  ;
+	QPushButton        *_shortcutModeSelector;
 
 	// Time display page
 	TimeDurationWidget *_delayBeforeDisplaySeconds;
@@ -105,7 +112,7 @@ private:
 	QCheckBox          *_displayByoYomiExtraInfo  ;
 
 	// Miscellaneous page
-	QCheckBox *_showStatusBar;
+	QCheckBox                                     *_showStatusBar    ;
 	Enum::array<ResetConfirmation, QRadioButton *> _resetConfirmation;
 };
 
