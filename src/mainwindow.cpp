@@ -365,6 +365,7 @@ void MainWindow::onAboutClicked()
 	message += "<p>Yoann Le Montagner <a href=\"mailto:yo35@melix.net\">&lt;yo35@melix.net&gt;</a></p>";
 	message += "<h2>" + _("Translators") + "</h2>";
 	message += "<table><tbody>";
+	message += "<tr><td>Deutsch</td><td>Tobias Küchel</td></tr>";
 	message += "<tr><td>English</td><td>Yoann Le Montagner</td></tr>";
 	message += "<tr><td>Español</td><td>Santiago Paz</td></tr>";
 	message += "<tr><td>Français</td><td>Yoann Le Montagner</td></tr>";
