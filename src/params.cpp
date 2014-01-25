@@ -180,6 +180,7 @@ void Params::save()
 	// Save the shortcut map file if it is loaded.
 	if(_shortcut_map_loaded) {
 		try {
+			ensure_config_path_exists();
 			_shortcut_map.save(custom_shortcut_map_file());
 		}
 		catch(boost::property_tree::xml_parser_error &) {
