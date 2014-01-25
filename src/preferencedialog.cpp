@@ -104,7 +104,7 @@ QWidget *PreferenceDialog::createKeyboardPage()
 
 	// Modifier keys selector
 	_modifierKeysSelector = new ModifierKeysWidget(this);
-	_keyboardWidget->setModifierKeyColor(_modifierKeysSelector->color());
+	_keyboardWidget->setModifierKeyBrush(_modifierKeysSelector->color());
 	connect(_modifierKeysSelector, &ModifierKeysWidget::valueChanged, this, &PreferenceDialog::onModifierKeysChanged);
 	captionLayout->addWidget(_modifierKeysSelector, 1, 2);
 
