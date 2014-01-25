@@ -129,6 +129,8 @@ void KeyboardWidget::bindShortcutMap(const ShortcutMap &shortcutMap)
 	if(_shortcutMap==&shortcutMap) {
 		return;
 	}
+	auto connection = shortcutMap.connect_changed(boost::bind(&KeyboardWidget::update, this));
+	_shortcutMapConnection.reset(new sig::scoped_connection(connection));
 	_shortcutMap = &shortcutMap;
 	update();
 }
@@ -140,6 +142,7 @@ void KeyboardWidget::unbindShortcutMap()
 	if(_shortcutMap==nullptr) {
 		return;
 	}
+	_shortcutMapConnection.reset();
 	_shortcutMap = nullptr;
 	update();
 }

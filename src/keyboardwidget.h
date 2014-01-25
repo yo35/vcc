@@ -26,6 +26,7 @@
 #include <QWidget>
 #include <vector>
 #include <map>
+#include <memory>
 #include <boost/optional.hpp>
 QT_BEGIN_NAMESPACE
 	class QPainter;
@@ -187,12 +188,13 @@ private:
 	double computeFontFactor(double w, double h, const std::vector<QString> &texts) const;
 
 	// Private members
-	const KeyboardHandler *_keyboardHandler ;
-	const KeyboardMap     *_keyboardMap     ;
-	const ShortcutMap     *_shortcutMap     ;
-	bool                   _hasNumericKeypad;
-	bool                   _showShortcutHigh;
-	ModifierKeys           _modifierKeys    ;
+	const KeyboardHandler                  *_keyboardHandler      ;
+	const KeyboardMap                      *_keyboardMap          ;
+	const ShortcutMap                      *_shortcutMap          ;
+	std::unique_ptr<sig::scoped_connection> _shortcutMapConnection;
+	bool                                    _hasNumericKeypad     ;
+	bool                                    _showShortcutHigh     ;
+	ModifierKeys                            _modifierKeys         ;
 
 	// Colors
 	QColor _colorBackground ;
