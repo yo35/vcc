@@ -42,7 +42,7 @@ KeyboardWidget::KeyboardWidget(const KeyboardHandler *keyboardHandler, QWidget *
 	_colorBackground (208, 255, 208),
 	_colorKeyDefault (Qt::white),
 	_colorKeyDown    (0, 0, 128),
-	_colorModifierKey(Qt::white),
+	_modifierKeyBrush(Qt::transparent),
 	_painter(nullptr), _scale(1), _xMargin(0), _yMargin(0), _keyMargin(0), _keyRadius(0)
 {
 	connect(_keyboardHandler, &KeyboardHandler::keyPressed , this, &KeyboardWidget::onKeyStateChanged);
@@ -224,15 +224,13 @@ void KeyboardWidget::paintEvent(QPaintEvent *)
 	for(std::size_t k=0; k<_keyboardMap->key_count(); ++k)
 	{
 		const KeyboardMap::KeyDescriptor &key(_keyboardMap->key(k));
-		bool isKeyDown = _keyboardHandler->isDown(key.scan_code());
-
-		// Determine the color to use to draw the key
+		bool keyDown     = _keyboardHandler->isDown(key.scan_code());
+		bool modifierKey = isModifierKey(key);
 		painter.save();
-		if(isKeyDown) {
+
+		// Draw the key shape and the background.
+		if(keyDown) {
 			painter.setBrush(_colorKeyDown);
-		}
-		else if(isModifierKey(key)) {
-			painter.setBrush(_colorModifierKey);
 		}
 		else if(_shortcutMap!=nullptr) {
 			int shortcut = _shortcutMap->shortcut(key.id(), _showShortcutHigh);
@@ -243,11 +241,21 @@ void KeyboardWidget::paintEvent(QPaintEvent *)
 				}
 			}
 		}
-
-		// Draw the key
 		drawKeyShape(key);
-		painter.setPen(isKeyDown ? Qt::white : Qt::black);
+
+		// For modifier keys, draw a texture over the background.
+		if(modifierKey) {
+			QBrush brush(_modifierKeyBrush);
+			brush.setTransform(_painter->worldTransform().inverted());
+			painter.setBrush(brush);
+			drawKeyShape(key);
+		}
+
+		// Draw the key label.
+		painter.setPen(keyDown ? Qt::white : Qt::black);
 		drawKeyLabel(key);
+
+		// Reset the original painter state.
 		painter.restore();
 	}
 }

@@ -63,6 +63,7 @@ private:
 
 	// Private function
 	void onActionTriggered(ModifierKeys value);
+	static QBrush buildBrush();
 
 	// Private members
 	ModifierKeys _modifierKeys;

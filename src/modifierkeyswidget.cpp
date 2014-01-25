@@ -25,11 +25,12 @@
 #include <boost/format.hpp>
 #include <boost/bind.hpp>
 #include <QMenu>
+#include <QBitmap>
 
 
 // Constructor.
 ModifierKeysWidget::ModifierKeysWidget(QWidget *parent) :
-	CaptionWidget(QBrush(QColor(0,0,128), Qt::FDiagPattern), _("Modifier keys"), parent)
+	CaptionWidget(buildBrush(), _("Modifier keys"), parent)
 {
 	// Prepare the composition of the menu labels.
 	static boost::format labelFormater(_("%1% keys (left and right)"));
@@ -79,4 +80,16 @@ void ModifierKeysWidget::onActionTriggered(ModifierKeys value)
 	}
 	_modifierKeys = value;
 	emit valueChanged();
+}
+
+
+// Build the brush that is used in the modifier keys caption.
+QBrush ModifierKeysWidget::buildBrush()
+{
+	static const uchar texture[] = {
+		0x0f, 0x00, 0x1e, 0x00, 0x3c, 0x00, 0x78, 0x00, 0xf0, 0x00, 0xe0, 0x01,
+		0xc0, 0x03, 0x80, 0x07, 0x00, 0x0f, 0x01, 0x0e, 0x03, 0x0c, 0x07, 0x08
+	};
+	static const QSize size(12, 12);
+	return QBrush(QColor(0, 0, 128), QBitmap::fromData(size, texture));
 }

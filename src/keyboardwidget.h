@@ -54,22 +54,22 @@ public:
 	/**
 	 * Colors to use for the keys that are associated to a shortcut.
 	 */
-	std::map<int, QBrush> &shortcutColors() { return _shortcutColors; }
+	std::map<int, QColor> &shortcutColors() { return _shortcutColors; }
 
 	/**
 	 * Colors to use for the keys that are associated to a shortcut (constant version).
 	 */
-	const std::map<int, QBrush> &shortcutColors() const { return _shortcutColors; }
+	const std::map<int, QColor> &shortcutColors() const { return _shortcutColors; }
 
 	/**
-	 * Modifier key color.
+	 * Modifier key brush.
 	 */
-	QBrush modifierKeyColor() const { return _colorModifierKey; }
+	QBrush modifierKeyBrush() const { return _modifierKeyBrush; }
 
 	/**
-	 * Change the modifier key color.
+	 * Change the modifier key brush.
 	 */
-	void setModifierKeyColor(QBrush color) { _colorModifierKey = color; }
+	void setModifierKeyBrush(QBrush brush) { _modifierKeyBrush = brush; }
 
 	/**
 	 * Whether the numeric keypad should be displayed or not.
@@ -200,8 +200,8 @@ private:
 	QColor _colorBackground ;
 	QColor _colorKeyDefault ;
 	QColor _colorKeyDown    ;
-	QBrush _colorModifierKey;
-	std::map<int, QBrush> _shortcutColors;
+	QBrush _modifierKeyBrush;
+	std::map<int, QColor> _shortcutColors;
 
 	// Temporary members used at rendering time
 	QPainter *_painter  ; // invalid used outside the `paintEvent` method
