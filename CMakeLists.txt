@@ -34,9 +34,9 @@ if(${WIN32})
 endif()
 
 
-include(project.cmake)
-include(libraries.cmake)
-include(compile.cmake)
+include(cmake/project.cmake)
+include(cmake/libraries.cmake)
+include(cmake/compile.cmake)
 
 
 
