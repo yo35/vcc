@@ -27,10 +27,11 @@
 
 
 # Find the QT compilation tool (lconvert)
-# If it cannot be found, the executable is still built, but not localized: most of the texts will appear in English.
+# If it cannot be found, the executable is still built, but not localized:
+# most of the texts will appear in English.
 find_package(Qt5LinguistTools)
 if(NOT ${Qt5LinguistTools_FOUND})
-	message(STATUS "Cannot found Qt5 linguist tools: translation will not be available.")
+	message(WARNING "Cannot find Qt5 linguist tools: translation will not be available.")
 	return()
 endif()
 find_program(Qt5_LCONVERT_EXECUTABLE lconvert
