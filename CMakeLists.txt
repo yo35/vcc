@@ -26,23 +26,6 @@
 # Check the CMake version
 cmake_minimum_required(VERSION 2.8)
 
-# Optimization mode
-if(NOT (
-	(${CMAKE_BUILD_TYPE} MATCHES Debug) OR
-	(${CMAKE_BUILD_TYPE} MATCHES RelWithDebInfo) OR
-	(${CMAKE_BUILD_TYPE} MATCHES Release)
-))
-	message(FATAL_ERROR "Must define CMAKE_BUILD_TYPE")
-endif()
-
-# Installation mode
-if(NOT (
-	(${INSTALL_TYPE} MATCHES Dev) OR
-	(${INSTALL_TYPE} MATCHES Compile) OR
-	(${INSTALL_TYPE} MATCHES Package)
-))
-	message(FATAL_ERROR "Must define INSTALL_TYPE")
-endif()
 
 # Resource file (only for windows)
 if(${WIN32})
@@ -239,7 +222,7 @@ add_custom_target(
 message(STATUS "VCC will be build in ${CMAKE_BUILD_TYPE} mode")
 
 # Exécution
-if(${INSTALL_TYPE} MATCHES Dev)
+#if(${INSTALL_TYPE} MATCHES Dev)
 	message(STATUS "VCC is configured for devel")
 	add_custom_target(
 		run
@@ -247,72 +230,72 @@ if(${INSTALL_TYPE} MATCHES Dev)
 		DEPENDS ${EXECUTABLE_NAME}
 	)
 
-# Installation
-else()
-	message(STATUS "VCC is configured in ${INSTALL_TYPE} install mode")
-	message(STATUS "VCC will be installed in ${CMAKE_INSTALL_PREFIX}")
-
-	# Cible 'make install'
-	install(PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/${EXECUTABLE_FULL_NAME}
-		DESTINATION ${VCC_BIN_RPATH})
-	if(${WIN32})
-		install(FILES ${LIBRARY_OUTPUT_PATH}/${HOOKDLL_FULL_NAME}
-			DESTINATION ${VCC_BIN_RPATH})
-	endif()
-	install(FILES ${data_shared_files} DESTINATION ${VCC_SHARE_RPATH}       )
-	install(FILES ${readme_aso_files}  DESTINATION ${VCC_DOC_RPATH}         )
-	install(FILES ${desktop_file}      DESTINATION ${VCC_APPLICATIONS_RPATH})
-	foreach(loop_var ${ICON_SIZES})
-		install(DIRECTORY data/icons/unix/${loop_var} DESTINATION ${VCC_ICONS_RPATH} PATTERN ".svn" EXCLUDE)
-	endforeach(loop_var)
-	foreach(loop_var ${translation_po_files})
-		get_filename_component(INTL_CODE ${loop_var} NAME_WE)
-		install(DIRECTORY locale/${INTL_CODE} DESTINATION ${VCC_LOCALE_RPATH})
-	endforeach(loop_var)
-
-	# Libraries additionnelles pour windows
-	if(${INSTALL_TYPE} MATCHES Package)
-		if(${WIN32})
-			install(DIRECTORY redist_win32/mingw32/         DESTINATION "." PATTERN ".svn" EXCLUDE)
-			install(DIRECTORY redist_win32/gtkmm/           DESTINATION "." PATTERN ".svn" EXCLUDE)
-			install(DIRECTORY redist_win32/gtk+/atk/        DESTINATION "." PATTERN ".svn" EXCLUDE)
-			install(DIRECTORY redist_win32/gtk+/cairo/      DESTINATION "." PATTERN ".svn" EXCLUDE)
-			install(DIRECTORY redist_win32/gtk+/expat/      DESTINATION "." PATTERN ".svn" EXCLUDE)
-			install(DIRECTORY redist_win32/gtk+/fontconfig/ DESTINATION "." PATTERN ".svn" EXCLUDE)
-			install(DIRECTORY redist_win32/gtk+/freetype/   DESTINATION "." PATTERN ".svn" EXCLUDE)
-			install(DIRECTORY redist_win32/gtk+/glib/       DESTINATION "." PATTERN ".svn" EXCLUDE)
-			install(DIRECTORY redist_win32/gtk+/gtk+/       DESTINATION "." PATTERN ".svn" EXCLUDE)
-			install(DIRECTORY redist_win32/gtk+/gtk+-conf/  DESTINATION "." PATTERN ".svn" EXCLUDE)
-			install(DIRECTORY redist_win32/gtk+/libpng/     DESTINATION "." PATTERN ".svn" EXCLUDE)
-			install(DIRECTORY redist_win32/gtk+/pango/      DESTINATION "." PATTERN ".svn" EXCLUDE)
-			install(DIRECTORY redist_win32/gtk+/zlib/       DESTINATION "." PATTERN ".svn" EXCLUDE)
-		endif()
-	endif()
-
-	# CPack
-	if(${INSTALL_TYPE} MATCHES Package)
-		if(${WIN32})
-			set(CPACK_GENERATOR "NSIS")
-		else()
-			set(CPACK_GENERATOR "DEB")
-		endif()
-		set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-		set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-		set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-		set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}")
-		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}-${PROJECT_VERSION_MAJOR}")
-		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}.${PROJECT_VERSION_MINOR}")
-		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}.${PROJECT_VERSION_PATCH}")
-		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
-		set(CPACK_PACKAGE_DESCRIPTION_FILE ${README_FULL_PATH})
-		set(CPACK_RESOURCE_FILE_LICENSE ${COPYING_FULL_PATH})
-		set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Virtual Chess Clock is a simple and free chess clock software")
-		set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Yoann Le Montagner")
-		set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtkmm-2.4-1c2a")
-		set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS
-			"CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\${PROJECT_FULL_NAME}.lnk' '$INSTDIR\\\\${VCC_BIN_RPATH}\\\\${EXECUTABLE_FULL_NAME}'")
-		set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS
-			"Delete '$SMPROGRAMS\\\\$START_MENU\\\\${PROJECT_FULL_NAME}.lnk'")
-		include(CPack)
-	endif()
-endif()
+# # Installation
+# else()
+# 	message(STATUS "VCC is configured in ${INSTALL_TYPE} install mode")
+# 	message(STATUS "VCC will be installed in ${CMAKE_INSTALL_PREFIX}")
+# 
+# 	# Cible 'make install'
+# 	install(PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/${EXECUTABLE_FULL_NAME}
+# 		DESTINATION ${VCC_BIN_RPATH})
+# 	if(${WIN32})
+# 		install(FILES ${LIBRARY_OUTPUT_PATH}/${HOOKDLL_FULL_NAME}
+# 			DESTINATION ${VCC_BIN_RPATH})
+# 	endif()
+# 	install(FILES ${data_shared_files} DESTINATION ${VCC_SHARE_RPATH}       )
+# 	install(FILES ${readme_aso_files}  DESTINATION ${VCC_DOC_RPATH}         )
+# 	install(FILES ${desktop_file}      DESTINATION ${VCC_APPLICATIONS_RPATH})
+# 	foreach(loop_var ${ICON_SIZES})
+# 		install(DIRECTORY data/icons/unix/${loop_var} DESTINATION ${VCC_ICONS_RPATH} PATTERN ".svn" EXCLUDE)
+# 	endforeach(loop_var)
+# 	foreach(loop_var ${translation_po_files})
+# 		get_filename_component(INTL_CODE ${loop_var} NAME_WE)
+# 		install(DIRECTORY locale/${INTL_CODE} DESTINATION ${VCC_LOCALE_RPATH})
+# 	endforeach(loop_var)
+# 
+# 	# Libraries additionnelles pour windows
+# 	if(${INSTALL_TYPE} MATCHES Package)
+# 		if(${WIN32})
+# 			install(DIRECTORY redist_win32/mingw32/         DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 			install(DIRECTORY redist_win32/gtkmm/           DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 			install(DIRECTORY redist_win32/gtk+/atk/        DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 			install(DIRECTORY redist_win32/gtk+/cairo/      DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 			install(DIRECTORY redist_win32/gtk+/expat/      DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 			install(DIRECTORY redist_win32/gtk+/fontconfig/ DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 			install(DIRECTORY redist_win32/gtk+/freetype/   DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 			install(DIRECTORY redist_win32/gtk+/glib/       DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 			install(DIRECTORY redist_win32/gtk+/gtk+/       DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 			install(DIRECTORY redist_win32/gtk+/gtk+-conf/  DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 			install(DIRECTORY redist_win32/gtk+/libpng/     DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 			install(DIRECTORY redist_win32/gtk+/pango/      DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 			install(DIRECTORY redist_win32/gtk+/zlib/       DESTINATION "." PATTERN ".svn" EXCLUDE)
+# 		endif()
+# 	endif()
+# 
+# 	# CPack
+# 	if(${INSTALL_TYPE} MATCHES Package)
+# 		if(${WIN32})
+# 			set(CPACK_GENERATOR "NSIS")
+# 		else()
+# 			set(CPACK_GENERATOR "DEB")
+# 		endif()
+# 		set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+# 		set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+# 		set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+# 		set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}")
+# 		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}-${PROJECT_VERSION_MAJOR}")
+# 		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}.${PROJECT_VERSION_MINOR}")
+# 		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}.${PROJECT_VERSION_PATCH}")
+# 		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
+# 		set(CPACK_PACKAGE_DESCRIPTION_FILE ${README_FULL_PATH})
+# 		set(CPACK_RESOURCE_FILE_LICENSE ${COPYING_FULL_PATH})
+# 		set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Virtual Chess Clock is a simple and free chess clock software")
+# 		set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Yoann Le Montagner")
+# 		set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtkmm-2.4-1c2a")
+# 		set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS
+# 			"CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\${PROJECT_FULL_NAME}.lnk' '$INSTDIR\\\\${VCC_BIN_RPATH}\\\\${EXECUTABLE_FULL_NAME}'")
+# 		set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS
+# 			"Delete '$SMPROGRAMS\\\\$START_MENU\\\\${PROJECT_FULL_NAME}.lnk'")
+# 		include(CPack)
+# 	endif()
+# endif()

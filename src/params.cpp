@@ -27,32 +27,24 @@
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <QApplication>
-#ifdef OS_IS_WINDOWS
-	#include <windows.h>
-#endif
-
+#include <QStandardPaths>
 
 
 // Singleton object.
 std::unique_ptr<Params> Params::_instance;
 
 
-// Root path indicating where the application is installed (read-only directory).
-const std::string &Params::prefix_path()
+// Directory holding data of the application (read-only directory).
+const std::string &Params::share_path()
 {
-	if(!_prefix_path) {
-		#ifdef OS_IS_WINDOWS
-			char buff[2048];
-			if(GetModuleFileName(NULL, buff, 2048)==0) {
-				throw std::runtime_error("Unable to retrieve the filename of the executable.");
-			}
-			boost::filesystem::path exe_path(buff);
-			_prefix_path = exe_path.parent_path().string() + "/" RPATH_BIN_BACKWARD;
+	if(!_share_path) {
+		#ifdef VCC_DEVELOPMENT_SETTINGS
+			_share_path = SHARE_PATH;
 		#else
-			_prefix_path = PATH_TOP;
+			_share_path = QCoreApplication::applicationDirPath().toStdString() + "/../share"; //TODO
 		#endif
 	}
-	return *_prefix_path;
+	return *_share_path;
 }
 
 
@@ -60,28 +52,13 @@ const std::string &Params::prefix_path()
 const std::string &Params::config_path()
 {
 	if(!_config_path) {
-		#ifdef DEV_COMPILATION
-			_config_path = PATH_TOP "/user_config";
+		#ifdef VCC_DEVELOPMENT_SETTINGS
+			_config_path = CONFIG_PATH;
 		#else
-			#ifdef OS_IS_WINDOWS
-				std::string config_path = Glib::get_user_config_dir() + "/" PROJECT_NAME;
-			#else
-				std::string config_path = Glib::get_home_dir() + "/." PROJECT_NAME;
-			#endif
-			_config_path =  wxStandardPaths::Get().GetUserDataDir();
+			_config_path = QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString();
 		#endif
 	}
 	return *_config_path;
-}
-
-
-// Directory holding data of the application (read-only directory).
-const std::string &Params::share_path()
-{
-	if(!_share_path) {
-		_share_path = prefix_path() + "/" RPATH_SHARE;
-	}
-	return *_share_path;
 }
 
 

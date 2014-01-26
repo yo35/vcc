@@ -36,34 +36,15 @@ set(APP_VERSION_MINOR 99)
 set(APP_VERSION_PATCH 0)
 
 
+# Development flag
+if(${Dev})
+	add_definitions(-DVCC_DEVELOPMENT_SETTINGS)
+	message(STATUS "VCC development settings selected.")
+endif()
+
+
 # Directories - Development configuration
-if(${INSTALL_TYPE} MATCHES Dev)
-	set(PATH_TOP           ".")
-	set(RPATH_BIN          ".")
-	set(RPATH_BIN_BACKWARD ".")
-	set(RPATH_SHARE        "data/share")
-	set(RPATH_ICONS        "data/icons/unix")
-	set(RPATH_APPLICATIONS "data/applications")
-	set(RPATH_LOCALE       "locale")
-	set(RPATH_DOC          ".")
-
-# Directories - Release configuration
-else(${INSTALL_TYPE} MATCHES Dev)
-	set(PATH_TOP           ${CMAKE_INSTALL_PREFIX})
-	set(RPATH_BIN          "bin")
-	set(RPATH_BIN_BACKWARD "..")
-	if(${WIN32})
-		set(RPATH_SHARE        "share")
-		set(RPATH_ICONS        "share/icons")
-		set(RPATH_APPLICATIONS "share/applications")
-		set(RAPTH_LOCALE       "share/locale")
-		set(RPATH_DOC          ".")
-	else()
-		set(RPATH_SHARE        "share/${PROJECT_NAME}")
-		set(RPATH_ICONS        "share/icons/hicolor")
-		set(RPATH_APPLICATIONS "share/applications")
-		set(RPATH_LOCALE       "share/locale")
-		set(RPATH_DOC          "share/doc/${PROJECT_NAME}")
-	endif()
-
+if(${Dev})
+	set(SHARE_PATH  ${CMAKE_SOURCE_DIR}/data/share)
+	set(CONFIG_PATH ${CMAKE_BINARY_DIR}/user_config)
 endif()

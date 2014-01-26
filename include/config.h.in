@@ -23,22 +23,24 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
+
 /* Application */
 #define APP_SHORT_NAME    "@APP_SHORT_NAME@"
 #define APP_NAME          "@APP_NAME@"
 #define APP_FULL_NAME     "@APP_FULL_NAME@"
+
+
+/* Application version */
 #define APP_VERSION_MAJOR @APP_VERSION_MAJOR@
 #define APP_VERSION_MINOR @APP_VERSION_MINOR@
 #define APP_VERSION_PATCH @APP_VERSION_PATCH@
 
+
 /* Paths */
-#define PATH_TOP           "@PATH_TOP@"
-#define RPATH_BIN          "@RPATH_BIN@"
-#define RPATH_BIN_BACKWARD "@RPATH_BIN_BACKWARD@"
-#define RPATH_SHARE        "@RPATH_SHARE@"
-#define RPATH_ICONS        "@RPATH_ICONS@"
-#define RPATH_APPLICATIONS "@RPATH_APPLICATIONS@"
-#define RPATH_LOCALE       "@RPATH_LOCALE@"
-#define RPATH_DOC          "@RPATH_DOC@"
+#ifdef VCC_DEVELOPMENT_SETTINGS
+	#define SHARE_PATH  "@SHARE_PATH@"
+	#define CONFIG_PATH "@CONFIG_PATH@"
+#endif
+
 
 #endif /* CONFIG_H_ */

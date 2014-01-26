@@ -24,10 +24,13 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include "mainwindow.h"
+#include <config.h>
+
 
 int main(int argc, char **argv)
 {
 	QApplication app(argc, argv);
+	app.setApplicationName(APP_NAME);
 
 	QTranslator qtTranslator;
 	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
