@@ -56,9 +56,11 @@ endif()
 
 
 # Generate the configuration files
-foreach(file_in ${source_in_files})
+set(config_h_files "")
+foreach(file_in ${config_in_files})
 	string(REGEX REPLACE "\\.in$" "" file_out ${file_in})
 	configure_file(${file_in} ${file_out})
+	set(config_h_files ${config_h_files} ${file_out})
 endforeach()
 
 

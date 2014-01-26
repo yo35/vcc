@@ -79,7 +79,7 @@ file(
 
 # Configuration files
 file(
-	GLOB source_in_files RELATIVE ${CMAKE_SOURCE_DIR}
+	GLOB config_in_files RELATIVE ${CMAKE_SOURCE_DIR}
 	config/*.h.in
 )
 
