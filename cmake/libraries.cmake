@@ -20,23 +20,24 @@
 ################################################################################
 
 
+
 # Boost
-find_package(Boost COMPONENTS system filesystem regex)
+find_package(Boost REQUIRED COMPONENTS system filesystem regex)
 
 
 # Qt
 set(CMAKE_AUTOMOC ON)
-find_package(Qt5Widgets)
+find_package(Qt5Widgets REQUIRED)
 set(Qt5Modules Widgets)
 if(${UNIX})
-	find_package(Qt5X11Extras)
+	find_package(Qt5X11Extras REQUIRED)
 	set(Qt5Modules ${Qt5Modules} X11Extras)
 endif()
 
 
 # XCB
 if(${UNIX})
-	find_package(PkgConfig)
+	find_package(PkgConfig REQUIRED)
 	pkg_check_modules(Xcb REQUIRED xcb)
 endif()
 
