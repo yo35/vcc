@@ -21,6 +21,11 @@
 
 
 
+################################################################################
+# GENERATION OF THE BINARY TRANSLATION FILES
+################################################################################
+
+
 # Find the QT compilation tool (lconvert)
 # If it cannot be found, the executable is still built, but not localized: most of the texts will appear in English.
 find_package(Qt5LinguistTools)

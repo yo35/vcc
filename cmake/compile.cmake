@@ -21,6 +21,11 @@
 
 
 
+################################################################################
+# GENERATION OF THE EXECUTABLE AND RELATED INSTRUCTIONS
+################################################################################
+
+
 # Include directories (for .h files)
 include_directories(
 	${all_INCLUDE_DIRS}
