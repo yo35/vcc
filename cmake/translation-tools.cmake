@@ -44,8 +44,8 @@ add_custom_target(
 	COMMAND ${GETTEXT_XGETTEXT_EXECUTABLE}
 		--from-code=UTF-8
 		--keyword=_
-		--package-name=${PROJECT_NAME}
-		--package-version=${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}
+		--package-name=${APP_NAME}
+		--package-version=${APP_VERSION_MAJOR}.${APP_VERSION_MINOR}.${APP_VERSION_PATCH}
 		-o ${translation_pot_file}
 		${source_cpp_files} ${source_h_files}
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
