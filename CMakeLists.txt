@@ -38,6 +38,7 @@ include(cmake/project.cmake)
 include(cmake/libraries.cmake)
 include(cmake/compile.cmake)
 include(cmake/translation.cmake)
+include(cmake/translation-tools.cmake)
 
 
 
@@ -150,28 +151,12 @@ add_custom_target(
 )
 
 # Génération du fichier de template pour les traductions
-add_custom_target(
-	pot
-	COMMAND xgettext --from-code=UTF-8 --keyword=_ --package-name=${PROJECT_NAME}
-		--package-version=${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}
-		--msgid-bugs-address='Yoann Le Montagner <yo35(at)melix(dot)net>'
-		--copyright-holder='Yoann Le Montagner <yo35(at)melix(dot)net>'
-		-o ${template_pot_file} ${src_cpp_files} ${src_h_files} ${dll_c_files}
-)
 
 # Compilation des fichiers de traduction
 
 # Informations
-message(STATUS "VCC will be build in ${CMAKE_BUILD_TYPE} mode")
 
 # Exécution
-#if(${INSTALL_TYPE} MATCHES Dev)
-	message(STATUS "VCC is configured for devel")
-	add_custom_target(
-		run
-		COMMAND ${EXECUTABLE_NAME}
-		DEPENDS ${EXECUTABLE_NAME}
-	)
 
 # # Installation
 # else()
