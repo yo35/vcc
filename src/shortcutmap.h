@@ -26,7 +26,7 @@
 #include <map>
 #include <string>
 #include <boost/property_tree/ptree.hpp>
-#include <signals.h>
+#include <wrappers/signals.h>
 
 
 /**

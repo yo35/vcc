@@ -21,7 +21,7 @@
 
 
 #include "namedialog.h"
-#include <translation.h>
+#include <wrappers/translation.h>
 #include <QLabel>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>

@@ -22,7 +22,7 @@
 
 #include "timecontroldialog.h"
 #include "timedurationwidget.h"
-#include <translation.h>
+#include <wrappers/translation.h>
 #include <boost/format.hpp>
 #include <boost/bind.hpp>
 #include <QGroupBox>

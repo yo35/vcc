@@ -22,7 +22,7 @@
 
 #include "preferencedialog.h"
 #include "params.h"
-#include <translation.h>
+#include <wrappers/translation.h>
 #include <boost/bind.hpp>
 #include <QDialogButtonBox>
 #include <QLabel>

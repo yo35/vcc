@@ -21,7 +21,7 @@
 
 
 #include "timedurationwidget.h"
-#include <translation.h>
+#include <wrappers/translation.h>
 #include <QLabel>
 #include <QSpinBox>
 #include <QHBoxLayout>

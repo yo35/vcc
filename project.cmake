@@ -67,18 +67,18 @@ endif()
 
 # C/CPP files
 file(
-	GLOB_RECURSE source_cpp_files
+	GLOB_RECURSE source_cpp_files RELATIVE ${CMAKE_SOURCE_DIR}
 	src/*.cpp
 )
 
 # C/CPP header files
 file(
-	GLOB_RECURSE source_h_files
+	GLOB_RECURSE source_h_files RELATIVE ${CMAKE_SOURCE_DIR}
 	src/*.h
 )
 
 # Configuration files
 file(
-	GLOB source_in_files
-	include/*.h.in
+	GLOB source_in_files RELATIVE ${CMAKE_SOURCE_DIR}
+	config/*.h.in
 )

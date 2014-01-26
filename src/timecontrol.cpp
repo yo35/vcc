@@ -21,7 +21,7 @@
 
 
 #include "timecontrol.h"
-#include <translation.h>
+#include <wrappers/translation.h>
 #include <stdexcept>
 #include <sstream>
 #include <algorithm>

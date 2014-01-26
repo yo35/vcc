@@ -24,7 +24,7 @@
 # Include directories (for .h files)
 include_directories(
 	${all_INCLUDE_DIRS}
-	${CMAKE_BINARY_DIR}/include
+	${CMAKE_BINARY_DIR}/config
 	${CMAKE_SOURCE_DIR}/src
 )
 

@@ -21,7 +21,7 @@
 
 
 #include "bitimerwidget.h"
-#include <translation.h>
+#include <wrappers/translation.h>
 #include <QPainter>
 #include <QTimer>
 #include <cstdlib>

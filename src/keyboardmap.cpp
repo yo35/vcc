@@ -21,7 +21,7 @@
 
 
 #include "keyboardmap.h"
-#include <translation.h>
+#include <wrappers/translation.h>
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>

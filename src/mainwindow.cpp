@@ -28,7 +28,7 @@
 #include "namedialog.h"
 #include "preferencedialog.h"
 #include "debugdialog.h"
-#include <translation.h>
+#include <wrappers/translation.h>
 #include <QToolBar>
 #include <QStatusBar>
 #include <QAction>
