@@ -21,64 +21,60 @@
 
 
 
-################################################################################
-# PROJECT DEFINITION
-################################################################################
-
-# Create the project
-project(virtual-chess-clock)
-
-
-# Application name
-set(APP_SHORT_NAME "vcc")
-set(APP_NAME       "virtual-chess-clock")
-set(APP_FULL_NAME  "Virtual Chess Clock")
+# Include directories (for .h files)
+include_directories(
+	${all_INCLUDE_DIRS}
+	${CMAKE_BINARY_DIR}/include
+	${CMAKE_SOURCE_DIR}/src
+)
 
 
-# Application version
-set(APP_VERSION_MAJOR 1)
-set(APP_VERSION_MINOR 99)
-set(APP_VERSION_PATCH 0)
+# Link directories (for library files)
+link_directories(
+	${all_LIBRARY_DIRS}
+)
 
 
-# Name of the executable program
-set(EXECUTABLE_NAME "vcc")
+# Enable all the warnings
+add_definitions(-pedantic -Wall -Wextra)
 
 
-# Development flag
-if(${DEV})
-	add_definitions(-DVCC_DEVELOPMENT_SETTINGS)
-	message(STATUS "VCC development settings selected.")
+# Enable C++11 features
+add_definitions(-std=c++11)
+# Remark for the "Eclipse CDT4" generators: to make C++11 code recognize by Eclipse,
+# it may be necessary to define manually the preprocessor symbol __GXX_EXPERIMENTAL_CXX0X__
+# in the project settings.
+
+
+# OS-detection flags
+if(${WIN32})
+	add_definitions(-DOS_IS_WINDOWS)
+endif()
+if(${UNIX})
+	add_definitions(-DOS_IS_UNIX)
 endif()
 
 
-# Directories - Development configuration
-if(${DEV})
-	set(SHARE_PATH  ${CMAKE_SOURCE_DIR}/data/share)
-	set(CONFIG_PATH ${CMAKE_BINARY_DIR}/user_config)
-endif()
+# Generate the configuration files
+foreach(file_in ${source_in_files})
+	string(REGEX REPLACE "\\.in$" "" file_out ${file_in})
+	configure_file(${file_in} ${file_out})
+endforeach()
 
 
-
-
-################################################################################
-# SOURCE FILES
-################################################################################
-
-# C/CPP files
-file(
-	GLOB_RECURSE source_cpp_files
-	src/*.cpp
+# Compile the executable and link it to the required libraries
+add_executable(
+	${EXECUTABLE_NAME}
+	${source_cpp_files}
+)
+target_link_libraries(
+	${EXECUTABLE_NAME}
+	${all_LIBRARIES}
 )
 
-# C/CPP header files
-file(
-	GLOB_RECURSE source_h_files
-	src/*.h
-)
 
-# Configuration files
-file(
-	GLOB source_in_files
-	include/*.h.in
+# QT's special compilation instructions
+qt5_use_modules(
+	${EXECUTABLE_NAME}
+	${Qt5Modules}
 )

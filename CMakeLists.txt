@@ -36,6 +36,7 @@ endif()
 
 include(project.cmake)
 include(libraries.cmake)
+include(compile.cmake)
 
 
 
@@ -48,10 +49,8 @@ include(libraries.cmake)
 # Nom du projet
 
 # Divers
-set(EXECUTABLE_NAME "vcc")
 
 # Noms complets
-set(EXECUTABLE_FULL_NAME "${EXECUTABLE_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 
 # Icône de l'application
 file(GLOB RAW_ICON_SIZES data/icons/unix/*x*)
@@ -68,20 +67,8 @@ set(ICON_NAME "apps/vcc.png")
 # Fichiers
 
 # Fichiers source de l'exécutable
-file(
-	GLOB
-	src_cpp_files
-	src/*.cpp
-)
-file(
-	GLOB
-	src_h_files
-	src/*.h
-)
 
 # Fichier de configuration
-set(config_in_file include/config.h.in)
-set(config_h_file include/config.h)
 
 # Fichiers de données
 file(
@@ -125,9 +112,6 @@ file(
 # Compilation
 
 # Flags compilo et linker
-add_definitions("-pedantic -Wall -Wextra -std=c++0x")
-include_directories(${all_INCLUDE_DIRS} include ${CMAKE_BINARY_DIR}/include)
-link_directories(${all_LIBRARY_DIRS})
 if(${WIN32})
 	add_definitions("-DOS_IS_WINDOWS")
 	if(NOT (${INSTALL_TYPE} MATCHES Dev))
@@ -136,29 +120,10 @@ if(${WIN32})
 else()
 	add_definitions("-DOS_IS_UNIX")
 endif()
-if(${INSTALL_TYPE} MATCHES Dev)
-	add_definitions("-DDEV_COMPILATION")
-endif()
 
 # Fichiers de configuration
-configure_file(
-	${config_in_file}
-	${config_h_file}
-)
 
 # Exécutable
-add_executable(
-	${EXECUTABLE_NAME}
-	${src_cpp_files}
-	${src_h_files}
-	${icon_rc_file}
-)
-target_link_libraries(
-	${EXECUTABLE_NAME}
-	${all_LIBRARIES}
-)
-
-qt5_use_modules(${EXECUTABLE_NAME} ${Qt5Modules})
 
 
 
