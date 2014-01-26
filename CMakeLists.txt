@@ -37,7 +37,7 @@ endif()
 include(cmake/project.cmake)
 include(cmake/libraries.cmake)
 include(cmake/compile.cmake)
-
+include(cmake/translation.cmake)
 
 
 
@@ -96,14 +96,8 @@ get_filename_component("README_FULL_PATH" "README" ABSOLUTE)
 get_filename_component("COPYING_FULL_PATH" "COPYING" ABSOLUTE)
 
 # Ficher de template pour les traductions
-set(template_pot_file po/vcc.pot)
 
 # Fichiers de traduction
-file(
-	GLOB
-	translation_po_files
-	po/*.po
-)
 
 
 
@@ -166,22 +160,6 @@ add_custom_target(
 )
 
 # Compilation des fichiers de traduction
-set(TRANSLATIONS_DEPENDS "")
-foreach(loop_var ${translation_po_files})
-	get_filename_component(INTL_CODE ${loop_var} NAME_WE)
-	add_custom_command(
-		OUTPUT locale/${INTL_CODE}/LC_MESSAGES/${PROJECT_NAME}.mo
-		COMMAND ${CMAKE_COMMAND} -E make_directory locale/${INTL_CODE}/LC_MESSAGES
-		COMMAND msgfmt -c -v -o $@ $<
-		DEPENDS ${loop_var}
-	)
-	set(TRANSLATIONS_DEPENDS ${TRANSLATIONS_DEPENDS} locale/${INTL_CODE}/LC_MESSAGES/${PROJECT_NAME}.mo)
-endforeach(loop_var)
-add_custom_target(
-	translations
-	DEPENDS ${TRANSLATIONS_DEPENDS}
-)
-#add_dependencies(${EXECUTABLE_NAME} translations)
 
 # Informations
 message(STATUS "VCC will be build in ${CMAKE_BUILD_TYPE} mode")

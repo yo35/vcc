@@ -21,73 +21,37 @@
 
 
 
-################################################################################
-# PROJECT DEFINITION
-################################################################################
-
-# Create the project
-project(virtual-chess-clock)
-
-
-# Application name
-set(APP_SHORT_NAME "vcc")
-set(APP_NAME       "virtual-chess-clock")
-set(APP_FULL_NAME  "Virtual Chess Clock")
-
-
-# Application version
-set(APP_VERSION_MAJOR 1)
-set(APP_VERSION_MINOR 99)
-set(APP_VERSION_PATCH 0)
-
-
-# Name of the executable program
-set(EXECUTABLE_NAME "vcc")
-
-
-# Development flag
-if(${DEV})
-	add_definitions(-DVCC_DEVELOPMENT_SETTINGS)
-	message(STATUS "VCC development settings selected.")
+# Find the QT compilation tool (lconvert)
+# If it cannot be found, the executable is still built, but not localized: most of the texts will appear in English.
+find_package(Qt5LinguistTools)
+if(NOT ${Qt5LinguistTools_FOUND})
+	message(STATUS "Cannot found Qt5 linguist tools: translation will not be available.")
+	return()
 endif()
-
-
-# Directories - Development configuration
-if(${DEV})
-	set(SHARE_PATH  ${CMAKE_SOURCE_DIR}/data/share)
-	set(CONFIG_PATH ${CMAKE_BINARY_DIR}/user_config)
-endif()
-
-
-
-
-################################################################################
-# SOURCE FILES
-################################################################################
-
-# C/CPP files
-file(
-	GLOB_RECURSE source_cpp_files RELATIVE ${CMAKE_SOURCE_DIR}
-	src/*.cpp
+find_program(Qt5_LCONVERT_EXECUTABLE lconvert
+	PATHS ${Qt5LinguistTools_DIR}/../../../bin
+	NO_DEFAULT_PATH
 )
 
-# C/CPP header files
-file(
-	GLOB_RECURSE source_h_files RELATIVE ${CMAKE_SOURCE_DIR}
-	src/*.h
-)
 
-# Configuration files
-file(
-	GLOB source_in_files RELATIVE ${CMAKE_SOURCE_DIR}
-	config/*.h.in
-)
+# Compilation of text files into QT's .qm files
+set(translation_qm_files "")
+foreach(file_in ${translation_po_files})
+	string(REGEX REPLACE "\\.po$" ".qm" file_out ${file_in})
+	get_filename_component(out_directory ${CMAKE_BINARY_DIR}/${file_out} PATH)
+	add_custom_command(
+		OUTPUT ${file_out}
+		COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${out_directory}
+		COMMAND ${Qt5_LCONVERT_EXECUTABLE} ARGS -o ${file_out} ${CMAKE_SOURCE_DIR}/${file_in}
+		DEPENDS ${file_in}
+	)
+	set(translation_qm_files ${translation_qm_files} ${file_out})
+endforeach()
 
-# Translation files
-file(
-	GLOB translation_po_files RELATIVE ${CMAKE_SOURCE_DIR}
-	translation/*.po
-)
 
-# Translation template file
-set(translation_pot_file translation/vcc.pot)
+# Add a target 'translations' to compile all the translation text files
+add_custom_target(translations DEPENDS ${translation_qm_files})
+
+
+# Make the executable depends on the 'translations' target
+add_dependencies(${EXECUTABLE_NAME} translations)
