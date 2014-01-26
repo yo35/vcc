@@ -18,7 +18,7 @@
 /vcc.exe
 
 # Auto-generated source files
-/include/config.h
+/config/*.h
 /*_automoc.cpp
 /moc_*.cpp
 

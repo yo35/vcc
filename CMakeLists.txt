@@ -24,7 +24,7 @@
 # Vérifications et configuration
 
 # Check the CMake version
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.11)
 
 
 # Resource file (only for windows)

@@ -31,7 +31,7 @@
 # (such as automatic extraction of the "to be translated" string in the source files)
 # will not be available.
 find_package(Gettext)
-if(NOT ${Gettext_FOUND})
+if(NOT ${GETTEXT_FOUND})
 	message(STATUS "Cannot find Gettext: translation management tools will not be available.")
 	return()
 endif()
