@@ -24,6 +24,7 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include "mainwindow.h"
+#include "params.h"
 #include <config.h>
 
 
@@ -35,6 +36,10 @@ int main(int argc, char **argv)
 	QTranslator qtTranslator;
 	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 	app.installTranslator(&qtTranslator);
+
+	QTranslator customTranslator;
+	customTranslator.load(QLocale::system(), "", "", QString::fromStdString(Params::get().translation_path()));
+	app.installTranslator(&customTranslator);
 
 	MainWindow mainWindow;
 	mainWindow.show();

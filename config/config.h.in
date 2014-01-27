@@ -38,8 +38,9 @@
 
 /* Paths */
 #ifdef VCC_DEVELOPMENT_SETTINGS
-	#define SHARE_PATH  "@SHARE_PATH@"
-	#define CONFIG_PATH "@CONFIG_PATH@"
+	#define SHARE_PATH       "@SHARE_PATH@"
+	#define CONFIG_PATH      "@CONFIG_PATH@"
+	#define TRANSLATION_PATH "@TRANSLATION_PATH@"
 #endif
 
 

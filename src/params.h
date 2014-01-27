@@ -71,6 +71,7 @@ public:
 	 */
 	const std::string &share_path               (); //!< Directory holding data of the application (read-only directory).
 	const std::string &config_path              (); //!< Configuration folder in the user's home (read-write directory).
+	const std::string &translation_path         (); //!< Directory holding the translation files (read-only directory).
 	const std::string &locale                   (); //!< Current locale.
 	const std::string &config_file              (); //!< File that holds the preferences of the current user.
 	const std::string &keyboard_index_file      (); //!< File that contains the index of all available keyboard maps.
@@ -270,6 +271,7 @@ private:
 	// Application directories, files, and environment.
 	boost::optional<std::string> _share_path               ;
 	boost::optional<std::string> _config_path              ;
+	boost::optional<std::string> _translation_path         ;
 	boost::optional<std::string> _locale                   ;
 	boost::optional<std::string> _config_file              ;
 	boost::optional<std::string> _keyboard_index_file      ;

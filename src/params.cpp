@@ -62,6 +62,20 @@ const std::string &Params::config_path()
 }
 
 
+// Directory holding the translation files (read-only directory).
+const std::string &Params::translation_path()
+{
+	if(!_translation_path) {
+		#ifdef VCC_DEVELOPMENT_SETTINGS
+			_translation_path = TRANSLATION_PATH;
+		#else
+			_translation_path = share_path() + "/translations"; //TODO
+		#endif
+	}
+	return *_translation_path;
+}
+
+
 // Current locale.
 const std::string &Params::locale()
 {
