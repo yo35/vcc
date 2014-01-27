@@ -30,12 +30,12 @@
 #include <boost/optional.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <QIcon>
-#include "options.h"
-#include "side.h"
-#include "timecontrol.h"
-#include "keyboardmap.h"
-#include "shortcutmap.h"
-#include "versionnumber.h"
+#include <core/options.h>
+#include <core/side.h>
+#include <core/timecontrol.h>
+#include <core/keyboardmap.h>
+#include <core/shortcutmap.h>
+#include <core/versionnumber.h>
 
 
 /**

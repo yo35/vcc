@@ -26,10 +26,10 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <boost/optional.hpp>
-#include "options.h"
-#include "keys.h"
-#include "bitimer.h"
-#include "shortcutmanager.h"
+#include <core/options.h>
+#include <core/keys.h>
+#include <core/bitimer.h>
+#include <core/shortcutmanager.h>
 class KeyboardHandler;
 class BiTimerWidget;
 class DebugDialog;

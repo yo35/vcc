@@ -2,7 +2,7 @@
  *                                                                            *
  *    This file is part of Virtual Chess Clock, a chess clock software        *
  *                                                                            *
- *    Copyright (C) 2010-2012 Yoann Le Montagner <yo35(at)melix(dot)net>      *
+ *    Copyright (C) 2010-2014 Yoann Le Montagner <yo35(at)melix(dot)net>      *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -20,24 +20,32 @@
  ******************************************************************************/
 
 
-#ifndef OPTIONS_H_
-#define OPTIONS_H_
+#ifndef KEYS_H_
+#define KEYS_H_
 
 #include "enumutil.h"
 #include <cstdint>
 
 
 /**
- * Option describing whether confirmation should be requested from the user when he/she resets the clock.
+ * The physical keys of the keyboard are identified by a scan-code. This is a low-level
+ * identification, that is likely to depends on the Operating System.
  */
-enum class ResetConfirmation : std::uint8_t
+typedef std::uint32_t ScanCode;
+
+
+/**
+ * Pair of modifier keys that can be pressed to change the function associated to
+ * some keys on the keyboard.
+ */
+enum class ModifierKeys : std::uint8_t
 {
-	ALWAYS   ,
-	IF_ACTIVE,
-	NEVER
+	DOUBLE_CTRL ,
+	DOUBLE_SHIFT,
+	DOUBLE_ALT
 };
 
-namespace Enum { template<> struct traits<ResetConfirmation> : trait_indexing<3> {}; }
+namespace Enum { template<> struct traits<ModifierKeys> : trait_indexing<3> {}; }
 
 
-#endif /* OPTIONS_H_ */
+#endif /* KEYS_H_ */

@@ -24,7 +24,7 @@
 #define TIMECONTROLDIALOG_H_
 
 #include <QDialog>
-#include "timecontrol.h"
+#include <core/timecontrol.h>
 QT_BEGIN_NAMESPACE
 	class QRadioButton;
 	class QCheckBox;

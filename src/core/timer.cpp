@@ -2,7 +2,7 @@
  *                                                                            *
  *    This file is part of Virtual Chess Clock, a chess clock software        *
  *                                                                            *
- *    Copyright (C) 2010-2012 Yoann Le Montagner <yo35(at)melix(dot)net>      *
+ *    Copyright (C) 2010-2014 Yoann Le Montagner <yo35(at)melix(dot)net>      *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -20,62 +20,46 @@
  ******************************************************************************/
 
 
-#ifndef TIMER_H_
-#define TIMER_H_
-
-#include <cstdint>
-#include "chrono.h"
+#include "timer.h"
+#include <utility>
 
 
-/**
- * Stoppable and reversible clock.
- */
-class Timer
+// Change the behavior of the timer.
+void Timer::set_mode(Mode mode)
 {
-public:
+	if(_mode==mode) {
+		return;
+	}
+	if(_mode!=Mode::PAUSED) {
+		_time = time();
+	}
+	if(mode!=Mode::PAUSED) {
+		_start_at = current_time();
+	}
+	_mode = mode;
+}
 
-	/**
-	 * Timer behavior.
-	 */
-	enum class Mode : std::uint8_t
-	{
-		INCREMENT, //!< Time is incrementing.
-		DECREMENT, //!< Time is decrementing.
-		PAUSED     //!< The timer is stopped.
-	};
 
-	/**
-	 * Constructor.
-	 */
-	Timer() : _mode(Mode::PAUSED) {}
+// Current time.
+TimeDuration Timer::time() const
+{
+	if(_mode==Mode::PAUSED) {
+		return _time;
+	}
+	else {
+		TimePoint    now  = current_time();
+		TimeDuration diff = now - _start_at;
+		if(_mode==Mode::INCREMENT)
+			return _time + diff;
+		else // _mode==Mode::DECREMENT
+			return _time - diff;
+	}
+}
 
-	/**
-	 * Timer behavior.
-	 */
-	Mode mode() const { return _mode; }
 
-	/**
-	 * Change the behavior of the timer.
-	 */
-	void set_mode(Mode mode);
-
-	/**
-	 * Current time.
-	 */
-	TimeDuration time() const;
-
-	/**
-	 * Change the current time. A call to this function stops the timer
-	 * (its mode is set to `Mode::PAUSED`).
-	 */
-	void set_time(TimeDuration time);
-
-private:
-
-	// Private members
-	Mode         _mode    ;
-	TimeDuration _time    ;
-	TimePoint    _start_at;
-};
-
-#endif /* TIMER_H_ */
+// Change the current time, and stop the timer if it is not already stopped.
+void Timer::set_time(TimeDuration time)
+{
+	_mode = Mode::PAUSED;
+	_time = std::move(time);
+}

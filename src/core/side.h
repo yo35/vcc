@@ -2,7 +2,7 @@
  *                                                                            *
  *    This file is part of Virtual Chess Clock, a chess clock software        *
  *                                                                            *
- *    Copyright (C) 2010-2012 Yoann Le Montagner <yo35(at)melix(dot)net>      *
+ *    Copyright (C) 2010-2014 Yoann Le Montagner <yo35(at)melix(dot)net>      *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -20,46 +20,30 @@
  ******************************************************************************/
 
 
-#include "timer.h"
-#include <utility>
+#ifndef SIDE_H_
+#define SIDE_H_
+
+#include "enumutil.h"
+#include <cstdint>
 
 
-// Change the behavior of the timer.
-void Timer::set_mode(Mode mode)
+/**
+ * Side of the clock.
+ */
+enum class Side : std::uint8_t
 {
-	if(_mode==mode) {
-		return;
-	}
-	if(_mode!=Mode::PAUSED) {
-		_time = time();
-	}
-	if(mode!=Mode::PAUSED) {
-		_start_at = current_time();
-	}
-	_mode = mode;
-}
+	LEFT ,
+	RIGHT
+};
+
+namespace Enum { template<> struct traits<Side> : trait_indexing<2> {}; }
 
 
-// Current time.
-TimeDuration Timer::time() const
-{
-	if(_mode==Mode::PAUSED) {
-		return _time;
-	}
-	else {
-		TimePoint    now  = current_time();
-		TimeDuration diff = now - _start_at;
-		if(_mode==Mode::INCREMENT)
-			return _time + diff;
-		else // _mode==Mode::DECREMENT
-			return _time - diff;
-	}
-}
+
+/**
+ * Return the opposite side of the clock with respect to `s`.
+ */
+constexpr Side flip(Side s) { return Enum::from_value<Side>(1 - Enum::to_value(s)); }
 
 
-// Change the current time, and stop the timer if it is not already stopped.
-void Timer::set_time(TimeDuration time)
-{
-	_mode = Mode::PAUSED;
-	_time = std::move(time);
-}
+#endif /* SIDE_H_ */

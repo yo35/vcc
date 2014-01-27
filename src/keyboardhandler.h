@@ -26,7 +26,7 @@
 #include <QObject>
 #include <QWidget>
 #include <set>
-#include "keys.h"
+#include <core/keys.h>
 
 #ifdef Q_OS_WIN
 	#include <windows.h>

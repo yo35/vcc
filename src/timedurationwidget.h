@@ -24,7 +24,7 @@
 #define TIMEDURATIONWIDGET_H_
 
 #include <QWidget>
-#include "chrono.h"
+#include <core/chrono.h>
 QT_BEGIN_NAMESPACE
 	class QSpinBox;
 QT_END_NAMESPACE

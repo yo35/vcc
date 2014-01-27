@@ -20,11 +20,24 @@
  ******************************************************************************/
 
 
-#ifndef SIGNALS_H_
-#define SIGNALS_H_
+#ifndef OPTIONS_H_
+#define OPTIONS_H_
 
-#include <boost/signals2.hpp>
+#include "enumutil.h"
+#include <cstdint>
 
-namespace sig = boost::signals2;
 
-#endif /* SIGNALS_H_ */
+/**
+ * Option describing whether confirmation should be requested from the user when he/she resets the clock.
+ */
+enum class ResetConfirmation : std::uint8_t
+{
+	ALWAYS   ,
+	IF_ACTIVE,
+	NEVER
+};
+
+namespace Enum { template<> struct traits<ResetConfirmation> : trait_indexing<3> {}; }
+
+
+#endif /* OPTIONS_H_ */

@@ -25,7 +25,7 @@
 
 #include <QWidget>
 #include <memory>
-#include "bitimer.h"
+#include <core/bitimer.h>
 QT_BEGIN_NAMESPACE
 	class QTimer;
 	class QPainter;

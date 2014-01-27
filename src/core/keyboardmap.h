@@ -2,7 +2,7 @@
  *                                                                            *
  *    This file is part of Virtual Chess Clock, a chess clock software        *
  *                                                                            *
- *    Copyright (C) 2010-2012 Yoann Le Montagner <yo35(at)melix(dot)net>      *
+ *    Copyright (C) 2010-2014 Yoann Le Montagner <yo35(at)melix(dot)net>      *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -24,11 +24,11 @@
 #define KEYBOARDMAP_H_
 
 #include <cstddef>
-#include <cstring>
+#include <string>
 #include <vector>
 #include <boost/optional.hpp>
-#include <boost/regex.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <boost/regex.hpp>
 #include "keys.h"
 
 

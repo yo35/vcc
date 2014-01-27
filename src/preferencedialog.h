@@ -34,7 +34,7 @@
 #include "keyboardhandler.h"
 #include "keyboardwidget.h"
 #include "timedurationwidget.h"
-#include "options.h"
+#include <core/options.h>
 
 
 /**

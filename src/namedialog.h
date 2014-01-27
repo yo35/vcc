@@ -26,7 +26,7 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QCheckBox>
-#include "side.h"
+#include <core/side.h>
 
 
 /**

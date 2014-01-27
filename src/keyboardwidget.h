@@ -31,10 +31,10 @@
 QT_BEGIN_NAMESPACE
 	class QPainter;
 QT_END_NAMESPACE
-#include "keys.h"
+#include <core/keys.h>
+#include <core/keyboardmap.h>
+#include <core/shortcutmap.h>
 #include "keyboardhandler.h"
-#include "keyboardmap.h"
-#include "shortcutmap.h"
 
 
 /**

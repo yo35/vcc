@@ -22,7 +22,6 @@
 
 #include "keyboardwidget.h"
 #include "keyboardhandler.h"
-#include "keyboardmap.h"
 #include <stdexcept>
 #include <cassert>
 #include <algorithm>
