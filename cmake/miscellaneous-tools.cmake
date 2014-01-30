@@ -22,31 +22,27 @@
 
 
 ################################################################################
-# UTILITIES TO MANAGE THE TEXT TRANSLATION FILES
+# VARIOUS GENERAL-PURPOSE TOOLS AND COMMANDS
 ################################################################################
 
 
-# Find the GNU Gettext compilation tool
-# If it cannot be found, the built of the executable is not impact at all, but the translation management tools
-# (such as automatic extraction of the "to be translated" string in the source files)
-# will not be available.
-find_package(Gettext)
-if(NOT ${GETTEXT_FOUND})
-	message(STATUS "Cannot find Gettext: translation management tools will not be available.")
-	return()
+# Compile and run the software (only available in the development configuration)
+#  -> target 'run'
+if(${DEV})
+	add_custom_target(
+		run
+		COMMAND ./${EXECUTABLE_NAME}
+		DEPENDS ${EXECUTABLE_NAME}
+	)
 endif()
-find_program(GETTEXT_XGETTEXT_EXECUTABLE xgettext) # Why not done by default by find_package(Gettext)? 
 
 
-# Custom target to generate or update the translation template file .pot
-add_custom_target(
-	translation-template
-	COMMAND ${GETTEXT_XGETTEXT_EXECUTABLE}
-		--from-code=UTF-8
-		--keyword=_
-		--package-name=${APP_NAME}
-		--package-version=${APP_VERSION_MAJOR}.${APP_VERSION_MINOR}.${APP_VERSION_PATCH}
-		-o ${translation_pot_file}
-		${source_cpp_files} ${source_h_files}
-	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
+# Code metrics (only available on Unix)
+#  -> target 'stats'
+if(${UNIX})
+	add_custom_target(
+		stats
+		COMMAND ./statistics.sh ${source_cpp_files} ${source_h_files}
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	)
+endif()
