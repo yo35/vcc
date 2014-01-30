@@ -2,7 +2,7 @@
  *                                                                            *
  *    This file is part of Virtual Chess Clock, a chess clock software        *
  *                                                                            *
- *    Copyright (C) 2010-2012 Yoann Le Montagner <yo35(at)melix(dot)net>      *
+ *    Copyright (C) 2010-2014 Yoann Le Montagner <yo35(at)melix(dot)net>      *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -22,19 +22,17 @@
 
 #include "modifierkeyswidget.h"
 #include <wrappers/translation.h>
-#include <boost/format.hpp>
 #include <boost/bind.hpp>
+#include <QAction>
 #include <QMenu>
 #include <QBitmap>
 
 
 // Constructor.
-ModifierKeysWidget::ModifierKeysWidget(QWidget *parent) :
-	CaptionWidget(buildBrush(), _("Modifier keys"), parent)
+ModifierKeysWidget::ModifierKeysWidget(QWidget *parent) : CaptionWidget(buildBrush(), _("Modifier keys"), parent)
 {
 	// Prepare the composition of the menu labels.
-	static boost::format labelFormater(_("%1% keys (left and right)"));
-	Enum::array<ModifierKeys, std::string> name;
+	Enum::array<ModifierKeys, QString> name;
 	name[ModifierKeys::DOUBLE_CTRL ] = _("Ctrl" );
 	name[ModifierKeys::DOUBLE_SHIFT] = _("Shift");
 	name[ModifierKeys::DOUBLE_ALT  ] = _("Alt"  );
@@ -44,7 +42,7 @@ ModifierKeysWidget::ModifierKeysWidget(QWidget *parent) :
 	QActionGroup *group = new QActionGroup(this);
 	group->setExclusive(true);
 	for(auto it=Enum::cursor<ModifierKeys>::first(); it.valid(); ++it) {
-		_action[*it] = menu->addAction(QString::fromStdString(boost::str(labelFormater.clear() % name[*it])));
+		_action[*it] = menu->addAction(QString(_("%1 keys (left and right)")).arg(name[*it]));
 		_action[*it]->setCheckable(true);
 		_action[*it]->setActionGroup(group);
 		connect(_action[*it], &QAction::triggered, boost::bind(&ModifierKeysWidget::onActionTriggered, this, *it));

@@ -2,7 +2,7 @@
  *                                                                            *
  *    This file is part of Virtual Chess Clock, a chess clock software        *
  *                                                                            *
- *    Copyright (C) 2010-2012 Yoann Le Montagner <yo35(at)melix(dot)net>      *
+ *    Copyright (C) 2010-2014 Yoann Le Montagner <yo35(at)melix(dot)net>      *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -27,14 +27,15 @@
 #include <vector>
 #include <map>
 #include <memory>
-#include <boost/optional.hpp>
-QT_BEGIN_NAMESPACE
-	class QPainter;
-QT_END_NAMESPACE
 #include <core/keys.h>
 #include <core/keyboardmap.h>
 #include <core/shortcutmap.h>
-#include "keyboardhandler.h"
+
+QT_BEGIN_NAMESPACE
+	class QPainter;
+QT_END_NAMESPACE
+
+class KeyboardHandler;
 
 
 /**

@@ -22,13 +22,13 @@
 
 #include "mainwindow.h"
 #include "params.h"
-#include "bitimerwidget.h"
-#include "keyboardhandler.h"
-#include "timecontroldialog.h"
-#include "namedialog.h"
-#include "preferencedialog.h"
-#include "debugdialog.h"
 #include <wrappers/translation.h>
+#include <gui/core/keyboardhandler.h>
+#include <gui/widgets/bitimerwidget.h>
+#include <gui/dialogs/timecontroldialog.h>
+#include <gui/dialogs/namedialog.h>
+#include <gui/dialogs/debugdialog.h>
+#include "preferencedialog.h"
 #include <QToolBar>
 #include <QStatusBar>
 #include <QAction>

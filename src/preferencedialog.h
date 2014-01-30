@@ -29,12 +29,12 @@
 #include <QRadioButton>
 #include <QComboBox>
 #include <QPushButton>
-#include "captionwidget.h"
-#include "modifierkeyswidget.h"
-#include "keyboardhandler.h"
-#include "keyboardwidget.h"
-#include "timedurationwidget.h"
 #include <core/options.h>
+#include <gui/core/keyboardhandler.h>
+#include <gui/widgets/captionwidget.h>
+#include <gui/widgets/modifierkeyswidget.h>
+#include <gui/widgets/keyboardwidget.h>
+#include <gui/widgets/timedurationwidget.h>
 
 
 /**

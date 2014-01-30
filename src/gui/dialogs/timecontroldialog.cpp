@@ -2,7 +2,7 @@
  *                                                                            *
  *    This file is part of Virtual Chess Clock, a chess clock software        *
  *                                                                            *
- *    Copyright (C) 2010-2012 Yoann Le Montagner <yo35(at)melix(dot)net>      *
+ *    Copyright (C) 2010-2014 Yoann Le Montagner <yo35(at)melix(dot)net>      *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -21,9 +21,8 @@
 
 
 #include "timecontroldialog.h"
-#include "timedurationwidget.h"
 #include <wrappers/translation.h>
-#include <boost/format.hpp>
+#include <gui/widgets/timedurationwidget.h>
 #include <boost/bind.hpp>
 #include <QGroupBox>
 #include <QRadioButton>
@@ -45,7 +44,7 @@ TimeControlDialog::TimeControlDialog(QWidget *parent) : QDialog(parent), _shuntS
 	setLayout(mainLayout);
 
 	// Tool-tips on time control modes
-	Enum::array<TimeControl::Mode, std::string> modeDescription;
+	Enum::array<TimeControl::Mode, QString> modeDescription;
 	modeDescription[TimeControl::Mode::SUDDEN_DEATH] = _(
 		"Simplest time control mode. No additional delay is never added to the "
 		"player's main time."
@@ -88,9 +87,10 @@ TimeControlDialog::TimeControlDialog(QWidget *parent) : QDialog(parent), _shuntS
 		modeLayout->addWidget(_mode[*it]);
 
 		// Tool-tips
-		static boost::format modeToolTipFormater("<p><b>%1%</b></p><p>%2%</p>");
-		std::string toolTip = boost::str(modeToolTipFormater.clear() % TimeControl::mode_name(*it) % modeDescription[*it]);
-		_mode[*it]->setToolTip(QString::fromStdString(toolTip));
+		_mode[*it]->setToolTip(QString("<p><b>%1</b></p><p>%2</p>")
+			.arg(QString::fromStdString(TimeControl::mode_name(*it)))
+			.arg(modeDescription[*it])
+		);
 	}
 
 	// Check-box "same times on both sides"
