@@ -23,7 +23,7 @@
 #include "timecontroldialog.h"
 #include <wrappers/translation.h>
 #include <gui/widgets/timedurationwidget.h>
-#include <boost/bind.hpp>
+#include <functional>
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QCheckBox>
@@ -83,7 +83,7 @@ TimeControlDialog::TimeControlDialog(QWidget *parent) : QDialog(parent), _shuntS
 	{
 		// Create the radio buttons
 		_mode[*it] = new QRadioButton(QString::fromStdString(TimeControl::mode_name(*it)), this);
-		connect(_mode[*it], &QCheckBox::toggled, boost::bind(&TimeControlDialog::onModeButtonToggled, this, _mode[*it]));
+		connect(_mode[*it], &QCheckBox::toggled, std::bind(&TimeControlDialog::onModeButtonToggled, this, _mode[*it]));
 		modeLayout->addWidget(_mode[*it]);
 
 		// Tool-tips

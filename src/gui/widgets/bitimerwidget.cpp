@@ -27,6 +27,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <cmath>
+#include <functional>
 
 
 // Constructor.
@@ -60,7 +61,7 @@ void BiTimerWidget::bindTimer(const BiTimer &biTimer)
 	}
 
 	// Perform the suitable connection/disconnection operations.
-	auto rawConnection = biTimer.connect_state_changed(boost::bind(&BiTimerWidget::onTimerStateChanged, this));
+	auto rawConnection = biTimer.connect_state_changed(std::bind(&BiTimerWidget::onTimerStateChanged, this));
 	_connection.reset(new sig::scoped_connection(rawConnection));
 	_biTimer = &biTimer;
 

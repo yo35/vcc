@@ -23,7 +23,7 @@
 #include "preferencedialog.h"
 #include "params.h"
 #include <wrappers/translation.h>
-#include <boost/bind.hpp>
+#include <functional>
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QGroupBox>
@@ -176,7 +176,7 @@ CaptionWidget *PreferenceDialog::captionWidgetFactory(const QColor &color, const
 {
 	CaptionWidget *widget = new CaptionWidget(color, label, this);
 	widget->button()->setCheckable(true);
-	connect(widget->button(), &QToolButton::toggled, boost::bind(&PreferenceDialog::onCaptionToggled, this, widget, shortcut));
+	connect(widget->button(), &QToolButton::toggled, std::bind(&PreferenceDialog::onCaptionToggled, this, widget, shortcut));
 	_keyboardWidget->shortcutColors()[shortcut] = color;
 	return widget;
 }

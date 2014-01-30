@@ -29,6 +29,7 @@
 #include <cstdlib>
 #include <cfloat>
 #include <cmath>
+#include <functional>
 #include <QPainter>
 #include <QMouseEvent>
 
@@ -128,7 +129,7 @@ void KeyboardWidget::bindShortcutMap(const ShortcutMap &shortcutMap)
 	if(_shortcutMap==&shortcutMap) {
 		return;
 	}
-	auto connection = shortcutMap.connect_changed(boost::bind(&KeyboardWidget::update, this));
+	auto connection = shortcutMap.connect_changed(std::bind(std::mem_fun(&KeyboardWidget::update), this));
 	_shortcutMapConnection.reset(new sig::scoped_connection(connection));
 	_shortcutMap = &shortcutMap;
 	update();

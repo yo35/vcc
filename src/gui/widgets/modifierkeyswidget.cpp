@@ -22,7 +22,7 @@
 
 #include "modifierkeyswidget.h"
 #include <wrappers/translation.h>
-#include <boost/bind.hpp>
+#include <functional>
 #include <QAction>
 #include <QMenu>
 #include <QBitmap>
@@ -45,7 +45,7 @@ ModifierKeysWidget::ModifierKeysWidget(QWidget *parent) : CaptionWidget(buildBru
 		_action[*it] = menu->addAction(QString(_("%1 keys (left and right)")).arg(name[*it]));
 		_action[*it]->setCheckable(true);
 		_action[*it]->setActionGroup(group);
-		connect(_action[*it], &QAction::triggered, boost::bind(&ModifierKeysWidget::onActionTriggered, this, *it));
+		connect(_action[*it], &QAction::triggered, std::bind(&ModifierKeysWidget::onActionTriggered, this, *it));
 	}
 
 	// Default value
