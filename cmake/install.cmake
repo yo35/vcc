@@ -32,11 +32,19 @@ if(${DEV})
 endif()
 
 
-# TODO
+# Install instructions for the executable and for the required associated files.
 install(TARGETS ${EXECUTABLE_NAME}
 	RUNTIME DESTINATION bin
 )
 install(DIRECTORY data/share/
 	DESTINATION share/${APP_NAME}
 )
+
+
+# Install instructions for the translation files, if available.
+if(${translation_qm_files})
+	install(FILES ${translation_qm_files}
+		DESTINATION share/${APP_NAME}/translation
+	)
+endif()
 

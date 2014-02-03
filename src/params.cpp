@@ -69,7 +69,7 @@ const std::string &Params::translation_path()
 		#ifdef VCC_DEVELOPMENT_SETTINGS
 			_translation_path = TRANSLATION_PATH;
 		#else
-			_translation_path = share_path() + "/translations"; //TODO
+			_translation_path = share_path() + "/translation"; //TODO
 		#endif
 	}
 	return *_translation_path;
