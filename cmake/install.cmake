@@ -25,7 +25,7 @@
 # INSTALLATION INSTRUCTIONS
 ################################################################################
 
-# No install-related target is provided in the development configuration
+# No install-related target is provided in the development configuration.
 if(${DEV})
 	return()
 endif()
@@ -69,15 +69,14 @@ set(CPACK_PACKAGE_VERSION_MINOR ${APP_VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${APP_VERSION_PATCH})
 
 
-# Debian-package associated variables
+# Debian-package associated variables.
 if(${UNIX})
 	set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Yoann Le Montagner")
 	set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5widgets5")
 endif()
 
 
-# Call the CPack generator
+# Call the CPack generator.
 if(DEFINED CPACK_GENERATOR)
 	include(CPack)
 endif()
-
