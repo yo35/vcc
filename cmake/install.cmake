@@ -31,6 +31,10 @@ if(${DEV})
 endif()
 
 
+# Show the install directory to the user
+message(STATUS "VCC will be installed to ${CMAKE_INSTALL_PREFIX}")
+
+
 # Install instructions for the executable and for the required associated files.
 install(TARGETS ${EXECUTABLE_NAME}
 	RUNTIME DESTINATION bin

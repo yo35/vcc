@@ -103,41 +103,8 @@ get_filename_component("COPYING_FULL_PATH" "COPYING" ABSOLUTE)
 
 
 
-
-################################################################################
-# Compilation
-
-# Flags compilo et linker
-#if(${WIN32})
-#	add_definitions("-DOS_IS_WINDOWS")
-#	if(NOT (${INSTALL_TYPE} MATCHES Dev))
-#		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
-#	endif(NOT (${INSTALL_TYPE} MATCHES Dev))
-#else()
-#	add_definitions("-DOS_IS_UNIX")
-#endif()
-
-# Fichiers de configuration
-
-# Exécutable
-
-
-
 ################################################################################
 # Cibles annexes
-
-# Supprimer tout ce qui n'est pas sur le SVN
-#add_custom_target(
-#	mrproper
-#	COMMAND ${CMAKE_COMMAND} -E remove -f cmake_*.cmake *.tar.gz *.deb *.exe
-#	COMMAND ${CMAKE_COMMAND} -E remove -f Makefile CMakeCache.txt install_manifest.txt
-#	COMMAND ${CMAKE_COMMAND} -E remove -f include/config.h
-#	COMMAND ${CMAKE_COMMAND} -E remove_directory bin
-#	COMMAND ${CMAKE_COMMAND} -E remove_directory locale
-#	COMMAND ${CMAKE_COMMAND} -E remove_directory CMakeFiles
-#	COMMAND ${CMAKE_COMMAND} -E remove_directory _CPack_Packages
-#	COMMAND ${CMAKE_COMMAND} -E remove_directory user_config
-#)
 
 # Génération du fichier ChangeLog
 #add_custom_target(
@@ -145,15 +112,6 @@ get_filename_component("COPYING_FULL_PATH" "COPYING" ABSOLUTE)
 #	COMMAND ./changelog.sh
 #)
 
-# Affichage des statistiques
-
-# Génération du fichier de template pour les traductions
-
-# Compilation des fichiers de traduction
-
-# Informations
-
-# Exécution
 
 # # Installation
 # else()

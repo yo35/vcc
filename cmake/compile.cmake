@@ -51,6 +51,13 @@ add_definitions(-std=c++11)
 # in the project settings.
 
 
+# On windows, GUI-applications must be linked with the -mwindows flag to avoid
+# having a console window created when the application is launched.
+if(${WIN32} AND NOT ${DEV})
+	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
+endif()
+
+
 # OS-detection flags
 if(${WIN32})
 	add_definitions(-DOS_IS_WINDOWS)
