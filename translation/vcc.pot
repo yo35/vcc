@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtual-chess-clock 1.99.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-26 17:41+0100\n"
+"POT-Creation-Date: 2014-02-03 16:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,207 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: src/timedurationwidget.cpp:48
-msgid "hour"
-msgstr ""
-
-#: src/timedurationwidget.cpp:49
-msgid "min"
-msgstr ""
-
-#: src/timedurationwidget.cpp:50
-msgid "sec"
-msgstr ""
-
-#: src/keyboardmap.cpp:116
-msgid "Invalid"
-msgstr ""
-
-#: src/keyboardmap.cpp:122 src/modifierkeyswidget.cpp:38
-msgid "Ctrl"
-msgstr ""
-
-#: src/keyboardmap.cpp:123 src/modifierkeyswidget.cpp:39
-msgid "Shift"
-msgstr ""
-
-#: src/keyboardmap.cpp:124 src/modifierkeyswidget.cpp:40
-msgid "Alt"
-msgstr ""
-
-#: src/keyboardmap.cpp:125
-msgid "Alt Gr"
-msgstr ""
-
-#: src/keyboardmap.cpp:126
-msgid "Super"
-msgstr ""
-
-#: src/keyboardmap.cpp:127
-msgid "Tab"
-msgstr ""
-
-#: src/keyboardmap.cpp:128
-msgid ""
-"Caps\n"
-"Lock"
-msgstr ""
-
-#: src/keyboardmap.cpp:129
-msgid "Space"
-msgstr ""
-
-#: src/keyboardmap.cpp:130 src/mainwindow.cpp:75 src/mainwindow.cpp:330
-msgid "Menu"
-msgstr ""
-
-#: src/keyboardmap.cpp:131
-msgid "Back Space"
-msgstr ""
-
-#: src/keyboardmap.cpp:132 src/keyboardmap.cpp:142
-msgid "Enter"
-msgstr ""
-
-#: src/keyboardmap.cpp:135
-msgid "Esc"
-msgstr ""
-
-#: src/keyboardmap.cpp:136
-msgid ""
-"Print\n"
-"Screen"
-msgstr ""
-
-#: src/keyboardmap.cpp:137
-msgid ""
-"Scroll\n"
-"Lock"
-msgstr ""
-
-#: src/keyboardmap.cpp:138 src/preferencedialog.cpp:95 src/mainwindow.cpp:65
-msgid "Pause"
-msgstr ""
-
-#: src/keyboardmap.cpp:141
-msgid ""
-"Num\n"
-"Lock"
-msgstr ""
-
-#: src/keyboardmap.cpp:145
-msgid "Ins"
-msgstr ""
-
-#: src/keyboardmap.cpp:146
-msgid "Del"
-msgstr ""
-
-#: src/keyboardmap.cpp:147
-msgid "Home"
-msgstr ""
-
-#: src/keyboardmap.cpp:148
-msgid "End"
-msgstr ""
-
-#: src/keyboardmap.cpp:149
-msgid ""
-"Page\n"
-"Up"
-msgstr ""
-
-#: src/keyboardmap.cpp:150
-msgid ""
-"Page\n"
-"Down"
-msgstr ""
-
-#: src/namedialog.cpp:35 src/mainwindow.cpp:72
-msgid "Players' names"
-msgstr ""
-
-#: src/namedialog.cpp:44
-msgid "Left player"
-msgstr ""
-
-#: src/namedialog.cpp:45
-msgid "Right player"
-msgstr ""
-
-#: src/namedialog.cpp:50
-msgid "Show the players' names"
-msgstr ""
-
-#: src/timecontroldialog.cpp:43 src/mainwindow.cpp:71
-msgid "Time control"
-msgstr ""
-
-#: src/timecontroldialog.cpp:50
-msgid ""
-"Simplest time control mode. No additional delay is never added to the "
-"player's main time."
-msgstr ""
-
-#: src/timecontroldialog.cpp:54
-msgid ""
-"At each move, the player is granted an additional delay, so that his/her "
-"global clock time is always greater than this bonus time at the beginning of "
-"his/her playing turn. Additional delays can be accumulated."
-msgstr ""
-
-#: src/timecontroldialog.cpp:60
-msgid ""
-"Same as Fischer time control mode, except that additional delays cannot be "
-"accumulated. Bronstein mode can also be thought as a kind of sudden death "
-"mode in which the clock waits for a certain delay before starting to "
-"substract from the player's remaining time when engaged."
-msgstr ""
-
-#: src/timecontroldialog.cpp:66
-msgid ""
-"While the current player is deciding on his/her move, the opponent's time is "
-"increasing. Therefore, the sum of both clocks remains always the same."
-msgstr ""
-
-#: src/timecontroldialog.cpp:71
-msgid ""
-"When the player's main time expires, he/she is granted one or more "
-"additional time periods, denoted as \"byo-yomi\" periods. If the move is "
-"completed before the current byo-yomi expires, the clock is reset with the "
-"whole byo-yomi time available for the next move; otherwise, the next byo-"
-"yomi starts. At the end of the last byo-yomi, the game is lost."
-msgstr ""
-
-#: src/timecontroldialog.cpp:79
-msgid "Mode"
-msgstr ""
-
-#: src/timecontroldialog.cpp:97
-msgid "Same time for both sides"
-msgstr ""
-
-#: src/timecontroldialog.cpp:107
-msgid "Left"
-msgstr ""
-
-#: src/timecontroldialog.cpp:107
-msgid "Right"
-msgstr ""
-
-#: src/timecontroldialog.cpp:113 src/bitimerwidget.cpp:211
-#: src/bitimerwidget.cpp:215
-msgid "Main time"
-msgstr ""
-
-#: src/timecontroldialog.cpp:114
-msgid "Increment"
-msgstr ""
-
-#: src/timecontroldialog.cpp:115
-msgid "Byo-yomi periods"
-msgstr ""
 
 #: src/preferencedialog.cpp:41 src/mainwindow.cpp:91 src/mainwindow.cpp:330
 msgid "Preferences"
@@ -248,6 +47,11 @@ msgstr ""
 
 #: src/preferencedialog.cpp:94
 msgid "Right player's button"
+msgstr ""
+
+#: src/preferencedialog.cpp:95 src/core/keyboardmap.cpp:138
+#: src/mainwindow.cpp:65
+msgid "Pause"
 msgstr ""
 
 #: src/preferencedialog.cpp:96 src/mainwindow.cpp:64
@@ -401,88 +205,285 @@ msgid ""
 "key actions"
 msgstr ""
 
-#: src/bitimerwidget.cpp:206
+#: src/gui/widgets/timedurationwidget.cpp:48
+msgid "hour"
+msgstr ""
+
+#: src/gui/widgets/timedurationwidget.cpp:49
+msgid "min"
+msgstr ""
+
+#: src/gui/widgets/timedurationwidget.cpp:50
+msgid "sec"
+msgstr ""
+
+#: src/gui/widgets/bitimerwidget.cpp:207
 msgid "Flag down"
 msgstr ""
 
-#: src/bitimerwidget.cpp:207
+#: src/gui/widgets/bitimerwidget.cpp:208
 msgid "Since: %1"
 msgstr ""
 
-#: src/bitimerwidget.cpp:215
+#: src/gui/widgets/bitimerwidget.cpp:212 src/gui/widgets/bitimerwidget.cpp:216
+#: src/gui/dialogs/timecontroldialog.cpp:113
+msgid "Main time"
+msgstr ""
+
+#: src/gui/widgets/bitimerwidget.cpp:216
 msgid "Byo-yomi period"
 msgstr ""
 
-#: src/bitimerwidget.cpp:216
+#: src/gui/widgets/bitimerwidget.cpp:217
 msgid "Byo-yomi period %1/%2"
 msgstr ""
 
-#: src/timecontrol.cpp:36
-msgid "Sudden death"
-msgstr ""
-
-#: src/timecontrol.cpp:37
-msgid "Fischer"
-msgstr ""
-
-#: src/timecontrol.cpp:38
-msgid "Bronstein"
-msgstr ""
-
-#: src/timecontrol.cpp:39
-msgid "Hourglass"
-msgstr ""
-
-#: src/timecontrol.cpp:40
-msgid "Byo-yomi"
-msgstr ""
-
-#: src/timecontrol.cpp:119
-msgid "left"
-msgstr ""
-
-#: src/timecontrol.cpp:121
-msgid "right"
-msgstr ""
-
-#: src/timecontrol.cpp:134
-msgid "by move"
-msgstr ""
-
-#: src/timecontrol.cpp:141
-msgid "byo-yomi period"
-msgstr ""
-
-#: src/timecontrol.cpp:141
-msgid "byo-yomi periods"
-msgstr ""
-
-#: src/timecontrol.cpp:155 src/timecontrol.cpp:168
-msgid "%1% sec"
-msgstr ""
-
-#: src/timecontrol.cpp:166
-msgid "%1% hour"
-msgstr ""
-
-#: src/timecontrol.cpp:167
-msgid "%1% min"
-msgstr ""
-
-#: src/debugdialog.cpp:33
-msgid "Debug information"
-msgstr ""
-
-#: src/debugdialog.cpp:45
-msgid "Press some key..."
-msgstr ""
-
-#: src/modifierkeyswidget.cpp:33
+#: src/gui/widgets/modifierkeyswidget.cpp:32
 msgid "Modifier keys"
 msgstr ""
 
-#: src/modifierkeyswidget.cpp:36
-msgid "%1% keys (left and right)"
+#: src/gui/widgets/modifierkeyswidget.cpp:36 src/core/keyboardmap.cpp:122
+msgid "Ctrl"
+msgstr ""
+
+#: src/gui/widgets/modifierkeyswidget.cpp:37 src/core/keyboardmap.cpp:123
+msgid "Shift"
+msgstr ""
+
+#: src/gui/widgets/modifierkeyswidget.cpp:38 src/core/keyboardmap.cpp:124
+msgid "Alt"
+msgstr ""
+
+#: src/gui/widgets/modifierkeyswidget.cpp:45
+msgid "%1 keys (left and right)"
+msgstr ""
+
+#: src/gui/dialogs/namedialog.cpp:37 src/mainwindow.cpp:72
+msgid "Players' names"
+msgstr ""
+
+#: src/gui/dialogs/namedialog.cpp:46
+msgid "Left player"
+msgstr ""
+
+#: src/gui/dialogs/namedialog.cpp:47
+msgid "Right player"
+msgstr ""
+
+#: src/gui/dialogs/namedialog.cpp:52
+msgid "Show the players' names"
+msgstr ""
+
+#: src/gui/dialogs/timecontroldialog.cpp:42 src/mainwindow.cpp:71
+msgid "Time control"
+msgstr ""
+
+#: src/gui/dialogs/timecontroldialog.cpp:49
+msgid ""
+"Simplest time control mode. No additional delay is never added to the "
+"player's main time."
+msgstr ""
+
+#: src/gui/dialogs/timecontroldialog.cpp:53
+msgid ""
+"At each move, the player is granted an additional delay, so that his/her "
+"global clock time is always greater than this bonus time at the beginning of "
+"his/her playing turn. Additional delays can be accumulated."
+msgstr ""
+
+#: src/gui/dialogs/timecontroldialog.cpp:59
+msgid ""
+"Same as Fischer time control mode, except that additional delays cannot be "
+"accumulated. Bronstein mode can also be thought as a kind of sudden death "
+"mode in which the clock waits for a certain delay before starting to "
+"substract from the player's remaining time when engaged."
+msgstr ""
+
+#: src/gui/dialogs/timecontroldialog.cpp:65
+msgid ""
+"While the current player is deciding on his/her move, the opponent's time is "
+"increasing. Therefore, the sum of both clocks remains always the same."
+msgstr ""
+
+#: src/gui/dialogs/timecontroldialog.cpp:70
+msgid ""
+"When the player's main time expires, he/she is granted one or more "
+"additional time periods, denoted as \"byo-yomi\" periods. If the move is "
+"completed before the current byo-yomi expires, the clock is reset with the "
+"whole byo-yomi time available for the next move; otherwise, the next byo-"
+"yomi starts. At the end of the last byo-yomi, the game is lost."
+msgstr ""
+
+#: src/gui/dialogs/timecontroldialog.cpp:78
+msgid "Mode"
+msgstr ""
+
+#: src/gui/dialogs/timecontroldialog.cpp:97
+msgid "Same time for both sides"
+msgstr ""
+
+#: src/gui/dialogs/timecontroldialog.cpp:107
+msgid "Left"
+msgstr ""
+
+#: src/gui/dialogs/timecontroldialog.cpp:107
+msgid "Right"
+msgstr ""
+
+#: src/gui/dialogs/timecontroldialog.cpp:114
+msgid "Increment"
+msgstr ""
+
+#: src/gui/dialogs/timecontroldialog.cpp:115
+msgid "Byo-yomi periods"
+msgstr ""
+
+#: src/gui/dialogs/debugdialog.cpp:35
+msgid "Debug information"
+msgstr ""
+
+#: src/gui/dialogs/debugdialog.cpp:47
+msgid "Press some key..."
+msgstr ""
+
+#: src/core/keyboardmap.cpp:116
+msgid "Invalid"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:125
+msgid "Alt Gr"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:126
+msgid "Super"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:127
+msgid "Tab"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:128
+msgid ""
+"Caps\n"
+"Lock"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:129
+msgid "Space"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:130 src/mainwindow.cpp:75 src/mainwindow.cpp:330
+msgid "Menu"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:131
+msgid "Back Space"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:132 src/core/keyboardmap.cpp:142
+msgid "Enter"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:135
+msgid "Esc"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:136
+msgid ""
+"Print\n"
+"Screen"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:137
+msgid ""
+"Scroll\n"
+"Lock"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:141
+msgid ""
+"Num\n"
+"Lock"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:145
+msgid "Ins"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:146
+msgid "Del"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:147
+msgid "Home"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:148
+msgid "End"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:149
+msgid ""
+"Page\n"
+"Up"
+msgstr ""
+
+#: src/core/keyboardmap.cpp:150
+msgid ""
+"Page\n"
+"Down"
+msgstr ""
+
+#: src/core/timecontrol.cpp:36
+msgid "Sudden death"
+msgstr ""
+
+#: src/core/timecontrol.cpp:37
+msgid "Fischer"
+msgstr ""
+
+#: src/core/timecontrol.cpp:38
+msgid "Bronstein"
+msgstr ""
+
+#: src/core/timecontrol.cpp:39
+msgid "Hourglass"
+msgstr ""
+
+#: src/core/timecontrol.cpp:40
+msgid "Byo-yomi"
+msgstr ""
+
+#: src/core/timecontrol.cpp:119
+msgid "left"
+msgstr ""
+
+#: src/core/timecontrol.cpp:121
+msgid "right"
+msgstr ""
+
+#: src/core/timecontrol.cpp:134
+msgid "by move"
+msgstr ""
+
+#: src/core/timecontrol.cpp:141
+msgid "byo-yomi period"
+msgstr ""
+
+#: src/core/timecontrol.cpp:141
+msgid "byo-yomi periods"
+msgstr ""
+
+#: src/core/timecontrol.cpp:155 src/core/timecontrol.cpp:168
+msgid "%1% sec"
+msgstr ""
+
+#: src/core/timecontrol.cpp:166
+msgid "%1% hour"
+msgstr ""
+
+#: src/core/timecontrol.cpp:167
+msgid "%1% min"
 msgstr ""
 
 #: src/mainwindow.cpp:60
