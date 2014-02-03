@@ -25,7 +25,6 @@
 # INSTALLATION INSTRUCTIONS
 ################################################################################
 
-
 # No install-related target is provided in the development configuration
 if(${DEV})
 	return()
@@ -42,9 +41,43 @@ install(DIRECTORY data/share/
 
 
 # Install instructions for the translation files, if available.
-if(${translation_qm_files})
+if(DEFINED translation_qm_files)
 	install(FILES ${translation_qm_files}
 		DESTINATION share/${APP_NAME}/translation
 	)
+endif()
+
+
+
+################################################################################
+# PACKAGE GENERATION
+################################################################################
+
+# Select the package generator.
+if(${WIN32})
+	set(CPACK_GENERATOR "NSIS")
+endif()
+if(${UNIX})
+	set(CPACK_GENERATOR "DEB")
+endif()
+
+
+# General package description variables.
+set(CPACK_PACKAGE_NAME ${APP_NAME})
+set(CPACK_PACKAGE_VERSION_MAJOR ${APP_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${APP_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${APP_VERSION_PATCH})
+
+
+# Debian-package associated variables
+if(${UNIX})
+	set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Yoann Le Montagner")
+	set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5widgets5")
+endif()
+
+
+# Call the CPack generator
+if(DEFINED CPACK_GENERATOR)
+	include(CPack)
 endif()
 

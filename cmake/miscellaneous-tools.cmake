@@ -44,7 +44,8 @@ add_custom_target(
 	COMMAND ${CMAKE_COMMAND} -E remove_directory user_config
 
 	# CMake's stuff
-	COMMAND ${CMAKE_COMMAND} -E remove install_manifest.txt
+	COMMAND ${CMAKE_COMMAND} -E remove install_manifest.txt CPack*.cmake
+	COMMAND ${CMAKE_COMMAND} -E remove_directory _CPack_Packages
 	COMMAND ${CMAKE_COMMAND} -E remove CMakeCache.txt cmake_*.cmake
 	COMMAND ${CMAKE_COMMAND} -E remove_directory CMakeFiles
 	COMMAND ${CMAKE_COMMAND} -E remove Makefile

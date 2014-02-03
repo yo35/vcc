@@ -2,6 +2,8 @@
 /CMakeCache.txt
 /CMakeFiles
 /cmake_*.cmake
+/CPack*.cmake
+/_CPack_Packages
 /install_manifest.txt
 /Makefile
 
@@ -20,4 +22,7 @@
 /config/*.h
 /*_automoc.cpp
 /moc_*.cpp
+
+# Packaged files
+/*.deb
 
