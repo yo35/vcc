@@ -22,52 +22,21 @@
 
 
 ################################################################################
-# VARIOUS GENERAL-PURPOSE TOOLS AND COMMANDS
+# INSTALLATION INSTRUCTIONS
 ################################################################################
 
 
-# Remove everything
-#  -> target 'mrproper'
-add_custom_target(
-	mrproper
+# No install-related target is provided in the development configuration
+if(${DEV})
+	return()
+endif()
 
-	# Binaries and auto-generated source files
-	COMMAND ${CMAKE_COMMAND} -E remove moc_*.cpp *_automoc.cpp
-	COMMAND ${CMAKE_COMMAND} -E remove config/*.h translation/*.qm
-	COMMAND ${CMAKE_COMMAND} -E remove ${EXECUTABLE_NAME} *.exe *.deb
 
-	# Eclipse project files
-	COMMAND ${CMAKE_COMMAND} -E remove .project .cproject
-	COMMAND ${CMAKE_COMMAND} -E remove_directory .settings
-
-	# Per-user runtime files
-	COMMAND ${CMAKE_COMMAND} -E remove_directory user_config
-
-	# CMake's stuff
-	COMMAND ${CMAKE_COMMAND} -E remove install_manifest.txt
-	COMMAND ${CMAKE_COMMAND} -E remove CMakeCache.txt cmake_*.cmake
-	COMMAND ${CMAKE_COMMAND} -E remove_directory CMakeFiles
-	COMMAND ${CMAKE_COMMAND} -E remove Makefile
+# TODO
+install(TARGETS ${EXECUTABLE_NAME}
+	RUNTIME DESTINATION bin
+)
+install(DIRECTORY data/share/
+	DESTINATION share/${APP_NAME}
 )
 
-
-# Compile and run the software (only available in the development configuration)
-#  -> target 'run'
-if(${DEV})
-	add_custom_target(
-		run
-		COMMAND ./${EXECUTABLE_NAME}
-		DEPENDS ${EXECUTABLE_NAME}
-	)
-endif()
-
-
-# Code metrics (only available on Unix)
-#  -> target 'stats'
-if(${UNIX})
-	add_custom_target(
-		stats
-		COMMAND ./statistics.sh ${source_cpp_files} ${source_h_files}
-		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-	)
-endif()

@@ -41,7 +41,7 @@ const std::string &Params::share_path()
 		#ifdef VCC_DEVELOPMENT_SETTINGS
 			_share_path = SHARE_PATH;
 		#else
-			_share_path = QCoreApplication::applicationDirPath().toStdString() + "/../share"; //TODO
+			_share_path = QCoreApplication::applicationDirPath().toStdString() + "/../share/" APP_NAME; //TODO
 		#endif
 	}
 	return *_share_path;
