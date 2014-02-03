@@ -41,7 +41,13 @@ const std::string &Params::share_path()
 		#ifdef VCC_DEVELOPMENT_SETTINGS
 			_share_path = SHARE_PATH;
 		#else
-			_share_path = QCoreApplication::applicationDirPath().toStdString() + "/../share/" APP_NAME; //TODO
+			#if defined(OS_IS_WINDOWS)
+				#define SHARE_PATH_SUFFIX "/share"
+			#elif defined(OS_IS_UNIX)
+				#define SHARE_PATH_SUFFIX "/../share/" APP_NAME
+			#endif
+			_share_path = QCoreApplication::applicationDirPath().toStdString() + SHARE_PATH_SUFFIX;
+			#undef SHARE_PATH_SUFFIX
 		#endif
 	}
 	return *_share_path;
@@ -69,7 +75,7 @@ const std::string &Params::translation_path()
 		#ifdef VCC_DEVELOPMENT_SETTINGS
 			_translation_path = TRANSLATION_PATH;
 		#else
-			_translation_path = share_path() + "/translation"; //TODO
+			_translation_path = share_path() + "/translation";
 		#endif
 	}
 	return *_translation_path;

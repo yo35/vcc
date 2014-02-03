@@ -35,19 +35,30 @@ endif()
 message(STATUS "VCC will be installed to ${CMAKE_INSTALL_PREFIX}")
 
 
+# Define the destination folders.
+if(${WIN32})
+	set(DESTINATION_DIRECTORY_BIN ".")
+	set(DESTINATION_DIRECTORY_SHARE share)
+elseif(${UNIX})
+	set(DESTINATION_DIRECTORY_BIN bin)
+	set(DESTINATION_DIRECTORY_SHARE share/${APP_NAME})
+endif()
+set(DESTINATION_DIRECTORY_TRANSLATION ${DESTINATION_DIRECTORY_SHARE}/translation)
+
+
 # Install instructions for the executable and for the required associated files.
 install(TARGETS ${EXECUTABLE_NAME}
-	RUNTIME DESTINATION bin
+	RUNTIME DESTINATION ${DESTINATION_DIRECTORY_BIN}
 )
 install(DIRECTORY data/share/
-	DESTINATION share/${APP_NAME}
+	DESTINATION ${DESTINATION_DIRECTORY_SHARE}
 )
 
 
 # Install instructions for the translation files, if available.
 if(DEFINED translation_qm_files)
 	install(FILES ${translation_qm_files}
-		DESTINATION share/${APP_NAME}/translation
+		DESTINATION ${DESTINATION_DIRECTORY_TRANSLATION}
 	)
 endif()
 
