@@ -40,7 +40,7 @@ include(cmake/compile.cmake)
 include(cmake/translation.cmake)
 include(cmake/translation-tools.cmake)
 include(cmake/miscellaneous-tools.cmake)
-
+include(cmake/install.cmake)
 
 
 
@@ -108,14 +108,14 @@ get_filename_component("COPYING_FULL_PATH" "COPYING" ABSOLUTE)
 # Compilation
 
 # Flags compilo et linker
-if(${WIN32})
-	add_definitions("-DOS_IS_WINDOWS")
-	if(NOT (${INSTALL_TYPE} MATCHES Dev))
-		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
-	endif(NOT (${INSTALL_TYPE} MATCHES Dev))
-else()
-	add_definitions("-DOS_IS_UNIX")
-endif()
+#if(${WIN32})
+#	add_definitions("-DOS_IS_WINDOWS")
+#	if(NOT (${INSTALL_TYPE} MATCHES Dev))
+#		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
+#	endif(NOT (${INSTALL_TYPE} MATCHES Dev))
+#else()
+#	add_definitions("-DOS_IS_UNIX")
+#endif()
 
 # Fichiers de configuration
 

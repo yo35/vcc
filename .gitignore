@@ -2,6 +2,7 @@
 /CMakeCache.txt
 /CMakeFiles
 /cmake_*.cmake
+/install_manifest.txt
 /Makefile
 
 # Per-user runtime files
