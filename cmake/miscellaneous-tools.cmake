@@ -26,6 +26,30 @@
 ################################################################################
 
 
+# Remove everything
+#  -> target 'mrproper'
+add_custom_target(
+	mrproper
+
+	# Binaries and auto-generated source files
+	COMMAND ${CMAKE_COMMAND} -E remove moc_*.cpp *_automoc.cpp
+	COMMAND ${CMAKE_COMMAND} -E remove config/*.h translation/*.qm
+	COMMAND ${CMAKE_COMMAND} -E remove ${EXECUTABLE_NAME} *.exe *.deb
+
+	# Eclipse project files
+	COMMAND ${CMAKE_COMMAND} -E remove .project .cproject
+	COMMAND ${CMAKE_COMMAND} -E remove_directory .settings
+
+	# Per-user runtime files
+	COMMAND ${CMAKE_COMMAND} -E remove_directory user_config
+
+	# CMake's stuff
+	COMMAND ${CMAKE_COMMAND} -E remove CMakeCache.txt cmake_*.cmake
+	COMMAND ${CMAKE_COMMAND} -E remove_directory CMakeFiles
+	COMMAND ${CMAKE_COMMAND} -E remove Makefile
+)
+
+
 # Compile and run the software (only available in the development configuration)
 #  -> target 'run'
 if(${DEV})

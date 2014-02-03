@@ -127,17 +127,17 @@ endif()
 # Cibles annexes
 
 # Supprimer tout ce qui n'est pas sur le SVN
-add_custom_target(
-	mrproper
-	COMMAND ${CMAKE_COMMAND} -E remove -f cmake_*.cmake *.tar.gz *.deb *.exe
-	COMMAND ${CMAKE_COMMAND} -E remove -f Makefile CMakeCache.txt install_manifest.txt
-	COMMAND ${CMAKE_COMMAND} -E remove -f include/config.h
-	COMMAND ${CMAKE_COMMAND} -E remove_directory bin
-	COMMAND ${CMAKE_COMMAND} -E remove_directory locale
-	COMMAND ${CMAKE_COMMAND} -E remove_directory CMakeFiles
-	COMMAND ${CMAKE_COMMAND} -E remove_directory _CPack_Packages
-	COMMAND ${CMAKE_COMMAND} -E remove_directory user_config
-)
+#add_custom_target(
+#	mrproper
+#	COMMAND ${CMAKE_COMMAND} -E remove -f cmake_*.cmake *.tar.gz *.deb *.exe
+#	COMMAND ${CMAKE_COMMAND} -E remove -f Makefile CMakeCache.txt install_manifest.txt
+#	COMMAND ${CMAKE_COMMAND} -E remove -f include/config.h
+#	COMMAND ${CMAKE_COMMAND} -E remove_directory bin
+#	COMMAND ${CMAKE_COMMAND} -E remove_directory locale
+#	COMMAND ${CMAKE_COMMAND} -E remove_directory CMakeFiles
+#	COMMAND ${CMAKE_COMMAND} -E remove_directory _CPack_Packages
+#	COMMAND ${CMAKE_COMMAND} -E remove_directory user_config
+#)
 
 # Génération du fichier ChangeLog
 #add_custom_target(

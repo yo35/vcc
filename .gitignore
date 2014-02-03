@@ -12,12 +12,10 @@
 /.cproject
 /.settings
 
-# Binaries
-/locale
+# Binaries and auto-generated source files
 /vcc
 /vcc.exe
-
-# Auto-generated source files
+/translation/*.qm
 /config/*.h
 /*_automoc.cpp
 /moc_*.cpp
