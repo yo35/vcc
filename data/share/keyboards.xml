@@ -153,4 +153,22 @@
 		</locales>
 	</keyboard>
 
+	<keyboard>
+		<id>PT</id>
+		<icon>PT.png</icon>
+		<name>Portuguese keyboard</name>
+		<locales>
+			<locale>pt_PT</locale>
+		</locales>
+	</keyboard>
+
+	<keyboard>
+		<id>BR</id>
+		<icon>BR.png</icon>
+		<name>Brazilian keyboard</name>
+		<locales>
+			<locale>pt_BR</locale>
+		</locales>
+	</keyboard>
+
 </keyboards>
