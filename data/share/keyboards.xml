@@ -171,4 +171,13 @@
 		</locales>
 	</keyboard>
 
+	<keyboard>
+		<id>IT</id>
+		<icon>IT.png</icon>
+		<name>Italian keyboard</name>
+		<locales>
+			<locale>it_IT</locale>
+		</locales>
+	</keyboard>
+
 </keyboards>
