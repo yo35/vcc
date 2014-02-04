@@ -2,11 +2,33 @@
 <keyboards>
 
 	<keyboard>
+		<id>qwerty</id>
+		<icon></icon>
+		<name>Generic QWERTY</name>
+		<locales>
+			<locale>*</locale>
+		</locales>
+	</keyboard>
+
+	<keyboard>
+		<id>qwertz</id>
+		<icon></icon>
+		<name>Generic QWERTZ</name>
+		<locales></locales>
+	</keyboard>
+
+	<keyboard>
+		<id>azerty</id>
+		<icon></icon>
+		<name>Generic AZERTY</name>
+		<locales></locales>
+	</keyboard>
+
+	<keyboard>
 		<id>US</id>
 		<icon>US.png</icon>
 		<name>American keyboard</name>
 		<locales>
-			<locale>*</locale>
 			<locale>en_US</locale>
 			<locale>en_CA</locale>
 		</locales>

@@ -462,9 +462,10 @@ void Params::ensure_keyboard_index_loaded()
 void Params::load_keyboard(const ptree &keyboard)
 {
 	// Read the ID/name/icon data associated to the given keyboard.
-	std::string id = keyboard.get<std::string>("id");
+	std::string id   = keyboard.get<std::string>("id"  );
+	std::string icon = keyboard.get<std::string>("icon");
 	_keyboard_names[id] = keyboard.get<std::string>("name");
-	_keyboard_icons[id] = QIcon(QString::fromStdString(share_path() + "/flags/" + keyboard.get<std::string>("icon")));
+	_keyboard_icons[id] = icon.empty() ? QIcon() : QIcon(QString::fromStdString(share_path() + "/flags/" + icon));
 
 	// List the locales for which the keyboard will be considered as the default one.
 	for(const auto &it : keyboard.get_child("locales")) {
