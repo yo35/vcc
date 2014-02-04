@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboards>
-	
+
 	<keyboard>
 		<id>US</id>
 		<icon>US.png</icon>
@@ -10,7 +10,7 @@
 			<locale>en_US</locale>
 		</locales>
 	</keyboard>
-	
+
 	<keyboard>
 		<id>FR</id>
 		<icon>FR.png</icon>
@@ -25,6 +25,15 @@
 			<locale>fr_YT</locale>
 			<locale>fr_MC</locale>
 			<locale>fr_AD</locale>
+		</locales>
+	</keyboard>
+
+	<keyboard>
+		<id>BE</id>
+		<icon>BE.png</icon>
+		<name>Clavier belge</name>
+		<locales>
+			<locale>fr_BE</locale>
 		</locales>
 	</keyboard>
 
