@@ -8,6 +8,7 @@
 		<locales>
 			<locale>*</locale>
 			<locale>en_US</locale>
+			<locale>en_CA</locale>
 		</locales>
 	</keyboard>
 
@@ -34,6 +35,15 @@
 		<name>Clavier belge</name>
 		<locales>
 			<locale>fr_BE</locale>
+		</locales>
+	</keyboard>
+
+	<keyboard>
+		<id>CA_french</id>
+		<icon>CA.png</icon>
+		<name>Clavier québécois</name>
+		<locales>
+			<locale>fr_CA</locale>
 		</locales>
 	</keyboard>
 
