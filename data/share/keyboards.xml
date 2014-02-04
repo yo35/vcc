@@ -18,6 +18,13 @@
 		<locales>
 			<locale>fr_FR</locale>
 			<locale>fr_GF</locale>
+			<locale>fr_MQ</locale>
+			<locale>fr_GP</locale>
+			<locale>fr_RE</locale>
+			<locale>fr_PM</locale>
+			<locale>fr_YT</locale>
+			<locale>fr_MC</locale>
+			<locale>fr_AD</locale>
 		</locales>
 	</keyboard>
 

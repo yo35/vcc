@@ -464,7 +464,7 @@ void Params::load_keyboard(const ptree &keyboard)
 	// Read the ID/name/icon data associated to the given keyboard.
 	std::string id = keyboard.get<std::string>("id");
 	_keyboard_names[id] = keyboard.get<std::string>("name");
-	_keyboard_icons[id] = QIcon(QString::fromStdString(share_path() + "/" + keyboard.get<std::string>("icon")));
+	_keyboard_icons[id] = QIcon(QString::fromStdString(share_path() + "/flags/" + keyboard.get<std::string>("icon")));
 
 	// List the locales for which the keyboard will be considered as the default one.
 	for(const auto &it : keyboard.get_child("locales")) {
@@ -584,7 +584,7 @@ const KeyboardMap &Params::keyboard_map(const std::string &id)
 	auto it = _keyboard_maps.find(id);
 	if(it==_keyboard_maps.end()) {
 		try {
-			return _keyboard_maps[id].load(share_path() + "/" + id + ".kbm");
+			return _keyboard_maps[id].load(share_path() + "/keyboard-maps/" + id + ".kbm");
 		}
 		catch(boost::property_tree::ptree_error &) {
 			throw std::runtime_error("An error has occurred while reading a keyboard map file.");
