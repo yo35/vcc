@@ -47,4 +47,14 @@
 		</locales>
 	</keyboard>
 
+	<keyboard>
+		<id>GB</id>
+		<icon>GB.png</icon>
+		<name>British keyboard</name>
+		<locales>
+			<locale>en_GB</locale>
+			<locale>en_UK</locale>
+		</locales>
+	</keyboard>
+
 </keyboards>

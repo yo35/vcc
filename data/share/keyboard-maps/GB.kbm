@@ -11,73 +11,73 @@
 		<!-- Main pad, key line 1 (mostly digits) -->
 		<key>
 			<id>main-01</id>
-			<label>1,!,±</label>
+			<label>1,!</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>100</x><width>100</width></geometry>
 			<scan-code><unix>10</unix><windows>2</windows></scan-code>
 		</key>
 		<key>
 			<id>main-02</id>
-			<label>2,&quot;,@</label>
+			<label>2,&quot;</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>200</x><width>100</width></geometry>
 			<scan-code><unix>11</unix><windows>3</windows></scan-code>
 		</key>
 		<key>
 			<id>main-03</id>
-			<label>3,/,£</label>
+			<label>3,£</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>300</x><width>100</width></geometry>
 			<scan-code><unix>12</unix><windows>4</windows></scan-code>
 		</key>
 		<key>
 			<id>main-04</id>
-			<label>4,$,¢</label>
+			<label>4,$,€</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>400</x><width>100</width></geometry>
 			<scan-code><unix>13</unix><windows>5</windows></scan-code>
 		</key>
 		<key>
 			<id>main-05</id>
-			<label>5,%,¤</label>
+			<label>5,%</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>500</x><width>100</width></geometry>
 			<scan-code><unix>14</unix><windows>6</windows></scan-code>
 		</key>
 		<key>
 			<id>main-06</id>
-			<label>6,?,¬</label>
+			<label>6,^</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>600</x><width>100</width></geometry>
 			<scan-code><unix>15</unix><windows>7</windows></scan-code>
 		</key>
 		<key>
 			<id>main-07</id>
-			<label>7,&amp;,|</label>
+			<label>7,&amp;</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>700</x><width>100</width></geometry>
 			<scan-code><unix>16</unix><windows>8</windows></scan-code>
 		</key>
 		<key>
 			<id>main-08</id>
-			<label>8,*,²</label>
+			<label>8,*</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>800</x><width>100</width></geometry>
 			<scan-code><unix>17</unix><windows>9</windows></scan-code>
 		</key>
 		<key>
 			<id>main-09</id>
-			<label>9,(,³</label>
+			<label>9,(</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>900</x><width>100</width></geometry>
 			<scan-code><unix>18</unix><windows>10</windows></scan-code>
 		</key>
 		<key>
 			<id>main-10</id>
-			<label>0,),¼</label>
+			<label>0,)</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>1000</x><width>100</width></geometry>
 			<scan-code><unix>19</unix><windows>11</windows></scan-code>
 		</key>
 		<key>
 			<id>main-11</id>
-			<label>-,_,½</label>
+			<label>-,_</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>1100</x><width>100</width></geometry>
 			<scan-code><unix>20</unix><windows>12</windows></scan-code>
 		</key>
 		<key>
 			<id>main-12</id>
-			<label>=,+,¾</label>
+			<label>=,+</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>1200</x><width>100</width></geometry>
 			<scan-code><unix>21</unix><windows>13</windows></scan-code>
 		</key>
@@ -160,13 +160,13 @@
 		</key>
 		<key>
 			<id>main-25</id>
-			<label>,^,[</label>
+			<label>[,\{</label>
 			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>1130</x><width>100</width></geometry>
 			<scan-code><unix>34</unix><windows>26</windows></scan-code>
 		</key>
 		<key>
 			<id>main-26</id>
-			<label>¸,¨,]</label>
+			<label>],\}</label>
 			<geometry><in-nkp>false</in-nkp><line-top>3</line-top><line-bottom>3</line-bottom><x>1230</x><width>100</width></geometry>
 			<scan-code><unix>35</unix><windows>27</windows></scan-code>
 		</key>
@@ -243,19 +243,19 @@
 		</key>
 		<key>
 			<id>main-38</id>
-			<label>;,:,~</label>
+			<label>;,:</label>
 			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>1060</x><width>100</width></geometry>
 			<scan-code><unix>47</unix><windows>39</windows></scan-code>
 		</key>
 		<key>
 			<id>main-39</id>
-			<label>,`,\{</label>
+			<label>&apos;,@</label>
 			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>1160</x><width>100</width></geometry>
 			<scan-code><unix>48</unix><windows>40</windows></scan-code>
 		</key>
 		<key>
 			<id>main-40</id>
-			<label>#,|,\\</label>
+			<label>`,¬,|</label>
 			<geometry><in-nkp>false</in-nkp><line-top>2</line-top><line-bottom>2</line-bottom><x>0</x><width>100</width></geometry>
 			<scan-code><unix>49</unix><windows>41</windows></scan-code>
 		</key>
@@ -272,7 +272,7 @@
 		</key>
 		<key>
 			<id>main-42</id>
-			<label>&lt;,&gt;,\}</label>
+			<label>#,~</label>
 			<geometry><in-nkp>false</in-nkp><line-top>4</line-top><line-bottom>4</line-bottom><x>1260</x><width>100</width></geometry>
 			<scan-code><unix>51</unix><windows>43</windows></scan-code>
 		</key>
@@ -320,19 +320,19 @@
 		</key>
 		<key>
 			<id>main-50</id>
-			<label>\,,&apos;,_</label>
+			<label>\,,&lt;</label>
 			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>920</x><width>100</width></geometry>
 			<scan-code><unix>59</unix><windows>51</windows></scan-code>
 		</key>
 		<key>
 			<id>main-51</id>
-			<label>.,,-</label>
+			<label>.,&gt;</label>
 			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>1020</x><width>100</width></geometry>
 			<scan-code><unix>60</unix><windows>52</windows></scan-code>
 		</key>
 		<key>
 			<id>main-52</id>
-			<label>É</label>
+			<label>/,?</label>
 			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>1120</x><width>100</width></geometry>
 			<scan-code><unix>61</unix><windows>53</windows></scan-code>
 		</key>
@@ -367,7 +367,7 @@
 		</key>
 		<key>
 			<id>main-90</id>
-			<label>«,»,°</label>
+			<label>\\,|</label>
 			<geometry><in-nkp>false</in-nkp><line-top>5</line-top><line-bottom>5</line-bottom><x>120</x><width>100</width></geometry>
 			<scan-code><unix>94</unix><windows>86</windows></scan-code>
 		</key>
