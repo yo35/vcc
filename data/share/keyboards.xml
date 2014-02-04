@@ -92,4 +92,43 @@
 		</locales>
 	</keyboard>
 
+	<keyboard>
+		<id>SE</id>
+		<icon>SE.png</icon>
+		<name>Swedish keyboard</name>
+		<locales>
+			<locale>sv_SE</locale>
+		</locales>
+	</keyboard>
+
+	<keyboard>
+		<id>NO</id>
+		<icon>NO.png</icon>
+		<name>Norwegian keyboard</name>
+		<locales>
+			<locale>no_NO</locale>
+			<locale>nb_NO</locale>
+			<locale>nn_NO</locale>
+		</locales>
+	</keyboard>
+
+	<keyboard>
+		<id>DK</id>
+		<icon>DK.png</icon>
+		<name>Danish keyboard</name>
+		<locales>
+			<locale>da_DK</locale>
+		</locales>
+	</keyboard>
+
+	<keyboard>
+		<id>FO</id>
+		<icon>FO.png</icon>
+		<name>Faroese keyboard</name>
+		<locales>
+			<locale>da_FO</locale>
+			<locale>fo_FO</locale>
+		</locales>
+	</keyboard>
+
 </keyboards>
