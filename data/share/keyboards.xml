@@ -77,4 +77,19 @@
 		</locales>
 	</keyboard>
 
+	<keyboard>
+		<id>CH</id>
+		<icon>CH.png</icon>
+		<name>Swiss keyboard</name>
+		<locales>
+			<locale>de_CH</locale>
+			<locale>fr_CH</locale>
+			<locale>rm_CH</locale>
+			<locale>de_LU</locale>
+			<locale>fr_LU</locale>
+			<locale>lb_LU</locale>
+			<locale>de_LI</locale>
+		</locales>
+	</keyboard>
+
 </keyboards>
