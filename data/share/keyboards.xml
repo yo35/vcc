@@ -67,4 +67,14 @@
 		</locales>
 	</keyboard>
 
+	<keyboard>
+		<id>DE</id>
+		<icon>DE.png</icon>
+		<name>Deutsch Tastatur</name>
+		<locales>
+			<locale>de_DE</locale>
+			<locale>de_AT</locale>
+		</locales>
+	</keyboard>
+
 </keyboards>
