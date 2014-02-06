@@ -23,6 +23,7 @@
 #include "mainwindow.h"
 #include "params.h"
 #include <wrappers/translation.h>
+#include <models/modelappinfo.h>
 #include <gui/core/keyboardhandler.h>
 #include <gui/widgets/bitimerwidget.h>
 #include <gui/dialogs/timecontroldialog.h>
@@ -42,7 +43,7 @@
 // Constructor.
 MainWindow::MainWindow() : _debugDialog(nullptr)
 {
-	setWindowTitle(QString::fromStdString(Params::get().app_full_name()));
+	setWindowTitle(QString::fromStdString(ModelAppInfo::instance().full_name()));
 	setWindowIcon(fetchIcon("logo", false));
 	qApp->installEventFilter(this);
 
@@ -346,12 +347,11 @@ void MainWindow::onHelpClicked()
 // About button handler.
 void MainWindow::onAboutClicked()
 {
-	QString title = QString(_("About %1")).arg(QString::fromStdString(Params::get().app_full_name()));
-
+	ModelAppInfo &model(ModelAppInfo::instance());
+	QString title = QString(_("About %1")).arg(QString::fromStdString(model.full_name()));
 	QString message;
-	message += "<h1>" + QString::fromStdString(
-		Params::get().app_full_name() + " " + Params::get().app_version().full_number()
-	) + "</h1>";
+
+	message += "<h1>" + QString::fromStdString(model.full_name() + " " + model.version().full_number()) + "</h1>";
 	message += "<p>" + _("A simple and free chess clock software.") + "</p>";
 	message += "<p>"
 		"<a href=\"http://vchessclock.sourceforge.net/\">http://vchessclock.sourceforge.net/</a><br/>"
@@ -361,8 +361,10 @@ void MainWindow::onAboutClicked()
 		"If you encounter some bugs with this program, or if you wish to get new features in the future versions, "
 		"you can report/propose them in the bug tracker at %1."
 	)).arg("<a href=\"https://github.com/yo35/vcc/issues\">https://github.com/yo35/vcc/issues</a>") + "</i></small></p>"; //TODO: register on GitHub
+
 	message += "<h2>" + _("Author") + "</h2>";
 	message += "<p>Yoann Le Montagner <a href=\"mailto:yo35@melix.net\">&lt;yo35@melix.net&gt;</a></p>";
+
 	message += "<h2>" + _("Translators") + "</h2>";
 	message += "<table><tbody>";
 	message += "<tr><td>Deutsch</td><td>Tobias Küchel</td></tr>";
@@ -374,6 +376,7 @@ void MainWindow::onAboutClicked()
 		"If you are interested in translating this plugin into your language, "
 		"please contact the author."
 	) + "</i></small></p>";
+
 	message += "<h2>" + _("License") + "</h2>";
 	message += "<p>" + _(
 		"This program is free software: you can redistribute it and/or modify "

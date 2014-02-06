@@ -22,6 +22,7 @@
 
 #include "params.h"
 #include <models/modelpaths.h>
+#include <models/modelappinfo.h>
 #include <config.h>
 #include <stdexcept>
 #include <sstream>
@@ -34,21 +35,11 @@
 std::unique_ptr<Params> Params::_instance;
 
 
-// Current locale.
-const std::string &Params::locale()
-{
-	if(!_locale) {
-		_locale = QApplication::inputMethod()->locale().name().toStdString();
-	}
-	return *_locale;
-}
-
-
 // File that holds the preferences of the current user.
 const std::string &Params::config_file()
 {
 	if(!_config_file) {
-		_config_file = ModelPaths::instance().config_path() + "/" + _app_short_name + ".xml";
+		_config_file = ModelPaths::instance().config_path() + "/" + ModelAppInfo::instance().short_name() + ".xml";
 	}
 	return *_config_file;
 }
@@ -86,8 +77,6 @@ const std::string &Params::custom_shortcut_map_file()
 
 // Private constructor.
 Params::Params() :
-	_app_short_name(APP_SHORT_NAME), _app_name(APP_NAME), _app_full_name(APP_FULL_NAME),
-	_app_version(APP_VERSION_MAJOR, APP_VERSION_MINOR, APP_VERSION_PATCH),
 	_root(nullptr), _ptree_loaded(false), _ptree_saved(true),
 	_keyboard_index_loaded(false), _shortcut_map_loaded(false)
 {}
@@ -491,7 +480,7 @@ const std::string &Params::default_keyboard(const std::string &locale)
 // Return the ID of the current selected keyboard.
 std::string Params::current_keyboard()
 {
-	return get_atomic_value("keyboard.id", default_keyboard(locale()));
+	return get_atomic_value("keyboard.id", default_keyboard(ModelAppInfo::instance().locale()));
 }
 
 

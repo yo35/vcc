@@ -69,22 +69,11 @@ public:
 	 * @name Application directories, files, and environment.
 	 * @{
 	 */
-	const std::string &locale                   (); //!< Current locale.
 	const std::string &config_file              (); //!< File that holds the preferences of the current user.
 	const std::string &keyboard_index_file      (); //!< Path to the file that indexes all the available keyboard maps.
 	const std::string &default_shortcut_map_file(); //!< Path to the default shortcut map file.
 	const std::string &custom_shortcut_map_file (); //!< Path to the user-specific shortcut map file.
 
-	/**@} */
-
-	/**
-	 * @name Application-level read-only properties.
-	 * @{
-	 */
-	const std::string   &app_short_name() { return _app_short_name; } //!< Application short name.
-	const std::string   &app_name      () { return _app_name      ; } //!< Application name (without spaces).
-	const std::string   &app_full_name () { return _app_full_name ; } //!< Application full name.
-	const VersionNumber &app_version   () { return _app_version   ; } //!< Application version.
 	/**@} */
 
 	/**
@@ -266,17 +255,10 @@ private:
 	static std::string side_key(Side side, const std::string &key);
 
 	// Application directories, files, and environment.
-	boost::optional<std::string> _locale                   ;
 	boost::optional<std::string> _config_file              ;
 	boost::optional<std::string> _keyboard_index_file      ;
 	boost::optional<std::string> _default_shortcut_map_file;
 	boost::optional<std::string> _custom_shortcut_map_file ;
-
-	// General application properties
-	std::string   _app_short_name;
-	std::string   _app_name      ;
-	std::string   _app_full_name ;
-	VersionNumber _app_version   ;
 
 	// Property tree for the user-related parameters
 	ptree  _ptree       ;
