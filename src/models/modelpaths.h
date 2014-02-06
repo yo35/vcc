@@ -2,7 +2,7 @@
  *                                                                            *
  *    This file is part of Virtual Chess Clock, a chess clock software        *
  *                                                                            *
- *    Copyright (C) 2010-2012 Yoann Le Montagner <yo35(at)melix(dot)net>      *
+ *    Copyright (C) 2010-2014 Yoann Le Montagner <yo35(at)melix(dot)net>      *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -20,28 +20,52 @@
  ******************************************************************************/
 
 
-#include <QApplication>
-#include <QTranslator>
-#include <QLibraryInfo>
-#include "mainwindow.h"
-#include <models/modelpaths.h>
-#include <config.h>
+#ifndef MODELPATHS_H_
+#define MODELPATHS_H_
+
+#include "abstractmodel.h"
+#include <core/singleton.h>
+#include <string>
 
 
-int main(int argc, char **argv)
+/**
+ * Model holding the paths to the folders used by the application.
+ */
+class ModelPaths : public AbstractModel, public Singleton<ModelPaths>
 {
-	QApplication app(argc, argv);
-	app.setApplicationName(APP_NAME);
+	friend class Singleton<ModelPaths>;
 
-	QTranslator qtTranslator;
-	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-	app.installTranslator(&qtTranslator);
+public:
 
-	QTranslator customTranslator;
-	customTranslator.load(QLocale::system(), "", "", QString::fromStdString(ModelPaths::instance().translation_path()));
-	app.installTranslator(&customTranslator);
+	/**
+	 * Directory holding data shared by all the users (read-only directory).
+	 */
+	const Property<std::string> share_path;
 
-	MainWindow mainWindow;
-	mainWindow.show();
-	return app.exec();
-}
+	/**
+	 * Directory holding data that is user-specific (read-write directory).
+	 */
+	const Property<std::string> config_path;
+
+	/**
+	 * Directory holding the translation files (read-only directory).
+	 */
+	const Property<std::string> translation_path;
+
+	/**
+	 * Ensure that the config path exists.
+	 */
+	void ensure_config_path_exists();
+
+private:
+
+	// Constructor.
+	ModelPaths();
+
+	// Loaders.
+	void load_share_path      (std::string &target);
+	void load_config_path     (std::string &target);
+	void load_translation_path(std::string &target);
+};
+
+#endif /* MODELPATHS_H_ */

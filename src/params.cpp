@@ -21,65 +21,17 @@
 
 
 #include "params.h"
+#include <models/modelpaths.h>
 #include <config.h>
 #include <stdexcept>
 #include <sstream>
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <QApplication>
-#include <QStandardPaths>
 
 
 // Singleton object.
 std::unique_ptr<Params> Params::_instance;
-
-
-// Directory holding data of the application (read-only directory).
-const std::string &Params::share_path()
-{
-	if(!_share_path) {
-		#ifdef VCC_DEVELOPMENT_SETTINGS
-			_share_path = SHARE_PATH;
-		#else
-			#if defined(OS_IS_WINDOWS)
-				#define SHARE_PATH_SUFFIX "/share"
-			#elif defined(OS_IS_UNIX)
-				#define SHARE_PATH_SUFFIX "/../share/" APP_NAME
-			#endif
-			_share_path = QCoreApplication::applicationDirPath().toStdString() + SHARE_PATH_SUFFIX;
-			#undef SHARE_PATH_SUFFIX
-		#endif
-	}
-	return *_share_path;
-}
-
-
-// Configuration folder in the user's home (read-write directory).
-const std::string &Params::config_path()
-{
-	if(!_config_path) {
-		#ifdef VCC_DEVELOPMENT_SETTINGS
-			_config_path = CONFIG_PATH;
-		#else
-			_config_path = QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString();
-		#endif
-	}
-	return *_config_path;
-}
-
-
-// Directory holding the translation files (read-only directory).
-const std::string &Params::translation_path()
-{
-	if(!_translation_path) {
-		#ifdef VCC_DEVELOPMENT_SETTINGS
-			_translation_path = TRANSLATION_PATH;
-		#else
-			_translation_path = share_path() + "/translation";
-		#endif
-	}
-	return *_translation_path;
-}
 
 
 // Current locale.
@@ -96,7 +48,7 @@ const std::string &Params::locale()
 const std::string &Params::config_file()
 {
 	if(!_config_file) {
-		_config_file = config_path() + "/" + _app_short_name + ".xml";
+		_config_file = ModelPaths::instance().config_path() + "/" + _app_short_name + ".xml";
 	}
 	return *_config_file;
 }
@@ -106,7 +58,7 @@ const std::string &Params::config_file()
 const std::string &Params::keyboard_index_file()
 {
 	if(!_keyboard_index_file) {
-		_keyboard_index_file = share_path() + "/keyboards.xml";
+		_keyboard_index_file = ModelPaths::instance().share_path() + "/keyboards.xml";
 	}
 	return *_keyboard_index_file;
 }
@@ -116,7 +68,7 @@ const std::string &Params::keyboard_index_file()
 const std::string &Params::default_shortcut_map_file()
 {
 	if(!_default_shortcut_map_file) {
-		_default_shortcut_map_file = share_path() + "/default-shortcut-map.xml";
+		_default_shortcut_map_file = ModelPaths::instance().share_path() + "/default-shortcut-map.xml";
 	}
 	return *_default_shortcut_map_file;
 }
@@ -126,7 +78,7 @@ const std::string &Params::default_shortcut_map_file()
 const std::string &Params::custom_shortcut_map_file()
 {
 	if(!_custom_shortcut_map_file) {
-		_custom_shortcut_map_file = config_path() + "/shortcut-map.xml";
+		_custom_shortcut_map_file = ModelPaths::instance().config_path() + "/shortcut-map.xml";
 	}
 	return *_custom_shortcut_map_file;
 }
@@ -208,7 +160,7 @@ void Params::save()
 // Create the application folder is the user's home if it does not exist yet.
 void Params::ensure_config_path_exists()
 {
-	boost::filesystem::create_directories(config_path());
+	ModelPaths::instance().ensure_config_path_exists();
 }
 
 
@@ -465,7 +417,7 @@ void Params::load_keyboard(const ptree &keyboard)
 	std::string id   = keyboard.get<std::string>("id"  );
 	std::string icon = keyboard.get<std::string>("icon");
 	_keyboard_names[id] = keyboard.get<std::string>("name");
-	_keyboard_icons[id] = icon.empty() ? QIcon() : QIcon(QString::fromStdString(share_path() + "/flags/" + icon));
+	_keyboard_icons[id] = icon.empty() ? QIcon() : QIcon(QString::fromStdString(ModelPaths::instance().share_path() + "/flags/" + icon));
 
 	// List the locales for which the keyboard will be considered as the default one.
 	for(const auto &it : keyboard.get_child("locales")) {
@@ -585,7 +537,7 @@ const KeyboardMap &Params::keyboard_map(const std::string &id)
 	auto it = _keyboard_maps.find(id);
 	if(it==_keyboard_maps.end()) {
 		try {
-			return _keyboard_maps[id].load(share_path() + "/keyboard-maps/" + id + ".kbm");
+			return _keyboard_maps[id].load(ModelPaths::instance().share_path() + "/keyboard-maps/" + id + ".kbm");
 		}
 		catch(boost::property_tree::ptree_error &) {
 			throw std::runtime_error("An error has occurred while reading a keyboard map file.");

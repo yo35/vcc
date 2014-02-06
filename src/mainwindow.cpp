@@ -420,6 +420,8 @@ void MainWindow::loadPersistentParameters()
 	_biTimerWidget->setDisplayByoYomiExtraInfo  (Params::get().display_byo_yomi_extra_info ());
 }
 
+#include <models/modelpaths.h>
+
 
 // Load an icon.
 QIcon MainWindow::fetchIcon(const std::string &name, bool fromTheme)
@@ -428,6 +430,6 @@ QIcon MainWindow::fetchIcon(const std::string &name, bool fromTheme)
 		return QIcon::fromTheme(QString::fromStdString(name));
 	}
 	else {
-		return QIcon(QString::fromStdString(Params::get().share_path() + "/" + name + ".png"));
+		return QIcon(QString::fromStdString(ModelPaths::instance().share_path() + "/" + name + ".png"));
 	}
 }

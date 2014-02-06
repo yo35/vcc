@@ -69,14 +69,11 @@ public:
 	 * @name Application directories, files, and environment.
 	 * @{
 	 */
-	const std::string &share_path               (); //!< Directory holding data of the application (read-only directory).
-	const std::string &config_path              (); //!< Configuration folder in the user's home (read-write directory).
-	const std::string &translation_path         (); //!< Directory holding the translation files (read-only directory).
 	const std::string &locale                   (); //!< Current locale.
 	const std::string &config_file              (); //!< File that holds the preferences of the current user.
-	const std::string &keyboard_index_file      (); //!< File that contains the index of all available keyboard maps.
-	const std::string &default_shortcut_map_file(); //!< File that contains the default shortcut map.
-	const std::string &custom_shortcut_map_file (); //!< File that contains the user-defined shortcut map.
+	const std::string &keyboard_index_file      (); //!< Path to the file that indexes all the available keyboard maps.
+	const std::string &default_shortcut_map_file(); //!< Path to the default shortcut map file.
+	const std::string &custom_shortcut_map_file (); //!< Path to the user-specific shortcut map file.
 
 	/**@} */
 
@@ -269,9 +266,6 @@ private:
 	static std::string side_key(Side side, const std::string &key);
 
 	// Application directories, files, and environment.
-	boost::optional<std::string> _share_path               ;
-	boost::optional<std::string> _config_path              ;
-	boost::optional<std::string> _translation_path         ;
 	boost::optional<std::string> _locale                   ;
 	boost::optional<std::string> _config_file              ;
 	boost::optional<std::string> _keyboard_index_file      ;
