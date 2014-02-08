@@ -21,6 +21,7 @@
 
 
 #include "modelappinfo.h"
+#include "modelpaths.h"
 #include <config.h>
 #include <QApplication>
 
@@ -31,13 +32,15 @@ ModelAppInfo::ModelAppInfo() :
 	name      (std::bind(&ModelAppInfo::load_name      , this, std::placeholders::_1)),
 	full_name (std::bind(&ModelAppInfo::load_full_name , this, std::placeholders::_1)),
 	version   (std::bind(&ModelAppInfo::load_version   , this, std::placeholders::_1)),
-	locale    (std::bind(&ModelAppInfo::load_locale    , this, std::placeholders::_1))
+	locale    (std::bind(&ModelAppInfo::load_locale    , this, std::placeholders::_1)),
+	icon      (std::bind(&ModelAppInfo::load_icon      , this, std::placeholders::_1))
 {
 	register_property(short_name);
 	register_property(name      );
 	register_property(full_name );
 	register_property(version   );
 	register_property(locale    );
+	register_property(icon      );
 }
 
 
@@ -71,4 +74,13 @@ void ModelAppInfo::load_full_name(std::string &target)
 void ModelAppInfo::load_locale(std::string &target)
 {
 	target = QApplication::inputMethod()->locale().name().toStdString();
+}
+
+
+void ModelAppInfo::load_icon(QIcon &target)
+{
+	ModelPaths &model(ModelPaths::instance());
+	target.addFile(QString::fromStdString(model.share_path() + "/vcc-small.png"));
+	target.addFile(QString::fromStdString(model.share_path() + "/vcc.png"      ));
+	target.addFile(QString::fromStdString(model.share_path() + "/vcc-large.png"));
 }

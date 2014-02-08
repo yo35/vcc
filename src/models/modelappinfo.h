@@ -27,6 +27,7 @@
 #include <core/singleton.h>
 #include <core/versionnumber.h>
 #include <string>
+#include <QIcon>
 
 
 /**
@@ -63,6 +64,11 @@ public:
 	 */
 	ReadOnlyProperty<std::string> locale;
 
+	/**
+	 * Application icon.
+	 */
+	ReadOnlyProperty<QIcon> icon;
+
 private:
 
 	// Constructor.
@@ -74,6 +80,7 @@ private:
 	void load_full_name (std::string   &target);
 	void load_version   (VersionNumber &target);
 	void load_locale    (std::string   &target);
+	void load_icon      (QIcon         &target);
 };
 
 #endif /* MODELAPPINFO_H_ */

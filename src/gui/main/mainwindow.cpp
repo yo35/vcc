@@ -51,7 +51,7 @@
 MainWindow::MainWindow() : _debugDialog(nullptr)
 {
 	setWindowTitle(QString::fromStdString(ModelAppInfo::instance().full_name()));
-	setWindowIcon(fetchIcon("logo", false));
+	setWindowIcon(ModelAppInfo::instance().icon());
 	qApp->installEventFilter(this);
 
 	// Low-level keyboard handler
