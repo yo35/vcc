@@ -23,6 +23,7 @@
 #include "preferencedialog.h"
 #include "params.h"
 #include <wrappers/translation.h>
+#include <models/modelkeyboard.h>
 #include <functional>
 #include <QDialogButtonBox>
 #include <QLabel>
@@ -291,10 +292,10 @@ void PreferenceDialog::refreshKeyboardHandlerActivationState()
 // Feed the keyboard selector combo-box.
 void PreferenceDialog::feedKeyboardSelector()
 {
-	for(const auto &it : Params::get().keyboards()) {
+	for(const auto &it : ModelKeyboard::instance().ids()) {
 		_keyboardSelector->addItem(
-			Params::get().keyboard_icon(it),
-			QString::fromStdString(Params::get().keyboard_name(it)),
+			ModelKeyboard::instance().icon(it),
+			QString::fromStdString(ModelKeyboard::instance().name(it)),
 			QVariant(it.c_str())
 		);
 	}
@@ -312,7 +313,7 @@ std::string PreferenceDialog::retrieveSelectedKeyboard() const
 // Action performed when the selected item in the keyboard selector combo-box changes.
 void PreferenceDialog::onSelectedKeyboardChanged()
 {
-	_keyboardWidget->bindKeyboardMap(Params::get().keyboard_map(retrieveSelectedKeyboard()));
+	_keyboardWidget->bindKeyboardMap(ModelKeyboard::instance().keyboard_map(retrieveSelectedKeyboard()));
 }
 
 

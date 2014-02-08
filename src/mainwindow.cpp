@@ -24,6 +24,7 @@
 #include "params.h"
 #include <wrappers/translation.h>
 #include <models/modelappinfo.h>
+#include <models/modelkeyboard.h>
 #include <gui/core/keyboardhandler.h>
 #include <gui/widgets/bitimerwidget.h>
 #include <gui/dialogs/timecontroldialog.h>
@@ -406,7 +407,7 @@ void MainWindow::loadPersistentParameters()
 {
 	// Keyboard shortcuts
 	_shortcutManager.reset(Params::get().modifier_keys(),
-		Params::get().keyboard_map(Params::get().current_keyboard()),
+		ModelKeyboard::instance().keyboard_map(Params::get().current_keyboard()),
 		Params::get().shortcut_map()
 	);
 

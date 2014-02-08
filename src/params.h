@@ -70,7 +70,6 @@ public:
 	 * @{
 	 */
 	const std::string &config_file              (); //!< File that holds the preferences of the current user.
-	const std::string &keyboard_index_file      (); //!< Path to the file that indexes all the available keyboard maps.
 	const std::string &default_shortcut_map_file(); //!< Path to the default shortcut map file.
 	const std::string &custom_shortcut_map_file (); //!< Path to the user-specific shortcut map file.
 
@@ -167,26 +166,6 @@ public:
 	void set_display_byo_yomi_extra_info(bool value);
 
 	/**
-	 * Return the IDs of the available keyboard maps.
-	 */
-	const std::set<std::string> &keyboards() { ensure_keyboard_index_loaded(); return _keyboard_list; }
-
-	/**
-	 * Return the name of the keyboard map corresponding to the given ID.
-	 */
-	const std::string &keyboard_name(const std::string &id) { ensure_keyboard_id_exists(id); return _keyboard_names.find(id)->second; }
-
-	/**
-	 * Return the icon of the keyboard map corresponding to the given ID.
-	 */
-	QIcon keyboard_icon(const std::string &id) { ensure_keyboard_id_exists(id); return _keyboard_icons.find(id)->second; }
-
-	/**
-	 * Return the ID of the keyboard that is associated to the given locale.
-	 */
-	const std::string &default_keyboard(const std::string &locale);
-
-	/**
 	 * Return the ID of the current selected keyboard.
 	 */
 	std::string current_keyboard();
@@ -217,16 +196,6 @@ public:
 	void set_modifier_keys(ModifierKeys value);
 
 	/**
-	 * Return the keyboard map corresponding to the given ID.
-	 */
-	const KeyboardMap &keyboard_map(const std::string &id);
-
-	/**
-	 * Default keyboard map.
-	 */
-	const std::string &default_keyboard_map();
-
-	/**
 	 * Return the current shortcut map.
 	 */
 	ShortcutMap &shortcut_map();
@@ -243,10 +212,7 @@ private:
 	void load();
 	void save();
 	void ensure_config_path_exists();
-	void ensure_keyboard_index_loaded();
 	void ensure_shortcut_map_loaded();
-	void load_keyboard(const ptree &keyboard);
-	void ensure_keyboard_id_exists(const std::string &id);
 
 	// Utility functions to manage the property tree holding the user-related data.
 	ptree &fetch(const std::string &key);
@@ -256,7 +222,6 @@ private:
 
 	// Application directories, files, and environment.
 	boost::optional<std::string> _config_file              ;
-	boost::optional<std::string> _keyboard_index_file      ;
 	boost::optional<std::string> _default_shortcut_map_file;
 	boost::optional<std::string> _custom_shortcut_map_file ;
 
@@ -267,14 +232,7 @@ private:
 	bool   _ptree_saved ;
 
 	// Keyboard maps
-	bool                               _keyboard_index_loaded;
 	bool                               _shortcut_map_loaded  ;
-	std::set<std::string>              _keyboard_list        ;
-	std::map<std::string, std::string> _keyboard_names       ;
-	std::map<std::string, QIcon>       _keyboard_icons       ;
-	std::map<std::string, std::string> _locale_to_keyboard   ;
-	std::string                        _default_keyboard     ;
-	std::map<std::string, KeyboardMap> _keyboard_maps        ;
 	ShortcutMap                        _shortcut_map         ;
 
 	// Singleton object

@@ -23,6 +23,7 @@
 #include "params.h"
 #include <models/modelpaths.h>
 #include <models/modelappinfo.h>
+#include <models/modelkeyboard.h>
 #include <config.h>
 #include <stdexcept>
 #include <sstream>
@@ -42,16 +43,6 @@ const std::string &Params::config_file()
 		_config_file = ModelPaths::instance().config_path() + "/" + ModelAppInfo::instance().short_name() + ".xml";
 	}
 	return *_config_file;
-}
-
-
-// File that contains the index of all available keyboard maps.
-const std::string &Params::keyboard_index_file()
-{
-	if(!_keyboard_index_file) {
-		_keyboard_index_file = ModelPaths::instance().share_path() + "/keyboards.xml";
-	}
-	return *_keyboard_index_file;
 }
 
 
@@ -78,7 +69,7 @@ const std::string &Params::custom_shortcut_map_file()
 // Private constructor.
 Params::Params() :
 	_root(nullptr), _ptree_loaded(false), _ptree_saved(true),
-	_keyboard_index_loaded(false), _shortcut_map_loaded(false)
+	_shortcut_map_loaded(false)
 {}
 
 
@@ -366,67 +357,6 @@ void Params::set_display_byo_yomi_extra_info(bool value)
 }
 
 
-// Load the keyboard index file if not done yet.
-void Params::ensure_keyboard_index_loaded()
-{
-	if(_keyboard_index_loaded) {
-		return;
-	}
-
-	try
-	{
-		// Read the keyboard index file
-		ptree keyboard_index;
-		boost::property_tree::read_xml(keyboard_index_file(), keyboard_index, boost::property_tree::xml_parser::trim_whitespace);
-
-		// Iterates over the list of keyboards
-		const ptree &keyboards(keyboard_index.get_child("keyboards"));
-		for(const auto &it : keyboards) {
-			if(it.first!="keyboard") {
-				continue;
-			}
-			load_keyboard(it.second);
-		}
-	}
-
-	// The keyboard index file must be readable.
-	catch(boost::property_tree::xml_parser_error &) {
-		throw std::runtime_error("An error has occurred while reading the keyboard index file.");
-	}
-
-	// Mark the keyboard index file as read.
-	_keyboard_index_loaded = true;
-}
-
-
-// Load the keyboard information contained in the given node.
-void Params::load_keyboard(const ptree &keyboard)
-{
-	// Read the ID/name/icon data associated to the given keyboard.
-	std::string id   = keyboard.get<std::string>("id"  );
-	std::string icon = keyboard.get<std::string>("icon");
-	_keyboard_names[id] = keyboard.get<std::string>("name");
-	_keyboard_icons[id] = icon.empty() ? QIcon() : QIcon(QString::fromStdString(ModelPaths::instance().share_path() + "/flags/" + icon));
-
-	// List the locales for which the keyboard will be considered as the default one.
-	for(const auto &it : keyboard.get_child("locales")) {
-		if(it.first!="locale") {
-			continue;
-		}
-		std::string locale = it.second.get_value<std::string>();
-		if(locale=="*") {
-			_default_keyboard = id;
-		}
-		else {
-			_locale_to_keyboard[locale] = id;
-		}
-	}
-
-	// Register the keyboard in the list of available keyboards.
-	_keyboard_list.insert(std::move(id));
-}
-
-
 // Load the shortcut map file if not done yet.
 void Params::ensure_shortcut_map_loaded()
 {
@@ -457,30 +387,10 @@ void Params::ensure_shortcut_map_loaded()
 }
 
 
-// Ensure that the keyboard corresponding to the given ID exists and is actually
-// registered in the keyboard index file.
-void Params::ensure_keyboard_id_exists(const std::string &id)
-{
-	ensure_keyboard_index_loaded();
-	if(_keyboard_list.count(id)==0) {
-		throw std::invalid_argument("Invalid keyboard ID.");
-	}
-}
-
-
-// Return the ID of the keyboard that is associated to the given locale.
-const std::string &Params::default_keyboard(const std::string &locale)
-{
-	ensure_keyboard_index_loaded();
-	auto it = _locale_to_keyboard.find(locale);
-	return it==_locale_to_keyboard.end() ? _default_keyboard : it->second;
-}
-
-
 // Return the ID of the current selected keyboard.
 std::string Params::current_keyboard()
 {
-	return get_atomic_value("keyboard.id", default_keyboard(ModelAppInfo::instance().locale()));
+	return get_atomic_value("keyboard.id", ModelKeyboard::instance().default_id());
 }
 
 
@@ -516,23 +426,6 @@ ModifierKeys Params::modifier_keys()
 void Params::set_modifier_keys(ModifierKeys value)
 {
 	put_atomic_value("keyboard.modifier-keys", value);
-}
-
-
-// Return the keyboard map corresponding to the given ID.
-const KeyboardMap &Params::keyboard_map(const std::string &id)
-{
-	ensure_keyboard_id_exists(id);
-	auto it = _keyboard_maps.find(id);
-	if(it==_keyboard_maps.end()) {
-		try {
-			return _keyboard_maps[id].load(ModelPaths::instance().share_path() + "/keyboard-maps/" + id + ".kbm");
-		}
-		catch(boost::property_tree::ptree_error &) {
-			throw std::runtime_error("An error has occurred while reading a keyboard map file.");
-		}
-	}
-	return it->second;
 }
 
 
