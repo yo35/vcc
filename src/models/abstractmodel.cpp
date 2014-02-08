@@ -24,16 +24,17 @@
 
 
 // Register the given constant property.
-void AbstractModel::register_property(const AbstractProperty &)
+void AbstractModel::register_property(AbstractReadOnlyProperty &)
 {
 	// Nothing to do.
 }
 
 
 // Register the given writable property.
-void AbstractModel::register_property(AbstractProperty &property)
+void AbstractModel::register_property(AbstractReadWriteProperty &property)
 {
-	_properties.insert(&property);
+	property.connect_saved(boost::bind(&AbstractModel::on_property_saved, this));
+	_read_write_properties.insert(&property);
 }
 
 
@@ -41,10 +42,22 @@ void AbstractModel::register_property(AbstractProperty &property)
 void AbstractModel::save()
 {
 	bool need_finalize_save = false;
-	for(auto it : _properties) {
-		need_finalize_save = AbstractProperty::Attorney::save(*it) || need_finalize_save;
+	_shunt_saved = true;
+	for(auto it : _read_write_properties) {
+		need_finalize_save = it->save() || need_finalize_save;
 	}
 	if(need_finalize_save) {
 		finalize_save();
 	}
+	_shunt_saved = false;
+}
+
+
+// Handler called when one of the registered property is saved.
+void AbstractModel::on_property_saved()
+{
+	if(_shunt_saved) {
+		return;
+	}
+	finalize_save();
 }
