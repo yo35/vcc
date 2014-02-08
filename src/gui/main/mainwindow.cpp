@@ -2,7 +2,7 @@
  *                                                                            *
  *    This file is part of Virtual Chess Clock, a chess clock software        *
  *                                                                            *
- *    Copyright (C) 2010-2012 Yoann Le Montagner <yo35(at)melix(dot)net>      *
+ *    Copyright (C) 2010-2014 Yoann Le Montagner <yo35(at)melix(dot)net>      *
  *                                                                            *
  *    This program is free software: you can redistribute it and/or modify    *
  *    it under the terms of the GNU General Public License as published by    *
@@ -21,26 +21,29 @@
 
 
 #include "mainwindow.h"
+#include "preferencedialog.h"
+
 #include <wrappers/translation.h>
+
 #include <models/modelpaths.h>
 #include <models/modelappinfo.h>
 #include <models/modelkeyboard.h>
 #include <models/modelshortcutmap.h>
 #include <models/modelmain.h>
+
 #include <gui/core/keyboardhandler.h>
 #include <gui/widgets/bitimerwidget.h>
 #include <gui/dialogs/timecontroldialog.h>
 #include <gui/dialogs/namedialog.h>
 #include <gui/dialogs/debugdialog.h>
-#include "preferencedialog.h"
-#include <QToolBar>
-#include <QStatusBar>
+
 #include <QAction>
-#include <QToolButton>
+#include <QEvent>
 #include <QMenu>
 #include <QMessageBox>
-#include <QEvent>
-#include <QApplication>
+#include <QStatusBar>
+#include <QToolBar>
+#include <QToolButton>
 
 
 // Constructor.
@@ -58,7 +61,7 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	_toolBarTimer = new QTimer(this);
 	_toolBarTimer->setInterval(500);
 	_toolBarTimer->setSingleShot(true);
-	connect(_toolBarTimer, &QTimer::timeout, this, &MainWindow::onTimeoutEvent);
+	connect(_toolBarTimer, &QTimer::timeout, this, &MainWindow::onToolbarTimerElapsed);
 
 	// Build the tool-bar.
 	_toolBar = addToolBar(_("Main tool-bar"));
@@ -187,7 +190,7 @@ void MainWindow::onMouseMoveEvent()
 
 
 // Triggered when the tool-bar timer elapses
-void MainWindow::onTimeoutEvent()
+void MainWindow::onToolbarTimerElapsed()
 {
 	if(!isFullScreen()) {
 		return;
