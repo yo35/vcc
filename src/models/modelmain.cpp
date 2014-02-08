@@ -22,6 +22,7 @@
 
 #include "modelmain.h"
 #include "modelpaths.h"
+#include "modelkeyboard.h"
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
@@ -50,7 +51,10 @@ ModelMain::ModelMain() :
 	DECLARE_READ_WRITE(delay_before_display_seconds),
 	DECLARE_READ_WRITE(display_time_after_timeout  ),
 	DECLARE_READ_WRITE(display_bronstein_extra_info),
-	DECLARE_READ_WRITE(display_byo_yomi_extra_info )
+	DECLARE_READ_WRITE(display_byo_yomi_extra_info ),
+	DECLARE_READ_WRITE(keyboard_id                 ),
+	DECLARE_READ_WRITE(keyboard_has_numeric_keypad ),
+	DECLARE_READ_WRITE(modifier_keys               )
 {
 	register_property(config_file                 );
 	register_property(time_control                );
@@ -60,6 +64,9 @@ ModelMain::ModelMain() :
 	register_property(display_time_after_timeout  );
 	register_property(display_bronstein_extra_info);
 	register_property(display_byo_yomi_extra_info );
+	register_property(keyboard_id                 );
+	register_property(keyboard_has_numeric_keypad );
+	register_property(modifier_keys               );
 
 	// Load the file if it exists.
 	if(boost::filesystem::exists(config_file())) {
@@ -257,4 +264,40 @@ void ModelMain::load_display_byo_yomi_extra_info(bool &target)
 void ModelMain::save_display_byo_yomi_extra_info(bool value)
 {
 	_root->put("time-options.byo-yomi-extra-info", value);
+}
+
+
+void ModelMain::load_keyboard_id(std::string &target)
+{
+	target = _root->get("keyboard.id", ModelKeyboard::instance().default_id());
+}
+
+
+void ModelMain::save_keyboard_id(const std::string &value)
+{
+	_root->put("keyboard.id", value);
+}
+
+
+void ModelMain::load_keyboard_has_numeric_keypad(bool &target)
+{
+	target = _root->get("keyboard.numeric-keypad", true);
+}
+
+
+void ModelMain::save_keyboard_has_numeric_keypad(bool value)
+{
+	_root->put("keyboard.numeric-keypad", value);
+}
+
+
+void ModelMain::load_modifier_keys(ModifierKeys &target)
+{
+	target = _root->get("keyboard.modifier-keys", ModifierKeys::DOUBLE_SHIFT);
+}
+
+
+void ModelMain::save_modifier_keys(ModifierKeys value)
+{
+	_root->put("keyboard.modifier-keys", value);
 }

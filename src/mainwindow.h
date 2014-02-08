@@ -25,10 +25,10 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include <boost/optional.hpp>
 #include <core/keys.h>
 #include <core/bitimer.h>
 #include <core/shortcutmanager.h>
+
 class KeyboardHandler;
 class BiTimerWidget;
 class DebugDialog;
@@ -83,7 +83,7 @@ private:
 	void onAboutClicked();
 	void refreshTimeControl();
 	void refreshStatusBarVisibility();
-	void loadPersistentParameters();
+	void refreshShortcutManager();
 	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
 
 	// Private members

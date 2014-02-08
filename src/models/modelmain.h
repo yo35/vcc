@@ -27,6 +27,7 @@
 #include <core/singleton.h>
 #include <core/timecontrol.h>
 #include <core/options.h>
+#include <core/keys.h>
 #include <boost/property_tree/ptree.hpp>
 #include <string>
 
@@ -80,6 +81,21 @@ public:
 	 */
 	ReadWriteProperty<bool> display_byo_yomi_extra_info;
 
+	/**
+	 * ID of the current selected keyboard.
+	 */
+	ReadWriteProperty<std::string> keyboard_id;
+
+	/**
+	 * Whether the numeric keypad should be displayed with the keyboard map or not.
+	 */
+	ReadWriteProperty<bool> keyboard_has_numeric_keypad;
+
+	/**
+	 * Modifier keys.
+	 */
+	ReadWriteProperty<ModifierKeys> modifier_keys;
+
 protected:
 
 	// Implement the save method.
@@ -99,6 +115,9 @@ private:
 	void load_display_time_after_timeout  (bool              &target);
 	void load_display_bronstein_extra_info(bool              &target);
 	void load_display_byo_yomi_extra_info (bool              &target);
+	void load_keyboard_id                 (std::string       &target);
+	void load_keyboard_has_numeric_keypad (bool              &target);
+	void load_modifier_keys               (ModifierKeys      &target);
 
 	// Savers
 	void save_time_control                (const TimeControl  &value);
@@ -108,6 +127,9 @@ private:
 	void save_display_time_after_timeout  (bool                value);
 	void save_display_bronstein_extra_info(bool                value);
 	void save_display_byo_yomi_extra_info (bool                value);
+	void save_keyboard_id                 (const std::string  &value);
+	void save_keyboard_has_numeric_keypad (bool                value);
+	void save_modifier_keys               (ModifierKeys        value);
 
 	// Useful alias
 	typedef boost::property_tree::ptree ptree;

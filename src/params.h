@@ -96,36 +96,6 @@ public:
 	void set_show_names(bool value);
 
 	/**
-	 * Return the ID of the current selected keyboard.
-	 */
-	std::string current_keyboard();
-
-	/**
-	 * Change the current selected keyboard.
-	 */
-	void set_current_keyboard(const std::string &value);
-
-	/**
-	 * Whether the numeric keypad should be displayed with the keyboard map or not.
-	 */
-	bool has_numeric_keypad();
-
-	/**
-	 * Whether the numeric keypad should be displayed with the keyboard map or not.
-	 */
-	void set_has_numeric_keypad(bool value);
-
-	/**
-	 * Modifier keys.
-	 */
-	ModifierKeys modifier_keys();
-
-	/**
-	 * Set the modifier keys.
-	 */
-	void set_modifier_keys(ModifierKeys value);
-
-	/**
 	 * Return the current shortcut map.
 	 */
 	ShortcutMap &shortcut_map();

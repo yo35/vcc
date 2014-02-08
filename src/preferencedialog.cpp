@@ -387,10 +387,10 @@ void PreferenceDialog::loadParameters()
 	ModelMain &model(ModelMain::instance());
 
 	// Keyboard page
-	_keyboardSelector->setCurrentIndex(_keyboardSelector->findData(QVariant(Params::get().current_keyboard().c_str())));
+	_keyboardSelector->setCurrentIndex(_keyboardSelector->findData(QVariant(model.keyboard_id().c_str())));
+	_modifierKeysSelector->setModifierKeys(model.modifier_keys              ());
+	_hasNumericKeypad    ->setChecked     (model.keyboard_has_numeric_keypad());
 	_shortcutMap = Params::get().shortcut_map();
-	_modifierKeysSelector->setModifierKeys(Params::get().modifier_keys());
-	_hasNumericKeypad->setChecked(Params::get().has_numeric_keypad());
 
 	// Time display page
 	_delayBeforeDisplaySeconds->setValue  (model.delay_before_display_seconds());
@@ -410,10 +410,10 @@ void PreferenceDialog::saveParameters()
 	ModelMain &model(ModelMain::instance());
 
 	// Keyboard page
-	Params::get().set_current_keyboard(retrieveSelectedKeyboard());
+	model.keyboard_id(retrieveSelectedKeyboard());
+	model.modifier_keys              (_modifierKeysSelector->modifierKeys());
+	model.keyboard_has_numeric_keypad(_hasNumericKeypad    ->isChecked   ());
 	Params::get().shortcut_map() = _shortcutMap;
-	Params::get().set_modifier_keys(_modifierKeysSelector->modifierKeys());
-	Params::get().set_has_numeric_keypad(_hasNumericKeypad->isChecked());
 
 	// Time display page
 	model.delay_before_display_seconds(_delayBeforeDisplaySeconds->value    ());

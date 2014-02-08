@@ -23,6 +23,7 @@
 #include "mainwindow.h"
 #include "params.h"
 #include <wrappers/translation.h>
+#include <models/modelpaths.h>
 #include <models/modelappinfo.h>
 #include <models/modelkeyboard.h>
 #include <models/modelmain.h>
@@ -140,8 +141,8 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	_biTimerWidget->setLabel(Side::RIGHT, QString::fromStdString(Params::get().player_name(Side::RIGHT)));
 	_biTimerWidget->setShowLabels(Params::get().show_names());
 
-	// Load the other persistent parameters
-	loadPersistentParameters();
+	// Initialize the shortcut manager.
+	refreshShortcutManager();
 }
 
 
@@ -316,7 +317,7 @@ void MainWindow::onPrefsClicked()
 		return;
 	}
 	dialog.saveParameters();
-	loadPersistentParameters();
+	refreshShortcutManager();
 }
 
 
@@ -434,17 +435,15 @@ void MainWindow::refreshStatusBarVisibility()
 }
 
 
-// Load the persistent parameters saved in the singleton Param object.
-void MainWindow::loadPersistentParameters()
+// Refresh the shortcut manager based on the keyboard settings.
+void MainWindow::refreshShortcutManager()
 {
-	// Keyboard shortcuts
-	_shortcutManager.reset(Params::get().modifier_keys(),
-		ModelKeyboard::instance().keyboard_map(Params::get().current_keyboard()),
+	_shortcutManager.reset(
+		ModelMain::instance().modifier_keys(),
+		ModelKeyboard::instance().keyboard_map(ModelMain::instance().keyboard_id()),
 		Params::get().shortcut_map()
 	);
 }
-
-#include <models/modelpaths.h>
 
 
 // Load an icon.
