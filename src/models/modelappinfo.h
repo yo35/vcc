@@ -27,6 +27,7 @@
 #include <core/singleton.h>
 #include <core/versionnumber.h>
 #include <string>
+#include <map>
 #include <QIcon>
 
 
@@ -69,6 +70,11 @@ public:
 	 */
 	ReadOnlyProperty<QIcon> icon;
 
+	/**
+	 * Tool-bar icon.
+	 */
+	const QIcon &toolbar_icon(const std::string &name);
+
 private:
 
 	// Constructor.
@@ -81,6 +87,9 @@ private:
 	void load_version   (VersionNumber &target);
 	void load_locale    (std::string   &target);
 	void load_icon      (QIcon         &target);
+
+	// Private members
+	std::map<std::string, QIcon> _toolbar_icons;
 };
 
 #endif /* MODELAPPINFO_H_ */

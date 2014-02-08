@@ -85,7 +85,6 @@ private:
 	void refreshTimeControl();
 	void refreshStatusBarVisibility();
 	void refreshShortcutManager();
-	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
 
 	// Private members
 	KeyboardHandler  *_keyboardHandler;

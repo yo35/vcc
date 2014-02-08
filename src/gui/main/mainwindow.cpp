@@ -50,8 +50,9 @@
 // Constructor.
 MainWindow::MainWindow() : _debugDialog(nullptr)
 {
-	setWindowTitle(QString::fromStdString(ModelAppInfo::instance().full_name()));
-	setWindowIcon(ModelAppInfo::instance().icon());
+	ModelAppInfo &appInfo(ModelAppInfo::instance());
+	setWindowTitle(QString::fromStdString(appInfo.full_name()));
+	setWindowIcon(appInfo.icon());
 	qApp->installEventFilter(this);
 
 	// Low-level keyboard handler
@@ -69,15 +70,15 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	_toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
 	_toolBar->setFloatable(false);
 	_toolBar->setMovable(false);
-	QAction *actReset = _toolBar->addAction(fetchIcon("reset", false), _("Reset"         ));
-	QAction *actPause = _toolBar->addAction(fetchIcon("pause", false), _("Pause"         ));
-	QAction *actSwap  = _toolBar->addAction(fetchIcon("swap" , false), _("Swap sides"    ));
+	QAction *actReset = _toolBar->addAction(appInfo.toolbar_icon("reset"), _("Reset"         ));
+	QAction *actPause = _toolBar->addAction(appInfo.toolbar_icon("pause"), _("Pause"         ));
+	QAction *actSwap  = _toolBar->addAction(appInfo.toolbar_icon("swap" ), _("Swap sides"    ));
 	_toolBar->addSeparator();
-	QAction *actFlScr = _toolBar->addAction(fetchIcon("flscr", false), _("Full screen"   ));
+	QAction *actFlScr = _toolBar->addAction(appInfo.toolbar_icon("flscr"), _("Full screen"   ));
 	actFlScr->setCheckable(true);
 	_toolBar->addSeparator();
-	QAction *actTCtrl = _toolBar->addAction(fetchIcon("tctrl", false), _("Time control"  ));
-	QAction *actNames = _toolBar->addAction(fetchIcon("names", false), _("Players' names"));
+	QAction *actTCtrl = _toolBar->addAction(appInfo.toolbar_icon("tctrl"), _("Time control"  ));
+	QAction *actNames = _toolBar->addAction(appInfo.toolbar_icon("names"), _("Players' names"));
 	_toolBar->addSeparator();
 	QToolButton *btnMenu = new QToolButton(this);
 	btnMenu->setText(_("Menu"));
@@ -96,12 +97,12 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	QMenu *menu = new QMenu(this);
 	btnMenu->setMenu(menu);
 	btnMenu->setPopupMode(QToolButton::InstantPopup);
-	QAction *actPrefs = menu->addAction(fetchIcon("preferences-desktop"), _("Preferences"));
+	QAction *actPrefs = menu->addAction(QIcon::fromTheme("preferences-desktop"), _("Preferences"));
 	menu->addSeparator();
-	QAction *actDebug = menu->addAction(                                  _("Debug"      ));
+	QAction *actDebug = menu->addAction(                                         _("Debug"      ));
 	menu->addSeparator();
-	QAction *actHelp  = menu->addAction(fetchIcon("help-contents"      ), _("Help"       ));
-	QAction *actAbout = menu->addAction(fetchIcon("help-about"         ), _("About"      ));
+	QAction *actHelp  = menu->addAction(QIcon::fromTheme("help-contents"      ), _("Help"       ));
+	QAction *actAbout = menu->addAction(QIcon::fromTheme("help-about"         ), _("About"      ));
 
 	// Connect the action handlers.
 	connect(actReset, &QAction::triggered, this, &MainWindow::onResetClicked);
@@ -444,16 +445,4 @@ void MainWindow::refreshShortcutManager()
 		ModelKeyboard::instance().keyboard_map(ModelMain::instance().keyboard_id()),
 		ModelShortcutMap::instance().shortcut_map()
 	);
-}
-
-
-// Load an icon.
-QIcon MainWindow::fetchIcon(const std::string &name, bool fromTheme)
-{
-	if(fromTheme) {
-		return QIcon::fromTheme(QString::fromStdString(name));
-	}
-	else {
-		return QIcon(QString::fromStdString(ModelPaths::instance().share_path() + "/" + name + ".png"));
-	}
 }

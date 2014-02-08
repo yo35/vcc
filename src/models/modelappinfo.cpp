@@ -44,6 +44,19 @@ ModelAppInfo::ModelAppInfo() :
 }
 
 
+// Tool-bar icon.
+const QIcon &ModelAppInfo::toolbar_icon(const std::string &name)
+{
+	auto it = _toolbar_icons.find(name);
+	if(it==_toolbar_icons.end()) {
+		_toolbar_icons[name] = QIcon(QString::fromStdString(
+			ModelPaths::instance().share_path() + "/toolbar-icons/" + name + ".png"));
+		it = _toolbar_icons.find(name);
+	}
+	return it->second;
+}
+
+
 
 // *****************************************************************************
 // Loaders
