@@ -70,15 +70,8 @@ public:
 	 * @{
 	 */
 	const std::string &config_file              (); //!< File that holds the preferences of the current user.
-	const std::string &default_shortcut_map_file(); //!< Path to the default shortcut map file.
-	const std::string &custom_shortcut_map_file (); //!< Path to the user-specific shortcut map file.
 
 	/**@} */
-
-	/**
-	 * Return the current shortcut map.
-	 */
-	ShortcutMap &shortcut_map();
 
 private:
 
@@ -102,18 +95,12 @@ private:
 
 	// Application directories, files, and environment.
 	boost::optional<std::string> _config_file              ;
-	boost::optional<std::string> _default_shortcut_map_file;
-	boost::optional<std::string> _custom_shortcut_map_file ;
 
 	// Property tree for the user-related parameters
 	ptree  _ptree       ;
 	ptree *_root        ;
 	bool   _ptree_loaded;
 	bool   _ptree_saved ;
-
-	// Keyboard maps
-	bool                               _shortcut_map_loaded  ;
-	ShortcutMap                        _shortcut_map         ;
 
 	// Singleton object
 	static std::unique_ptr<Params> _instance;

@@ -21,11 +21,11 @@
 
 
 #include "mainwindow.h"
-#include "params.h"
 #include <wrappers/translation.h>
 #include <models/modelpaths.h>
 #include <models/modelappinfo.h>
 #include <models/modelkeyboard.h>
+#include <models/modelshortcutmap.h>
 #include <models/modelmain.h>
 #include <gui/core/keyboardhandler.h>
 #include <gui/widgets/bitimerwidget.h>
@@ -150,8 +150,8 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 // Close event handler.
 void MainWindow::closeEvent(QCloseEvent *)
 {
-	Params::force_save();
 	ModelMain::instance().save();
+	ModelShortcutMap::instance().save();
 }
 
 
@@ -438,7 +438,7 @@ void MainWindow::refreshShortcutManager()
 	_shortcutManager.reset(
 		ModelMain::instance().modifier_keys(),
 		ModelKeyboard::instance().keyboard_map(ModelMain::instance().keyboard_id()),
-		Params::get().shortcut_map()
+		ModelShortcutMap::instance().shortcut_map()
 	);
 }
 

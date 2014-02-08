@@ -24,6 +24,7 @@
 #include "params.h"
 #include <wrappers/translation.h>
 #include <models/modelkeyboard.h>
+#include <models/modelshortcutmap.h>
 #include <models/modelmain.h>
 #include <functional>
 #include <QDialogButtonBox>
@@ -390,7 +391,7 @@ void PreferenceDialog::loadParameters()
 	_keyboardSelector->setCurrentIndex(_keyboardSelector->findData(QVariant(model.keyboard_id().c_str())));
 	_modifierKeysSelector->setModifierKeys(model.modifier_keys              ());
 	_hasNumericKeypad    ->setChecked     (model.keyboard_has_numeric_keypad());
-	_shortcutMap = Params::get().shortcut_map();
+	_shortcutMap = ModelShortcutMap::instance().shortcut_map();
 
 	// Time display page
 	_delayBeforeDisplaySeconds->setValue  (model.delay_before_display_seconds());
@@ -413,7 +414,7 @@ void PreferenceDialog::saveParameters()
 	model.keyboard_id(retrieveSelectedKeyboard());
 	model.modifier_keys              (_modifierKeysSelector->modifierKeys());
 	model.keyboard_has_numeric_keypad(_hasNumericKeypad    ->isChecked   ());
-	Params::get().shortcut_map() = _shortcutMap;
+	ModelShortcutMap::instance().shortcut_map(_shortcutMap);
 
 	// Time display page
 	model.delay_before_display_seconds(_delayBeforeDisplaySeconds->value    ());
