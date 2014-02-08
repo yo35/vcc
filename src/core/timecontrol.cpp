@@ -73,6 +73,26 @@ void TimeControl::set_byo_periods(Side side, int value)
 }
 
 
+// Equal operator.
+bool TimeControl::operator==(const TimeControl &op) const
+{
+	bool retval = _mode==op._mode &&
+		_main_time[Side::LEFT ]==op._main_time[Side::LEFT ] &&
+		_main_time[Side::RIGHT]==op._main_time[Side::RIGHT];
+	if(retval && (_mode==Mode::FISCHER || _mode==Mode::BRONSTEIN || _mode==Mode::BYO_YOMI)) {
+		retval =
+			_increment[Side::LEFT ]==op._increment[Side::LEFT ] &&
+			_increment[Side::RIGHT]==op._increment[Side::RIGHT];
+	}
+	if(retval && _mode==Mode::BYO_YOMI) {
+		retval =
+			_byo_periods[Side::LEFT ]==op._byo_periods[Side::LEFT ] &&
+			_byo_periods[Side::RIGHT]==op._byo_periods[Side::RIGHT];
+	}
+	return retval;
+}
+
+
 // Check whether both sides have the same time parameters.
 bool TimeControl::both_sides_have_same_time() const
 {

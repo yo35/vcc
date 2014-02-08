@@ -24,10 +24,13 @@
 #include <algorithm>
 
 
-// Change the current time control, and resets the timers.
-void BiTimer::set_time_control(TimeControl time_control)
+// Change the current time control, and resets the timers if necessary.
+void BiTimer::set_time_control(const TimeControl &time_control)
 {
-	_time_control = std::move(time_control);
+	if(time_control==_time_control) {
+		return;
+	}
+	_time_control = time_control;
 	reset_timers();
 }
 

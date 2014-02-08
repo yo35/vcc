@@ -116,10 +116,10 @@ public:
 	const TimeControl &time_control() const { return _time_control; }
 
 	/**
-	 * Change the current time control. A call to this function automatically
-	 * stops and resets the timers.
+	 * Change the current time control. If the new time control is different from the old one,
+	 * the timers are stopped and reseted.
 	 */
-	void set_time_control(TimeControl time_control);
+	void set_time_control(const TimeControl &time_control);
 
 	/**
 	 * Current time of the timer on side `side`.

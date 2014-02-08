@@ -72,6 +72,14 @@ public:
 	TimeControl() : _mode(Mode::SUDDEN_DEATH), _byo_periods{0, 0} {}
 
 	/**
+	 * @name Comparison operators.
+	 * @{
+	 */
+	bool operator==(const TimeControl &op) const;
+	bool operator!=(const TimeControl &op) const { return !operator==(op); }
+	/**@} */
+
+	/**
 	 * Current time control mode.
 	 */
 	Mode mode() const { return _mode; }
