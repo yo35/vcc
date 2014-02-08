@@ -30,6 +30,7 @@
 #include <core/keys.h>
 #include <boost/property_tree/ptree.hpp>
 #include <string>
+#include <QString>
 
 
 /**
@@ -96,6 +97,21 @@ public:
 	 */
 	ReadWriteProperty<ModifierKeys> modifier_keys;
 
+	/**
+	 * Left player's name.
+	 */
+	ReadWriteProperty<QString> left_player;
+
+	/**
+	 * Right player's name.
+	 */
+	ReadWriteProperty<QString> right_player;
+
+	/**
+	 * Whether the players' names should be shown or not.
+	 */
+	ReadWriteProperty<bool> show_player_names;
+
 protected:
 
 	// Implement the save method.
@@ -118,6 +134,9 @@ private:
 	void load_keyboard_id                 (std::string       &target);
 	void load_keyboard_has_numeric_keypad (bool              &target);
 	void load_modifier_keys               (ModifierKeys      &target);
+	void load_left_player                 (QString           &target);
+	void load_right_player                (QString           &target);
+	void load_show_player_names           (bool              &target);
 
 	// Savers
 	void save_time_control                (const TimeControl  &value);
@@ -130,6 +149,9 @@ private:
 	void save_keyboard_id                 (const std::string  &value);
 	void save_keyboard_has_numeric_keypad (bool                value);
 	void save_modifier_keys               (ModifierKeys        value);
+	void save_left_player                 (const QString      &value);
+	void save_right_player                (const QString      &value);
+	void save_show_player_names           (bool                value);
 
 	// Useful alias
 	typedef boost::property_tree::ptree ptree;

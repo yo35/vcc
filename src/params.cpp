@@ -180,34 +180,6 @@ std::string Params::side_key(Side side, const std::string &key)
 }
 
 
-// Players' names.
-std::string Params::player_name(Side side)
-{
-	return get_atomic_value(side==Side::LEFT ? "players.left" : "players.right", std::string());
-}
-
-
-// Set the players' names.
-void Params::set_player_name(Side side, const std::string &value)
-{
-	put_atomic_value(side==Side::LEFT ? "players.left" : "players.right", value);
-}
-
-
-// Whether the players' names should be shown or not.
-bool Params::show_names()
-{
-	return get_atomic_value("players.show-names", false);
-}
-
-
-// Set whether the players' names should be shown or not.
-void Params::set_show_names(bool value)
-{
-	put_atomic_value("players.show-names", value);
-}
-
-
 // Load the shortcut map file if not done yet.
 void Params::ensure_shortcut_map_loaded()
 {

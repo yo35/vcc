@@ -76,26 +76,6 @@ public:
 	/**@} */
 
 	/**
-	 * Players' names.
-	 */
-	std::string player_name(Side side);
-
-	/**
-	 * Set the players' names.
-	 */
-	void set_player_name(Side side, const std::string &value);
-
-	/**
-	 * Whether the players' names should be shown or not.
-	 */
-	bool show_names();
-
-	/**
-	 * Set whether the players' names should be shown or not.
-	 */
-	void set_show_names(bool value);
-
-	/**
 	 * Return the current shortcut map.
 	 */
 	ShortcutMap &shortcut_map();

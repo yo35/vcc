@@ -54,7 +54,10 @@ ModelMain::ModelMain() :
 	DECLARE_READ_WRITE(display_byo_yomi_extra_info ),
 	DECLARE_READ_WRITE(keyboard_id                 ),
 	DECLARE_READ_WRITE(keyboard_has_numeric_keypad ),
-	DECLARE_READ_WRITE(modifier_keys               )
+	DECLARE_READ_WRITE(modifier_keys               ),
+	DECLARE_READ_WRITE(left_player                 ),
+	DECLARE_READ_WRITE(right_player                ),
+	DECLARE_READ_WRITE(show_player_names           )
 {
 	register_property(config_file                 );
 	register_property(time_control                );
@@ -67,6 +70,9 @@ ModelMain::ModelMain() :
 	register_property(keyboard_id                 );
 	register_property(keyboard_has_numeric_keypad );
 	register_property(modifier_keys               );
+	register_property(left_player                 );
+	register_property(right_player                );
+	register_property(show_player_names           );
 
 	// Load the file if it exists.
 	if(boost::filesystem::exists(config_file())) {
@@ -300,4 +306,40 @@ void ModelMain::load_modifier_keys(ModifierKeys &target)
 void ModelMain::save_modifier_keys(ModifierKeys value)
 {
 	_root->put("keyboard.modifier-keys", value);
+}
+
+
+void ModelMain::load_left_player(QString &target)
+{
+	target = QString::fromStdString(_root->get("players.left", std::string("")));
+}
+
+
+void ModelMain::save_left_player(const QString &value)
+{
+	_root->put("players.left", value.toStdString());
+}
+
+
+void ModelMain::load_right_player(QString &target)
+{
+	target = QString::fromStdString(_root->get("players.right", std::string("")));
+}
+
+
+void ModelMain::save_right_player(const QString &value)
+{
+	_root->put("players.right", value.toStdString());
+}
+
+
+void ModelMain::load_show_player_names(bool &target)
+{
+	target = _root->get("players.show-names", false);
+}
+
+
+void ModelMain::save_show_player_names(bool value)
+{
+	_root->put("players.show-names", value);
 }

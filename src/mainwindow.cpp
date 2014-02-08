@@ -122,10 +122,16 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	model.display_time_after_timeout  .connect_changed(std::bind(&BiTimerWidget::setDisplayTimeAfterTimeout  , _biTimerWidget, std::placeholders::_1));
 	model.display_bronstein_extra_info.connect_changed(std::bind(&BiTimerWidget::setDisplayBronsteinExtraInfo, _biTimerWidget, std::placeholders::_1));
 	model.display_byo_yomi_extra_info .connect_changed(std::bind(&BiTimerWidget::setDisplayByoYomiExtraInfo  , _biTimerWidget, std::placeholders::_1));
+	model.show_player_names           .connect_changed(std::bind(&BiTimerWidget::setShowLabels               , _biTimerWidget, std::placeholders::_1));
+	model.left_player .connect_changed(std::bind(&BiTimerWidget::setLabel, _biTimerWidget, Side::LEFT , std::placeholders::_1));
+	model.right_player.connect_changed(std::bind(&BiTimerWidget::setLabel, _biTimerWidget, Side::RIGHT, std::placeholders::_1));
 	_biTimerWidget->setDelayBeforeDisplaySeconds(model.delay_before_display_seconds());
 	_biTimerWidget->setDisplayTimeAfterTimeout  (model.display_time_after_timeout  ());
 	_biTimerWidget->setDisplayBronsteinExtraInfo(model.display_bronstein_extra_info());
 	_biTimerWidget->setDisplayByoYomiExtraInfo  (model.display_byo_yomi_extra_info ());
+	_biTimerWidget->setShowLabels               (model.show_player_names           ());
+	_biTimerWidget->setLabel(Side::LEFT , model.left_player ());
+	_biTimerWidget->setLabel(Side::RIGHT, model.right_player());
 
 	// Status bar
 	_statusBar = statusBar();
@@ -135,11 +141,6 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	// Load the time control
 	model.time_control.connect_changed(std::bind(&MainWindow::refreshTimeControl, this));
 	refreshTimeControl();
-
-	// Load the players' names
-	_biTimerWidget->setLabel(Side::LEFT , QString::fromStdString(Params::get().player_name(Side::LEFT )));
-	_biTimerWidget->setLabel(Side::RIGHT, QString::fromStdString(Params::get().player_name(Side::RIGHT)));
-	_biTimerWidget->setShowLabels(Params::get().show_names());
 
 	// Initialize the shortcut manager.
 	refreshShortcutManager();
@@ -248,11 +249,9 @@ void MainWindow::onSwapClicked()
 	model.time_control(_biTimer.time_control());
 
 	// Swap the players' names.
-	QString name_buffer = _biTimerWidget->label(Side::LEFT);
-	_biTimerWidget->setLabel(Side::LEFT , _biTimerWidget->label(Side::RIGHT));
-	_biTimerWidget->setLabel(Side::RIGHT, name_buffer);
-	Params::get().set_player_name(Side::LEFT , _biTimerWidget->label(Side::LEFT ).toStdString());
-	Params::get().set_player_name(Side::RIGHT, _biTimerWidget->label(Side::RIGHT).toStdString());
+	QString name_buffer = model.left_player();
+	model.left_player(model.right_player());
+	model.right_player(name_buffer);
 }
 
 
@@ -292,19 +291,17 @@ void MainWindow::onTCtrlClicked()
 // Players' names button handler.
 void MainWindow::onNamesClicked()
 {
+	ModelMain &model(ModelMain::instance());
 	NameDialog dialog(this);
-	dialog.setName(Side::LEFT , _biTimerWidget->label(Side::LEFT ));
-	dialog.setName(Side::RIGHT, _biTimerWidget->label(Side::RIGHT));
-	dialog.setDisplayNames(_biTimerWidget->showLabels());
+	dialog.setName(Side::LEFT , model.left_player ());
+	dialog.setName(Side::RIGHT, model.right_player());
+	dialog.setDisplayNames(model.show_player_names());
 	if(dialog.exec()!=QDialog::Accepted) {
 		return;
 	}
-	_biTimerWidget->setLabel(Side::LEFT , dialog.name(Side::LEFT ));
-	_biTimerWidget->setLabel(Side::RIGHT, dialog.name(Side::RIGHT));
-	_biTimerWidget->setShowLabels(dialog.displayNames());
-	Params::get().set_player_name(Side::LEFT , _biTimerWidget->label(Side::LEFT ).toStdString());
-	Params::get().set_player_name(Side::RIGHT, _biTimerWidget->label(Side::RIGHT).toStdString());
-	Params::get().set_show_names(_biTimerWidget->showLabels());
+	model.left_player (dialog.name(Side::LEFT ));
+	model.right_player(dialog.name(Side::RIGHT));
+	model.show_player_names(dialog.displayNames());
 }
 
 
