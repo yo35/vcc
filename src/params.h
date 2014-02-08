@@ -76,16 +76,6 @@ public:
 	/**@} */
 
 	/**
-	 * Retrieve the current time control.
-	 */
-	TimeControl time_control();
-
-	/**
-	 * Set the persistent time control.
-	 */
-	void set_time_control(const TimeControl &value);
-
-	/**
 	 * Players' names.
 	 */
 	std::string player_name(Side side);
@@ -104,26 +94,6 @@ public:
 	 * Set whether the players' names should be shown or not.
 	 */
 	void set_show_names(bool value);
-
-	/**
-	 * Whether the status bar should be shown or not.
-	 */
-	bool show_status_bar();
-
-	/**
-	 * Set whether the status bar should be shown or not.
-	 */
-	void set_show_status_bar(bool value);
-
-	/**
-	 * Reset confirmation option.
-	 */
-	ResetConfirmation reset_confirmation();
-
-	/**
-	 * Set the reset confirmation option.
-	 */
-	void set_reset_confirmation(ResetConfirmation value);
 
 	/**
 	 * Minimal remaining time before seconds is displayed.

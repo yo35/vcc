@@ -214,37 +214,6 @@ namespace boost { namespace property_tree {
 }}
 
 
-// Retrieve the current time control.
-TimeControl Params::time_control()
-{
-	load();
-	const ptree &tc_node(fetch("time-control"));
-	TimeControl retval;
-	retval.set_mode(tc_node.get("mode", TimeControl::Mode::SUDDEN_DEATH));
-	for(auto s = Enum::cursor<Side>::first(); s.valid(); ++s) {
-		retval.set_main_time  (*s, tc_node.get(side_key(*s, "main-time"  ), from_seconds(3*60)));
-		retval.set_increment  (*s, tc_node.get(side_key(*s, "increment"  ), from_seconds(   2)));
-		retval.set_byo_periods(*s, tc_node.get(side_key(*s, "byo-periods"), 1));
-	}
-	return std::move(retval);
-}
-
-
-// Set the persistent time control.
-void Params::set_time_control(const TimeControl &value)
-{
-	load();
-	ptree &tc_node(fetch("time-control"));
-	tc_node.put("mode", value.mode());
-	for(auto s = Enum::cursor<Side>::first(); s.valid(); ++s) {
-		tc_node.put(side_key(*s, "main-time"  ), value.main_time  (*s));
-		tc_node.put(side_key(*s, "increment"  ), value.increment  (*s));
-		tc_node.put(side_key(*s, "byo-periods"), value.byo_periods(*s));
-	}
-	_ptree_saved = false;
-}
-
-
 // Players' names.
 std::string Params::player_name(Side side)
 {
@@ -270,34 +239,6 @@ bool Params::show_names()
 void Params::set_show_names(bool value)
 {
 	put_atomic_value("players.show-names", value);
-}
-
-
-// Whether the status bar should be shown or not.
-bool Params::show_status_bar()
-{
-	return get_atomic_value("misc-options.show-status-bar", true);
-}
-
-
-// Set whether the status bar should be shown or not.
-void Params::set_show_status_bar(bool value)
-{
-	put_atomic_value("misc-options.show-status-bar", value);
-}
-
-
-// Reset confirmation option.
-ResetConfirmation Params::reset_confirmation()
-{
-	return get_atomic_value("misc-options.reset-confirmation", ResetConfirmation::IF_ACTIVE);
-}
-
-
-// Set the reset confirmation option.
-void Params::set_reset_confirmation(ResetConfirmation value)
-{
-	put_atomic_value("misc-options.reset-confirmation", value);
 }
 
 

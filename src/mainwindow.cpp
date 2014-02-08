@@ -25,6 +25,7 @@
 #include <wrappers/translation.h>
 #include <models/modelappinfo.h>
 #include <models/modelkeyboard.h>
+#include <models/modelmain.h>
 #include <gui/core/keyboardhandler.h>
 #include <gui/widgets/bitimerwidget.h>
 #include <gui/dialogs/timecontroldialog.h>
@@ -114,12 +115,17 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	_biTimerWidget->bindTimer(_biTimer);
 	setCentralWidget(_biTimerWidget);
 
+	// Main model
+	ModelMain &model(ModelMain::instance());
+
 	// Status bar
 	_statusBar = statusBar();
+	model.show_status_bar.connect_changed(std::bind(&MainWindow::refreshStatusBarVisibility, this));
+	refreshStatusBarVisibility();
 
 	// Load the time control
-	_biTimer.set_time_control(Params::get().time_control());
-	_statusBar->showMessage(QString::fromStdString(_biTimer.time_control().description()));
+	model.time_control.connect_changed(std::bind(&MainWindow::refreshTimeControl, this));
+	refreshTimeControl();
 
 	// Load the players' names
 	_biTimerWidget->setLabel(Side::LEFT , QString::fromStdString(Params::get().player_name(Side::LEFT )));
@@ -135,6 +141,7 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 void MainWindow::closeEvent(QCloseEvent *)
 {
 	Params::force_save();
+	ModelMain::instance().save();
 }
 
 
@@ -204,7 +211,8 @@ void MainWindow::onKeyPressed(ScanCode scanCode)
 // Reset button handler.
 void MainWindow::onResetClicked()
 {
-	if(_resetConfirmation==ResetConfirmation::ALWAYS || (_resetConfirmation==ResetConfirmation::IF_ACTIVE && _biTimer.is_active())) {
+	ResetConfirmation mode = ModelMain::instance().reset_confirmation();
+	if(mode==ResetConfirmation::ALWAYS || (mode==ResetConfirmation::IF_ACTIVE && _biTimer.is_active())) {
 		auto response = QMessageBox::question(this, _("Stop this game?"), _("Do you really want to start a new game?"));
 		if(response!=QMessageBox::Yes) {
 			return;
@@ -224,10 +232,11 @@ void MainWindow::onPauseClicked()
 // Swap-sides button handler.
 void MainWindow::onSwapClicked()
 {
+	ModelMain &model(ModelMain::instance());
+
 	// Swap the time control options.
 	_biTimer.swap_sides();
-	_statusBar->showMessage(QString::fromStdString(_biTimer.time_control().description()));
-	Params::get().set_time_control(_biTimer.time_control());
+	model.time_control(_biTimer.time_control());
 
 	// Swap the players' names.
 	QString name_buffer = _biTimerWidget->label(Side::LEFT);
@@ -254,21 +263,20 @@ void MainWindow::onFlScrClicked()
 
 	// Tool-bar and status bar
 	_toolBar->setVisible(!isFullScreen());
-	_statusBar->setVisible(!isFullScreen() && Params::get().show_status_bar());
+	refreshStatusBarVisibility();
 }
 
 
 // Time control button handler.
 void MainWindow::onTCtrlClicked()
 {
+	ModelMain &model(ModelMain::instance());
 	TimeControlDialog dialog(this);
-	dialog.setTimeControl(_biTimer.time_control());
+	dialog.setTimeControl(model.time_control());
 	if(dialog.exec()!=QDialog::Accepted) {
 		return;
 	}
-	_biTimer.set_time_control(dialog.timeControl());
-	_statusBar->showMessage(QString::fromStdString(_biTimer.time_control().description()));
-	Params::get().set_time_control(_biTimer.time_control());
+	model.time_control(dialog.timeControl());
 }
 
 
@@ -402,6 +410,22 @@ void MainWindow::onAboutClicked()
 }
 
 
+// Refresh the time control.
+void MainWindow::refreshTimeControl()
+{
+	ModelMain &model(ModelMain::instance());
+	_biTimer.set_time_control(model.time_control());
+	_statusBar->showMessage(QString::fromStdString(model.time_control().description()));
+}
+
+
+// Show or hide the status bar.
+void MainWindow::refreshStatusBarVisibility()
+{
+	_statusBar->setVisible(!isFullScreen() && ModelMain::instance().show_status_bar());
+}
+
+
 // Load the persistent parameters saved in the singleton Param object.
 void MainWindow::loadPersistentParameters()
 {
@@ -410,12 +434,6 @@ void MainWindow::loadPersistentParameters()
 		ModelKeyboard::instance().keyboard_map(Params::get().current_keyboard()),
 		Params::get().shortcut_map()
 	);
-
-	// Reset confirmation option
-	_resetConfirmation = Params::get().reset_confirmation();
-
-	// Status bar
-	_statusBar->setVisible(!isFullScreen() && Params::get().show_status_bar());
 
 	// Display options
 	_biTimerWidget->setDelayBeforeDisplaySeconds(Params::get().delay_before_display_seconds());

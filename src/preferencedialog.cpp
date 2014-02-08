@@ -24,6 +24,7 @@
 #include "params.h"
 #include <wrappers/translation.h>
 #include <models/modelkeyboard.h>
+#include <models/modelmain.h>
 #include <functional>
 #include <QDialogButtonBox>
 #include <QLabel>
@@ -383,6 +384,8 @@ void PreferenceDialog::onKeyClicked(const std::string &id, Qt::MouseButton butto
 // Load the dialog with the parameters saved in the Params singleton object.
 void PreferenceDialog::loadParameters()
 {
+	ModelMain &model(ModelMain::instance());
+
 	// Keyboard page
 	_keyboardSelector->setCurrentIndex(_keyboardSelector->findData(QVariant(Params::get().current_keyboard().c_str())));
 	_shortcutMap = Params::get().shortcut_map();
@@ -396,14 +399,16 @@ void PreferenceDialog::loadParameters()
 	_displayByoYomiExtraInfo  ->setChecked(Params::get().display_byo_yomi_extra_info ());
 
 	// Miscellaneous page
-	_showStatusBar->setChecked(Params::get().show_status_bar());
-	_resetConfirmation[Params::get().reset_confirmation()]->setChecked(true);
+	_showStatusBar->setChecked(model.show_status_bar());
+	_resetConfirmation[model.reset_confirmation()]->setChecked(true);
 }
 
 
 // Save the new parameters defined from the dialog in the Params singleton object.
 void PreferenceDialog::saveParameters()
 {
+	ModelMain &model(ModelMain::instance());
+
 	// Keyboard page
 	Params::get().set_current_keyboard(retrieveSelectedKeyboard());
 	Params::get().shortcut_map() = _shortcutMap;
@@ -417,10 +422,10 @@ void PreferenceDialog::saveParameters()
 	Params::get().set_display_byo_yomi_extra_info (_displayByoYomiExtraInfo  ->isChecked());
 
 	// Miscellaneous page
-	Params::get().set_show_status_bar(_showStatusBar->isChecked());
+	model.show_status_bar(_showStatusBar->isChecked());
 	for(auto it=Enum::cursor<ResetConfirmation>::first(); it.valid(); ++it) {
 		if(_resetConfirmation[*it]->isChecked()) {
-			Params::get().set_reset_confirmation(*it);
+			model.reset_confirmation(*it);
 		}
 	}
 }
