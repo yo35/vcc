@@ -109,14 +109,6 @@ public:
 	virtual bool save()=0;
 
 	/**
-	 * Signal triggered when the value of the property changes.
-	 */
-	sig::connection connect_changed(const sig::signal<void()>::slot_type &slot) const
-	{
-		return _signal_changed.connect(slot);
-	}
-
-	/**
 	 * Signal triggered when the value of the property is saved.
 	 */
 	sig::connection connect_saved(const sig::signal<void()>::slot_type &slot) const
@@ -135,11 +127,6 @@ protected:
 	 * Whether the saved (i.e. persistent) state of the property reflects its current (i.e. logical) state.
 	 */
 	bool _saved;
-
-	/**
-	 * Signal triggered when the value of the property changes.
-	 */
-	mutable sig::signal<void()> _signal_changed;
 
 	/**
 	 * Signal triggered when the value of the property is saved.
@@ -174,6 +161,16 @@ struct PropertyTraits
 	 * Type of the saver (this is a function).
 	 */
 	typedef std::function<void(lightweight_type_t)> saver;
+
+	/**
+	 * Type of the signal indicating a modification of the underlying value.
+	 */
+	typedef sig::signal<void(lightweight_type_t)> change_signal;
+
+	/**
+	 * Type of the signal indicating a modification of the underlying value.
+	 */
+	typedef typename sig::signal<void(lightweight_type_t)>::slot_type change_slot;
 };
 
 
@@ -247,7 +244,15 @@ public:
 	 */
 	void operator()(typename traits::lightweight_type_t value)
 	{
-		_data=value; _loaded=true; _saved=false; _signal_changed();
+		_data=value; _loaded=true; _saved=false; _signal_changed(_data);
+	}
+
+	/**
+	 * Signal triggered when the value of the property changes.
+	 */
+	sig::connection connect_changed(const typename traits::change_slot &slot) const
+	{
+		return _signal_changed.connect(slot);
 	}
 
 	// Implement the load method.
@@ -277,6 +282,7 @@ private:
 	}
 
 	// Private members
+	mutable typename traits::change_signal _signal_changed;
 	typename traits::type_t _data  ;
 	typename traits::loader _loader;
 	typename traits::saver  _saver ;
