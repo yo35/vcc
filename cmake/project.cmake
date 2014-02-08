@@ -54,7 +54,7 @@ endif()
 
 # Directories - Development configuration
 if(${DEV})
-	set(SHARE_PATH       ${CMAKE_SOURCE_DIR}/data/share)
+	set(SHARE_PATH       ${CMAKE_SOURCE_DIR}/share)
 	set(CONFIG_PATH      ${CMAKE_BINARY_DIR}/user_config)
 	set(TRANSLATION_PATH ${CMAKE_BINARY_DIR}/translation)
 endif()
