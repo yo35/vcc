@@ -96,46 +96,6 @@ public:
 	void set_show_names(bool value);
 
 	/**
-	 * Minimal remaining time before seconds is displayed.
-	 */
-	TimeDuration delay_before_display_seconds();
-
-	/**
-	 * Set the minimal remaining time before seconds are displayed.
-	 */
-	void set_delay_before_display_seconds(const TimeDuration &value);
-
-	/**
-	 * Whether the time should be displayed after timeout.
-	 */
-	bool display_time_after_timeout();
-
-	/**
-	 * Set whether the time should be displayed after timeout.
-	 */
-	void set_display_time_after_timeout(bool value);
-
-	/**
-	 * Whether extra-information is displayed in Bronstein-mode.
-	 */
-	bool display_bronstein_extra_info();
-
-	/**
-	 * Set whether extra-information is displayed in Bronstein-mode.
-	 */
-	void set_display_bronstein_extra_info(bool value);
-
-	/**
-	 * Whether extra-information is displayed in byo-yomi-mode.
-	 */
-	bool display_byo_yomi_extra_info();
-
-	/**
-	 * Set whether extra-information is displayed in byo-yomi-mode.
-	 */
-	void set_display_byo_yomi_extra_info(bool value);
-
-	/**
 	 * Return the ID of the current selected keyboard.
 	 */
 	std::string current_keyboard();

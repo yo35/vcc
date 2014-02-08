@@ -60,6 +60,26 @@ public:
 	 */
 	ReadWriteProperty<ResetConfirmation> reset_confirmation;
 
+	/**
+	 * Minimal remaining time before seconds is displayed.
+	 */
+	ReadWriteProperty<TimeDuration> delay_before_display_seconds;
+
+	/**
+	 * Whether the time should be displayed after timeout.
+	 */
+	ReadWriteProperty<bool> display_time_after_timeout;
+
+	/**
+	 * Whether extra-information is displayed in Bronstein-mode.
+	 */
+	ReadWriteProperty<bool> display_bronstein_extra_info;
+
+	/**
+	 * Whether extra-information is displayed in byo-yomi-mode.
+	 */
+	ReadWriteProperty<bool> display_byo_yomi_extra_info;
+
 protected:
 
 	// Implement the save method.
@@ -71,15 +91,23 @@ private:
 	ModelMain();
 
 	// Loaders.
-	void load_config_file       (std::string       &target);
-	void load_time_control      (TimeControl       &target);
-	void load_show_status_bar   (bool              &target);
-	void load_reset_confirmation(ResetConfirmation &target);
+	void load_config_file                 (std::string       &target);
+	void load_time_control                (TimeControl       &target);
+	void load_show_status_bar             (bool              &target);
+	void load_reset_confirmation          (ResetConfirmation &target);
+	void load_delay_before_display_seconds(TimeDuration      &target);
+	void load_display_time_after_timeout  (bool              &target);
+	void load_display_bronstein_extra_info(bool              &target);
+	void load_display_byo_yomi_extra_info (bool              &target);
 
 	// Savers
-	void save_time_control      (const TimeControl &value);
-	void save_show_status_bar   (bool               value);
-	void save_reset_confirmation(ResetConfirmation  value);
+	void save_time_control                (const TimeControl  &value);
+	void save_show_status_bar             (bool                value);
+	void save_reset_confirmation          (ResetConfirmation   value);
+	void save_delay_before_display_seconds(const TimeDuration &value);
+	void save_display_time_after_timeout  (bool                value);
+	void save_display_bronstein_extra_info(bool                value);
+	void save_display_byo_yomi_extra_info (bool                value);
 
 	// Useful alias
 	typedef boost::property_tree::ptree ptree;

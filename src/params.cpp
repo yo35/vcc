@@ -180,40 +180,6 @@ std::string Params::side_key(Side side, const std::string &key)
 }
 
 
-// Translator class for time durations.
-// !!! I do not understand why overloading the operators << and >> is not sufficient
-// for TimeDuration to work with ptree. !!!
-struct TimeDurationTranslator
-{
-	typedef std::string  internal_type;
-	typedef TimeDuration external_type;
-	boost::optional<external_type> get_value(const internal_type &v)
-	{
-		std::istringstream stream(v);
-		external_type retval;
-		if(stream >> retval) {
-			return retval;
-		}
-		else {
-			return boost::none;
-		}
-	}
-	boost::optional<internal_type> put_value(const external_type &v)
-	{
-		std::ostringstream buffer;
-		buffer<<v;
-		return buffer.str();
-	}
-};
-namespace boost { namespace property_tree {
-	template<>
-	struct translator_between<std::string, TimeDuration>
-	{
-		typedef TimeDurationTranslator type;
-	};
-}}
-
-
 // Players' names.
 std::string Params::player_name(Side side)
 {
@@ -239,62 +205,6 @@ bool Params::show_names()
 void Params::set_show_names(bool value)
 {
 	put_atomic_value("players.show-names", value);
-}
-
-
-// Minimal remaining time before seconds is displayed.
-TimeDuration Params::delay_before_display_seconds()
-{
-	return get_atomic_value("time-options.delay-for-seconds", from_seconds(20*60));
-}
-
-
-// Set the minimal remaining time before seconds are displayed.
-void Params::set_delay_before_display_seconds(const TimeDuration &value)
-{
-	put_atomic_value("time-options.delay-for-seconds", value);
-}
-
-
-// Whether the time should be displayed after timeout.
-bool Params::display_time_after_timeout()
-{
-	return get_atomic_value("time-options.time-after-timeout", true);
-}
-
-
-// Set whether the time should be displayed after timeout.
-void Params::set_display_time_after_timeout(bool value)
-{
-	put_atomic_value("time-options.time-after-timeout", value);
-}
-
-
-// Whether extra-information is displayed in Bronstein-mode.
-bool Params::display_bronstein_extra_info()
-{
-	return get_atomic_value("time-options.bronstein-extra-info", true);
-}
-
-
-// Set whether extra-information is displayed in Bronstein-mode.
-void Params::set_display_bronstein_extra_info(bool value)
-{
-	put_atomic_value("time-options.bronstein-extra-info", value);
-}
-
-
-// Whether extra-information is displayed in byo-yomi-mode.
-bool Params::display_byo_yomi_extra_info()
-{
-	return get_atomic_value("time-options.byo-yomi-extra-info", true);
-}
-
-
-// Set whether extra-information is displayed in byo-yomi-mode.
-void Params::set_display_byo_yomi_extra_info(bool value)
-{
-	put_atomic_value("time-options.byo-yomi-extra-info", value);
 }
 
 

@@ -110,13 +110,21 @@ MainWindow::MainWindow() : _debugDialog(nullptr)
 	connect(actHelp , &QAction::triggered, this, &MainWindow::onHelpClicked );
 	connect(actAbout, &QAction::triggered, this, &MainWindow::onAboutClicked);
 
+	// Main model
+	ModelMain &model(ModelMain::instance());
+
 	// Bi-timer widget
 	_biTimerWidget = new BiTimerWidget(this);
 	_biTimerWidget->bindTimer(_biTimer);
 	setCentralWidget(_biTimerWidget);
-
-	// Main model
-	ModelMain &model(ModelMain::instance());
+	model.delay_before_display_seconds.connect_changed(std::bind(&BiTimerWidget::setDelayBeforeDisplaySeconds, _biTimerWidget, std::placeholders::_1));
+	model.display_time_after_timeout  .connect_changed(std::bind(&BiTimerWidget::setDisplayTimeAfterTimeout  , _biTimerWidget, std::placeholders::_1));
+	model.display_bronstein_extra_info.connect_changed(std::bind(&BiTimerWidget::setDisplayBronsteinExtraInfo, _biTimerWidget, std::placeholders::_1));
+	model.display_byo_yomi_extra_info .connect_changed(std::bind(&BiTimerWidget::setDisplayByoYomiExtraInfo  , _biTimerWidget, std::placeholders::_1));
+	_biTimerWidget->setDelayBeforeDisplaySeconds(model.delay_before_display_seconds());
+	_biTimerWidget->setDisplayTimeAfterTimeout  (model.display_time_after_timeout  ());
+	_biTimerWidget->setDisplayBronsteinExtraInfo(model.display_bronstein_extra_info());
+	_biTimerWidget->setDisplayByoYomiExtraInfo  (model.display_byo_yomi_extra_info ());
 
 	// Status bar
 	_statusBar = statusBar();
@@ -434,12 +442,6 @@ void MainWindow::loadPersistentParameters()
 		ModelKeyboard::instance().keyboard_map(Params::get().current_keyboard()),
 		Params::get().shortcut_map()
 	);
-
-	// Display options
-	_biTimerWidget->setDelayBeforeDisplaySeconds(Params::get().delay_before_display_seconds());
-	_biTimerWidget->setDisplayTimeAfterTimeout  (Params::get().display_time_after_timeout  ());
-	_biTimerWidget->setDisplayBronsteinExtraInfo(Params::get().display_bronstein_extra_info());
-	_biTimerWidget->setDisplayByoYomiExtraInfo  (Params::get().display_byo_yomi_extra_info ());
 }
 
 #include <models/modelpaths.h>

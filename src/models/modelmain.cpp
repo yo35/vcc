@@ -43,15 +43,23 @@
 
 // Constructor.
 ModelMain::ModelMain() :
-	DECLARE_READ_ONLY (config_file       ),
-	DECLARE_READ_WRITE(time_control      ),
-	DECLARE_READ_WRITE(show_status_bar   ),
-	DECLARE_READ_WRITE(reset_confirmation)
+	DECLARE_READ_ONLY (config_file                 ),
+	DECLARE_READ_WRITE(time_control                ),
+	DECLARE_READ_WRITE(show_status_bar             ),
+	DECLARE_READ_WRITE(reset_confirmation          ),
+	DECLARE_READ_WRITE(delay_before_display_seconds),
+	DECLARE_READ_WRITE(display_time_after_timeout  ),
+	DECLARE_READ_WRITE(display_bronstein_extra_info),
+	DECLARE_READ_WRITE(display_byo_yomi_extra_info )
 {
-	register_property(config_file       );
-	register_property(time_control      );
-	register_property(show_status_bar   );
-	register_property(reset_confirmation);
+	register_property(config_file                 );
+	register_property(time_control                );
+	register_property(show_status_bar             );
+	register_property(reset_confirmation          );
+	register_property(delay_before_display_seconds);
+	register_property(display_time_after_timeout  );
+	register_property(display_bronstein_extra_info);
+	register_property(display_byo_yomi_extra_info );
 
 	// Load the file if it exists.
 	if(boost::filesystem::exists(config_file())) {
@@ -201,4 +209,52 @@ void ModelMain::load_reset_confirmation(ResetConfirmation &target)
 void ModelMain::save_reset_confirmation(ResetConfirmation value)
 {
 	_root->put("misc-options.reset-confirmation", value);
+}
+
+
+void ModelMain::load_delay_before_display_seconds(TimeDuration &target)
+{
+	target = _root->get("time-options.delay-for-seconds", from_seconds(20*60));
+}
+
+
+void ModelMain::save_delay_before_display_seconds(const TimeDuration &value)
+{
+	_root->put("time-options.delay-for-seconds", value);
+}
+
+
+void ModelMain::load_display_time_after_timeout(bool &target)
+{
+	target = _root->get("time-options.time-after-timeout", true);
+}
+
+
+void ModelMain::save_display_time_after_timeout(bool value)
+{
+	_root->put("time-options.time-after-timeout", value);
+}
+
+
+void ModelMain::load_display_bronstein_extra_info(bool &target)
+{
+	target = _root->get("time-options.bronstein-extra-info", true);
+}
+
+
+void ModelMain::save_display_bronstein_extra_info(bool value)
+{
+	_root->put("time-options.bronstein-extra-info", value);
+}
+
+
+void ModelMain::load_display_byo_yomi_extra_info(bool &target)
+{
+	target = _root->get("time-options.byo-yomi-extra-info", true);
+}
+
+
+void ModelMain::save_display_byo_yomi_extra_info(bool value)
+{
+	_root->put("time-options.byo-yomi-extra-info", value);
 }

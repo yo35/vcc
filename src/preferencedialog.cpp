@@ -393,10 +393,10 @@ void PreferenceDialog::loadParameters()
 	_hasNumericKeypad->setChecked(Params::get().has_numeric_keypad());
 
 	// Time display page
-	_delayBeforeDisplaySeconds->setValue(Params::get().delay_before_display_seconds());
-	_displayTimeAfterTimeout  ->setChecked(Params::get().display_time_after_timeout  ());
-	_displayBronsteinExtraInfo->setChecked(Params::get().display_bronstein_extra_info());
-	_displayByoYomiExtraInfo  ->setChecked(Params::get().display_byo_yomi_extra_info ());
+	_delayBeforeDisplaySeconds->setValue  (model.delay_before_display_seconds());
+	_displayTimeAfterTimeout  ->setChecked(model.display_time_after_timeout  ());
+	_displayBronsteinExtraInfo->setChecked(model.display_bronstein_extra_info());
+	_displayByoYomiExtraInfo  ->setChecked(model.display_byo_yomi_extra_info ());
 
 	// Miscellaneous page
 	_showStatusBar->setChecked(model.show_status_bar());
@@ -416,10 +416,10 @@ void PreferenceDialog::saveParameters()
 	Params::get().set_has_numeric_keypad(_hasNumericKeypad->isChecked());
 
 	// Time display page
-	Params::get().set_delay_before_display_seconds(_delayBeforeDisplaySeconds->value());
-	Params::get().set_display_time_after_timeout  (_displayTimeAfterTimeout  ->isChecked());
-	Params::get().set_display_bronstein_extra_info(_displayBronsteinExtraInfo->isChecked());
-	Params::get().set_display_byo_yomi_extra_info (_displayByoYomiExtraInfo  ->isChecked());
+	model.delay_before_display_seconds(_delayBeforeDisplaySeconds->value    ());
+	model.display_time_after_timeout  (_displayTimeAfterTimeout  ->isChecked());
+	model.display_bronstein_extra_info(_displayBronsteinExtraInfo->isChecked());
+	model.display_byo_yomi_extra_info (_displayByoYomiExtraInfo  ->isChecked());
 
 	// Miscellaneous page
 	model.show_status_bar(_showStatusBar->isChecked());
