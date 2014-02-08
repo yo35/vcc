@@ -130,13 +130,13 @@ public:
 	 * Save the shortcut map to a file.
 	 * @returns `*this`
 	 */
-	ShortcutMap &save(const std::string &path);
+	const ShortcutMap &save(const std::string &path) const;
 
 	/**
 	 * Save the shortcut map to a property tree.
 	 * @returns `*this`
 	 */
-	ShortcutMap &save(boost::property_tree::ptree &data);
+	const ShortcutMap &save(boost::property_tree::ptree &data) const;
 
 private:
 

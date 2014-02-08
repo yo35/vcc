@@ -101,7 +101,7 @@ ShortcutMap &ShortcutMap::load(const boost::property_tree::ptree &data)
 
 
 // Save the shortcut map to a file.
-ShortcutMap &ShortcutMap::save(const std::string &path)
+const ShortcutMap &ShortcutMap::save(const std::string &path) const
 {
 	boost::property_tree::ptree root;
 	boost::property_tree::ptree data;
@@ -114,7 +114,7 @@ ShortcutMap &ShortcutMap::save(const std::string &path)
 
 
 // Save the shortcut map to a property tree.
-ShortcutMap &ShortcutMap::save(boost::property_tree::ptree &data)
+const ShortcutMap &ShortcutMap::save(boost::property_tree::ptree &data) const
 {
 	// For each key that is binded to a "low-position" shortcut, create a property tree node.
 	std::map<std::string, boost::property_tree::ptree> nodes;
