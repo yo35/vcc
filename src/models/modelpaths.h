@@ -40,17 +40,17 @@ public:
 	/**
 	 * Directory holding data shared by all the users (read-only directory).
 	 */
-	const Property<std::string> share_path;
+	ReadOnlyProperty<std::string> share_path;
 
 	/**
 	 * Directory holding data that is user-specific (read-write directory).
 	 */
-	const Property<std::string> config_path;
+	ReadOnlyProperty<std::string> config_path;
 
 	/**
 	 * Directory holding the translation files (read-only directory).
 	 */
-	const Property<std::string> translation_path;
+	ReadOnlyProperty<std::string> translation_path;
 
 	/**
 	 * Ensure that the config path exists.

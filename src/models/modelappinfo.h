@@ -41,27 +41,27 @@ public:
 	/**
 	 * Application short-name.
 	 */
-	const Property<std::string> short_name;
+	ReadOnlyProperty<std::string> short_name;
 
 	/**
 	 * Application name.
 	 */
-	const Property<std::string> name;
+	ReadOnlyProperty<std::string> name;
 
 	/**
 	 * Application full-name.
 	 */
-	const Property<std::string> full_name;
+	ReadOnlyProperty<std::string> full_name;
 
 	/**
 	 * Application version number.
 	 */
-	const Property<VersionNumber> version;
+	ReadOnlyProperty<VersionNumber> version;
 
 	/**
 	 * Current locale.
 	 */
-	const Property<std::string> locale;
+	ReadOnlyProperty<std::string> locale;
 
 private:
 
