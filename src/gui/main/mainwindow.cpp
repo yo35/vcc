@@ -38,6 +38,7 @@
 #include <gui/dialogs/debugdialog.h>
 
 #include <QAction>
+#include <QApplication>
 #include <QEvent>
 #include <QMenu>
 #include <QMessageBox>

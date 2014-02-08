@@ -88,11 +88,11 @@ private:
 	QIcon fetchIcon(const std::string &name, bool fromTheme=true);
 
 	// Private members
-	KeyboardHandler  *_keyboardHandler  ;
-	QTimer           *_toolBarTimer     ;
-	ShortcutManager   _shortcutManager  ;
-	BiTimer           _biTimer          ;
-	Qt::WindowStates  _previousState    ;
+	KeyboardHandler  *_keyboardHandler;
+	QTimer           *_toolBarTimer   ;
+	ShortcutManager   _shortcutManager;
+	BiTimer           _biTimer        ;
+	Qt::WindowStates  _previousState  ;
 
 	// Widgets
 	BiTimerWidget *_biTimerWidget;
