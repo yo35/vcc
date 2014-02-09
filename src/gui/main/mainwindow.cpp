@@ -328,6 +328,9 @@ void MainWindow::onDebugClicked()
 {
 	if(_debugDialog==nullptr) {
 		_debugDialog = new DebugDialog(this);
+		_debugDialog->addInfo("Share path" , QString::fromStdString(ModelPaths  ::instance().share_path ()));
+		_debugDialog->addInfo("Config path", QString::fromStdString(ModelPaths  ::instance().config_path()));
+		_debugDialog->addInfo("Locale"     , QString::fromStdString(ModelAppInfo::instance().locale     ()));
 	}
 	_debugDialog->show();
 }

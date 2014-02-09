@@ -48,6 +48,11 @@ public:
 	DebugDialog(QWidget *parent=0);
 
 	/**
+	 * Add some information to the text field.
+	 */
+	void addInfo(const QString &name, const QString &value);
+
+	/**
 	 * Default size.
 	 */
 	QSize sizeHint() const override;

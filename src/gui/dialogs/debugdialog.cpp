@@ -66,6 +66,13 @@ void DebugDialog::changeEvent(QEvent *event)
 }
 
 
+// Add some information to the text field.
+void DebugDialog::addInfo(const QString &name, const QString &value)
+{
+	_info->append(QString("<b style=\"color: #0000ff;\">%1</b>: %2").arg(name).arg(value));
+}
+
+
 // Key-pressed handler.
 void DebugDialog::onKeyPressed (ScanCode scanCode)
 {
