@@ -71,6 +71,50 @@ if(${UNIX})
 endif()
 
 
+# OS integration specific instructions -> Windows.
+if(${WIN32})
+
+	# GCC-specific libraries
+	find_library(RuntimeLib_GCC_S_DW2_1  "gcc_s_dw2-1")
+	find_library(RuntimeLib_STDC_PP_6    "stdc++-6")
+	find_library(RuntimeLib_WINPTHREAD_1 "winpthread-1")
+	set(RuntimeLib_GCC_ALL
+		${RuntimeLib_GCC_S_DW2_1}
+		${RuntimeLib_STDC_PP_6}
+		${RuntimeLib_WINPTHREAD_1}
+	)
+
+	# Qt-specific libraries
+	# TODO: How to automatically detect the .dll needed by Qt?
+	find_library(RuntimeLib_QT5CORE    "Qt5Core")
+	find_library(RuntimeLib_QT5GUI     "Qt5Gui")
+	find_library(RuntimeLib_QT5WIDGETS "Qt5Widgets")
+	find_library(RuntimeLib_ICUDT51    "icudt51")
+	find_library(RuntimeLib_ICUIN51    "icuin51")
+	find_library(RuntimeLib_ICUUC51    "icuuc51")
+	set(RuntimeLib_QT_ALL
+		${RuntimeLib_QT5CORE}
+		${RuntimeLib_QT5GUI}
+		${RuntimeLib_QT5WIDGETS}
+		${RuntimeLib_ICUDT51}
+		${RuntimeLib_ICUIN51}
+		${RuntimeLib_ICUUC51}
+	)
+
+	# Qt-specific plugin libraries
+	find_library(RuntimeLib_QWINDOWS "qwindows" PATH_SUFFIXES ../plugins/platforms)
+
+	# Install instructions for the runtime libraries
+	install(FILES ${RuntimeLib_GCC_ALL} ${RuntimeLib_QT_ALL}
+		DESTINATION ${DESTINATION_DIRECTORY_BIN}
+	)
+	install(FILES ${RuntimeLib_QWINDOWS}
+		DESTINATION ${DESTINATION_DIRECTORY_BIN}/platforms
+	)
+
+endif()
+
+
 
 ################################################################################
 # PACKAGE GENERATION
