@@ -98,8 +98,8 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Virtual Chess Clock is a simple and free 
 
 # Debian-package associated variables.
 if(${UNIX})
-	set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Yoann Le Montagner")
-	set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5widgets5")
+	set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Yoann Le Montagner <yo35@melix.net>")
+	set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6, libqt5widgets5")
 endif()
 
 
