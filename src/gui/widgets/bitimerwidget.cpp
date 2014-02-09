@@ -195,7 +195,7 @@ void BiTimerWidget::paintEvent(QPaintEvent *)
 	// Time rendering.
 	for(auto it=Enum::cursor<Side>::first(); it.valid(); ++it) {
 		BiTimer::TimeInfo info = _biTimer->detailed_time(*it);
-		bool isNegative = info.total_time<TimeDuration::zero();
+		bool isNegative = info.total_time<TIME_DURATION_ZERO;
 
 		// Color to use for the text.
 		textColor[*it] = isNegative ? QColor(208,0,0) : Qt::black;
@@ -209,7 +209,7 @@ void BiTimerWidget::paintEvent(QPaintEvent *)
 		}
 		else if(_biTimer->time_control().mode()==TimeControl::Mode::BRONSTEIN && _displayBronsteinExtraInfo) {
 			mainText  = timeDurationAsString(info.main_time);
-			extraText = info.bronstein_time<=TimeDuration::zero() ? _("Main time") : timeDurationAsString(info.bronstein_time);
+			extraText = info.bronstein_time<=TIME_DURATION_ZERO ? _("Main time") : timeDurationAsString(info.bronstein_time);
 		}
 		else if(_biTimer->time_control().mode()==TimeControl::Mode::BYO_YOMI && _displayByoYomiExtraInfo) {
 			mainText  = timeDurationAsString(info.main_time);

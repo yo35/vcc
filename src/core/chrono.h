@@ -23,23 +23,20 @@
 #ifndef CHRONO_H_
 #define CHRONO_H_
 
-#include <chrono>
-#include <cstdint>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <cstdlib>
-#include <ostream>
-#include <istream>
 
 
 /**
  * A time interval, with a resolution of one millisecond.
  */
-typedef std::chrono::duration<std::int64_t, std::milli> TimeDuration;
+typedef boost::posix_time::time_duration TimeDuration;
 
 
 /**
  * A reference to a point in the time.
  */
-typedef std::chrono::time_point<std::chrono::high_resolution_clock, TimeDuration> TimePoint;
+typedef boost::posix_time::ptime TimePoint;
 
 
 /**
@@ -47,7 +44,7 @@ typedef std::chrono::time_point<std::chrono::high_resolution_clock, TimeDuration
  */
 inline TimePoint current_time()
 {
-	return std::chrono::time_point_cast<TimePoint::duration>(std::chrono::high_resolution_clock::now());
+	return boost::posix_time::microsec_clock::local_time();
 }
 
 
@@ -56,7 +53,7 @@ inline TimePoint current_time()
  */
 inline TimeDuration from_seconds(long sec)
 {
-	return TimeDuration(static_cast<TimeDuration::rep>(sec)*static_cast<TimeDuration::rep>(1000));
+	return boost::posix_time::seconds(sec);
 }
 
 
@@ -65,29 +62,23 @@ inline TimeDuration from_seconds(long sec)
  */
 inline long to_seconds(const TimeDuration &td)
 {
-	auto retval = std::div(td.count(), static_cast<TimeDuration::rep>(1000));
+	auto retval = std::div(td.total_milliseconds(), 1000l);
 	return retval.quot + (retval.rem>=500 ? 1 : (retval.rem<-500 ? -1: 0));
 }
 
 
 /**
- * Output stream operator for time duration values.
+ * Zero-length time duration.
  */
-inline std::ostream &operator<<(std::ostream &stream, TimeDuration td)
-{
-	return stream << td.count();
-}
+const TimeDuration TIME_DURATION_ZERO = from_seconds(0);
 
 
 /**
- * Input stream operator for time duration values.
+ * Division operator between two TimeDuration objects.
  */
-inline std::istream &operator>>(std::istream &stream, TimeDuration &td)
+inline long operator/(const TimeDuration &lhs, const TimeDuration &rhs)
 {
-	TimeDuration::rep buffer = 0;
-	stream >> buffer;
-	td = TimeDuration(buffer);
-	return stream;
+	return lhs.total_milliseconds() / rhs.total_milliseconds();
 }
 
 

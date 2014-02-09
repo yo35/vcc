@@ -52,7 +52,7 @@ public:
 		/**
 		 * Factory method for "standard" time control modes.
 		 */
-		static TimeInfo make(const TimeDuration &tt) { return TimeInfo(tt, TimeDuration::zero(), TimeDuration::zero(), 0, 0); }
+		static TimeInfo make(const TimeDuration &tt) { return TimeInfo(tt, TIME_DURATION_ZERO, TIME_DURATION_ZERO, 0, 0); }
 
 		/**
 		 * Factory method for Bronstein mode.
@@ -67,7 +67,7 @@ public:
 		 */
 		static TimeInfo makeByoYomi(const TimeDuration &tt, const TimeDuration &mt, int cbp, int tbp)
 		{
-			return TimeInfo(tt, mt, TimeDuration::zero(), cbp, tbp);
+			return TimeInfo(tt, mt, TIME_DURATION_ZERO, cbp, tbp);
 		}
 
 	private:

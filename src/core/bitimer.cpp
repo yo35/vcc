@@ -42,21 +42,21 @@ BiTimer::TimeInfo BiTimer::detailed_time(Side side) const
 	TimeControl::Mode mode = _time_control.mode();
 
 	// Negative remaining time -> never add any additional information
-	if(tt<TimeDuration::zero()) {
+	if(tt<TIME_DURATION_ZERO) {
 		return TimeInfo::make(tt);
 	}
 
 	// Bronstein mode
 	else if(mode==TimeControl::Mode::BRONSTEIN) {
 		TimeDuration mt = _bronstein_limit[side] - _time_control.increment(side);
-		return mt<=tt ? TimeInfo::makeBronstein(tt, mt, tt-mt) : TimeInfo::makeBronstein(tt, tt, TimeDuration::zero());
+		return mt<=tt ? TimeInfo::makeBronstein(tt, mt, tt-mt) : TimeInfo::makeBronstein(tt, tt, TIME_DURATION_ZERO);
 	}
 
 	// Byo-yomi mode
 	else if(mode==TimeControl::Mode::BYO_YOMI) {
 		TimeDuration increment = _time_control.increment(side);
 		int          tbp       = _time_control.byo_periods(side);
-		if(increment>TimeDuration::zero() && tbp>0 && increment*tbp>=tt) {
+		if(increment>TIME_DURATION_ZERO && tbp>0 && increment*tbp>=tt) {
 			TimeDuration delta = increment*tbp - tt;
 			int          cbp   = static_cast<int>(delta/increment) + 1;
 			return TimeInfo::makeByoYomi(tt, tt-increment*(tbp - cbp), cbp, tbp);
@@ -85,7 +85,7 @@ void BiTimer::start_timer(Side side)
 	}
 
 	// Regular situation
-	if(_time_control.mode()==TimeControl::Mode::HOURGLASS && _timer[flip(side)].time()>=TimeDuration::zero()) {
+	if(_time_control.mode()==TimeControl::Mode::HOURGLASS && _timer[flip(side)].time()>=TIME_DURATION_ZERO) {
 		_timer[flip(side)].set_mode(Timer::Mode::INCREMENT);
 	}
 	_timer[side].set_mode(Timer::Mode::DECREMENT);
@@ -108,7 +108,7 @@ void BiTimer::change_timer()
 	TimeDuration      current_time = _timer[active_side].time();
 
 	// With hour-glass mode, the future "inactive" timer is incrementing
-	if(current_mode==TimeControl::Mode::HOURGLASS && current_time>=TimeDuration::zero()) {
+	if(current_mode==TimeControl::Mode::HOURGLASS && current_time>=TIME_DURATION_ZERO) {
 		_timer[active_side].set_mode(Timer::Mode::INCREMENT);
 	}
 
@@ -118,7 +118,7 @@ void BiTimer::change_timer()
 
 		// If the current player still has time, his/her timer may be incremented,
 		// depending on the time control mode.
-		if(current_time>=TimeDuration::zero()) {
+		if(current_time>=TIME_DURATION_ZERO) {
 			TimeDuration new_time = current_time;
 
 			// Fischer mode => grant unconditionally the increment to the player
@@ -142,7 +142,7 @@ void BiTimer::change_timer()
 			else if(current_mode==TimeControl::Mode::BYO_YOMI) {
 				TimeDuration increment   = _time_control.increment(active_side);
 				int          byo_periods = _time_control.byo_periods(active_side);
-				if(increment>TimeDuration::zero() && byo_periods>0 && increment*byo_periods>=current_time) {
+				if(increment>TIME_DURATION_ZERO && byo_periods>0 && increment*byo_periods>=current_time) {
 					int current_byo_period = (increment*byo_periods - current_time) / increment;
 					new_time = increment * (byo_periods - current_byo_period);
 				}

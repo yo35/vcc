@@ -46,7 +46,7 @@ const std::string &TimeControl::mode_name(Mode mode)
 // Set the main time.
 void TimeControl::set_main_time(Side side, TimeDuration value)
 {
-	if(value < TimeDuration::zero()) {
+	if(value < TIME_DURATION_ZERO) {
 		throw std::invalid_argument("Cannot set a negative value as a main time.");
 	}
 	_main_time[side] = std::move(value);
@@ -56,7 +56,7 @@ void TimeControl::set_main_time(Side side, TimeDuration value)
 // Set the increment.
 void TimeControl::set_increment(Side side, TimeDuration value)
 {
-	if(value < TimeDuration::zero()) {
+	if(value < TIME_DURATION_ZERO) {
 		throw std::invalid_argument("Cannot set a negative value as an increment.");
 	}
 	_increment[side] = std::move(value);
@@ -168,7 +168,7 @@ void TimeControl::side_description(std::ostream &stream, Side side) const
 void TimeControl::format_time(std::ostream &stream, const TimeDuration &value)
 {
 	// Rounding the number of milliseconds to the closest full second
-	int rounded_value = (value.count()+500) / 1000;
+	int rounded_value = to_seconds(value);
 
 	// Special case: no time
 	if(rounded_value==0) {

@@ -126,40 +126,6 @@ std::string ModelMain::side_key(Side side, const std::string &key)
 }
 
 
-// Translator class for time durations.
-// !!! I do not understand why overloading the operators << and >> is not sufficient
-// for TimeDuration to work with ptree. !!!
-struct TimeDurationTranslator
-{
-	typedef std::string  internal_type;
-	typedef TimeDuration external_type;
-	boost::optional<external_type> get_value(const internal_type &v)
-	{
-		std::istringstream stream(v);
-		external_type retval;
-		if(stream >> retval) {
-			return retval;
-		}
-		else {
-			return boost::none;
-		}
-	}
-	boost::optional<internal_type> put_value(const external_type &v)
-	{
-		std::ostringstream buffer;
-		buffer<<v;
-		return buffer.str();
-	}
-};
-namespace boost { namespace property_tree {
-	template<>
-	struct translator_between<std::string, TimeDuration>
-	{
-		typedef TimeDurationTranslator type;
-	};
-}}
-
-
 
 // *****************************************************************************
 // Loaders (read-only properties)
