@@ -63,6 +63,14 @@ if(DEFINED translation_qm_files)
 endif()
 
 
+# OS integration specific instructions -> Unix.
+if(${UNIX})
+	install(DIRECTORY os-integration/unix/
+		DESTINATION share
+	)
+endif()
+
+
 
 ################################################################################
 # PACKAGE GENERATION
@@ -82,6 +90,10 @@ set(CPACK_PACKAGE_NAME ${APP_NAME})
 set(CPACK_PACKAGE_VERSION_MAJOR ${APP_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${APP_VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${APP_VERSION_PATCH})
+
+
+# Describe the package.
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Virtual Chess Clock is a simple and free chess clock software")
 
 
 # Debian-package associated variables.
