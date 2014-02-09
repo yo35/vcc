@@ -25,8 +25,8 @@
 print_help() {
 	echo -e "Usage: ./configure [options]"
 	echo -e "Available options:"
-	echo -e "\t--prefix=PREFIX  install files at PREFIX (default: /usr/local)"
-	echo -e "\t--help           print this message"
+	echo -e "  --prefix=PREFIX  install files at PREFIX (default: /usr/local)"
+	echo -e "  --help           print this message"
 }
 
 # Default installation directory
