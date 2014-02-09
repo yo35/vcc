@@ -17,12 +17,9 @@
 
 # Binaries and auto-generated source files
 /vcc
-/vcc.exe
+/*.exe
+/*.deb
 /translation/*.qm
 /config/*.h
 /*_automoc.cpp
 /moc_*.cpp
-
-# Packaged files
-/*.deb
-
