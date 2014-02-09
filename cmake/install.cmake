@@ -138,6 +138,17 @@ set(CPACK_PACKAGE_VERSION_PATCH ${APP_VERSION_PATCH})
 
 # Describe the package.
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Virtual Chess Clock is a simple and free chess clock software")
+set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/COPYING)
+
+
+# NSIS-installer associated variables
+if(${WIN32})
+	set(CPACK_PACKAGE_INSTALL_DIRECTORY ${APP_NAME})
+	set(CPACK_NSIS_PACKAGE_NAME ${APP_FULL_NAME})
+	set(CPACK_NSIS_MENU_LINKS
+		${DESTINATION_DIRECTORY_BIN}/${EXECUTABLE_NAME} ${APP_FULL_NAME}
+	)
+endif()
 
 
 # Debian-package associated variables.
