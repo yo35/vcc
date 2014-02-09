@@ -58,19 +58,25 @@ inline TimeDuration from_seconds(long sec)
 
 
 /**
+ * Zero-length time duration.
+ */
+const TimeDuration TIME_DURATION_ZERO = from_seconds(0);
+
+
+/**
+ * 1 second time duration.
+ */
+const TimeDuration TIME_DURATION_ONE = from_seconds(1);
+
+
+/**
  * Extract the total (rounded) number of seconds represented by a TimeDuration object.
  */
 inline long to_seconds(const TimeDuration &td)
 {
-	auto retval = std::div(td.total_milliseconds(), 1000l);
+	auto retval = std::div(td.total_milliseconds(), TIME_DURATION_ONE.total_milliseconds());
 	return retval.quot + (retval.rem>=500 ? 1 : (retval.rem<-500 ? -1: 0));
 }
-
-
-/**
- * Zero-length time duration.
- */
-const TimeDuration TIME_DURATION_ZERO = from_seconds(0);
 
 
 /**
