@@ -92,3 +92,8 @@ file(
 
 # Translation template file
 set(translation_pot_file translation/vcc.pot)
+
+# Windows resource file
+if(${WIN32})
+	set(resource_rc_file os-integration/windows/vcc.rc)
+endif()

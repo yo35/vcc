@@ -76,10 +76,18 @@ foreach(file_in ${config_in_files})
 endforeach()
 
 
+# The default resource file compilation command does not work with MinGW.
+# The following one seems to solve the problem.
+if(MINGW)
+	set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
+endif()
+
+
 # Compile the executable and link it to the required libraries
 add_executable(
 	${EXECUTABLE_NAME}
 	${source_cpp_files}
+	${resource_rc_file}
 )
 target_link_libraries(
 	${EXECUTABLE_NAME}
