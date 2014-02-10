@@ -621,7 +621,7 @@ msgstr "Espace"
 
 #: src/core/keyboardmap.cpp:131
 msgid "Back Space"
-msgstr "Retour arrière"
+msgstr "Retour\narrière"
 
 #: src/core/keyboardmap.cpp:132 src/core/keyboardmap.cpp:142
 msgid "Enter"
