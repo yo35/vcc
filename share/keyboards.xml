@@ -180,4 +180,23 @@
 		</locales>
 	</keyboard>
 
+	<keyboard>
+		<id>ES</id>
+		<icon>ES.png</icon>
+		<name>Teclado español</name>
+		<locales>
+			<locale>es_ES</locale>
+			<locale>ca_ES</locale>
+		</locales>
+	</keyboard>
+
+	<keyboard>
+		<id>MX</id>
+		<icon>MX.png</icon>
+		<name>Teclado mexicano</name>
+		<locales>
+			<locale>es_MX</locale>
+		</locales>
+	</keyboard>
+
 </keyboards>
