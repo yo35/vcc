@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtual-chess-clock ..\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-03 16:34+0100\n"
+"POT-Creation-Date: 2014-02-10 13:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Tobias Küchel <devel@zukuul.de>\n"
 "Language-Team: \n"
@@ -16,232 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: src/preferencedialog.cpp:41 src/mainwindow.cpp:91 src/mainwindow.cpp:330
-msgid "Preferences"
-msgstr "Einstellungen"
-
-#: src/preferencedialog.cpp:48
-msgid "Keyboard set-up"
-msgstr "Tastaturbelegung einstellen"
-
-#: src/preferencedialog.cpp:49
-msgid "Time display"
-msgstr "Zeitanzeige"
-
-#: src/preferencedialog.cpp:50
-msgid "Miscellaneous"
-msgstr "Verschiedenes"
-
-#: src/preferencedialog.cpp:76
-msgid "Select the keyboard layout you are using"
-msgstr "Wählen Sie ihre Tastaturlayout"
-
-#: src/preferencedialog.cpp:81
-msgid "The keyboard has a numeric keypad"
-msgstr "Die Tastatur besitzt einen Ziffernblock "
-
-#: src/preferencedialog.cpp:93
-msgid "Left player's button"
-msgstr "Tasten linke Spieler"
-
-#: src/preferencedialog.cpp:94
-msgid "Right player's button"
-msgstr "Tasten des rechten Spielers"
-
-#: src/preferencedialog.cpp:95 src/core/keyboardmap.cpp:138
-#: src/mainwindow.cpp:65
-msgid "Pause"
-msgstr "Pause"
-
-#: src/preferencedialog.cpp:96 src/mainwindow.cpp:64
-msgid "Reset"
-msgstr "Reset"
-
-#: src/preferencedialog.cpp:97
-msgid "Switch"
-msgstr "Schalter"
-
-#: src/preferencedialog.cpp:130
-msgid "Key actions"
-msgstr "Tastenaktionen"
-
-#: src/preferencedialog.cpp:132
-msgid ""
-"This schematic representation of the keyboard shows the actions that are "
-"associated to each key."
-msgstr ""
-"Die schematische Darstellung der Tastatur zeigt welche Aktionen jeweils mit "
-"den Tasten verknüpft sind."
-
-#: src/preferencedialog.cpp:135
-msgid ""
-"To associate an action to a key, click on the corresponding caption below "
-"the keyboard representation, and then click on the key whose behavior you "
-"want to change. Clicking twice on a key cancels the key/action association."
-msgstr ""
-"Um eine Aktion einer Taste zuzuordnen, klicken Sie auf die entsprechende "
-"Aktion in der Legende unter der Tastatur und klicken dann auf die Taste, "
-"deren Zuordnung Sie ändern wollen. Ein Doppelklick auf eine Taste bricht den "
-"Vorgang ab."
-
-#: src/preferencedialog.cpp:143
-msgid ""
-"Two actions may be associated to each key: one is triggered by default when "
-"the user presses the key, the other is triggered when the user presses the "
-"key while holding both &quot;modifier keys&quot; down. For instance, in the "
-"default configuration, the modifier keys are the shift keys, and pressing "
-"&lt;shift-left&gt; + &lt;shift-right&gt; + &lt;space&gt; stops the clock."
-msgstr ""
-"Jeder Taste können zwei Aktionen zugeordnet werden: eine wird durch den "
-"einfachen Tastendruck des Benutzers ausgelöst, die andere wird ausgelöst, "
-"wenn zusätzlich noch beide &quot;Steuertasten&quot; gehalten werden. Z.B. "
-"sind die Umschalttasten (Shift) standardmäßig die Steuertasten und &lt;shift-"
-"links&gt; + &lt;shift-rechts&gt; + &lt;Leertaste&gt; halten die Uhr an."
-
-#: src/preferencedialog.cpp:152
-msgid ""
-"Toggle this button to show (and edit) either the default actions or the "
-"actions triggered when the modifier keys are pressed."
-msgstr ""
-"Diese Schaltfläche bestimmt ob die Standardaktionen oder die Aktionen, die "
-"durch Halten der Steuertasten angezeigt werden (und bearbeitbar sind)."
-
-#: src/preferencedialog.cpp:157
-msgid ""
-"Edit the keys that the left player can press to start the right player's "
-"clock."
-msgstr ""
-"Bearbeite die Tasten, die der linke Spieler drücken soll, um die Uhr des "
-"rechten Spielers zu starten."
-
-#: src/preferencedialog.cpp:160
-msgid ""
-"Edit the keys that the right player can press to start the left player's "
-"clock."
-msgstr ""
-"Bearbeite die Tasten, die der rechte Spieler drücken soll, um die Uhr des "
-"linken Spielers zu starten."
-
-#: src/preferencedialog.cpp:162
-msgid "Edit the keys that can be pressed to stop the clock."
-msgstr "Bearbeite die Tasten, die die Uhr anhalten können."
-
-#: src/preferencedialog.cpp:163
-msgid "Edit the keys that can be pressed to reset the clock."
-msgstr "Bearbeite die Tasten, die die Uhr zurücksetzen können."
-
-#: src/preferencedialog.cpp:165
-msgid ""
-"Edit the keys that can be pressed to swap the players and the time control "
-"parameters."
-msgstr ""
-"Bearbeite die Tasten, die erlauben die Spieler und deren Bedenkzeit "
-"Parameter zu vertauschen."
-
-#: src/preferencedialog.cpp:167
-msgid "Click to change the modifier keys."
-msgstr "Klicke hier um die Steuertasten zu ändern"
-
-#: src/preferencedialog.cpp:195
-msgid "Show seconds only if the time is less than"
-msgstr "Zeige die Sekunden nur, wenn die Zeit kleiner ist als"
-
-#: src/preferencedialog.cpp:203
-msgid "Display an increasing time counter when the flag is down"
-msgstr "Zeige einen hochzählenden Zähler, wenn die Fahne unten ist."
-
-#: src/preferencedialog.cpp:204
-msgid "Display extra time information when playing in Bronstein mode"
-msgstr "Zeige die Extra-Bedenkzeit im Bronstein-System an."
-
-#: src/preferencedialog.cpp:205
-msgid "Display extra time information when playing in byo-yomi mode"
-msgstr "Zeige die Extra-Bedenkzeit im Byo-yomi System an."
-
-#: src/preferencedialog.cpp:212
-msgid ""
-"If the remaining time is greater than (or equal to) this threshold, it is "
-"rounded to the nearest minute before being displayed. For instance, if the "
-"threshold is set to 0, the seconds are never displayed."
-msgstr ""
-"Wenn die verbleibende Zeit größer (oder gleich) dieser Schwelle ist, wird "
-"die Zeit vor der Anzeige zur nächsten vollen Minute gerundet. Wenn "
-"beispielsweise die Schranke 0 ist, werden Sekunden nie angezeigt."
-
-#: src/preferencedialog.cpp:216
-msgid ""
-"This parameter affects only the display, not the accuracy of the time "
-"measurement."
-msgstr ""
-"Diese Einstellung betrifft nur die Anzeige, nicht die Genauigkeit der "
-"Zeitmessung."
-
-#: src/preferencedialog.cpp:219
-msgid ""
-"If checked, an increasing time counter is displayed when the players run out "
-"of time. Otherwise, in this situation, the clock only displays \"Flag down\"."
-msgstr ""
-"Wenn ausgewählt, wird ein hochzählender Zähler angezeigt wenn die Zeit der "
-"Spieler abgelaufen ist. Anderenfalls zeigt die Uhr in dieser Situation nur "
-"\"Fahne unten\" an."
-
-#: src/preferencedialog.cpp:223
-msgid ""
-"This option only affects the display with the Bronstein time control mode. "
-"If checked, the main time and the additional time are displayed separately."
-msgstr ""
-"Diese Option betrifft die Anzeige im Bronstein-System. Wenn ausgewählt, "
-"werden die Grundbedenkzeit und die Zugbedenkzeit separat angezeigt."
-
-#: src/preferencedialog.cpp:227
-msgid ""
-"This option only affects the display with the byo-yomi time control mode. If "
-"checked, the clock displays when the players are currently spending their "
-"additional byo-yomi periods."
-msgstr ""
-"Diese Option betrifft nur die Anzeige im Byo-yomi Sytem. Wenn ausgewählt, "
-"zeigt die Uhr an, ob die Spieler gerade ihre zusätzliche Byo-yomi Periode "
-"verbrauchen."
-
-#: src/preferencedialog.cpp:248
-msgid "Show the status bar at the bottom of the main window"
-msgstr "Zeige eine Statusleiste im Hauptfenster unten an."
-
-#: src/preferencedialog.cpp:253
-msgid "Always"
-msgstr "Immer"
-
-#: src/preferencedialog.cpp:254
-msgid "Only if the clock is still running"
-msgstr "Nur wenn die Uhr noch läuft"
-
-#: src/preferencedialog.cpp:255
-msgid "Never"
-msgstr "Niemals"
-
-#: src/preferencedialog.cpp:258
-msgid "Ask for confirmation when clicking on the \"Reset the clock\" button?"
-msgstr ""
-"Soll nachgefragt werden, wenn der \"Uhr zurücksetzen\" Knopf gedrückt wurde?"
-
-#: src/preferencedialog.cpp:338
-msgid ""
-"Key actions\n"
-"when the modifier keys\n"
-"are pressed"
-msgstr ""
-"Tastenbefehle\n"
-"bei gedrückt gehaltenen\n"
-"Steuertasten."
-
-#: src/preferencedialog.cpp:339
-msgid ""
-"Default\n"
-"key actions"
-msgstr ""
-"Standard-\n"
-"Tastenaktionen"
 
 #: src/gui/widgets/timedurationwidget.cpp:48
 msgid "hour"
@@ -296,9 +70,418 @@ msgstr "Alt"
 msgid "%1 keys (left and right)"
 msgstr "%1 Tasten (links und rechts)"
 
-#: src/gui/dialogs/namedialog.cpp:37 src/mainwindow.cpp:72
+#: src/gui/main/preferencedialog.cpp:58 src/gui/main/mainwindow.cpp:100
+#: src/gui/main/mainwindow.cpp:354
+msgid "Preferences"
+msgstr "Einstellungen"
+
+#: src/gui/main/preferencedialog.cpp:65
+msgid "Keyboard set-up"
+msgstr "Tastaturbelegung einstellen"
+
+#: src/gui/main/preferencedialog.cpp:66
+msgid "Time display"
+msgstr "Zeitanzeige"
+
+#: src/gui/main/preferencedialog.cpp:67
+msgid "Miscellaneous"
+msgstr "Verschiedenes"
+
+#: src/gui/main/preferencedialog.cpp:93
+msgid "Select the keyboard layout you are using"
+msgstr "Wählen Sie ihre Tastaturlayout"
+
+#: src/gui/main/preferencedialog.cpp:98
+msgid "The keyboard has a numeric keypad"
+msgstr "Die Tastatur besitzt einen Ziffernblock"
+
+#: src/gui/main/preferencedialog.cpp:110
+msgid "Left player's button"
+msgstr "Tasten linke Spieler"
+
+#: src/gui/main/preferencedialog.cpp:111
+msgid "Right player's button"
+msgstr "Tasten des rechten Spielers"
+
+#: src/gui/main/preferencedialog.cpp:112 src/gui/main/mainwindow.cpp:74
+#: src/core/keyboardmap.cpp:138
+msgid "Pause"
+msgstr "Pause"
+
+#: src/gui/main/preferencedialog.cpp:113 src/gui/main/mainwindow.cpp:73
+msgid "Reset"
+msgstr "Reset"
+
+#: src/gui/main/preferencedialog.cpp:114
+msgid "Switch"
+msgstr "Schalter"
+
+#: src/gui/main/preferencedialog.cpp:147
+msgid "Key actions"
+msgstr "Tastenaktionen"
+
+#: src/gui/main/preferencedialog.cpp:149
+msgid ""
+"This schematic representation of the keyboard shows the actions that are "
+"associated to each key."
+msgstr ""
+"Die schematische Darstellung der Tastatur zeigt welche Aktionen jeweils mit "
+"den Tasten verknüpft sind."
+
+#: src/gui/main/preferencedialog.cpp:152
+msgid ""
+"To associate an action to a key, click on the corresponding caption below "
+"the keyboard representation, and then click on the key whose behavior you "
+"want to change. Clicking twice on a key cancels the key/action association."
+msgstr ""
+"Um eine Aktion einer Taste zuzuordnen, klicken Sie auf die entsprechende "
+"Aktion in der Legende unter der Tastatur und klicken dann auf die Taste, "
+"deren Zuordnung Sie ändern wollen. Ein Doppelklick auf eine Taste bricht den "
+"Vorgang ab."
+
+#: src/gui/main/preferencedialog.cpp:160
+msgid ""
+"Two actions may be associated to each key: one is triggered by default when "
+"the user presses the key, the other is triggered when the user presses the "
+"key while holding both &quot;modifier keys&quot; down. For instance, in the "
+"default configuration, the modifier keys are the shift keys, and pressing "
+"&lt;shift-left&gt; + &lt;shift-right&gt; + &lt;space&gt; stops the clock."
+msgstr ""
+"Jeder Taste können zwei Aktionen zugeordnet werden: eine wird durch den "
+"einfachen Tastendruck des Benutzers ausgelöst, die andere wird ausgelöst, "
+"wenn zusätzlich noch beide &quot;Steuertasten&quot; gehalten werden. Z.B. "
+"sind die Umschalttasten (Shift) standardmäßig die Steuertasten und &lt;shift-"
+"links&gt; + &lt;shift-rechts&gt; + &lt;Leertaste&gt; halten die Uhr an."
+
+#: src/gui/main/preferencedialog.cpp:169
+msgid ""
+"Toggle this button to show (and edit) either the default actions or the "
+"actions triggered when the modifier keys are pressed."
+msgstr ""
+"Diese Schaltfläche bestimmt ob die Standardaktionen oder die Aktionen, die "
+"durch Halten der Steuertasten angezeigt werden (und bearbeitbar sind)."
+
+#: src/gui/main/preferencedialog.cpp:174
+msgid ""
+"Edit the keys that the left player can press to start the right player's "
+"clock."
+msgstr ""
+"Bearbeite die Tasten, die der linke Spieler drücken soll, um die Uhr des "
+"rechten Spielers zu starten."
+
+#: src/gui/main/preferencedialog.cpp:177
+msgid ""
+"Edit the keys that the right player can press to start the left player's "
+"clock."
+msgstr ""
+"Bearbeite die Tasten, die der rechte Spieler drücken soll, um die Uhr des "
+"linken Spielers zu starten."
+
+#: src/gui/main/preferencedialog.cpp:179
+msgid "Edit the keys that can be pressed to stop the clock."
+msgstr "Bearbeite die Tasten, die die Uhr anhalten können."
+
+#: src/gui/main/preferencedialog.cpp:180
+msgid "Edit the keys that can be pressed to reset the clock."
+msgstr "Bearbeite die Tasten, die die Uhr zurücksetzen können."
+
+#: src/gui/main/preferencedialog.cpp:182
+msgid ""
+"Edit the keys that can be pressed to swap the players and the time control "
+"parameters."
+msgstr ""
+"Bearbeite die Tasten, die erlauben die Spieler und deren Bedenkzeit "
+"Parameter zu vertauschen."
+
+#: src/gui/main/preferencedialog.cpp:184
+msgid "Click to change the modifier keys."
+msgstr "Klicke hier um die Steuertasten zu ändern"
+
+#: src/gui/main/preferencedialog.cpp:212
+msgid "Show seconds only if the time is less than"
+msgstr "Zeige die Sekunden nur, wenn die Zeit kleiner ist als"
+
+#: src/gui/main/preferencedialog.cpp:220
+msgid "Display an increasing time counter when the flag is down"
+msgstr "Zeige einen hochzählenden Zähler, wenn die Fahne unten ist."
+
+#: src/gui/main/preferencedialog.cpp:221
+msgid "Display extra time information when playing in Bronstein mode"
+msgstr "Zeige die Extra-Bedenkzeit im Bronstein-System an."
+
+#: src/gui/main/preferencedialog.cpp:222
+msgid "Display extra time information when playing in byo-yomi mode"
+msgstr "Zeige die Extra-Bedenkzeit im Byo-yomi System an."
+
+#: src/gui/main/preferencedialog.cpp:229
+msgid ""
+"If the remaining time is greater than (or equal to) this threshold, it is "
+"rounded to the nearest minute before being displayed. For instance, if the "
+"threshold is set to 0, the seconds are never displayed."
+msgstr ""
+"Wenn die verbleibende Zeit größer (oder gleich) dieser Schwelle ist, wird "
+"die Zeit vor der Anzeige zur nächsten vollen Minute gerundet. Wenn "
+"beispielsweise die Schranke 0 ist, werden Sekunden nie angezeigt."
+
+#: src/gui/main/preferencedialog.cpp:233
+msgid ""
+"This parameter affects only the display, not the accuracy of the time "
+"measurement."
+msgstr ""
+"Diese Einstellung betrifft nur die Anzeige, nicht die Genauigkeit der "
+"Zeitmessung."
+
+#: src/gui/main/preferencedialog.cpp:236
+msgid ""
+"If checked, an increasing time counter is displayed when the players run out "
+"of time. Otherwise, in this situation, the clock only displays \"Flag down\"."
+msgstr ""
+"Wenn ausgewählt, wird ein hochzählender Zähler angezeigt wenn die Zeit der "
+"Spieler abgelaufen ist. Anderenfalls zeigt die Uhr in dieser Situation nur "
+"\"Fahne unten\" an."
+
+#: src/gui/main/preferencedialog.cpp:240
+msgid ""
+"This option only affects the display with the Bronstein time control mode. "
+"If checked, the main time and the additional time are displayed separately."
+msgstr ""
+"Diese Option betrifft die Anzeige im Bronstein-System. Wenn ausgewählt, "
+"werden die Grundbedenkzeit und die Zugbedenkzeit separat angezeigt."
+
+#: src/gui/main/preferencedialog.cpp:244
+msgid ""
+"This option only affects the display with the byo-yomi time control mode. If "
+"checked, the clock displays when the players are currently spending their "
+"additional byo-yomi periods."
+msgstr ""
+"Diese Option betrifft nur die Anzeige im Byo-yomi Sytem. Wenn ausgewählt, "
+"zeigt die Uhr an, ob die Spieler gerade ihre zusätzliche Byo-yomi Periode "
+"verbrauchen."
+
+#: src/gui/main/preferencedialog.cpp:265
+msgid "Show the status bar at the bottom of the main window"
+msgstr "Zeige eine Statusleiste im Hauptfenster unten an."
+
+#: src/gui/main/preferencedialog.cpp:270
+msgid "Always"
+msgstr "Immer"
+
+#: src/gui/main/preferencedialog.cpp:271
+msgid "Only if the clock is still running"
+msgstr "Nur wenn die Uhr noch läuft"
+
+#: src/gui/main/preferencedialog.cpp:272
+msgid "Never"
+msgstr "Niemals"
+
+#: src/gui/main/preferencedialog.cpp:275
+msgid "Ask for confirmation when clicking on the \"Reset the clock\" button?"
+msgstr ""
+"Soll nachgefragt werden, wenn der \"Uhr zurücksetzen\" Knopf gedrückt wurde?"
+
+#: src/gui/main/preferencedialog.cpp:355
+msgid ""
+"Key actions\n"
+"when the modifier keys\n"
+"are pressed"
+msgstr ""
+"Tastenbefehle\n"
+"bei gedrückt gehaltenen\n"
+"Steuertasten."
+
+#: src/gui/main/preferencedialog.cpp:356
+msgid ""
+"Default\n"
+"key actions"
+msgstr ""
+"Standard-\n"
+"Tastenaktionen"
+
+#: src/gui/main/mainwindow.cpp:69
+msgid "Main tool-bar"
+msgstr "Hauptwerkzeugleiste"
+
+#: src/gui/main/mainwindow.cpp:75
+msgid "Swap sides"
+msgstr "Tausche die Seiten"
+
+#: src/gui/main/mainwindow.cpp:77
+msgid "Full screen"
+msgstr "Vollbild"
+
+#: src/gui/main/mainwindow.cpp:80 src/gui/dialogs/timecontroldialog.cpp:42
+msgid "Time control"
+msgstr "Bedenkzeit Einstellungen"
+
+#: src/gui/main/mainwindow.cpp:81 src/gui/dialogs/namedialog.cpp:37
 msgid "Players' names"
 msgstr "Namen der Spieler"
+
+#: src/gui/main/mainwindow.cpp:84 src/gui/main/mainwindow.cpp:354
+#: src/core/keyboardmap.cpp:130
+msgid "Menu"
+msgstr "Menü"
+
+#: src/gui/main/mainwindow.cpp:88
+msgid "Reset the clock"
+msgstr "Uhr zurücksetzen"
+
+#: src/gui/main/mainwindow.cpp:89
+msgid "Pause the clock"
+msgstr "Uhr anhalten"
+
+#: src/gui/main/mainwindow.cpp:90
+msgid "Swap the players and the time control parameters"
+msgstr "Tausche die Spieler und die Bedenkzeitparameter"
+
+#: src/gui/main/mainwindow.cpp:91
+msgid "Full screen on/off"
+msgstr "Vollbild an/aus"
+
+#: src/gui/main/mainwindow.cpp:92
+msgid "Change the current time control"
+msgstr "Ändere das Bedenkzeitsystem"
+
+#: src/gui/main/mainwindow.cpp:93
+msgid "Edit the names of the players"
+msgstr "Bearbeite die Namen der Spieler"
+
+#: src/gui/main/mainwindow.cpp:94
+msgid "General options, help, etc..."
+msgstr "Allgemeine Optionen, Hilfe, etc..."
+
+#: src/gui/main/mainwindow.cpp:102
+msgid "Debug"
+msgstr "Fehler"
+
+#: src/gui/main/mainwindow.cpp:104 src/gui/main/mainwindow.cpp:366
+msgid "Help"
+msgstr "Hilfe"
+
+#: src/gui/main/mainwindow.cpp:105
+msgid "About"
+msgstr "Über"
+
+#: src/gui/main/mainwindow.cpp:231
+msgid "Stop this game?"
+msgstr "Wollen Sie dieses Spiel beenden?"
+
+#: src/gui/main/mainwindow.cpp:231
+msgid "Do you really want to start a new game?"
+msgstr "Möchten Sie wirklich ein neues Spiel starten?"
+
+#: src/gui/main/mainwindow.cpp:343
+msgid "http://en.wikipedia.org/wiki/Time_control"
+msgstr "http://de.wikipedia.org/wiki/Bedenkzeit"
+
+#: src/gui/main/mainwindow.cpp:348
+msgid ""
+"To start playing and then change the running side of the clock, just press "
+"some keys on the keyboard. The left player must press keys on the left side "
+"of the keyboard, the right player on the right side. The role of each key "
+"can be edited in the \"%1\" dialog, available through the menu \"%2\" &gt; "
+"\"%1\"."
+msgstr ""
+"Um das Spiel zu starten und danach die Schachuhr zu bedienen muss man nur "
+"einige Tasten drücken. Der linke Spieler drückt die Tasten auf der linken "
+"Seite der Tastatur, der rechte Spieler die auf der rechten Seite. Die "
+"Zuordnung jeder Taste kann im \"%1\"-Dialog bearbeitet werden, der sich "
+"unter \"%2\" &gt; \"%1\" befindet."
+
+#: src/gui/main/mainwindow.cpp:356
+msgid ""
+"Most tool-bar buttons and dialog fields have tool-tips to give a short "
+"description of their respective roles. To show the tool-tip, just place the "
+"mouse cursor over the button or the field you want to be explained, and wait "
+"a few seconds."
+msgstr ""
+"Die meisten Schaltflächen in den Werkzeugleisten und die Dialogfelder haben "
+"Tooltips um eine kurze Beschreibung ihrer jeweiligen Funktion zu geben. Um "
+"ein Tooltip zu sehen, müssen Sie nur kurz den Mauszeiger über die fragliche "
+"Schaltfläche oder das fragliche Feld halten und einen Moment warten."
+
+#: src/gui/main/mainwindow.cpp:362
+msgid ""
+"General description of time control systems and rules can be found on the "
+"Internet, for instance: %1."
+msgstr ""
+"Eine allgemeine Beschreibung von Bedenkzeit Systemen und Regeln finden sich "
+"im Internet, z.B. unter %1."
+
+#: src/gui/main/mainwindow.cpp:374
+msgid "About %1"
+msgstr "Info über %1"
+
+#: src/gui/main/mainwindow.cpp:378
+msgid "A simple and free chess clock software."
+msgstr "Eine einfache und quelloffene Schachuhr Software."
+
+#: src/gui/main/mainwindow.cpp:381
+msgid "developer link"
+msgstr "Entwickler link"
+
+#: src/gui/main/mainwindow.cpp:384
+msgid ""
+"If you encounter some bugs with this program, or if you wish to get new "
+"features in the future versions, you can report/propose them in the bug "
+"tracker at %1."
+msgstr ""
+"Wenn Sie Fehler in diesem Programm finden, oder neu Funkionen in zukünftigen "
+"Versionen wünschen, können Sie diese im Bugtracker unter %1 einbringen."
+
+#: src/gui/main/mainwindow.cpp:388
+msgid "Author"
+msgstr "Autor"
+
+#: src/gui/main/mainwindow.cpp:391
+msgid "Translators"
+msgstr "Übersetzer"
+
+#: src/gui/main/mainwindow.cpp:399
+msgid ""
+"If you are interested in translating this plugin into your language, please "
+"contact the author."
+msgstr ""
+"Wenn Sie das Programm in eine andere Sprache übersetzen wollen, wenden Sie "
+"sich bitte an den Autor."
+
+#: src/gui/main/mainwindow.cpp:403
+msgid "License"
+msgstr "Lizenz"
+
+#: src/gui/main/mainwindow.cpp:405
+msgid ""
+"This program is free software: you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation, either version 3 of the License, or (at your option) "
+"any later version."
+msgstr ""
+"Dieses Programm ist freie Software. Sie können es unter den Bedingungen der "
+"GNU General Public License, wie von der Free Software Foundation "
+"veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß Version 3 "
+"der Lizenz oder (nach Ihrer Option) jeder späteren Version. "
+
+#: src/gui/main/mainwindow.cpp:411
+msgid ""
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
+"more details."
+msgstr ""
+"Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen "
+"von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die "
+"implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN "
+"BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License."
+
+#: src/gui/main/mainwindow.cpp:417
+msgid ""
+"You should have received a copy of the GNU General Public License along with "
+"this program. If not, see <a href=\"http://www.gnu.org/licenses/\">http://"
+"www.gnu.org/licenses/</a>."
+msgstr ""
+"Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem "
+"Programm erhalten haben. Falls nicht, siehe <a href=\"http://www.gnu.org/"
+"licenses/\">http://www.gnu.org/licenses/</a>."
 
 #: src/gui/dialogs/namedialog.cpp:46
 msgid "Left player"
@@ -311,10 +494,6 @@ msgstr "Rechter Spieler"
 #: src/gui/dialogs/namedialog.cpp:52
 msgid "Show the players' names"
 msgstr "Zeige die Namen der Spieler"
-
-#: src/gui/dialogs/timecontroldialog.cpp:42 src/mainwindow.cpp:71
-msgid "Time control"
-msgstr "Bedenkzeit Einstellungen"
 
 #: src/gui/dialogs/timecontroldialog.cpp:49
 msgid ""
@@ -429,10 +608,6 @@ msgstr ""
 msgid "Space"
 msgstr "Leertaste"
 
-#: src/core/keyboardmap.cpp:130 src/mainwindow.cpp:75 src/mainwindow.cpp:330
-msgid "Menu"
-msgstr "Menü"
-
 #: src/core/keyboardmap.cpp:131
 msgid "Back Space"
 msgstr "Backspace"
@@ -515,207 +690,34 @@ msgstr "Sanduhr-System"
 msgid "Byo-yomi"
 msgstr "Byo-yomi"
 
-#: src/core/timecontrol.cpp:119
+#: src/core/timecontrol.cpp:139
 msgid "left"
 msgstr "links"
 
-#: src/core/timecontrol.cpp:121
+#: src/core/timecontrol.cpp:141
 msgid "right"
 msgstr "rechts"
 
-#: src/core/timecontrol.cpp:134
+#: src/core/timecontrol.cpp:154
 msgid "by move"
 msgstr "pro Zug"
 
-#: src/core/timecontrol.cpp:141
+#: src/core/timecontrol.cpp:161
 msgid "byo-yomi period"
 msgstr "byo-yomi Periode"
 
-#: src/core/timecontrol.cpp:141
+#: src/core/timecontrol.cpp:161
 msgid "byo-yomi periods"
 msgstr "byo-yomi Perioden"
 
-#: src/core/timecontrol.cpp:155 src/core/timecontrol.cpp:168
+#: src/core/timecontrol.cpp:175 src/core/timecontrol.cpp:188
 msgid "%1% sec"
 msgstr "%1% Sek."
 
-#: src/core/timecontrol.cpp:166
+#: src/core/timecontrol.cpp:186
 msgid "%1% hour"
 msgstr "%1% Std."
 
-#: src/core/timecontrol.cpp:167
+#: src/core/timecontrol.cpp:187
 msgid "%1% min"
 msgstr "%1% Min."
-
-#: src/mainwindow.cpp:60
-msgid "Main tool-bar"
-msgstr "Hauptwerkzeugleiste"
-
-#: src/mainwindow.cpp:66
-msgid "Swap sides"
-msgstr "Tausche die Seiten"
-
-#: src/mainwindow.cpp:68
-msgid "Full screen"
-msgstr "Vollbild"
-
-#: src/mainwindow.cpp:79
-msgid "Reset the clock"
-msgstr "Uhr zurücksetzen"
-
-#: src/mainwindow.cpp:80
-msgid "Pause the clock"
-msgstr "Uhr anhalten"
-
-#: src/mainwindow.cpp:81
-msgid "Swap the players and the time control parameters"
-msgstr "Tausche die Spieler und die Bedenkzeitparameter"
-
-#: src/mainwindow.cpp:82
-msgid "Full screen on/off"
-msgstr "Vollbild an/aus"
-
-#: src/mainwindow.cpp:83
-msgid "Change the current time control"
-msgstr "Ändere das Bedenkzeitsystem"
-
-#: src/mainwindow.cpp:84
-msgid "Edit the names of the players"
-msgstr "Bearbeite die Namen der Spieler"
-
-#: src/mainwindow.cpp:85
-msgid "General options, help, etc..."
-msgstr "Allgemeine Optionen, Hilfe, etc..."
-
-#: src/mainwindow.cpp:93
-msgid "Debug"
-msgstr "Fehler"
-
-#: src/mainwindow.cpp:95 src/mainwindow.cpp:342
-msgid "Help"
-msgstr "Hilfe"
-
-#: src/mainwindow.cpp:96
-msgid "About"
-msgstr "Über"
-
-#: src/mainwindow.cpp:206
-msgid "Stop this game?"
-msgstr "Wollen Sie dieses Spiel beenden?"
-
-#: src/mainwindow.cpp:206
-msgid "Do you really want to start a new game?"
-msgstr "Möchten Sie wirklich ein neues Spiel starten?"
-
-#: src/mainwindow.cpp:319
-msgid "http://en.wikipedia.org/wiki/Time_control"
-msgstr "http://de.wikipedia.org/wiki/Bedenkzeit"
-
-#: src/mainwindow.cpp:324
-msgid ""
-"To start playing and then change the running side of the clock, just press "
-"some keys on the keyboard. The left player must press keys on the left side "
-"of the keyboard, the right player on the right side. The role of each key "
-"can be edited in the \"%1\" dialog, available through the menu \"%2\" &gt; "
-"\"%1\"."
-msgstr ""
-"Um das Spiel zu starten und danach die Schachuhr zu bedienen muss man nur "
-"einige Tasten drücken. Der linke Spieler drückt die Tasten auf der linken "
-"Seite der Tastatur, der rechte Spieler die auf der rechten Seite. Die "
-"Zuordnung jeder Taste kann im \"%1\"-Dialog bearbeitet werden, der sich "
-"unter \"%2\" &gt; \"%1\" befindet."
-
-#: src/mainwindow.cpp:332
-msgid ""
-"Most tool-bar buttons and dialog fields have tool-tips to give a short "
-"description of their respective roles. To show the tool-tip, just place the "
-"mouse cursor over the button or the field you want to be explained, and wait "
-"a few seconds."
-msgstr ""
-"Die meisten Schaltflächen in den Werkzeugleisten und die Dialogfelder haben "
-"Tooltips um eine kurze Beschreibung ihrer jeweiligen Funktion zu geben. Um "
-"ein Tooltip zu sehen, müssen Sie nur kurz den Mauszeiger über die fragliche "
-"Schaltfläche oder das fragliche Feld halten und einen Moment warten."
-
-#: src/mainwindow.cpp:338
-msgid ""
-"General description of time control systems and rules can be found on the "
-"Internet, for instance: %1."
-msgstr ""
-"Eine allgemeine Beschreibung von Bedenkzeit Systemen und Regeln finden sich "
-"im Internet, z.B. unter %1."
-
-#: src/mainwindow.cpp:349
-msgid "About %1"
-msgstr "Info über %1"
-
-#: src/mainwindow.cpp:355
-msgid "A simple and free chess clock software."
-msgstr "Eine einfache und quelloffene Schachuhr Software"
-
-#: src/mainwindow.cpp:358
-msgid "developer link"
-msgstr "Entwickler link"
-
-#: src/mainwindow.cpp:361
-msgid ""
-"If you encounter some bugs with this program, or if you wish to get new "
-"features in the future versions, you can report/propose them in the bug "
-"tracker at %1."
-msgstr ""
-"Wenn Sie Fehler in diesem Programm finden, oder neu Funkionen in zukünftigen "
-"Versionen wünschen, können Sie diese im Bugtracker unter %1 einbringen."
-
-#: src/mainwindow.cpp:364
-msgid "Author"
-msgstr "Autor"
-
-#: src/mainwindow.cpp:366
-msgid "Translators"
-msgstr "Übersetzer"
-
-#: src/mainwindow.cpp:374
-msgid ""
-"If you are interested in translating this plugin into your language, please "
-"contact the author."
-msgstr ""
-"Wenn Sie das Programm in eine andere Sprache übersetzen wollen, wenden Sie "
-"sich bitte an den Autor."
-
-#: src/mainwindow.cpp:377
-msgid "License"
-msgstr "Lizenz"
-
-#: src/mainwindow.cpp:379
-msgid ""
-"This program is free software: you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation, either version 3 of the License, or (at your option) "
-"any later version."
-msgstr ""
-"Dieses Programm ist freie Software. Sie können es unter den Bedingungen der "
-"GNU General Public License, wie von der Free Software Foundation "
-"veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß Version 3 "
-"der Lizenz oder (nach Ihrer Option) jeder späteren Version. "
-
-#: src/mainwindow.cpp:385
-msgid ""
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
-"more details."
-msgstr ""
-"Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen "
-"von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die "
-"implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN "
-"BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License. "
-
-#: src/mainwindow.cpp:391
-msgid ""
-"You should have received a copy of the GNU General Public License along with "
-"this program. If not, see <a href=\"http://www.gnu.org/licenses/\">http://"
-"www.gnu.org/licenses/</a>."
-msgstr ""
-"Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem "
-"Programm erhalten haben. Falls nicht, siehe <a href=\"http://www.gnu.org/"
-"licenses/\">http://www.gnu.org/licenses/</a>."
