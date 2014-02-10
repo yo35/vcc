@@ -179,7 +179,7 @@ QWidget *PreferenceDialog::createKeyboardPage()
 	captionPause->button()->setToolTip("<p>" + _("Edit the keys that can be pressed to stop the clock." ) + "</p>");
 	captionReset->button()->setToolTip("<p>" + _("Edit the keys that can be pressed to reset the clock.") + "</p>");
 	captionSwap ->button()->setToolTip("<p>" + _(
-		"Edit the keys that can be pressed to swap the players and the time control parameters."
+		"Edit the keys that can be pressed to swap the players' names and the time control parameters."
 	) + "</p>");
 	_modifierKeysSelector->setToolTip(_("Click to change the modifier keys."));
 

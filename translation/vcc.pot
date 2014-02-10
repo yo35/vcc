@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtual-chess-clock 1.99.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-10 13:16+0100\n"
+"POT-Creation-Date: 2014-02-10 13:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -170,8 +170,8 @@ msgstr ""
 
 #: src/gui/main/preferencedialog.cpp:182
 msgid ""
-"Edit the keys that can be pressed to swap the players and the time control "
-"parameters."
+"Edit the keys that can be pressed to swap the players' names and the time "
+"control parameters."
 msgstr ""
 
 #: src/gui/main/preferencedialog.cpp:184
