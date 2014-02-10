@@ -199,4 +199,22 @@
 		</locales>
 	</keyboard>
 
+	<keyboard>
+		<id>CZ</id>
+		<icon>CZ.png</icon>
+		<name>Czech keyboard</name>
+		<locales>
+			<locale>cs_CZ</locale>
+		</locales>
+	</keyboard>
+
+	<keyboard>
+		<id>SK</id>
+		<icon>SK.png</icon>
+		<name>Slovak keyboard</name>
+		<locales>
+			<locale>sk_SK</locale>
+		</locales>
+	</keyboard>
+
 </keyboards>
