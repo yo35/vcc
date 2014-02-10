@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtual-chess-clock 0.99.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-10 13:16+0100\n"
+"POT-Creation-Date: 2014-02-10 14:26+0100\n"
 "PO-Revision-Date: 2010-10-09 12:02+0200\n"
 "Last-Translator: Yoann Le Montagner <yo35@melix.net>\n"
 "Language-Team: French\n"
@@ -34,9 +34,8 @@ msgid "Flag down"
 msgstr "Tombé"
 
 #: src/gui/widgets/bitimerwidget.cpp:208
-#, fuzzy
 msgid "Since: %1"
-msgstr "Depuis :"
+msgstr "Depuis : %1"
 
 #: src/gui/widgets/bitimerwidget.cpp:212 src/gui/widgets/bitimerwidget.cpp:216
 #: src/gui/dialogs/timecontroldialog.cpp:113
@@ -48,13 +47,12 @@ msgid "Byo-yomi period"
 msgstr "Période byo-yomi"
 
 #: src/gui/widgets/bitimerwidget.cpp:217
-#, fuzzy
 msgid "Byo-yomi period %1/%2"
-msgstr "Période byo-yomi"
+msgstr "Période byo-yomi %1/%2"
 
 #: src/gui/widgets/modifierkeyswidget.cpp:32
 msgid "Modifier keys"
-msgstr ""
+msgstr "Touches modificatrices"
 
 #: src/gui/widgets/modifierkeyswidget.cpp:36 src/core/keyboardmap.cpp:122
 msgid "Ctrl"
@@ -69,9 +67,8 @@ msgid "Alt"
 msgstr "Alt"
 
 #: src/gui/widgets/modifierkeyswidget.cpp:45
-#, fuzzy
 msgid "%1 keys (left and right)"
-msgstr "Touches MAJ (gauche et droite)"
+msgstr "Touches %1 (gauche et droite)"
 
 #: src/gui/main/preferencedialog.cpp:58 src/gui/main/mainwindow.cpp:100
 #: src/gui/main/mainwindow.cpp:354
@@ -80,34 +77,31 @@ msgstr "Préférences"
 
 #: src/gui/main/preferencedialog.cpp:65
 msgid "Keyboard set-up"
-msgstr ""
+msgstr "Configuration du clavier"
 
 #: src/gui/main/preferencedialog.cpp:66
 msgid "Time display"
-msgstr ""
+msgstr "Affichage des temps"
 
 #: src/gui/main/preferencedialog.cpp:67
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Divers"
 
 #: src/gui/main/preferencedialog.cpp:93
 msgid "Select the keyboard layout you are using"
 msgstr "Sélectionnez l'agencement de clavier que vous utilisez"
 
 #: src/gui/main/preferencedialog.cpp:98
-#, fuzzy
 msgid "The keyboard has a numeric keypad"
-msgstr "Afficher le pavé numérique"
+msgstr "Le clavier a un pavé numérique"
 
 #: src/gui/main/preferencedialog.cpp:110
-#, fuzzy
 msgid "Left player's button"
-msgstr "Joueur de gauche"
+msgstr "Bouton du joueur de gauche"
 
 #: src/gui/main/preferencedialog.cpp:111
-#, fuzzy
 msgid "Right player's button"
-msgstr "Joueur de droite"
+msgstr "Bouton du joueur de droite"
 
 #: src/gui/main/preferencedialog.cpp:112 src/gui/main/mainwindow.cpp:74
 #: src/core/keyboardmap.cpp:138
@@ -119,19 +113,20 @@ msgid "Reset"
 msgstr "Réinitialisation"
 
 #: src/gui/main/preferencedialog.cpp:114
-#, fuzzy
 msgid "Switch"
-msgstr "Inverser les joueurs"
+msgstr "Inverser"
 
 #: src/gui/main/preferencedialog.cpp:147
 msgid "Key actions"
-msgstr ""
+msgstr "Action des touches"
 
 #: src/gui/main/preferencedialog.cpp:149
 msgid ""
 "This schematic representation of the keyboard shows the actions that are "
 "associated to each key."
 msgstr ""
+"Cette représentation schématique du clavier montre les actions associées à "
+"chaque touche."
 
 #: src/gui/main/preferencedialog.cpp:152
 msgid ""
@@ -139,6 +134,10 @@ msgid ""
 "the keyboard representation, and then click on the key whose behavior you "
 "want to change. Clicking twice on a key cancels the key/action association."
 msgstr ""
+"Pour associer une action à une touche, cliquez sur la légende correspondante "
+"en dessous du schéma du clavier, puis cliquez (avec la souris) sur la touche "
+"dont vous voulez modifier le comportement. Cliquer deux fois sur la touche "
+"supprime l'action associée." 
 
 #: src/gui/main/preferencedialog.cpp:160
 msgid ""
@@ -148,46 +147,60 @@ msgid ""
 "default configuration, the modifier keys are the shift keys, and pressing "
 "&lt;shift-left&gt; + &lt;shift-right&gt; + &lt;space&gt; stops the clock."
 msgstr ""
+"Deux actions peuvent être associée à chaque touche : l'une est déclenchée par "
+"défaut lorsque l'utilisateur presse la touche seule, l'autre est déclenchée "
+"lorsqu'il presse la touche tout en maintenant appuyées deux &quot;touches "
+"modificatrices&quot;. Par exemple, dans la configuration initiale, les "
+"touches modificatrices sont les touches Maj, et appuyer sur &lt;maj-gauche"
+"&gt; + &lt;maj-droite&gt; + &lt;espace&gt; met la pendule en pause."
 
 #: src/gui/main/preferencedialog.cpp:169
 msgid ""
 "Toggle this button to show (and edit) either the default actions or the "
 "actions triggered when the modifier keys are pressed."
 msgstr ""
+"Basculer ce bouton pour voir (et modifier) soit les actions par défaut, soit "
+"les actions déclenchées lorsque les touches modificatrices sont pressées."
 
 #: src/gui/main/preferencedialog.cpp:174
 msgid ""
 "Edit the keys that the left player can press to start the right player's "
 "clock."
 msgstr ""
+"Modifier les touches servant au joueur de gauche à démarrer la pendule du "
+"joueur de droite."
 
 #: src/gui/main/preferencedialog.cpp:177
 msgid ""
 "Edit the keys that the right player can press to start the left player's "
 "clock."
 msgstr ""
+"Modifier les touches servant au joueur de droite à démarrer la pendule du "
+"joueur de gauche."
 
 #: src/gui/main/preferencedialog.cpp:179
 msgid "Edit the keys that can be pressed to stop the clock."
-msgstr ""
+msgstr "Modifier les touches servant à mettre la pendule en pause."
 
 #: src/gui/main/preferencedialog.cpp:180
 msgid "Edit the keys that can be pressed to reset the clock."
-msgstr ""
+msgstr "Modifier les touches servant à reinintialiser la pendule."
 
 #: src/gui/main/preferencedialog.cpp:182
 msgid ""
-"Edit the keys that can be pressed to swap the players and the time control "
-"parameters."
+"Edit the keys that can be pressed to swap the players' names and the time "
+"control parameters."
 msgstr ""
+"Modifier les touches servant à inverser les noms des joueurs et les "
+"paramètres de la pendule."
 
 #: src/gui/main/preferencedialog.cpp:184
 msgid "Click to change the modifier keys."
-msgstr ""
+msgstr "Cliquer pour changer les touches modificatrices."
 
 #: src/gui/main/preferencedialog.cpp:212
 msgid "Show seconds only if the time is less than"
-msgstr ""
+msgstr "Afficher les secondes seulement si le temps est inférieur à"
 
 #: src/gui/main/preferencedialog.cpp:220
 msgid "Display an increasing time counter when the flag is down"
@@ -208,27 +221,38 @@ msgstr ""
 #: src/gui/main/preferencedialog.cpp:229
 msgid ""
 "If the remaining time is greater than (or equal to) this threshold, it is "
-"rounded to the nearest minute before being displayed. For instance, if the "
+"rounded to the nearest minute before being displayed. In particular, if the "
 "threshold is set to 0, the seconds are never displayed."
 msgstr ""
+"Lorsque le temps restant est supérieur (ou égal) à ce seuil, il est arrondi "
+"à la minute la plus proche avant d'être affiché. En particulier, si le seuil "
+"est fixé à 0, les secondes ne sont jamais affichées."
 
 #: src/gui/main/preferencedialog.cpp:233
 msgid ""
 "This parameter affects only the display, not the accuracy of the time "
 "measurement."
 msgstr ""
+"Ce paramètre n'influence que l'affichage, et n'affecte pas la précision avec "
+"laquelle le temps est mesuré."
 
 #: src/gui/main/preferencedialog.cpp:236
 msgid ""
 "If checked, an increasing time counter is displayed when the players run out "
 "of time. Otherwise, in this situation, the clock only displays \"Flag down\"."
 msgstr ""
+"Lorsque cette option est activée, un compteur de temps croissant s'affiche "
+"sur leur côté de pendule lorque les joueurs tombent. Sinon, dans cette "
+"situation la pendule affiche simplement \"Tombé\"."
 
 #: src/gui/main/preferencedialog.cpp:240
 msgid ""
 "This option only affects the display with the Bronstein time control mode. "
 "If checked, the main time and the additional time are displayed separately."
 msgstr ""
+"Cette option permet de modifier l'affichage du temps dans le cas des "
+"cadences Bronstein. Lorsqu'elle est activée, le temps principal et le temps "
+"additionnel sont affiché séparément."
 
 #: src/gui/main/preferencedialog.cpp:244
 msgid ""
@@ -236,9 +260,11 @@ msgid ""
 "checked, the clock displays when the players are currently spending their "
 "additional byo-yomi periods."
 msgstr ""
+"Cette option permet de modifier l'affichage du temps dans le cas des "
+"cadences byo-yomi. Lorsqu'elle est activée, la pendule signale aux joueurs "
+"s'ils sont ou non en train d'utiliser leurs périodes additionnelles byo-yomi."
 
 #: src/gui/main/preferencedialog.cpp:265
-#, fuzzy
 msgid "Show the status bar at the bottom of the main window"
 msgstr "Afficher la barre d'état en bas de la fenêtre principale"
 
@@ -257,6 +283,8 @@ msgstr "Jamais"
 #: src/gui/main/preferencedialog.cpp:275
 msgid "Ask for confirmation when clicking on the \"Reset the clock\" button?"
 msgstr ""
+"Demander confimation lorsque l'utilisateur clique sur le bouton "
+"\"Initialiser la pendule\" ?"
 
 #: src/gui/main/preferencedialog.cpp:355
 msgid ""
@@ -264,24 +292,29 @@ msgid ""
 "when the modifier keys\n"
 "are pressed"
 msgstr ""
+"Actions des touches lorsque\n"
+"les touches modificatrices\n"
+"sont pressées"
 
 #: src/gui/main/preferencedialog.cpp:356
 msgid ""
 "Default\n"
 "key actions"
 msgstr ""
+"Actions des touches\n"
+"par défaut"
 
 #: src/gui/main/mainwindow.cpp:69
 msgid "Main tool-bar"
-msgstr ""
+msgstr "Barre d'outils principale"
 
 #: src/gui/main/mainwindow.cpp:75
 msgid "Swap sides"
-msgstr ""
+msgstr "Inverser les côtés"
 
 #: src/gui/main/mainwindow.cpp:77
 msgid "Full screen"
-msgstr ""
+msgstr "Plein écran"
 
 #: src/gui/main/mainwindow.cpp:80 src/gui/dialogs/timecontroldialog.cpp:42
 msgid "Time control"
@@ -294,7 +327,7 @@ msgstr "Noms des joueurs"
 #: src/gui/main/mainwindow.cpp:84 src/gui/main/mainwindow.cpp:354
 #: src/core/keyboardmap.cpp:130
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/gui/main/mainwindow.cpp:88
 msgid "Reset the clock"
@@ -305,12 +338,12 @@ msgid "Pause the clock"
 msgstr "Mettre la pendule en pause"
 
 #: src/gui/main/mainwindow.cpp:90
-msgid "Swap the players and the time control parameters"
-msgstr ""
+msgid "Swap the players' names and the time control parameters"
+msgstr "Permutter les noms des joueurs et les paramètres de cadence"
 
 #: src/gui/main/mainwindow.cpp:91
 msgid "Full screen on/off"
-msgstr ""
+msgstr "Plein écran on/off"
 
 #: src/gui/main/mainwindow.cpp:92
 msgid "Change the current time control"
@@ -322,11 +355,11 @@ msgstr "Modifier les noms des joueurs"
 
 #: src/gui/main/mainwindow.cpp:94
 msgid "General options, help, etc..."
-msgstr ""
+msgstr "Options générales, aide, etc..."
 
 #: src/gui/main/mainwindow.cpp:102
 msgid "Debug"
-msgstr ""
+msgstr "Débug"
 
 #: src/gui/main/mainwindow.cpp:104 src/gui/main/mainwindow.cpp:366
 msgid "Help"
@@ -334,7 +367,7 @@ msgstr "Aide"
 
 #: src/gui/main/mainwindow.cpp:105
 msgid "About"
-msgstr ""
+msgstr "À propos"
 
 #: src/gui/main/mainwindow.cpp:231
 msgid "Stop this game?"
@@ -346,7 +379,7 @@ msgstr "Voulez-vous vraiment commencer une nouvelle partie ?"
 
 #: src/gui/main/mainwindow.cpp:343
 msgid "http://en.wikipedia.org/wiki/Time_control"
-msgstr ""
+msgstr "http://fr.wikipedia.org/wiki/Pendule_d'échecs"
 
 #: src/gui/main/mainwindow.cpp:348
 msgid ""
@@ -356,6 +389,12 @@ msgid ""
 "can be edited in the \"%1\" dialog, available through the menu \"%2\" &gt; "
 "\"%1\"."
 msgstr ""
+"Pour commencer la partie et ensuite changer le côté actif de la pendule, "
+"appuyez sur les touches du clavier. Le joueur de gauche doit appuyer sur "
+"une des touches de la gauche du clavier, le joueur de droite une des "
+"touches de la droite. Le rôle de chaque touche peut être modifié par "
+"l'intermédiaire de la boîte de dialogue \"%1\", disponible via le menu \"%2\" "
+"&gt; \"%1\"."
 
 #: src/gui/main/mainwindow.cpp:356
 msgid ""
@@ -364,25 +403,31 @@ msgid ""
 "mouse cursor over the button or the field you want to be explained, and wait "
 "a few seconds."
 msgstr ""
+"La plupart des boutons de la barre d'outils et des champs des boîtes de "
+"dialogue sont pourvu de bulles d'aide (<em>tool-tips</em>) décrivant leurs "
+"fonctions respectives. Pour afficher la bulle d'aide, placez le curseur de la "
+"souris au-dessus du bouton ou du champ concerné, et attendez quelques "
+"secondes."
 
 #: src/gui/main/mainwindow.cpp:362
 msgid ""
 "General description of time control systems and rules can be found on the "
 "Internet, for instance: %1."
 msgstr ""
+"Une description générale des différents systèmes de cadence est disponible "
+"sur Internet, par exemple : %1."
 
 #: src/gui/main/mainwindow.cpp:374
 msgid "About %1"
-msgstr ""
+msgstr "À propos de %1"
 
 #: src/gui/main/mainwindow.cpp:378
-#, fuzzy
 msgid "A simple and free chess clock software."
-msgstr "Un logiciel de pendule d'échecs simple et gratuit"
+msgstr "Un logiciel de pendule d'échecs simple et gratuit."
 
 #: src/gui/main/mainwindow.cpp:381
 msgid "developer link"
-msgstr ""
+msgstr "lien pour les développeurs"
 
 #: src/gui/main/mainwindow.cpp:384
 msgid ""
@@ -390,24 +435,29 @@ msgid ""
 "features in the future versions, you can report/propose them in the bug "
 "tracker at %1."
 msgstr ""
+"Si vous rencontrez des bugs avec ce programme, ou bien si vous souhaitez "
+"voir implémenté de nouvelles fonctionnalités dans les versions futures, vous "
+"pouvez les signaler/proposer dans le <em>bug tracker</em> à l'adresse %1."
 
 #: src/gui/main/mainwindow.cpp:388
 msgid "Author"
-msgstr ""
+msgstr "Auteur"
 
 #: src/gui/main/mainwindow.cpp:391
 msgid "Translators"
-msgstr ""
+msgstr "Traducteurs"
 
 #: src/gui/main/mainwindow.cpp:399
 msgid ""
-"If you are interested in translating this plugin into your language, please "
+"If you are interested in translating this program into your language, please "
 "contact the author."
 msgstr ""
+"Si vous souhaitez traduire ce programme dans votre langue, merci de contacter "
+"l'auteur."
 
 #: src/gui/main/mainwindow.cpp:403
 msgid "License"
-msgstr ""
+msgstr "Licence"
 
 #: src/gui/main/mainwindow.cpp:405
 msgid ""
@@ -416,6 +466,10 @@ msgid ""
 "Software Foundation, either version 3 of the License, or (at your option) "
 "any later version."
 msgstr ""
+"Ce programme est un logiciel libre ; vous pouvez le redistribuer ou le "
+"modifier suivant les termes de la <em>GNU General Public License</em> telle "
+"que publiée par la Free Software Foundation : soit la version 3 de cette "
+"licence, soit (à votre gré) toute version ultérieure."
 
 #: src/gui/main/mainwindow.cpp:411
 msgid ""
@@ -424,6 +478,10 @@ msgid ""
 "FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
 "more details."
 msgstr ""
+"Ce programme est distribué dans l’espoir qu’il vous sera utile, mais SANS "
+"AUCUNE GARANTIE : sans même la garantie implicite de COMMERCIALISABILITÉ "
+"ni d’ADÉQUATION À UN OBJECTIF PARTICULIER. Consultez la <em>GNU General "
+"Public License</em> pour plus de détails."
 
 #: src/gui/main/mainwindow.cpp:417
 msgid ""
@@ -431,6 +489,9 @@ msgid ""
 "this program. If not, see <a href=\"http://www.gnu.org/licenses/\">http://"
 "www.gnu.org/licenses/</a>."
 msgstr ""
+"Vous devriez avoir reçu une copie de la <em>GNU General Public License</em> "
+"avec ce programme ; si ce n’est pas le cas, consultez : <a href=\"http://"
+"www.gnu.org/licenses/\">http://www.gnu.org/licenses/</a>."
 
 #: src/gui/dialogs/namedialog.cpp:46
 msgid "Left player"
@@ -441,9 +502,8 @@ msgid "Right player"
 msgstr "Joueur de droite"
 
 #: src/gui/dialogs/namedialog.cpp:52
-#, fuzzy
 msgid "Show the players' names"
-msgstr "Noms des joueurs"
+msgstr "Afficher les noms des joueurs"
 
 #: src/gui/dialogs/timecontroldialog.cpp:49
 msgid ""
@@ -454,7 +514,6 @@ msgstr ""
 "jamais ajouté au temps principal du joueur."
 
 #: src/gui/dialogs/timecontroldialog.cpp:53
-#, fuzzy
 msgid ""
 "At each move, the player is granted an additional delay, so that his/her "
 "global clock time is always greater than this bonus time at the beginning of "
@@ -478,7 +537,6 @@ msgstr ""
 "du joueur au début de son tour de jeu."
 
 #: src/gui/dialogs/timecontroldialog.cpp:65
-#, fuzzy
 msgid ""
 "While the current player is deciding on his/her move, the opponent's time is "
 "increasing. Therefore, the sum of both clocks remains always the same."
@@ -487,7 +545,6 @@ msgstr ""
 "somme des temps des deux horloges reste toujours constante."
 
 #: src/gui/dialogs/timecontroldialog.cpp:70
-#, fuzzy
 msgid ""
 "When the player's main time expires, he/she is granted one or more "
 "additional time periods, denoted as \"byo-yomi\" periods. If the move is "
@@ -508,7 +565,7 @@ msgstr "Mode"
 
 #: src/gui/dialogs/timecontroldialog.cpp:97
 msgid "Same time for both sides"
-msgstr ""
+msgstr "Même temps pour les deux côtés"
 
 #: src/gui/dialogs/timecontroldialog.cpp:107
 msgid "Left"
@@ -532,11 +589,11 @@ msgstr "Informations de débug"
 
 #: src/gui/dialogs/debugdialog.cpp:47
 msgid "Press some key..."
-msgstr ""
+msgstr "Appuyez sur une touche..."
 
 #: src/core/keyboardmap.cpp:116
 msgid "Invalid"
-msgstr ""
+msgstr "Invalide."
 
 #: src/core/keyboardmap.cpp:125
 msgid "Alt Gr"
@@ -547,38 +604,34 @@ msgid "Super"
 msgstr "Super"
 
 #: src/core/keyboardmap.cpp:127
-#, fuzzy
 msgid "Tab"
 msgstr "Tab"
 
 #: src/core/keyboardmap.cpp:128
-#, fuzzy
 msgid ""
 "Caps\n"
 "Lock"
 msgstr ""
 "Verr\n"
-"maj"
+"Maj"
 
 #: src/core/keyboardmap.cpp:129
 msgid "Space"
 msgstr "Espace"
 
 #: src/core/keyboardmap.cpp:131
-#, fuzzy
 msgid "Back Space"
-msgstr "Retour"
+msgstr "Retour arrière"
 
 #: src/core/keyboardmap.cpp:132 src/core/keyboardmap.cpp:142
 msgid "Enter"
-msgstr ""
+msgstr "Entrée"
 
 #: src/core/keyboardmap.cpp:135
 msgid "Esc"
 msgstr "Echap"
 
 #: src/core/keyboardmap.cpp:136
-#, fuzzy
 msgid ""
 "Print\n"
 "Screen"
@@ -587,7 +640,6 @@ msgstr ""
 "écran"
 
 #: src/core/keyboardmap.cpp:137
-#, fuzzy
 msgid ""
 "Scroll\n"
 "Lock"
@@ -596,13 +648,12 @@ msgstr ""
 "défil"
 
 #: src/core/keyboardmap.cpp:141
-#, fuzzy
 msgid ""
 "Num\n"
 "Lock"
 msgstr ""
 "Verr\n"
-"num"
+"Num"
 
 #: src/core/keyboardmap.cpp:145
 msgid "Ins"
@@ -621,22 +672,20 @@ msgid "End"
 msgstr "Fin"
 
 #: src/core/keyboardmap.cpp:149
-#, fuzzy
 msgid ""
 "Page\n"
 "Up"
 msgstr ""
 "Page\n"
-"haut"
+"Haut"
 
 #: src/core/keyboardmap.cpp:150
-#, fuzzy
 msgid ""
 "Page\n"
 "Down"
 msgstr ""
 "Page\n"
-"bas"
+"Bas"
 
 #: src/core/timecontrol.cpp:36
 msgid "Sudden death"
@@ -680,259 +729,12 @@ msgstr "périodes byo-yomi"
 
 #: src/core/timecontrol.cpp:175 src/core/timecontrol.cpp:188
 msgid "%1% sec"
-msgstr ""
+msgstr "%1% sec"
 
 #: src/core/timecontrol.cpp:186
-#, fuzzy
 msgid "%1% hour"
-msgstr "heure"
+msgstr "%1% heure"
 
 #: src/core/timecontrol.cpp:187
 msgid "%1% min"
-msgstr ""
-
-#~ msgid "Unable to open the INI file %1 for reading"
-#~ msgstr "Impossible d'ouvrir le fichier INI %1 en lecture"
-
-#~ msgid "Unconsistency in the INI file %1 at line #%2"
-#~ msgstr "Le fichier INI %1 est corrompu à la ligne #%2"
-
-#~ msgid "Unable to open the INI file %1 for writing"
-#~ msgstr "Impossible d'ouvrir le fichier INI %1 en écriture"
-
-#~ msgid "The version (%1) of the keyboard map file %2 is not supported"
-#~ msgstr ""
-#~ "La version (%1) du fichier de plan de clavier %2 n'est pas supportée"
-
-#~ msgid "The key %1 must be placed at least on one line on the keyboard"
-#~ msgstr "La touche %1 doit être placée au moins sur une ligne sur le clavier"
-
-#~ msgid "The key %1 must have at least one keyval"
-#~ msgstr "La touche %1 doit avoir au moins une keyval"
-
-#~ msgid "Time control values are the same for both sides"
-#~ msgstr "Même temps pour les deux côtés"
-
-#~ msgid "Unable to open the data file %1 for reading"
-#~ msgstr "Impossible d'ouvrir le fichier de données %1 en lecture"
-
-#~ msgid "Unconsistency in the data file %1 at line #%2"
-#~ msgstr "Le fichier de données %1 est corrompu à la ligne #%2"
-
-#~ msgid "Unable to open the data file %1 for writing"
-#~ msgstr "Impossible d'ouvrir le fichier de données %1 en écriture"
-
-#~ msgid "The version (%1) of the area map file %2 is not supported"
-#~ msgstr "La version (%1) du fichier de plan de régions %2 n'est pas supporté"
-
-#~ msgid "The number of keys reported the file %1 is incorrect"
-#~ msgstr "Le nombre de touches spécifié dans le fichier %1 est incorrect"
-
-#~ msgid "Incorrect affectation code for the key %1 in the file %2"
-#~ msgstr "Code d'affection incorrect pour la touche %1 dans le fichier %2"
-
-#~ msgid "Unable to create the INI configuration file at %1"
-#~ msgstr ""
-#~ "Impossible de créer le fichier de configuration INI à l'emplacement %1"
-
-#~ msgid "Unable to retrieve the name of keyboard %1"
-#~ msgstr "Impossible de récupérer le nom du clavier %1"
-
-#~ msgid "Unable to retrieve the name of the layout file for keyboard %1"
-#~ msgstr ""
-#~ "Impossible de récupérer le nom du fichier de plan d'agencement pour le "
-#~ "clavier %1"
-
-#~ msgid "Unable to retrieve the name of the default area file for keyboard %1"
-#~ msgstr ""
-#~ "Impossible de récupérer le nom du fichier de plan de zones par défaut "
-#~ "pour le clavier %1"
-
-#~ msgid ""
-#~ "Null\n"
-#~ "character"
-#~ msgstr ""
-#~ "Caractère\n"
-#~ "nul"
-
-#~ msgid ""
-#~ "Shift\n"
-#~ "lock"
-#~ msgstr ""
-#~ "Verr\n"
-#~ "maj"
-
-#~ msgid "Return"
-#~ msgstr "Entrée"
-
-#~ msgid "Meta"
-#~ msgstr "Méta"
-
-#~ msgid "Hyper"
-#~ msgstr "Hyper"
-
-#~ msgid ""
-#~ "Decimal\n"
-#~ "mark"
-#~ msgstr ""
-#~ "Séparateur\n"
-#~ "décimal"
-
-#~ msgid ""
-#~ "No break\n"
-#~ "space"
-#~ msgstr ""
-#~ "Espace\n"
-#~ "insécable"
-
-#~ msgid "Hyphen"
-#~ msgstr "Césure"
-
-#~ msgid "Current directory"
-#~ msgstr "Répertoire courant"
-
-#~ msgid "Top directory"
-#~ msgstr "Répertoire de référence"
-
-#~ msgid "User directory"
-#~ msgstr "Répertoire utilisateur"
-
-#~ msgid "Locale"
-#~ msgstr "Locale"
-
-#~ msgid "Keycode"
-#~ msgstr "Keycode"
-
-#~ msgid "Keyval"
-#~ msgstr "Keyval"
-
-#~ msgid "Keyval (hex)"
-#~ msgstr "Keyval (héxa)"
-
-#~ msgid "Name"
-#~ msgstr "Nom"
-
-#~ msgid "Symbol"
-#~ msgstr "Symbole"
-
-#~ msgid "Group"
-#~ msgstr "Groupe"
-
-#~ msgid "Level"
-#~ msgstr "Niveau"
-
-#~ msgid "Keyboard information"
-#~ msgstr "Informations clavier"
-
-#~ msgid "Display players' names"
-#~ msgstr "Afficher les noms des joueurs"
-
-#~ msgid "Set the configuration and the preferences"
-#~ msgstr "Définir la configuration et les préférences"
-
-#~ msgid "A short help text"
-#~ msgstr "Un court texte d'aide"
-
-#~ msgid "Information about credits and license"
-#~ msgstr "Informations sur les crédits et la licence"
-
-#~ msgid ""
-#~ "To start playing and then change the running side of the clock, just push "
-#~ "some keys on the keyboard. The left player have to push some key on the "
-#~ "left side of the keyboard, the right player on the right side.\n"
-#~ "\n"
-#~ "If it does not work, it might be due to a misdetection of your keyboard "
-#~ "layout; you can check it and correct it through the \"Preferences\" "
-#~ "dialog. If your actual keyboard layout is not available among those "
-#~ "proposed by VCC, you should select \"Default QWERTY\" or one of the "
-#~ "default layouts that suits good to your keyboard. Thus, only the A-Z keys "
-#~ "will be used by VCC, but the software will be usable anyway."
-#~ msgstr ""
-#~ "Pour commencer la partie et ensuite changer le côté actif de la pendule, "
-#~ "appuyer sur les touches du clavier. Le joueur de gauche doit appuyer sur "
-#~ "une des touches de la gauche du clavier, le joueur de droite une des "
-#~ "touches de la droite du clavier.\n"
-#~ "\n"
-#~ "Si ça ne fonctionne pas, c'est probablement dû à une mauvaise détection "
-#~ "de l'agencement de votre clavier ; vous pouvez vérifier et corriger celui-"
-#~ "ci dans la boîte de dialogue \"Préférences\". Si votre plan d'agencement "
-#~ "de clavier n'est pas disponible parmi ceux proposé par VCC, vous pouvez "
-#~ "sélectionner \"Default QWERTY\" ou bien l'un des agencements par défaut "
-#~ "qui convient selon votre clavier. De cette façon, seules les touches de A "
-#~ "à Z seront utilisées par VCC, mais le logiciel sera tout de même "
-#~ "utilisable."
-
-#~ msgid "Reset through the toolbar"
-#~ msgstr "Remise-à-zéro par la barre d'outils"
-
-#~ msgid "Ask for confirmation before resetting"
-#~ msgstr "Demander confirmation avant la remise-à-zéro"
-
-#~ msgid "Reset through the keyboard"
-#~ msgstr "Remise-à-zéro par le clavier"
-
-#~ msgid "Keys to press to reset"
-#~ msgstr "Touches sur lesquelles appuyer pour la remise-à-zéro"
-
-#~ msgid "CTRL keys (left and right)"
-#~ msgstr "Touches CTRL (gauche et droite)"
-
-#~ msgid "Delay (milliseconds)"
-#~ msgstr "Délai (millisecondes)"
-
-#~ msgid "Pause through the keyboard"
-#~ msgstr "Mise en pause par le clavier"
-
-#~ msgid "Allow the game to be paused through the keyboard"
-#~ msgstr "Autoriser le jeu à être mis en pause à partir du clavier"
-
-#~ msgid "Keys to press to pause"
-#~ msgstr "Touches sur lesquelles appuyer pour la mise en pause"
-
-#~ msgid "Only the space key"
-#~ msgstr "Seulement la touche espace"
-
-#~ msgid "CTRL keys (left and right) + space"
-#~ msgstr "Touches CTRL (gauche et droite) + espace"
-
-#~ msgid "MAJ keys (left and right) + space"
-#~ msgstr "Touches MAJ (gauche et droite) + espace"
-
-#~ msgid "Use the mouse buttons to switch between players"
-#~ msgstr "Utiliser les boutons de la souris pour alterner les joueurs"
-
-#~ msgid ""
-#~ "The left player must click on the left button, the right player on the "
-#~ "right button"
-#~ msgstr ""
-#~ "Le joueur de gauche doit cliquer sur le bouton de gauche, le joueur de "
-#~ "droite sur le bouton de droite"
-
-#~ msgid "Modify the active areas by clicking on the keyboard"
-#~ msgstr "Modifiez les zones actives en cliquant sur le clavier"
-
-#~ msgid "Modify the left player's area"
-#~ msgstr "Modifier la zone du joueur de gauche"
-
-#~ msgid "Modify the right player's area"
-#~ msgstr "Modifier la zone du joueur de droite"
-
-#~ msgid "Active areas that players can use to engage the clock when playing"
-#~ msgstr ""
-#~ "Zones actives que les joueurs peuvent utiliser pour appuyer sur la "
-#~ "pendule pendant la partie"
-
-#~ msgid "left player's area"
-#~ msgstr "zone du joueur de gauche"
-
-#~ msgid "right player's area"
-#~ msgstr "zone du joueur de droite"
-
-#~ msgid "Keyboard active areas"
-#~ msgstr "Zones actives du clavier"
-
-#~ msgid "Control options"
-#~ msgstr "Options de contrôle"
-
-#~ msgid "Display options"
-#~ msgstr "Options d'affichage"
+msgstr "%1% min"
