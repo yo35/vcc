@@ -227,7 +227,7 @@ QWidget *PreferenceDialog::createTimeDisplayPage()
 	// Tool-tips
 	_delayBeforeDisplaySeconds->setToolTip("<p>" + _(
 		"If the remaining time is greater than (or equal to) this threshold, "
-		"it is rounded to the nearest minute before being displayed. For instance, "
+		"it is rounded to the nearest minute before being displayed. In particular, "
 		"if the threshold is set to 0, the seconds are never displayed."
 	) + "</p><p>" + _(
 		"This parameter affects only the display, not the accuracy of the time measurement."
