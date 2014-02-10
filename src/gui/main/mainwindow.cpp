@@ -396,7 +396,7 @@ void MainWindow::onAboutClicked()
 	message += "<tr><td>Français</td><td>Yoann Le Montagner</td></tr>";
 	message += "</tbody></table>";
 	message += "<p><small><i>" + _(
-		"If you are interested in translating this plugin into your language, "
+		"If you are interested in translating this program into your language, "
 		"please contact the author."
 	) + "</i></small></p>";
 
