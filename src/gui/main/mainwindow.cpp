@@ -378,12 +378,12 @@ void MainWindow::onAboutClicked()
 	message += "<p>" + _("A simple and free chess clock software.") + "</p>";
 	message += "<p>"
 		"<a href=\"http://vchessclock.sourceforge.net/\">http://vchessclock.sourceforge.net/</a><br/>"
-		"<a href=\"https://github.com/yo35/vcc\">https://github.com/yo35/vcc</a> (" + _("developer link") + ")" //TODO: register on GitHub
+		"<a href=\"https://github.com/yo35/vcc\">https://github.com/yo35/vcc</a> (" + _("developer link") + ")"
 	"</p>";
 	message += "<p><small><i>" + QString(_(
 		"If you encounter some bugs with this program, or if you wish to get new features in the future versions, "
 		"you can report/propose them in the bug tracker at %1."
-	)).arg("<a href=\"https://github.com/yo35/vcc/issues\">https://github.com/yo35/vcc/issues</a>") + "</i></small></p>"; //TODO: register on GitHub
+	)).arg("<a href=\"https://github.com/yo35/vcc/issues\">https://github.com/yo35/vcc/issues</a>") + "</i></small></p>";
 
 	message += "<h2>" + _("Author") + "</h2>";
 	message += "<p>Yoann Le Montagner <a href=\"mailto:yo35@melix.net\">&lt;yo35@melix.net&gt;</a></p>";
