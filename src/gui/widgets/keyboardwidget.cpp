@@ -224,6 +224,9 @@ void KeyboardWidget::paintEvent(QPaintEvent *)
 	for(std::size_t k=0; k<_keyboardMap->key_count(); ++k)
 	{
 		const KeyboardMap::KeyDescriptor &key(_keyboardMap->key(k));
+		if(!_hasNumericKeypad && key.in_numeric_keypad()) {
+			continue;
+		}
 		bool keyDown     = _keyboardHandler->isDown(key.scan_code());
 		bool modifierKey = isModifierKey(key);
 		painter.save();
