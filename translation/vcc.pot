@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtual-chess-clock 1.99.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-10 13:58+0100\n"
+"POT-Creation-Date: 2014-02-10 14:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -293,7 +293,7 @@ msgid "Pause the clock"
 msgstr ""
 
 #: src/gui/main/mainwindow.cpp:90
-msgid "Swap the players and the time control parameters"
+msgid "Swap the players' names and the time control parameters"
 msgstr ""
 
 #: src/gui/main/mainwindow.cpp:91
