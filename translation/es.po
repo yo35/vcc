@@ -34,9 +34,8 @@ msgid "Flag down"
 msgstr "Bandera baja"
 
 #: src/gui/widgets/bitimerwidget.cpp:208
-#, fuzzy
 msgid "Since: %1"
-msgstr "Desde:"
+msgstr "Desde: %1"
 
 #: src/gui/widgets/bitimerwidget.cpp:212 src/gui/widgets/bitimerwidget.cpp:216
 #: src/gui/dialogs/timecontroldialog.cpp:113
@@ -48,9 +47,8 @@ msgid "Byo-yomi period"
 msgstr "Periodo byo-yomi"
 
 #: src/gui/widgets/bitimerwidget.cpp:217
-#, fuzzy
 msgid "Byo-yomi period %1/%2"
-msgstr "Periodo byo-yomi"
+msgstr "Periodo byo-yomi %1/%2"
 
 #: src/gui/widgets/modifierkeyswidget.cpp:32
 msgid "Modifier keys"
@@ -69,9 +67,8 @@ msgid "Alt"
 msgstr ""
 
 #: src/gui/widgets/modifierkeyswidget.cpp:45
-#, fuzzy
 msgid "%1 keys (left and right)"
-msgstr "Teclas Shift (izquierda y derecha)"
+msgstr ""
 
 #: src/gui/main/preferencedialog.cpp:58 src/gui/main/mainwindow.cpp:100
 #: src/gui/main/mainwindow.cpp:354
@@ -373,9 +370,8 @@ msgid "About %1"
 msgstr ""
 
 #: src/gui/main/mainwindow.cpp:378
-#, fuzzy
 msgid "A simple and free chess clock software."
-msgstr "Un programa de reloj de ajedrez simple y libre"
+msgstr "Un programa de reloj de ajedrez simple y libre."
 
 #: src/gui/main/mainwindow.cpp:381
 msgid "developer link"
@@ -430,19 +426,16 @@ msgid ""
 msgstr ""
 
 #: src/gui/dialogs/namedialog.cpp:46
-#, fuzzy
 msgid "Left player"
-msgstr "area del jugador de la izquierda"
+msgstr ""
 
 #: src/gui/dialogs/namedialog.cpp:47
-#, fuzzy
 msgid "Right player"
-msgstr "area del jugador de la derecha"
+msgstr ""
 
 #: src/gui/dialogs/namedialog.cpp:52
-#, fuzzy
 msgid "Show the players' names"
-msgstr "area del jugador de la derecha"
+msgstr ""
 
 #: src/gui/dialogs/timecontroldialog.cpp:49
 msgid ""
@@ -660,182 +653,9 @@ msgid "%1% sec"
 msgstr ""
 
 #: src/core/timecontrol.cpp:186
-#, fuzzy
 msgid "%1% hour"
-msgstr "hora"
+msgstr ""
 
 #: src/core/timecontrol.cpp:187
 msgid "%1% min"
 msgstr ""
-
-#~ msgid "Unable to create the INI configuration file at %1"
-#~ msgstr "No se puede crear el INI archivo de configuracion en %1"
-
-#~ msgid "Unable to retrieve the name of keyboard %1"
-#~ msgstr "No se puede obtener el nombre del teclado %1"
-
-#~ msgid "Unable to retrieve the name of the layout file for keyboard %1"
-#~ msgstr ""
-#~ "No se puede obtener el nombre del archivo de diseño para el teclado %1"
-
-#~ msgid "Unable to retrieve the name of the default area file for keyboard %1"
-#~ msgstr ""
-#~ "No se puede obtener el nombre de la zona predeterminada para el teclado %1"
-
-#~ msgid "Set the configuration and the preferences"
-#~ msgstr "Establece la configuracion y preferencias"
-
-#~ msgid "A short help text"
-#~ msgstr "Un pequeño texto de ayuda"
-
-#~ msgid "Information about credits and license"
-#~ msgstr "Informacion sobre creditos y licencia"
-
-#~ msgid ""
-#~ "To start playing and then change the running side of the clock, just push "
-#~ "some keys on the keyboard. The left player have to push some key on the "
-#~ "left side of the keyboard, the right player on the right side.\n"
-#~ "\n"
-#~ "If it does not work, it might be due to a misdetection of your keyboard "
-#~ "layout; you can check it and correct it through the \"Preferences\" "
-#~ "dialog. If your actual keyboard layout is not available among those "
-#~ "proposed by VCC, you should select \"Default QWERTY\" or one of the "
-#~ "default layouts that suits good to your keyboard. Thus, only the A-Z keys "
-#~ "will be used by VCC, but the software will be usable anyway."
-#~ msgstr ""
-#~ "Para iniciar el juego y luego cambiar el lado del contador del reloj, "
-#~ "solo presione alguna tecla. El jugador de la izquierda debe presionar "
-#~ "alguna tecla del lado izquierdo del tablero, el jugador derecho del lado "
-#~ "derecho.\n"
-#~ "\n"
-#~ "Si esto no funciona, podria ser por una mala deteccion de su tipo de "
-#~ "teclado; podes chequearlo y corregirlo en el cuadro \"Preferences\". Si "
-#~ "su tipo de teclado no esta disponible entre los propuestos por VCC, debes "
-#~ "seleccionar \"Default QWERTY\" o alguno de los predeterminados que se "
-#~ "adapte bien a su teclado. Por eso, solo las teclas A-Z seran usadas por "
-#~ "VCC, pero el programa podra utilizarlas de todos modos."
-
-#~ msgid "Current directory"
-#~ msgstr "Directorio actual"
-
-#~ msgid "Top directory"
-#~ msgstr "Directorio arriba"
-
-#~ msgid "User directory"
-#~ msgstr "Directorio usuario"
-
-#~ msgid "Locale"
-#~ msgstr "Locale"
-
-#~ msgid "Keycode"
-#~ msgstr "Keycode"
-
-#~ msgid "Keyval"
-#~ msgstr "Keyval"
-
-#~ msgid "Keyval (hex)"
-#~ msgstr "Keyval (hex)"
-
-#~ msgid "Name"
-#~ msgstr "Nombre"
-
-#~ msgid "Symbol"
-#~ msgstr "Simbolo"
-
-#~ msgid "Group"
-#~ msgstr "Grupo"
-
-#~ msgid "Level"
-#~ msgstr "Nivel"
-
-#~ msgid "Keyboard information"
-#~ msgstr "Informacion de teclado"
-
-#~ msgid "The version (%1) of the keyboard map file %2 is not supported"
-#~ msgstr "La version (%1) del archivo de tipo de teclado %2 no es soportada"
-
-#~ msgid "The key %1 must be placed at least on one line on the keyboard"
-#~ msgstr "La tecla %1 debe ubicarse al menos en una linea en el teclado"
-
-#~ msgid "The key %1 must have at least one keyval"
-#~ msgstr "La tecla %1 debe tener al menos un keyval"
-
-#~ msgid "Reset through the toolbar"
-#~ msgstr "Reiniciar mediante la barra de tareas"
-
-#~ msgid "Ask for confirmation before resetting"
-#~ msgstr "Pedir confirmacion antes de reiniciar"
-
-#~ msgid "Reset through the keyboard"
-#~ msgstr "Resetear mediante el teclado"
-
-#~ msgid "Keys to press to reset"
-#~ msgstr "Teclas a presionar para reiniciar"
-
-#~ msgid "CTRL keys (left and right)"
-#~ msgstr "Teclas CTRL (izquierda y derecha)"
-
-#~ msgid "Delay (milliseconds)"
-#~ msgstr "Mantener apretado (milisegundos)"
-
-#~ msgid "Use the mouse buttons to switch between players"
-#~ msgstr "Usar los botones del mouse para cambiar de jugador"
-
-#~ msgid ""
-#~ "The left player must click on the left button, the right player on the "
-#~ "right button"
-#~ msgstr ""
-#~ "El jugador de la izquierda debe hacer click izquierdo, el jugador de la "
-#~ "derecha debe hacer click derecho button"
-
-#~ msgid "Modify the active areas by clicking on the keyboard"
-#~ msgstr "Modificar las areas activas haciendo click en el teclado"
-
-#~ msgid "Modify the right player's area"
-#~ msgstr "Modificar el area del jugador de la derecha"
-
-#~ msgid "Active areas that players can use to engage the clock when playing"
-#~ msgstr ""
-#~ "Areas que los jugadores pueden usar para activar el reloj cuando esten "
-#~ "jugando"
-
-#~ msgid "Keyboard active areas"
-#~ msgstr "Areas activas del teclado"
-
-#~ msgid "Reset options"
-#~ msgstr "Opciones de reinicio"
-
-#~ msgid "Display options"
-#~ msgstr "Opciones de visualizacion"
-
-#~ msgid "Unable to open the INI file %1 for reading"
-#~ msgstr "No se puede abrir el archivo INI %1 para su lectura"
-
-#~ msgid "Unconsistency in the INI file %1 at line #%2"
-#~ msgstr "Inconsistencia en el archivo INI %1 en la linea #%2"
-
-#~ msgid "Unable to open the INI file %1 for writing"
-#~ msgstr "No se puede abrir el archivo INI  %1 para su escritura"
-
-#~ msgid "Time control values are the same for both sides"
-#~ msgstr ""
-#~ "Los valores para los tiempos de control son los mismos para los dos "
-#~ "jugadores"
-
-#~ msgid "Unable to open the data file %1 for reading"
-#~ msgstr "No se puede abrir el archivo %1 para leer"
-
-#~ msgid "Unconsistency in the data file %1 at line #%2"
-#~ msgstr "Inconsistencia en el archivo %1 en la linea #%2"
-
-#~ msgid "Unable to open the data file %1 for writing"
-#~ msgstr "No se puede abrir el archivo %1 para escritura"
-
-#~ msgid "The version (%1) of the area map file %2 is not supported"
-#~ msgstr "La version (%1) del archivo de area %2 no es soportado"
-
-#~ msgid "The number of keys reported the file %1 is incorrect"
-#~ msgstr "El numero de teclas reportado en el archivo %1 es incorrecto"
-
-#~ msgid "Incorrect affectation code for the key %1 in the file %2"
-#~ msgstr "Codigo incorrecto de afectacion para el key %1 en el archivo %2"
