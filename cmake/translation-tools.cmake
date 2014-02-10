@@ -40,7 +40,7 @@ find_program(GETTEXT_XGETTEXT_EXECUTABLE xgettext) # Why not done by default by 
 
 # Custom target to generate or update the translation template file .pot
 add_custom_target(
-	translation-template
+	translation-template-pot
 	COMMAND ${GETTEXT_XGETTEXT_EXECUTABLE}
 		--from-code=UTF-8
 		--keyword=_
@@ -50,3 +50,26 @@ add_custom_target(
 		${source_cpp_files} ${source_h_files}
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
+
+
+# Custom target to update all the translation files .po
+add_custom_target(
+	translation-templates
+	DEPENDS translation-template-pot
+)
+
+
+# Custom targets to update the translation files .po
+foreach(translation_po_file ${translation_po_files})
+	get_filename_component(locale_code ${translation_po_file} NAME_WE)
+	add_custom_target(
+		"translation-template-po-${locale_code}"
+		COMMAND ${GETTEXT_MSGMERGE_EXECUTABLE}
+			--backup=off
+			-U ${translation_po_file}
+			${translation_pot_file}
+		DEPENDS translation-template-pot
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	)
+	add_dependencies(translation-templates "translation-template-po-${locale_code}")
+endforeach()
