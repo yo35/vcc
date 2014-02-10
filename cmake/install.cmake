@@ -138,7 +138,7 @@ set(CPACK_PACKAGE_VERSION_PATCH ${APP_VERSION_PATCH})
 
 # Describe the package.
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Virtual Chess Clock is a simple and free chess clock software")
-set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/COPYING)
+set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
 
 
 # NSIS-installer associated variables
