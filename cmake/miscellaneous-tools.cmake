@@ -68,7 +68,7 @@ endif()
 if(${UNIX})
 	add_custom_target(
 		stats
-		COMMAND ./statistics.sh ${source_cpp_files} ${source_h_files}
+		COMMAND ./cmake/statistics.sh ${source_cpp_files} ${source_h_files}
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 	)
 endif()
