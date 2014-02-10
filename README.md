@@ -38,8 +38,8 @@ Currently, Virtual Chess Clock is available in the following languages:
 * Spanish.
 
 If you are interested in translating this program into your language, please
-contact the author. Do not be afraid: you don't need to have any special
-proficiency in programming or software development to do so.
+contact the author. Don't be afraid: you don't need to have any special
+proficiency in programming or software development for this task.
 
 
 
@@ -83,7 +83,7 @@ make
 sudo make install
 ```
 
-On Windows, this process becomes:
+On Windows, using the MinGW compiler, this process becomes:
 
 ```
 cd x:\path\to\VCC\sources
