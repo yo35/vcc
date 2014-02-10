@@ -217,4 +217,20 @@
 		</locales>
 	</keyboard>
 
+	<keyboard>
+		<id>TR_q</id>
+		<icon>TR.png</icon>
+		<name>Turkish Q keyboard</name>
+		<locales>
+			<locale>tr_TR</locale>
+		</locales>
+	</keyboard>
+
+	<keyboard>
+		<id>TR_f</id>
+		<icon>TR.png</icon>
+		<name>Turkish F keyboard</name>
+		<locales></locales>
+	</keyboard>
+
 </keyboards>
