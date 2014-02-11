@@ -27,6 +27,17 @@ yo35@melix.net.
 
 
 
+Screenshots
+-----------
+
+<img alt="Main window" src="screenshot_main_window.png" width="600" />
+
+<img alt="Time control set-up" src="screenshot_time_control.png" width="600" />
+
+<img alt="Keyboard set-up" src="screenshot_keyboard_setup.png" width="600" />
+
+
+
 Translation
 -----------
 
@@ -58,7 +69,7 @@ These packages are available for download at
 https://sourceforge.net/projects/vchessclock/files/.
 
 
-### Building from sources ###
+### Building from the sources ###
 
 To build Virtual Chess Clock from the source, you need:
 
