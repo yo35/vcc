@@ -39,9 +39,11 @@ message(STATUS "VCC will be installed to ${CMAKE_INSTALL_PREFIX}")
 if(${WIN32})
 	set(DESTINATION_DIRECTORY_BIN ".")
 	set(DESTINATION_DIRECTORY_SHARE share)
+	set(DESTINATION_DIRECTORY_README ".")
 elseif(${UNIX})
 	set(DESTINATION_DIRECTORY_BIN bin)
 	set(DESTINATION_DIRECTORY_SHARE share/${APP_NAME})
+	set(DESTINATION_DIRECTORY_README ${DESTINATION_DIRECTORY_SHARE})
 endif()
 set(DESTINATION_DIRECTORY_TRANSLATION ${DESTINATION_DIRECTORY_SHARE}/translation)
 
@@ -61,6 +63,12 @@ if(DEFINED translation_qm_files)
 		DESTINATION ${DESTINATION_DIRECTORY_TRANSLATION}
 	)
 endif()
+
+
+# Install instructions for the README file, LICENSE file, etc...
+install(FILES ${readme_txt_files}
+	DESTINATION ${DESTINATION_DIRECTORY_README}
+)
 
 
 # OS integration specific instructions -> Unix.

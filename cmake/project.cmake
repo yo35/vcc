@@ -97,3 +97,9 @@ set(translation_pot_file translation/vcc.pot)
 if(${WIN32})
 	set(resource_rc_file os-integration/windows/vcc.rc)
 endif()
+
+# README, CHANGELOG, LICENSE, AUTHORS files
+file(
+	GLOB readme_txt_files RELATIVE ${CMAKE_SOURCE_DIR}
+	*.md LICENSE
+)
