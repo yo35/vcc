@@ -55,7 +55,7 @@ using one of the following pre-compiled binary package:
 * Debian package (for Debian-based Linux distributions).
 
 These packages are available for download at
-https://sourceforge.net/projects/vchessclock/files/v2.0/.
+https://sourceforge.net/projects/vchessclock/files/.
 
 
 ### Building from sources ###
