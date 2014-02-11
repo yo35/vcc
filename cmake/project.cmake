@@ -98,8 +98,8 @@ if(${WIN32})
 	set(resource_rc_file os-integration/windows/vcc.rc)
 endif()
 
-# README, CHANGELOG, LICENSE, AUTHORS files
+# README, CHANGELOG, LICENSE, AUTHORS, screenshot files
 file(
 	GLOB readme_txt_files RELATIVE ${CMAKE_SOURCE_DIR}
-	*.md LICENSE
+	*.md LICENSE screenshot_*.png
 )
