@@ -30,13 +30,13 @@ yo35@melix.net.
 Screenshots
 -----------
 
-<img alt="Main window" src="screenshot_main_window.png" width="600" />
+<img alt="Main window" src="screenshot_main_window.png" width="600" />  
 The main window.
 
-<img alt="Time control set-up" src="screenshot_time_control.png" width="600" />
+<img alt="Time control set-up" src="screenshot_time_control.png" width="600" />  
 Time control configuration dialog.
 
-<img alt="Keyboard set-up" src="screenshot_keyboard_setup.png" width="600" />
+<img alt="Keyboard set-up" src="screenshot_keyboard_setup.png" width="600" />  
 Keyboard set-up dialog. The function of each key can be finely tuned.
 
 
