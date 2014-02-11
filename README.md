@@ -5,7 +5,7 @@ Virtual Chess Clock is a chess clock software: it can be used to simulate a
 chess clock on computer (typically a laptop). Virtual Chess Clock is designed
 to be easy to use. It is free, open-source and multi-platform.
 
-http://vchessclock.sourceforge.net/  
+https://sourceforge.net/projects/vchessclock/  
 https://github.com/yo35/vcc (developer link)
 
 
@@ -55,7 +55,7 @@ using one of the following pre-compiled binary package:
 * Debian package (for Debian-based Linux distributions).
 
 These packages are available for download at
-http://vchessclock.sourceforge.net/download/.
+https://sourceforge.net/projects/vchessclock/files/v2.0/.
 
 
 ### Building from sources ###
@@ -72,7 +72,7 @@ code:
 
 * either by cloning the git repository (from https://github.com/yo35/vcc.git),
 * or by downloading and unpacking the ZIP archive with the sources, available
-  for download at http://vchessclock.sourceforge.net/download/.
+  for download at https://sourceforge.net/projects/vchessclock/files/.
 
 Finally, open a terminal, and type the following commands:
 

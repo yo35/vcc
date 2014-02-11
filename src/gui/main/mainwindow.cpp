@@ -377,7 +377,7 @@ void MainWindow::onAboutClicked()
 	message += "<h1>" + QString::fromStdString(model.full_name() + " " + model.version().short_number()) + "</h1>";
 	message += "<p>" + _("A simple and free chess clock software.") + "</p>";
 	message += "<p>"
-		"<a href=\"http://vchessclock.sourceforge.net/\">http://vchessclock.sourceforge.net/</a><br/>"
+		"<a href=\"https://sourceforge.net/projects/vchessclock/\">https://sourceforge.net/projects/vchessclock/</a><br/>"
 		"<a href=\"https://github.com/yo35/vcc\">https://github.com/yo35/vcc</a> (" + _("developer link") + ")"
 	"</p>";
 	message += "<p><small><i>" + QString(_(
