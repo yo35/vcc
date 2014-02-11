@@ -149,7 +149,16 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Virtual Chess Clock is a simple and free 
 set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
 
 
-# NSIS-installer associated variables
+# Strip the binaries.
+set(CPACK_STRIP_FILES true)
+
+
+# Name of the package file.
+set(CPACK_PACKAGE_FILE_NAME "${APP_NAME}-${APP_VERSION_MAJOR}.${APP_VERSION_MINOR}.${APP_VERSION_PATCH}")
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
+
+
+# NSIS-installer associated variables.
 if(${WIN32})
 	set(CPACK_PACKAGE_INSTALL_DIRECTORY ${APP_NAME})
 	set(CPACK_NSIS_PACKAGE_NAME ${APP_FULL_NAME})
