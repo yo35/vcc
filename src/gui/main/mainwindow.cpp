@@ -374,7 +374,7 @@ void MainWindow::onAboutClicked()
 	QString title = QString(_("About %1")).arg(QString::fromStdString(model.full_name()));
 	QString message;
 
-	message += "<h1>" + QString::fromStdString(model.full_name() + " " + model.version().full_number()) + "</h1>";
+	message += "<h1>" + QString::fromStdString(model.full_name() + " " + model.version().short_number()) + "</h1>";
 	message += "<p>" + _("A simple and free chess clock software.") + "</p>";
 	message += "<p>"
 		"<a href=\"http://vchessclock.sourceforge.net/\">http://vchessclock.sourceforge.net/</a><br/>"
