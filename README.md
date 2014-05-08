@@ -81,9 +81,9 @@ Build from source
 
 If your development environment is properly set with the required components,
 you should be able to build and install VCC by running the standard
-"configure/make/make install" instructions.
+_configure/make/make install_ instructions.
 This procedure is explained in detail
-at http://yo35.org/virtual-chess-clock/build-vcc-from-source/.
+[here](http://yo35.org/virtual-chess-clock/build-vcc-from-source/).
 
 Additional details about the available installation options can be obtained
 with the command `./configure --help` (or `configure.bat --help` on Windows).
