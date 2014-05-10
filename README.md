@@ -61,8 +61,6 @@ Currently, Virtual Chess Clock is available in the following languages:
 
 If you are interested in translating this program into your language,
 please [contact the author](mailto:yo35@melix.net).
-Don't be afraid: you don't need any special skill in programming
-or software development to achieve this.
 
 
 
