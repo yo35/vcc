@@ -6,7 +6,7 @@ it can be used to simulate a chess clock on computer (typically a laptop).
 Virtual Chess Clock is designed to be easy to use. It is free, open-source and multi-platform.
 
 **http://yo35.org/virtual-chess-clock/**  
-https://sourceforge.net/projects/vchessclock/ (project page on SourceForge)   
+https://sourceforge.net/projects/vchessclock/ (project page on SourceForge)  
 https://github.com/yo35/vcc (source code on GitHub)
 
 
