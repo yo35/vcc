@@ -107,7 +107,7 @@ const ShortcutMap &ShortcutMap::save(const std::string &path) const
 	boost::property_tree::ptree data;
 	save(data);
 	root.put_child("shortcut-map", data);
-	boost::property_tree::xml_writer_settings<boost::property_tree::ptree::key_type::value_type> settings('\t', 1);
+	boost::property_tree::xml_writer_settings<boost::property_tree::ptree::key_type> settings('\t', 1);
 	boost::property_tree::write_xml(path, root, std::locale(), settings);
 	return *this;
 }

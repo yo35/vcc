@@ -100,7 +100,7 @@ void ModelMain::finalize_save()
 
 	// Write the file
 	try {
-		boost::property_tree::xml_writer_settings<ptree::key_type::value_type> settings('\t', 1);
+		boost::property_tree::xml_writer_settings<ptree::key_type> settings('\t', 1);
 		boost::property_tree::write_xml(config_file(), _data, std::locale(), settings);
 	}
 	catch(boost::property_tree::xml_parser_error &) {
