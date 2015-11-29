@@ -5,16 +5,14 @@ Virtual Chess Clock is a [chess clock](http://en.wikipedia.org/wiki/Chess_clock)
 it can be used to simulate a chess clock on computer (typically a laptop).
 Virtual Chess Clock is designed to be easy to use. It is free, open-source and multi-platform.
 
-**http://yo35.org/virtual-chess-clock/**  
-https://sourceforge.net/projects/vchessclock/ (project page on SourceForge)  
-https://github.com/yo35/vcc (source code on GitHub)
+https://sourceforge.net/projects/vchessclock/
 
 
 
 Download
 --------
 
-http://yo35.org/virtual-chess-clock/download-vcc/
+https://sourceforge.net/projects/vchessclock/files/
 
 
 
@@ -74,14 +72,43 @@ Build from source
 3. The [boost libraries](http://www.boost.org/) (at least version 1.49).
 4. The [Qt library](http://qt-project.org/) (at least version 5.0).
 
+Making all these things work together is likely to be the harder part of the job! ;-)
+
+
+### Download the source code ###
+
+The source code can be retrieved by cloning the current GitHub repository:
+
+```
+git clone https://github.com/yo35/vcc.git --branch release
+```
+
+However, if you are not familiar with the Git tool, you can download a
+[ZIP archive](https://sourceforge.net/projects/vchessclock/files/2.0-latest/virtual-chess-clock-2.0.0-Source.zip/download)
+containing the latest (stable) source from the
+[SourceForge repository](https://sourceforge.net/projects/vchessclock/).
+
 
 ### Build VCC ###
 
-If your development environment is properly set with the required components,
-you should be able to build and install VCC by running the standard
-_configure/make/make install_ instructions.
-This procedure is explained in detail
-[here](http://yo35.org/virtual-chess-clock/build-vcc-from-source/).
+When the required components and the VCC source are ready, open a terminal,
+and type the following commands:
+
+```
+cd /path/to/VCC/source
+./configure
+make
+sudo make install
+```
+
+On Windows, using the MinGW compiler, this process becomes:
+
+```
+cd x:\path\to\VCC\sources
+configure.bat
+mingw32-make
+mingw32-make install
+```
 
 Additional details about the available installation options can be obtained
 with the command `./configure --help` (or `configure.bat --help` on Windows).
