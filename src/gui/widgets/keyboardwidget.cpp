@@ -32,6 +32,7 @@
 #include <functional>
 #include <QPainter>
 #include <QMouseEvent>
+#include <QPainterPath>
 
 
 // Constructor.
